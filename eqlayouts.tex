@@ -1,0 +1,346 @@
+\documentclass[twocolumn]{article}
+\pagestyle{myheadings}
+\raggedbottom
+\makeatletter
+\def\maketitle{%
+  \twocolumn[%
+    \centering
+    \noindent
+      \begingroup \Large\bfseries \@title\par\endgroup
+    \medskip
+      \textsc{\@author}%
+    \par \bigskip
+  ]\thispagestyle{plain}%
+  \markboth{\@title}{\@title}%
+}
+
+\def\@oddhead{\quad\hfil\textsc{\rightmark}\hfil\quad\llap{\thepage}}
+\def\@evenhead{\rlap{\thepage}\quad\hfil\textsc{\leftmark}\quad\hfil}
+
+\providecommand{\qq}[1]{\textquotedblleft#1\textquotedblright}
+\providecommand{\mdash}{\textemdash}
+\providecommand{\ndash}{\textendash}
+
+\newcommand{\ititle}[1]{\textit{#1}}
+
+\newcommand{\LR}[2][.4]{%
+  \framebox[#1\displaywidth]{$\displaystyle{}#2$}%
+}
+
+\newcommand{\LHS}[1]{\LR[\relifactor]{#1}}
+
+\newdimen\relindent \newdimen\rhswd
+
+\newcommand{\dwline}{%
+  \hbox to\curdw{\vrule height1ex
+    \leaders\hrule height.55ex depth-.45ex\hfil
+    \tiny \space display width
+    \leaders\hrule height.55ex depth-.45ex\hfil
+    \vrule height1ex}%
+}
+
+\newenvironment{layout}[1][.15]{%
+  \noindent
+  $$\edef\curdw{\the\displaywidth}%
+    \def\relifactor{#1}%
+    \gdef\layoutcr{\cr}\def\\{\layoutcr}%
+    \binoppenalty 10000 \relpenalty 10000
+  \setbox8\vbox\bgroup
+    \advance\baselineskip .35\baselineskip
+    \advance\lineskip .35\baselineskip \lineskiplimit\lineskip
+    \relindent=#1\displaywidth
+    \rhswd=\displaywidth \advance\rhswd-\relindent
+    \global\row 0 \gdef\rhsskew{}%
+    \halign\bgroup \global\advance\row 1 $\hfil\displaystyle{}##$&%
+      \ifnum\row>1 \rhsskew \fi $\displaystyle{}##\hfil$\cr
+}{%
+  \crcr\egroup\egroup
+  \vcenter{\halign{\hfil##\hfil\cr
+    \hbox{\hss\dwline\hss}\cr\noalign{\vskip.6\baselineskip}\box8 \cr}}%
+  $$\relax
+  \ignorespacesafterend
+}
+
+\newcommand{\stagger}{\omit\span\gdef\layoutcr{\cr\omit\span}}
+  
+\newcount\row
+
+\newcommand{\rhsskew}{}
+\newcommand{\skewleft}[1]{\gdef\rhsskew{\kern-#1\relax}}
+
+\parskip\baselineskip
+
+% Tone down the usual large font sizes of section heads.
+\let\Huge\large \let\huge\large \let\LARGE\large \let\Large\large
+\let\large\normalsize
+
+\begin{document}
+\title{Equation Layouts}
+\author{MJD [1998/12/28]}
+\date{}
+\maketitle
+
+\section{Misc examples}
+
+Let us consider which of these have 50\% or more of wasted whitespace
+\emph{within the bounding box of the visible material}.
+\begin{layout}[.4]
+\LHS{L}&=\LR[.35]{R_{1}}\\
+&=\LR[.25]{R_{1}}
+\end{layout}
+
+\section{Ladder and step layouts}
+
+\subsection{Straight ladder layout}
+This is distinguished by a relatively short LHS and one or more RHS's of
+any length.
+\begin{layout}
+\LHS{L} &= \LR[.5]{R_{1}}\\
+&=\LR[.3]{R_{2}}\\
+&=\LR[.25]{R_{3}}\\
+&\qquad\ldots
+\end{layout}
+The simplest kind of equation that fits on one line and has only one RHS
+may be viewed as a trivial subcase of the straight ladder layout:
+\begin{layout}
+\LHS{L} &= \LR[.5]{R}
+\end{layout}
+If some of the RHS's are too wide to fit on a single line they may be
+broken at binary operator symbols such as plus or minus. This is still
+classified as a straight ladder layout if none of the fragments intrude
+into the LHS column, because the underlying parshape is the same.
+\begin{layout}
+\LHS{L} &= \LR[.4]{R_{1a}}\\
+&\quad +\LR[.6]{R_{1b}}\\
+&=\LR[.3]{R_{2}}\\
+&=\LR[.25]{R_{3a}}\\
+&\quad +\LR[.45]{R_{3b}}\\
+&\quad +\LR[.54]{R_{3c}}\\
+&\qquad\ldots
+\end{layout}
+
+\subsection{Skew ladder layout}
+\begin{layout}[.5]
+\skewleft{.35\displaywidth}
+\LHS{L}&= \LR[.3]{R_{1}}\\
+&=\LR[.6]{R_{2}}\\
+&=\LR[.25]{R_{3}}\\
+&\qquad\ldots
+\end{layout}
+In a skew ladder layout, the combined LHS width plus width of $R_{1}$
+does not exceed the available width, but one of the other RHS's is so
+wide that aligning its relation symbol with the others cannot be done
+without making it run over the right margin: $\mbox{width}(L) +
+\mbox{width}_{\mathrm{max}}(R_{i})>\mbox{width}_{\mathrm{avail}}$. In
+that case we next try aligning all but the first relation symbol,
+allowing all the $R_{i}$ after $R_1$ to shift leftward.
+
+\subsection{Drop ladder layout}
+\begin{layout}[.6]
+\makebox[.15\displaywidth][l]{\LHS{L}}\\
+&= \LR[.6]{R_{1}}\\
+&=\LR[.3]{R_{2}}\\
+&=\LR[.25]{R_{3}}\\
+&\qquad\ldots
+\end{layout}
+The drop ladder layout is similar to the skew ladder layout but with the
+width of $R_1$ too large for it to fit on the same line as the LHS. Then
+we move $R_1$ down to a separate line and try again to align all the
+relation symbols. Note that this layout consumes more vertical space
+than the skew ladder layout.
+
+\subsection{Step layout}
+\begin{layout}[.6]
+\stagger
+\LHS{R_{a}}\\
+\qquad + \LR[.7]{R_{b}}\\
+\qquad\qquad + \LR[.6]{R_{c}}\\
+\qquad\qquad\qquad + \LR[.45]{R_{d}}\\
+\qquad\qquad\qquad\qquad\ldots
+\end{layout}
+The chief characteristic of the step layout is that there is no relation
+symbol, so that the available line breaks are (usually) all at binary
+operator symbols. Let $w_1$ and $w_l$ be the widths of the first and
+last fragments. We postulate that the ideal presentation is as follows:
+Choose a small stairstep indent $I$ (let's say 1 or 2 em). We want the
+last fragment to be offset at least $I$ from the start of the first
+fragment, and to end at least $I$ past the end of the first fragment. If
+there are only two lines these requirements determine a target width
+$w_T=\max(w_1+I,w_l+I)$. If there are more than two lines ($l>2$) then
+use $w_T = \max(w_1 + (l-1)I, w_l+I, w_{\mathrm{avail}}$ and reset $I$
+to $w_T/(l-1)$ if $w_T = w_{\mathrm{avail}}$.
+
+Furthermore, we would like the material to be distributed as evenly as
+possible over all the lines rather than leave the last line exceedingly
+short. If the total width is $1.1(\mbox{width}_{\mathrm{avail}})$, we
+don't want to have .9 of that on line 1 and .2 of it on line 2:
+\begin{layout}[.9]
+\stagger
+\LHS{R_{a}\hfil+\hfil R_{b}\hfil+\hfil R_{c}}\\
+\qquad + \LR[.1]{R_{d}}
+\end{layout}
+Better to split it as evenly as possible, if the available breakpoints
+permit.
+\begin{layout}[.5]
+\stagger
+\LHS{R_{a}\hfil+\hfil R_{b}}\\
+\qquad + \LR[.5]{R_{c}\hfil+\hfil R_d}
+\end{layout}
+A degenerate step layout may arise if an unbreakable fragment of
+the equation is so wide that indenting it to its appointed starting
+point would cause it to run over the right margin. In that case, we want
+to shift the fragment leftward just enough to bring it within the right
+margin:
+\begin{layout}[.6]
+\stagger
+\LHS{L_{a}}\\
+\quad + \LR[.8]{L_{b}}\\
+\qquad + \LR[.7]{L_{c}}\\
+\; + \LR[.87]{L_{d}}\\
+\qquad\ldots
+\end{layout}
+And then we may want to regularize the indents as in the drop ladder
+layout. Let's call this a dropped step layout:
+\begin{layout}[.6]
+\stagger
+\LHS{L_{a}}\\
+\quad + \LR[.8]{L_{b}}\\
+\quad + \LR[.7]{L_{c}}\\
+\quad + \LR[.87]{L_{d}}\\
+\qquad\ldots
+\end{layout}
+
+\section{Strategy}
+
+Here is the basic procedure for deciding which equation layout to use,
+before complications like equation numbers and delimiter clearance come
+into the picture. Let $A$ be the available width, $w_{\mathrm{total}}$
+the total width of the equation contents, $w(L)$ the width of the
+left-hand side, $w_{\max}(R)$ the max width of the right-hand sides, $I$
+the standard indent for step layout, and $O$ the standard offset for
+binary operators if a break occurs in the middle of an RHS. Also let
+$t_L$ and $t_R$ represent certain thresholds for the width of the LHS or
+the RHS at which a layout decision may change, as explained below.
+
+\newpage
+\begin{small}
+\begin{enumerate}
+\renewcommand{\labelenumi}{(\theenumi)}
+\item \ititle{Does everything fit on one line?}\label{i:LR}
+  $w_{\mathrm{total}}\leq A$?
+
+Yes: print the equation on a single line (done).
+
+No: Check whether the equation has both LHS and RHS (\ref{i:lhs-check}).
+
+\item \ititle{Is there a left-hand side?}\label{i:lhs-check}
+Are there any relation symbols in the equation?
+
+Yes: Try a ladder layout (\ref{i:ladder}).
+
+No: Try a step layout (\ref{i:step}).
+
+\item\ititle{Does the LHS leave room to fit the widest RHS?}\label{i:ladder}
+  $w(L)+w_{\max}(R)<A$?
+
+Yes: Use a straight ladder layout (\ref{i:straight-ladder}).
+
+No: Check the width of the LHS (\ref{i:check-lhs}).
+
+\item\ititle{Is the LHS relatively short?}\label{i:check-lhs}
+$w(L)\leq t_L$? (where $t_L$ is typically $0.4A$).
+
+Yes: Subdividing one or more of the RHS's may permit us to use a
+straight ladder layout (\ref{i:straight-ladder}).
+
+No: The straight ladder layout is unlikely to work.
+Try a skew or drop ladder layout (\ref{i:skew-drop}).
+
+\item\ititle{Straight ladder layout}\label{i:straight-ladder}
+Set up a straight ladder parshape [0pt $A$ $w(L)$ $A-w(L)$] and run
+a trial break. If the combined width of the LHS plus the longest RHS is
+no greater than $A$ then we should get a satisfactory layout with all
+line breaks occurring at major division points (relation symbols).
+Otherwise, we hope, some additional line breaks at minor division points
+will allow everything to fit within the text column.
+
+\ititle{Line breaks OK?}
+
+\begingroup \hbadness=9999
+Yes: The straight ladder layout succeeded
+  (done).\par\endgroup
+
+No: Try a skew or drop ladder layout (\ref{i:skew-drop}).
+
+\item\ititle{Do the LHS and the first RHS fit on one
+    line?}\label{i:skew-drop} $w(L)+w(R_1) \leq A$?
+
+Yes: Try a skew ladder layout (\ref{i:skew}).
+
+No: Try a drop ladder layout (\ref{i:drop}).
+
+\item\ititle{Skew ladder layout}\label{i:skew}
+Set up a parshape [0pt $A$ $I$ $A-I$] and run a trial break.
+
+\ititle{Line breaks OK?}
+
+Yes: Skew ladder layout succeeded (done).
+
+No: One of the unbreakable fragments of the $R_i$ ($i>1$) is wider than
+$A-I$; try an almost-columnar layout (\ref{i:almost-columnar}).
+
+\item\ititle{Drop ladder layout}\label{i:drop}
+Set up a parshape [0pt $w(L)$ $I$ $A-I$] and run a trial break.
+This is the same parshape as for a skew ladder layout except that the
+width of the first line is limited to the LHS width, so that the RHS is
+forced to drop down to the next line.
+
+\ititle{Line breaks OK?}
+
+Yes: Drop ladder layout succeeded (done).
+
+No: One of the unbreakable fragments of the $R_i$ ($i>1$) is wider than
+$A-I$; try an almost-columnar layout (\ref{i:almost-columnar}).
+
+\item\ititle{Almost-columnar layout}\label{i:almost-columnar}
+This presupposes a trial break that yielded a series of expressions or
+fragments, one per line. Let $w(F)$ denote the width of the first
+fragment and $w(R_i)$ the widths of the remaining fragments.
+Set up a parshape [0pt $w(F)$ $A-w_{\max}(R_i)$ $w_{\max}(R_i)$]: in other
+words, set the first line flush left and the longest line flush right
+and all other lines indented to the same position as the longest line.
+But as a matter of fact there is one other refinement for extreme cases:
+if $w_{\max}(R_i)>A$ then the parshape can be simplified without loss to
+[0pt $w(F)$ 0pt $A$]\mdash for that is the net effect of substituting
+$\min(A,w_{\max})$ in stead of $w_{\max}$.
+(Done.)
+
+\item\ititle{Step layout}\label{i:step} Set target width $w_T$ to $A -
+  2I$.  Set parshape to [0pt $w_T$ $I$ $w_T -I$ $2I$ $w_T -2I$ \ldots\ 
+  $(l-1)I$ $w_T - (l-1)I$], where $l=\lceil w_{\mathrm{total}}/A\rceil$
+  is the expected number of lines that will be required.  Trial break
+  with that parshape in order to find out the width of the last line.
+
+\ititle{Indents OK?}
+
+Yes: Step layout succeeded (done).
+
+No: One of the fragments is too wide to fit in
+the allotted line width, after subtracting the indent specified by the
+parshape. Try a dropped step layout (\ref{i:drop-step})
+
+\item\ititle{Dropped step layout}\label{i:drop-step} Set up a parshape
+  [0pt $A$ $I$ $A-I$] and run a trial break.  Note that this is actually
+  the same parshape as for a skew ladder layout.
+
+\ititle{Line breaks OK?}
+
+Yes: Dropped step layout succeeded (done).
+
+No: One of the unbreakable fragments of the $R_i$ ($i>1$) is wider than
+$A-I$; as a last resort try an almost-columnar layout (\ref{i:almost-columnar}).
+
+\end{enumerate}
+\par\end{small}
+
+\end{document}

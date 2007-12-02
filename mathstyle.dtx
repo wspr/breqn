@@ -1,0 +1,245 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 1997-2003 by Michael J. Downes
+% Copyright (C) 2007 by Morten Hoegholm <mh.ctan@gmail.com>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.3 of this license or (at your option) any later
+% version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of
+% LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status "maintained".
+%
+% This Current Maintainer of this work is Morten Hoegholm.
+%
+% This work consists of the main source file mathstyle.dtx
+% and the derived files
+%    mathstyle.sty, mathstyle.pdf, mathstyle.ins, mathstyle.drv.
+%
+% Distribution:
+%    CTAN:macros/latex/contrib/mh/mathstyle.dtx
+%    CTAN:macros/latex/contrib/mh/mathstyle.pdf
+%
+% Unpacking:
+%    (a) If mathstyle.ins is present:
+%           tex mathstyle.ins
+%    (b) Without mathstyle.ins:
+%           tex mathstyle.dtx
+%    (c) If you insist on using LaTeX
+%           latex \let\install=y\input{mathstyle.dtx}
+%        (quote the arguments according to the demands of your shell)
+%
+% Documentation:
+%    (a) If mathstyle.drv is present:
+%           latex mathstyle.drv
+%    (b) Without mathstyle.drv:
+%           latex mathstyle.dtx; ...
+%    The class ltxdoc loads the configuration file ltxdoc.cfg
+%    if available. Here you can specify further options, e.g.
+%    use A4 as paper format:
+%       \PassOptionsToClass{a4paper}{article}
+%
+%    Programm calls to get the documentation (example):
+%       pdflatex mathstyle.dtx
+%       makeindex -s gind.ist mathstyle.idx
+%       pdflatex mathstyle.dtx
+%       makeindex -s gind.ist mathstyle.idx
+%       pdflatex mathstyle.dtx
+%
+% Installation:
+%    TDS:tex/latex/mh/mathstyle.sty
+%    TDS:doc/latex/mh/mathstyle.pdf
+%    TDS:source/latex/mh/mathstyle.dtx
+%
+%<*ignore>
+\begingroup
+  \def\x{LaTeX2e}
+\expandafter\endgroup
+\ifcase 0\ifx\install y1\fi\expandafter
+         \ifx\csname processbatchFile\endcsname\relax\else1\fi
+         \ifx\fmtname\x\else 1\fi\relax
+\else\csname fi\endcsname
+%</ignore>
+%<*install>
+\input docstrip.tex
+\Msg{************************************************************************}
+\Msg{* Installation}
+\Msg{* Package: mathstyle 2007/12/02 v0.93 Mathstyle (MH)}
+\Msg{************************************************************************}
+
+\keepsilent
+\askforoverwritefalse
+
+\preamble
+
+This is a generated file.
+
+Copyright (C) 1997-2003 by Michael J. Downes
+Copyright (C) 2007 by Morten Hoegholm <mh.ctan@gmail.com>
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either
+version 1.3 of this license or (at your option) any later
+version. The latest version of this license is in
+   http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of
+LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status "maintained".
+
+This Current Maintainer of this work is Morten Hoegholm.
+
+This work consists of the main source file mathstyle.dtx
+and the derived files
+   mathstyle.sty, mathstyle.pdf, mathstyle.ins, mathstyle.drv.
+
+\endpreamble
+
+\generate{%
+  \file{mathstyle.ins}{\from{mathstyle.dtx}{install}}%
+  \file{mathstyle.drv}{\from{mathstyle.dtx}{driver}}%
+  \usedir{tex/latex/mh}%
+  \file{mathstyle.sty}{\from{mathstyle.dtx}{package}}%
+}
+
+\obeyspaces
+\Msg{************************************************************************}
+\Msg{*}
+\Msg{* To finish the installation you have to move the following}
+\Msg{* file into a directory searched by TeX:}
+\Msg{*}
+\Msg{*     mathstyle.sty}
+\Msg{*}
+\Msg{* To produce the documentation run the file `mathstyle.drv'}
+\Msg{* through LaTeX.}
+\Msg{*}
+\Msg{* Happy TeXing!}
+\Msg{*}
+\Msg{************************************************************************}
+
+\endbatchfile
+%</install>
+%<*ignore>
+\fi
+%</ignore>
+%<*driver>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{mathstyle.drv}%
+  [2007/12/02 v0.95 mathstyle (MH)]
+\documentclass{ltxdoc}
+\begin{document}
+  \DocInput{mathstyle.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \title{The \textsf{mathstyle} package}
+% \date{2007/12/02 v0.95}
+% \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
+%
+%
+% \maketitle
+%
+% \part*{User's guide}
+%
+% For now, the user's guide is in breqn.
+%
+% \StopEventually{}
+% \part*{Implementation}
+%
+%
+%
+%    \begin{macrocode}
+%<*package>
+\ProvidesPackage{mathstyle}[2007/12/02 v0.81]
+\providecommand{\@saveprimitive}[2]{%
+  \begingroup
+  \edef\@tempa{\string#1}\edef\@tempb{\meaning#1}%
+  \ifx\@tempa\@tempb \global\let#2#1%
+  \else
+    \edef\@tempb{\meaning#2}%
+    \ifx\@tempa\@tempb
+    \else
+      \keyed@msg\@latex@error\@saveprimitive{{#2}{#1}}
+%      {Unable to properly define \string#2; primitive
+%      \noexpand#1no longer primitive}\@eha
+    \fi
+  \fi
+  \endgroup
+}
+\chardef\mathstyle=0
+\@saveprimitive\displaystyle\@@displaystyle
+\@saveprimitive\textstyle\@@textstyle
+\@saveprimitive\scriptstyle\@@scriptstyle
+\@saveprimitive\scriptscriptstyle\@@scriptscriptstyle
+\DeclareRobustCommand{\displaystyle}{%
+  \@@displaystyle \chardef\mathstyle\z@}
+\DeclareRobustCommand{\textstyle}{%
+  \@@textstyle \chardef\mathstyle\@ne}
+\DeclareRobustCommand{\scriptstyle}{%
+  \@@scriptstyle \chardef\mathstyle\tw@}
+\DeclareRobustCommand{\scriptscriptstyle}{%
+  \@@scriptscriptstyle \chardef\mathstyle\thr@@}
+\begingroup \catcode`\^=7 \catcode`\_=8 % just in case
+\lowercase{\endgroup
+\let\@@superscript=^ \let\@@subscript=_
+}%
+\def\subsupstyle{%
+  \ifnum\mathstyle<\tw@ \chardef\mathstyle\tw@
+  \else \chardef\mathstyle\thr@@   
+  \fi
+}
+\begingroup \catcode`\^=7 \catcode`\_=8
+\global\let\mathsup=^\global\let\mathsub=_\relax 
+\endgroup
+\def\sb#1{\mathsub{\protect\subsupstyle#1}}%
+\def\sp#1{\mathsup{\protect\subsupstyle#1}}%
+\def\mathchoice#1#2#3#4{%
+  \relax\ifcase\mathstyle#1\relax\or#2\relax\or#3\relax\else#4\relax\fi
+}
+\DeclareOption{activechars}{\catcode`\^=13 \catcode`\_=13 }
+\ProcessOptions\relax
+\ifnum\catcode`\^=13
+  \let^=\sp \let_=\sb
+\else
+  \mathcode`\^="8000 \mathcode`\_="8000
+  \begingroup \catcode`\^=\active \catcode`\_=\active
+  \global\let^=\sp \global\let_=\sb
+  \endgroup
+\fi
+\@saveprimitive\over\@@over
+\@saveprimitive\atop\@@atop
+\@saveprimitive\above\@@above
+\@saveprimitive\overwithdelims\@@overwithdelims
+\@saveprimitive\atopwithdelims\@@atopwithdelims
+\@saveprimitive\abovewithdelims\@@abovewithdelims
+\DeclareRobustCommand\genfrac[6]{%
+  {\fracstyle #1%
+    {\begingroup #5\endgroup
+      \csname @@\ifx\maxdimen#4\maxdimen over\else above\fi
+        \if @#2@\else withdelims\fi\endcsname #2#3#4\relax
+     #6}%
+  }%
+}
+\renewcommand{\frac}{\genfrac{}{}{}{}}
+\providecommand{\dfrac}{}
+\providecommand{\tfrac}{}
+\renewcommand{\dfrac}{\genfrac\displaystyle{}{}{}}
+\renewcommand{\tfrac}{\genfrac\textstyle{}{}{}}
+\providecommand{\binom}{}
+\providecommand{\tbinom}{}
+\providecommand{\dbinom}{}
+\renewcommand{\binom}{\genfrac{}(){0pt}}
+\renewcommand{\dbinom}{\genfrac\displaystyle(){0pt}}
+\renewcommand{\tbinom}{\genfrac\textstyle(){0pt}}
+\def\fracstyle{\ifcase\mathstyle
+    \chardef\mathstyle=\@ne
+  \or \chardef\mathstyle=\tw@
+  \else \chardef\mathstyle=\thr@@
+  \fi
+}
+%</package>
+%    \end{macrocode}

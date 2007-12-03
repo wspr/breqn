@@ -67,7 +67,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: breqn 2007/12/02 v0.93 Breqn (MH)}
+\Msg{* Package: breqn 2007/12/03 v0.95 Breqn (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -128,15 +128,16 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}%
-  [2007/12/02 v0.95 breqn (MH)]
+  [2007/12/03 v0.95 breqn (MH)]
 \documentclass{ltxdoc}
 
-\usepackage{verbatim}
+\usepackage{verbatim,xspace}
 
 \makeatletter
 
 {\catcode`\%=12
- \long\gdef\@gobble@percent@space#1{\ifx #1%\expandafter\@gobble\else\expandafter#1\fi}}
+ \long\gdef\@gobble@percent@space#1{\ifx 
+   #1%\expandafter\@gobble\else\expandafter#1\fi}}
 
 
 \AtBeginDocument{\def\verbatim@processline{\expandafter\check@percent
@@ -166,29 +167,23 @@ and the derived files
 }
 \makeatother
 
-\hfuzz2pc \vbadness9999 \hbadness5000
-\def\AmS{{\protect\usefont{OMS}{cmsy}{m}{n}%
-  A\kern-.1667em\lower.5ex\hbox{M}\kern-.125emS}}
-\def\latex/{{\protect\LaTeX}}
-\def\amslatex/{{\protect\AmS-\protect\LaTeX}}
-\def\tex/{{\protect\TeX}}
-\def\amstex/{{\protect\AmS-\protect\TeX}}
 
-\newcommand{\ntt}{\normalfont\ttfamily}
-\chardef\ttbackslash=92
-\DeclareRobustCommand{\cs}[1]{{\ntt\ttbackslash#1}}
-\let\cn=\cs
-\DeclareRobustCommand{\pkg}[1]{{\ntt#1}}
+
+\providecommand*\pkg[1]{\textsf{#1}}
+\providecommand*\opt[1]{\texttt{#1}}
+\providecommand*\env[1]{\texttt{#1}}
+\providecommand*\fn[1]{\texttt{#1}}
+
 \let\opt=\pkg \let\env=\pkg \let\fn=\pkg
 
 \newcommand\dash{\textemdash}
 \newcommand\dbslash[1]{\texttt{\string\\}}
-\newcommand\thepkg[1]{the \pkg{breqn} package}
+\newcommand\thepkg{the \pkg{breqn} package\xspace}
 
-\providecommand\dotsc{\ldots}
-\providecommand\eqref[1]{(\ref{#1})}
+\providecommand*\dotsc{\ldots}
+\providecommand*\eqref[1]{(\ref{#1})}
 
-\providecommand{\qq}[1]{\textquotedblleft#1\textquotedblright}
+\providecommand*\qq[1]{\textquotedblleft#1\textquotedblright}
 
 
 \usepackage[cmbase]{flexisym}
@@ -200,8 +195,8 @@ and the derived files
 %</driver>
 % \fi
 %
-% \title{The \textsf{breqn} package}
-% \date{2007/12/02 v0.95}
+% \title{The \pkg{breqn} package}
+% \date{2007/12/03 v0.95}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -229,6 +224,18 @@ and the derived files
 % more \emph{masterpieces of the publishing art} as I think he would
 % have wanted.
 %
+% \section{The state of things}
+%
+% The original sources of \pkg{breqn} and related files exist in a
+% non-dtx format devised by Michael Downes himself.  I will eventually
+% incorporate the implementation notes but for the time being getting
+% the package on CTAN takes precedence over this.
+% 
+% The documentation for the package was formerly found in
+% \fn{breqndoc}. It has now been added to this implementation
+% file. Below follows the contents of the original \pkg{breqn}
+% documentation.
+%
 % \section{To do}
 %
 % \begin{itemize}
@@ -242,7 +249,7 @@ and the derived files
 % \item Or maybe provide an \qq{alignwidths} option where you give
 %   lhs/rhs width in terms of ems? And get feedback later on discrepancies
 %   with the actual measured contents?
-% \item \cn{intertext} not needed within dgroup! But currently there are
+% \item \cs{intertext} not needed within dgroup! But currently there are
 %   limitations on floating objects within dgroup.
 % \item \verb'align={1}' or 2, 3, 4 expressing various levels of demand
 %   for group-wide alignment. Level 4 means force alignment even if some
@@ -258,11 +265,11 @@ and the derived files
 %
 % \section{Introduction}
 %
-% The \pkg{breqn} package for \latex/ provides solutions to a number of
+% The \pkg{breqn} package for \LaTeX\ provides solutions to a number of
 % common difficulties in writing displayed equations and getting
 % high-quality output. For example, it is a well-known inconvenience that
-% if an equation must be broken into more than one line, \cn{left} \dots\
-% \cn{right} constructs cannot span lines. The \pkg{breqn} package makes
+% if an equation must be broken into more than one line, \cs{left} \dots\
+% \cs{right} constructs cannot span lines. The \pkg{breqn} package makes
 % them work as one would expect whether or not there is an intervening
 % line break.
 %
@@ -292,8 +299,8 @@ and the derived files
 % automatically to the prevailing column width, and continuation lines
 % will be indented following standard conventions.
 %
-% \item[line breaks within delimiters] Line breaks within \cn{left} \dots\
-% \cn{right} delimiters work in a natural way. Line breaks can be
+% \item[line breaks within delimiters] Line breaks within \cs{left} \dots\
+% \cs{right} delimiters work in a natural way. Line breaks can be
 % forbidden below a given depth of delimiter nesting through a package
 % option.
 %
@@ -309,24 +316,24 @@ and the derived files
 %
 % \item[flexible numbering] Equation numbering is handled in a natural
 % way, with all the flexibility of the \pkg{amsmath} package and with no
-% need for a special \cn{nonumber} command.
+% need for a special \cs{nonumber} command.
 %
 % \item[special effects] It is easy to apply special effects to individual
 % displays, e.g., changing the type size or adding a frame.
 %
 % \item[using available space] Horizontal shrink is made use of
 % whenever feasible. With most other equation macros it is frozen when it
-% occurs between \cn{left} \dots\ \cn{right} delimiters, or in any sort of
+% occurs between \cs{left} \dots\ \cs{right} delimiters, or in any sort of
 % multiline structure, so that some expressions require two lines that would
 % otherwise fit on one.
 %
-% \item[high-quality spacing] The \cn{abovedisplayshortskip} is used when
+% \item[high-quality spacing] The \cs{abovedisplayshortskip} is used when
 % applicable (other equation macros fail to apply it in equations of more
 % than one line).
 %
 % \item[abbreviations] Unlike the \pkg{amsmath} equation environments, the
 % \pkg{breqn} environments can be called through user-defined abbreviations
-% such as \cn{beq} \dots\ \cn{eeq}.
+% such as \cs{beq} \dots\ \cs{eeq}.
 %
 % \end{description}
 %
@@ -334,7 +341,7 @@ and the derived files
 % The principal known deficiencies of the \pkg{breqn} package are:
 %
 % \subsection{Incompatibilities} As it pushes the envelope
-% of what is possible within the context of \latex/2e, \thepkg/ will tend
+% of what is possible within the context of \LaTeXe, \thepkg will tend
 % to break other packages when used in combination with them, or to fail
 % itself, when there are any areas of internal overlap; successful use may
 % in some cases depend on package loading order.
@@ -350,7 +357,7 @@ and the derived files
 % math symbols of class 2, 3, 4, and 5 must be altered (relations, binary
 % operators, opening delimiters, closing delimiters). This is done by an
 % auxiliary package \pkg{flexisym}. As long as you stick to the advertised
-% \latex/ interface for defining math symbols (\cn{DeclareMathSymbol}),
+% \LaTeX\ interface for defining math symbols (\cs{DeclareMathSymbol}),
 % things should work OK most of the time. Any more complex math symbol
 % setup is quite likely to quarrel with the \pkg{flexisym} package.
 % See Section~\ref{flexisym} for further information.
@@ -360,9 +367,9 @@ and the derived files
 % Because of the changes to math symbols of class 2--5, writing certain
 % combinations such as \verb'^+' or \verb'_\pm' or \verb'^\geq' without
 % braces would lead to error messages; (The problem described here
-% already exists in standard \latex/ to a lesser extent, as you may know
+% already exists in standard \LaTeX\ to a lesser extent, as you may know
 % if you ever tried \verb'^\neq' or \verb'^\cong'; and indeed there are
-% no examples in the \latex/ book to indicate any sanction for omitting
+% no examples in the \LaTeX\ book to indicate any sanction for omitting
 % braces around a subscript or superscript.)
 %
 % The \pkg{flexisym} package therefore calls, as of version 0.92, another
@@ -371,19 +378,19 @@ and the derived files
 % case, in the long run, because having a proper mathstyle variable
 % eliminates some enormous burdens that affect almost any
 % nontrivial math macros, as well as many other things where the
-% connection is not immediately obvious, e.g., the \latex/ facilities for
+% connection is not immediately obvious, e.g., the \LaTeX\ facilities for
 % loading fonts on demand.
 %
 % Not that this doesn't introduce new and interesting problems of its
 % own---for example, you don't want to put usepackage statements
 % after flexisym for any package that refers to, e.g., \verb'^^J' or 
 % \verb'^^M'
-% internally (too bad that the \latex/ package loading code does not
+% internally (too bad that the \LaTeX\ package loading code does not
 % include automatic defenses to ensure normal catcodes in the interior of
 % a package; but it only handles the \verb'@' character).
 %
 % But I took a random AMS journal article, with normal end-user kind of
-% \latex/ writing, did some straightforward substitutions to change all
+% \LaTeX\ writing, did some straightforward substitutions to change all
 % the equations into dmath environments, and ran it with active math
 % sub/sup: everything worked OK. This suggests to me that it can work in
 % the real world, without an impossible amount of compatibility work.
@@ -426,11 +433,11 @@ and the derived files
 %
 % \section{Package options}
 %
-% Many of the package options for \thepkg/ are the same as options of the
+% Many of the package options for \thepkg are the same as options of the
 % \env{dmath} or \env{dgroup} environments, and some of them require an
 % argument, which is something that cannot be done through the normal
 % package option mechanism. Therefore most of the \pkg{breqn} package
-% options are designed to be set with a \cn{setkeys} command after the
+% options are designed to be set with a \cs{setkeys} command after the
 % package is loaded. For example, to load the package and set the
 % maximum delimiter nesting depth for line breaks to~1:
 % \begin{verbatim}
@@ -441,7 +448,7 @@ and the derived files
 % See the discussion of environment options, Section~\ref{envopts}, for
 % more information.
 %
-% One package option that may be of interest to \tex/nicians is the
+% One package option that may be of interest to \TeX nicians is the
 % \opt{debug} option; this activates some debugging statements embedded in
 % the code of the alpha release which trace measuring activities related
 % to line breaking.
@@ -485,7 +492,7 @@ and the derived files
 % there is no easy way to do that because the \verb'$' function has no
 % entry point to allow changing what happens before math mode is entered.
 % Making it work would therefore require turning \verb'$' into an active
-% character, something that I hesitate to do in a \latex/2e context.
+% character, something that I hesitate to do in a \LaTeXe\ context.
 %
 % \item[\env{dseries*}] Unnumbered variant of \env{dseries}
 %
@@ -508,20 +515,19 @@ and the derived files
 % done here.
 %
 % \item[\env{darray*}] Unnumbered variant of \env{darray}, rather like
-% \env{array} except in using \cn{displaystyle} for all column
+% \env{array} except in using \cs{displaystyle} for all column
 % entries.
 %
 % \item[\env{dsuspend}] Suspend the current display in order to print
 %   some text, without loss of the alignment. There is also a command
-%   form of the same thing, \cn{intertext}. \textbf{The environment
-%     does not currently work.}
+%   form of the same thing, \cs{intertext}. 
 % \end{description}
 %
 % \subsection{Commands}
 %
-% The commands provided by \thepkg/ are:
+% The commands provided by \thepkg are:
 % \begin{description}
-% \item[\cn{condition}] This command is used for
+% \item[\cs{condition}] This command is used for
 % a part of a display which functions as a condition on the main
 % assertion. For example:
 % \begin{verbatim}
@@ -532,14 +538,14 @@ and the derived files
 % \begin{dmath}
 % f(x)=\frac{1}{x} \condition{for $x\neq 0$}
 % \end{dmath}.
-% The \cn{condition} command automatically switches to text mode (so that
+% The \cs{condition} command automatically switches to text mode (so that
 % interword spaces function the way they should), puts in a comma, and
 % adds an appropriate amount of space. To facilitate promotion\slash
-% demotion of formulas, \cn{condition} \qq{does the right thing} if used
+% demotion of formulas, \cs{condition} \qq{does the right thing} if used
 % outside of display math.
 %
 % To substitute a different punctuation mark instead of the default comma,
-% supply it as an optional argument for the \cn{condition} command:
+% supply it as an optional argument for the \cs{condition} command:
 % \begin{verbatim}
 % \condition[;]{...}
 % \end{verbatim}
@@ -558,13 +564,13 @@ and the derived files
 % \newcommand{\mc}{\condition*}% math condition
 % \newcommand{\tc}{\condition}%  text condition
 % \end{verbatim}
-% But \thepkg/ refrains from predefining such abbreviations in order that
+% But \thepkg refrains from predefining such abbreviations in order that
 % they may be left to the individual author's taste.
 %
-% \item[\cn{hiderel}] In a compound equation it is sometimes desired to
+% \item[\cs{hiderel}] In a compound equation it is sometimes desired to
 % use a later relation symbol as the alignment point, rather than the
 % first one. To do this, mark all the relation symbols up to the desired
-% one with \cn{hiderel}:
+% one with \cs{hiderel}:
 % \begin{verbatim}
 % T(n) \hiderel{\leq} T(2^n) \leq c(3^n - 2^n) ...
 % \end{verbatim}
@@ -605,7 +611,7 @@ and the derived files
 % style={\refstepcounter{equation}}
 % \end{verbatim}
 %
-% Use of the normal \cn{label} command instead of the \opt{label} option
+% Use of the normal \cs{label} command instead of the \opt{label} option
 % works, I think, most of the time (untested).
 %
 % Use the \opt{relindent} option to specify something other than the
@@ -615,7 +621,7 @@ and the derived files
 % Use the \opt{compact} option in compound equations to inhibit line
 % breaks at relation symbols. By default a line break will be taken before
 % each relation symbol except the first one. With the \opt{compact} option
-% \latex/ will try to fit as much material as possible on each line, but
+% \LaTeX\ will try to fit as much material as possible on each line, but
 % breaks at relation symbols will still be preferred over breaks at binary
 % operator symbols.
 %
@@ -625,10 +631,10 @@ and the derived files
 % Use the \opt{frame} option to produce a frame around the body of the
 % equation. The thickness of the frame can optionally be specified by
 % giving it as an argument of the option. The default thickness is
-% \cn{fboxrule}.
+% \cs{fboxrule}.
 %
 % Use the \opt{framesep} option to change the amount of space separating
-% the frame from what it encloses. The default space is \cn{fboxsep}.
+% the frame from what it encloses. The default space is \cs{fboxsep}.
 %
 % Use the \opt{background} option to produce a colored background for the
 % equation body. The \pkg{breqn} package doesn't automatically load the
@@ -675,7 +681,7 @@ and the derived files
 % \begin{itemize}
 % \item For l, c, and r what you get is not text, but math, and
 % displaystyle math at that. To get text you must use a 'p' column
-% specifier, or put an \cn{mbox} in each of the individual cells.
+% specifier, or put an \cs{mbox} in each of the individual cells.
 %
 % \item Vertical rules don't connect across lines.
 % \end{itemize}
@@ -690,15 +696,15 @@ and the derived files
 % breaking.
 %
 % The method used to effect these changes is to change the definitions of
-% \cn{DeclareMathSymbol} and \cn{DeclareMathDelimiter}, and then
-% re-execute the standard set of \latex/ math symbol definitions.
+% \cs{DeclareMathSymbol} and \cs{DeclareMathDelimiter}, and then
+% re-execute the standard set of \LaTeX\ math symbol definitions.
 % Consequently, additional mathrel and mathbin symbols defined by other
 % packages will get proper line-breaking behavior if the other package is
 % loaded after the \pkg{flexisym} package and the symbols are defined
 % through the standard interface.
 %
 % \section{Caution! Warning!}
-% Things to keep in mind when writing documents with \thepkg/:
+% Things to keep in mind when writing documents with \thepkg:
 % \begin{itemize}
 %
 % \item The notation $:=$ must be written with the command \cs{coloneq}.
@@ -712,20 +718,20 @@ and the derived files
 % in such constructions: \verb'^{+}'. This applies for both display and
 % in-line math.
 %
-% \item If you want \latex/ to make intelligent decisions about line
+% \item If you want \LaTeX\ to make intelligent decisions about line
 % breaks when vert bars are involved, use proper pairing versions of the
 % vert-bar symbols according to context: \verb'\lvert n\rvert' instead of
-% \verb'|n|'. With the nondirectional \verb'|' there is no way for \latex/
+% \verb'|n|'. With the nondirectional \verb'|' there is no way for \LaTeX\
 % to reliably deduce which potential breakpoints are inside delimiters
 % (more highly discouraged) and which are not.
 %
 % \item If you use the \pkg{german} package or some other package that
 % turns double quote \verb'"' into a special character, you may encounter
 % some problems with named math symbols of type mathbin, mathrel,
-% mathopen, or mathclose in moving arguments. For example, \cn{leq} in a
+% mathopen, or mathclose in moving arguments. For example, \cs{leq} in a
 % section title will be written to the \fn{.aux} file as something like
 % \verb'\mathchar "3214'. This situation probably ought to be improved,
-% but for now use \cn{protect}.
+% but for now use \cs{protect}.
 %
 % \item Watch out for the \texttt{[} character at the beginning of a
 % \env{dmath} or similar environment, if it is supposed to be interpreted
@@ -750,14 +756,14 @@ and the derived files
 % If an open delimiter is used without a close delimiter, or vice versa,
 % it is normally harmless but may adversely affect line breaking. This is only
 % for symbols that have a natural left or right directionality. Unpaired
-% \cn{vert} and so on are fine.
+% \cs{vert} and so on are fine.
 %
 % When a null delimiter is used as the other member of the pair
 % (\verb'\left.' or \verb'\right.') this warning doesn't apply.
 %
-% \item If you inadvertently apply \cn{left} or \cn{right} to something
+% \item If you inadvertently apply \cs{left} or \cs{right} to something
 % that is not a delimiter, the error messages are likely to be a bit
-% more confusing than usual. The normal \latex/ response to an error such
+% more confusing than usual. The normal \LaTeX\ response to an error such
 % as
 % \begin{verbatim}
 % \left +
@@ -766,7 +772,7 @@ and the derived files
 % \begin{verbatim}
 % ! Missing delimiter (. inserted).
 % \end{verbatim}
-% When \thepkg/ is in use, \latex/ will fail to realize anything is wrong
+% When \thepkg is in use, \LaTeX\ will fail to realize anything is wrong
 % until it hits the end of the math formula, or a closing delimiter
 % without a matching opening delimiter, and then the first message is an
 % apparently pointless
@@ -816,7 +822,6 @@ and the derived files
 % \end{dmath*}.
 % \end{xio}
 %
-% \begin{comment}
 % \begin{xio}
 % The reduced minimal Gr\"obner basis for $I^q_3$ consists of
 % \begin{dgroup*}
@@ -834,7 +839,6 @@ and the derived files
 % \end{dmath*}.
 % \end{dgroup*}
 % \end{xio}
-% \end{comment}
 %
 %
 % \StopEventually{}
@@ -847,25 +851,10 @@ and the derived files
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{breqn}[2007/12/02 v0.95]
 
-\edef\breqnpopcats{%
-  \catcode\number`\"=\number\catcode`\"
-  \relax
-}
-\catcode`\^=7 \catcode`\_=8 \catcode`\"=12 \relax
 \DeclareOption{debug}{}
-\DeclareOption{mathstyleoff}{%
-  \PassOptionsToPackage{mathstyleoff}{flexisym}%
-}
 \ProcessOptions\relax
 \@ifpackageloaded{flexisym}{}{%
   \RequirePackage[cmbase]{flexisym}[1997/01/01]
-  % Reiterate this here, for now, until I have a chance to better
-  % sort things out. [mjd,2002-05-29]
-  \edef\breqnpopcats{\breqnpopcats
-    \catcode\number`\^=\number\catcode`\^
-    \catcode\number`\_=\number\catcode`\_
-  }%
-  \catcode`\^=7 \catcode`\_=8 \catcode`\"=12 \relax
 }
 \RequirePackage{keyval}\relax
 \@ifundefined{options}{%
@@ -920,11 +909,15 @@ and the derived files
   \futurelet\@tempc\@ifnexta
 }
 \def\@optarg#1#2{\@ifnext[{#1}{#1[#2]}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some conditionals.
 \def\@True{00}
 \def\@False{01}
 \def\@Not#1{0\ifcase#11 \or\@xp 1\else \@xp 0\fi}
 \def\@And#1#2{0\ifcase#1#2 \@xp 0\else \@xp 1\fi}
 \def\@Or#1#2{0\ifnum#1#2<101 \@xp 0\else \@xp 1\fi}
+\def\theb@@le#1{\if#1 True\else False\fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\freeze@glue#1{#11#1\relax}
 \def\z@rule{\vrule\@width\z@}% no \relax ! use with care
 \def\keep@glue{\z@rule\relax}
@@ -947,6 +940,7 @@ and the derived files
 \def\eq@cons#1#2{%
   \begingroup \let\@elt\relax \xdef#1{\@elt{#2}#1}\endgroup
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \providecommand{\@saveprimitive}[2]{%
   \begingroup
   \edef\@tempa{\string#1}\edef\@tempb{\meaning#1}%
@@ -988,19 +982,20 @@ and the derived files
 \@saveprimitive\vadjust\@@vadjust
 \@saveprimitive\insert\@@insert
 \@saveprimitive\mark\@@mark
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \let\debug=\begingroup
 \let\gubed=\endgroup
-\def\debugmsg{\message{|= \iffalse}\fi
+\def\debugmsg{\message{||= \iffalse}\fi
   \@xp\@gobble\string
 }
-\def\debugwr#1{\immediate\write\sixt@@n{|= #1}}
+\def\debugwr#1{\immediate\write\sixt@@n{||= #1}}
 \def\debug@box#1{%
   \batchmode{\showboxbreadth\maxdimen\showboxdepth99\showbox#1}%
   \errorstopmode
 }
 \def\eqinfo{%
   \debug@box\EQ@copy
-  \wlog{||= EQ@copy: \the\wd\EQ@copy\space x
+  \wlog{!! EQ@copy: \the\wd\EQ@copy\space x
     \the\ht\EQ@copy+\the\dp\EQ@copy
   }%
 }
@@ -1012,11 +1007,12 @@ and the derived files
     \parindent\the\parindent}%
 }
 \@ifpackagewith{breqn}{debug}{}{%
-  \let\debug\iffalse \let\gubed\fi
+  \let\debug\relax \let\gubed\relax
   \let\debugmsg\@gobble \let\debug@lines\relax \let\debug@para\relax
   \let\debugwr\@gobble
   \let\debug@box\@gobble \let\debug@push\@gobbletwo
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \@ifundefined{listwidth}{\newdimen\listwidth}{}
 \listwidth=\z@
 \def\do#1#2{\begingroup
@@ -1026,14 +1022,15 @@ and the derived files
     B\newbox#2{\z@\z@}d{\newcommand#2{}}{}{\def#2}%
     Q\relax\@gobbletwo\relax \@nil}%
 \do % def, Count, Dimen, Skip, mUskip, toKs, Box, False, True
-d\eqfontsize{}         % Inherit from context
-d\eqcolor{black}       % Default to black
-D\eqnumsep=9pt         % Min space between equ number and body
+d\eqfontsize{}         % Inherit from context    [NOT USED?]
+d\eqcolor{black}       % Default to black        [NOT USED?]
+D\eqnumsep=10pt        % Min space between equ number and body
 D\eqmargin=8pt         % For `multline' gap emulation
 d\eqindent{C}%         % C or I, centered or indented
 d\eqnumside{R}%        % R or L, right or left
 d\eqnumplace{M}%       % M or T or B, middle top or bottom
-d\eqnumfont{\upshape}% % Upright even when surrounding text is slanted
+%d\eqnumfont{\upshape}% % Upright even when surrounding text is slanted
+d\eqnumfont{}%         % Null for easier debugging [mjd,1997/09/26]
 d\eqnumform#1{(#1\@@italiccorr)} % Add parens
 d\eqnumsize{}          % Allow numbers to have different typesize ...
 d\eqnumcolor{}         % ... or color than eq body e.g. \color{blue}
@@ -1043,12 +1040,10 @@ D\eqlineskiplimit=2pt  % Threshold for switching to eqlineskip
 U\eqbinoffset=15mu minus-3mu % Offset from mathrel alignment pt for mathbins
 U\eqdelimoffset=2mu    % Additional offset for break inside delims
 D\eqindentstep=8pt     % Indent used when LHS wd is n/a or too large
-d\eqcompactzone{5em}   % Force compact unless RHS max exceeds this
 K\eqstyle={}           % Customization hook
 C\eqbreakdepth=2       % Allow breaks within delimiters to this depth
-C\eqlinepenalty=199    % No page breaks between equation lines
 C\eqinterlinepenalty=10000 % No page breaks between equation lines
-C\intereqpenalty=\@M   % Pagebreak penalty between equations
+C\intereqpenalty=1000   % Pagebreak penalty between equations [BRM: Was \@M]
 S\intereqskip=3pt plus2pt % Additional vert space between equations
 C\prerelpenalty=-\@M   % Linebreak penalty before mathrel symbols
 C\prebinoppenalty=888  % Linebreak penalty before mathbins
@@ -1057,42 +1052,56 @@ U\Dthickmuskip=5mu minus 2mu % thickmuskip in displays
 Q\relax                % End of assignments
 \do % def, Dimen, Skip, mUskip, toKs, Box, False, True
 d\eq@number{}          % Internal variable
-S\eqleftskip=\@centering  % Space on the left
-S\eqrightskip=\@centering % Space on the right
+S\eqleftskip=\@centering  % Space on the left  [NOT USED?]
+S\eqrightskip=\@centering % Space on the right [NOT USED?]
 S\eq@vspan=\z@skip     % Glue used to vcenter the eq number
 U\eq@binoffset=\eqbinoffset % Roughly, \eqbinoffset + \eqdelimoffset
 B\EQ@box               % Storage for equation body
 B\EQ@copy              % For eq body sans vadjust/insert/mark material
 B\EQ@numbox            % For equation number
+D\eq@wdNum=0pt         % width of number + separation [NEW]
+B\GRP@numbox            % For group number [NEW]
+D\grp@wdNum=0pt         % width of number + separation [NEW]
 %%B\EQ@vimbox            % Vadjust, insert, or mark material
 %%B\EQ@vimcopy           % Spare copy of same
 %%B\eq@impinging         % Temporary box for measuring number placement
-T\if@eq@number         % Number present or not?
+%%T\if@eq@number         % Number present or not? [BRM: USE \@True|\@False style instead]
 C\eq@lines=\z@         % Internal counter, actual number of lines
 C\eq@curline=\z@       % Loop counter
 C\eq@badness=\z@       % Used in testing for overfull lines
 C\EQ@vims=\z@          % For bookkeeping
 Q\relax
-\newdimen\eq@dp \newdimen\eq@sidespace
-\newdimen\eq@wdL \newdimen\grp@wdL \newdimen\grp@bodywidth
-\newdimen\eq@bodywidth \newdimen\eq@wdRmax \newdimen\eq@firstht
-\newdimen\eq@indentstep \newdimen\eq@linewidth \newdimen\eq@freewidth
+%% BRM: Use \@True|\@False logic instead of \newif
+%% \@eq@numbertrue => \let\eq@hasNumber\@True
+%% \@eq@numberfalse => \let\eq@hasNumber\@False
+%% \if@eq@number => \if\eq@hasNumber
+\def\@eq@numbertrue{\let\eq@hasNumber\@True}%
+\def\@eq@numberfalse{\let\eq@hasNumber\@False}%
+\let\eq@hasNumber\@False
+
+\newdimen\eq@dp
+\newdimen\eq@wdL \newdimen\eq@wdT \newdimen\eq@wdMin
+\newdimen\grp@wdL \newdimen\grp@wdR \newdimen\grp@wdT
+\newdimen\eq@wdRmax \newdimen\eq@firstht
+% BRM: measure the condition too.
+\newdimen\eq@wdCond
+\newdimen\eq@indentstep \newdimen\eq@linewidth
 \newdimen\grp@linewidth
+\newdimen\eq@hshift
+\let\eq@isIntertext\@False
 \def\do#1#2{\if Q#1\relax \else\@xp\do\fi}\do
-D\eq@bodywidth  % Total width for framing
+D\eq@wdT        % Total width for framing
+D\eq@wdMin      % Width of narrowest line in equation
 D\eq@wdL        % Width of the left-hand-side
-D\eq@sidespace  % Min leftover space for centering
 D\grp@wdL       % Max width of LHS's in a group
-D\grp@bodywidth % Max width of all equations in a group
+D\grp@wdR       % Max RHS of all equations in a group
 D\eq@firstht    % Height of first line
 D\eq@dp         % Depth of last line
 D\eq@indentstep % Indent amount when LHS is not present
 D\eq@linewidth  % Width actually used for display
 D\grp@linewidth % Max eq@linewidth over a group
-D\eq@freewidth  % eq@linewidth - space for number
 Q\relax
 \eq@indentstep=\maxdimen
-\eq@sidespace=\maxdimen
 \let\given@sidespace\@empty
 \def\eq@overrun{0pt}
 \@ifpackagewith{amsmath}{leqno}{%
@@ -1129,7 +1138,9 @@ Q\relax
     }%
   \fi
 }
-\if I\eqindent
+
+% BRM: This conditional implies we must use ALL indented or ALL centered?
+%\if I\eqindent
   \@ifundefined{mathindent}{%
     \newdimen\mathindent
   }{%
@@ -1137,7 +1148,9 @@ Q\relax
       \mathindent\@mathmargin
     }%
   }
-\fi
+%\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \let\EQ@hasLHS=\@False
 \let\EQ@QED=\@empty
 \def\mark@lhs#1{%
@@ -1147,9 +1160,10 @@ Q\relax
     \global\let\EQ@prebin@space\EQ@prebin@space@a
     \mark@lhs@a
     \penalty9999 % instead of normal \rel@break
-  % else no penalty = forbid break
   \fi
 }
+% BRM: I originally thought the \mskip\thickmuskip was messing up summation limits in LHS.
+% But I may have fixed that problem by fixing other things...
 \def\mark@lhs@a{%
   \mskip\thickmuskip \@@vadjust{\penalty\tw@}\penalty-\@Mi\@@vadjust{}%
 }
@@ -1173,11 +1187,32 @@ Q\relax
 \let\m@@symDeR\@symDeR
 \let\m@@symDeB\@symDeB
 \let\m@@symDeA\@symDeA
-\global\everydisplay\expandafter{\the\everydisplay \display@setup}
+% BRM: Disable this! It also affects non-breqn math!!!!
+%\global\everydisplay\expandafter{\the\everydisplay \display@setup}
 \def\display@setup{%
   \medmuskip\Dmedmuskip \thickmuskip\Dthickmuskip
   \let\m@Bin\d@@Bin \let\m@Rel\d@@Rel
   \let\@symRel\d@@symRel \let\@symBin\d@@symBin
+  \let\m@DeL\d@@DeL \let\m@DeR\d@@DeR \let\m@DeB\d@@DeB
+  \let\m@DeA\d@@DeA
+  \let\@symDeL\d@@symDeL \let\@symDeR\d@@symDeR
+  \let\@symDeB\d@@symDeB \let\@symDeA\d@@symDeA
+  \let\left\eq@left \let\right\eq@right \global\lr@level\z@
+  \global\eq@wdCond\z@          %BRM: new
+  \everyhbox{\everyhbox\@emptytoks
+    \let\display@setup\relax \textmath@setup \let\textmath@setup\relax
+  }%
+  \everyvbox{\everyvbox\@emptytoks
+    \let\display@setup\relax \textmath@setup \let\textmath@setup\relax
+  }%
+}
+%BRM: DS Experiment: Variant of \display@setup for use within dseries environmnents
+\def\dseries@display@setup{%
+  \medmuskip\Dmedmuskip \thickmuskip\Dthickmuskip
+  \let\m@Bin\d@@Bin 
+%\let\m@Rel\d@@Rel
+%  \let\@symRel\d@@symRel
+ \let\@symBin\d@@symBin
   \let\m@DeL\d@@DeL \let\m@DeR\d@@DeR \let\m@DeB\d@@DeB
   \let\m@DeA\d@@DeA
   \let\@symDeL\d@@symDeL \let\@symDeR\d@@symDeR
@@ -1189,6 +1224,7 @@ Q\relax
   \everyvbox{\everyvbox\@emptytoks
     \let\display@setup\relax \textmath@setup \let\textmath@setup\relax
   }%
+ \displaystyle
 }
 \def\textmath@setup{%
   \let\m@Bin\m@@Bin \let\m@Rel\m@@Rel
@@ -1201,8 +1237,11 @@ Q\relax
 }
 \@ifundefined{@displaytrue}{%
   \@xp\newif\csname if@display\endcsname
-  \everydisplay\@xp{\the\everydisplay \@displaytrue}
+  \everydisplay\@xp{\the\everydisplay \@displaytrue}%
 }{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \begin{dmath}[label={xyz}]
 \define@key{breqn}{label}{\def\next@label{\label{#1}}}
 \global\let\next@label\@empty
@@ -1236,17 +1275,18 @@ Q\relax
 % \begin{dmath}[style={\small}]
 \define@key{breqn}{style}{\eqstyle\@xp{\the\eqstyle #1}}
 % \begin{dmath}[frame]
-\define@key{breqn}{frame}[\fboxrule]{\let\eq@frame=T%
+\define@key{breqn}{frame}[\fboxrule]{\def\eq@frame{T}%
   \dim@a#1\relax\edef\eq@framewd{\the\dim@a}%
   \freeze@glue\eqlinespacing \freeze@glue\eqlineskip
 }
-\define@key{breqn}{fullframe}[]{\let\eq@frame=U%
+\define@key{breqn}{fullframe}[]{\def\eq@frame{U}%
   \freeze@glue\eqlinespacing \freeze@glue\eqlineskip
 }
-\let\eq@frame=F % no frame
+\def\eq@frame{F} % no frame
+
 \def\eq@framewd{\fboxrule}
 \define@key{breqn}{framesep}[\fboxsep]{%
-  \ifx\eq@frame=F\let\eq@frame=T\fi
+  \if\eq@frame F\def\eq@frame{T}\fi
   \dim@a#1\relax \edef\eq@framesep{\the\dim@a}%
   \freeze@glue\eqlinespacing \freeze@glue\eqlineskip
 }
@@ -1260,18 +1300,59 @@ Q\relax
 \define@key{breqn}{color}{\def\eq@foreground{#1}}
 % \begin{dmath}[center]
 \define@key{breqn}{center}[]{\let\eq@centerlines\@True}
+% \begin{dmath}[nocenter]
+\define@key{breqn}{nocenter}[]{\let\eq@centerlines\@False}
 \let\eq@centerlines\@False
 % \begin{dgroup}[noalign]
-\define@key{breqn}{noalign}[]{\let\grp@align\@False}
-\let\grp@align\@True % default
+\define@key{breqn}{noalign}[]{\let\grp@aligned\@False}
+\let\grp@aligned\@True % default
 % \begin{dgroup}[breakdepth={2}]
 \define@key{breqn}{breakdepth}{\eqbreakdepth#1\relax}
 % \begin{darray}[cols={lcrlcr}]
 \define@key{breqn}{cols}{\global\let\@preamble\@empty
   \darray@mkpream#1\@percentchar
 }
-\newenvironment{dmath}{\@eq@numbertrue \@optarg\@dmath{}}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FORMAT STATUS%
+% \def\eq@frame{T}%
+% CLM works tolerably
+%  \def\eqindent{C}\def\eqnumside{L}\def\eqnumplace{M}
+% CLT works tolerably
+%  \def\eqindent{C}\def\eqnumside{L}\def\eqnumplace{T}
+% ILM
+%  \def\eqindent{I}\def\eqnumside{L}\def\eqnumplace{M}\mathindent40\p@
+% ILT
+%  \def\eqindent{I}\def\eqnumside{L}\def\eqnumplace{T}\mathindent40\p@
+% Indended w/left number
+%    work ok if mathindent is larger than number width,
+%    but then equations must fit into smaller space.
+%    Is shiftnumber allowed to put eqn at left, instead of indent?
+% CRM
+%  \def\eqindent{C}\def\eqnumside{R}\def\eqnumplace{M}
+% CRB
+%  \def\eqindent{C}\def\eqnumside{R}\def\eqnumplace{B}
+% IRM
+%  \def\eqindent{I}\def\eqnumside{R}\def\eqnumplace{M}\mathindent10\p@
+% IRB
+%  \def\eqindent{I}\def\eqnumside{R}\def\eqnumplace{B}\mathindent10\p@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The main environments.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%BRM: The following incorporates several changes:
+%%  1) modifications supplied by MJD to fix the eaten \paragraph problem.
+%%  2) Added \display@setup here, rather than globally.
+\newenvironment{dmath}{%
+ \let\eq@hasNumber\@True \@optarg\@dmath{}}{}
+
+%BRM DEBUG
+\errorcontextlines2000\relax
+
 \def\@dmath[#1]{%
+  \debugmsg{=== DMATH ==================================================}%
+  \everydisplay\expandafter{\the\everydisplay \display@setup}%
+  \if@noskipsec \leavevmode \fi
+  \if@inlabel \leavevmode \global\@inlabelfalse \fi
   \if\eq@group\else\eq@prelim\fi
   \setkeys{breqn}{#1}%
   \the\eqstyle
@@ -1280,8 +1361,10 @@ Q\relax
   \eq@setup@a
   \eq@startup
 }
+
 \def\enddmath#1{\check@punct@or@qed}
 \def\end@dmath{%
+  \gdef\EQ@setwdL{}% Occasionally undefined ???
   \eq@capture
   \endgroup
   \EQ@setwdL
@@ -1289,13 +1372,13 @@ Q\relax
   \if\eq@group \grp@push \else \eq@finish\fi
 }
 \newenvironment{dmath*}{%
-  \@eq@numberfalse \@optarg\@dmath{}%
+  \let\eq@hasNumber\@False \@optarg\@dmath{}%
 }{}
 \@namedef{end@dmath*}{\end@dmath}
 \@namedef{enddmath*}#1{\check@punct@or@qed}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\eq@prelim{%
-  \if@noskipsec \leavevmode \fi
-  \if@inlabel \leavevmode \global\@inlabelfalse \fi
+  \if@inlabel \indent \par \fi
   \if@nobreak \global\@nobreakfalse \predisplaypenalty\@M \fi
   \everypar\@emptytoks
   \noindent
@@ -1321,40 +1404,52 @@ Q\relax
   \fi
 }
 \def\eq@setnumber{%
-  \debugwr{=====================================================}%
-  \if@eq@number
+  \eq@wdNum\z@
+  \if\eq@hasNumber
     \ifx\eq@number\@empty
       \stepcounter{equation}\let\eq@number\theequation
     \fi
-  \fi
+%  \fi
+ % This sets up numbox, etc, even if unnumbered?????
   \ifx\eq@number\@empty
   \else
+    \debugmsg{Number \eq@number}%
     \set@label{equation}\eq@number
     \global\sbox\EQ@numbox{%
       \next@label \global\let\next@label\@empty
-      \eqnumcolor\eqnumsize
-      \eqnumfont{\eqnumform{\eq@number}}%
-\debug      \typeout{|= Eq number (\eq@number)
-         placement '\eqnumside\eqnumplace'}%
-\gubed
+      \eqnumcolor\eqnumsize\eqnumfont{\eqnumform{\eq@number}}%
     }%
-    \@eq@numbertrue % locally true
-    \debugwr{Eq number width: \the\wd\EQ@numbox\space
-      (ht/dp: \the\ht\EQ@numbox+\the\dp\EQ@numbox)}%
-    \debugwr{Eq number sep: \the\eqnumsep}%
+    \global\eq@wdNum\wd\EQ@numbox\global\advance\eq@wdNum\eqnumsep
+%    \let\eq@hasNumber\@True % locally true
   \fi
+\fi
 }
+% Invoke the equation formatter for the requested centering/indentation
+% having worked out the best parshape.
+% BRM: This portion is extensively refactored to get common operations
+% together (so corrections get consistently applied).
 \def\eq@finish{%
   \begingroup
-  \csname eq@\eqindent \if@eq@number\eqnumside\eqnumplace\fi\endcsname
-  \ifnum\eq@lines=\prevgraf
-  \else
-\debug
-\batchmode\showboxbreadth\maxdimen\showboxdepth99\showlists\errorstopmode
-\gubed
-    \debugmsg{%
-      prevgraf \the\prevgraf\space != eq@lines \the\eq@lines?}%
-  \fi
+    \debugmsg{Formatting equation}%
+    \debug@showmeasurements
+    \if F\eq@frame\else
+      \freeze@glue\eqlinespacing \freeze@glue\eqlineskip
+    \fi
+%    \eq@topspace{\vskip\parskip}% Set top spacing
+    \csname eq@\eqindent @setsides\endcsname % Compute \leftskip,\rightskip
+    \adjust@parshape\eq@parshape% Final adjustment of parshape for left|right skips
+    \eq@topspace{\vskip\parskip}% Set top spacing
+    \debug@showformat
+    % Now, invoke the appropriate typesetter according to number placement
+    \if\eq@hasNumber
+      \if\eq@shiftnumber
+        \csname eq@typeset@\eqnumside Shifted\endcsname
+      \else
+        \csname eq@typeset@\eqnumside\eqnumplace\endcsname
+      \fi
+    \else
+      \eq@typeset@Unnumbered
+    \fi
   \endgroup
   \eq@botspace
 }
@@ -1387,13 +1482,12 @@ Q\relax
 \toks@c{\fi\fi\fi}% matching with \toks@a
 \catcode`\.=\active \catcode`\,=\active \catcode`\;=\active
 \catcode`\?=\active \catcode`\!=\active
-\toks@b{
+\toks@b{%
   \else\ifx\@let@token ,\@nx\check@qed
   \else\ifx\@let@token .\@nx\check@qed
   \else\ifx\@let@token ;\@nx\check@qed
   \else\ifx\@let@token ?\@nx\check@qed
   \else\ifx\@let@token !\@nx\check@qed
-  \else\@nx\finish@end
   \fi\fi\fi\fi\fi
 }
 \xdef\check@punct@b{%
@@ -1422,48 +1516,59 @@ Q\relax
 \expandafter\@tempa\end{#1}\@nil
 \def\end#1{\csname end#1\endcsname \latex@end{#1}}%
 \def\check@punct@or@qed#1{%
+  \xdef\found@punct{\@empty}% BRM: punctuation was being remembered past this eqn.
   \def\finish@end{\csname end@#1\endcsname\latex@end{#1}}%
   \check@punct
 }
 \newcommand\eqpunct[1]{\thinspace#1}
 \providecommand\set@label[2]{\protected@edef\@currentlabel{#2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BRM: Hmm; we need to do *@setspace BEFORE this for small skips to work!
 \def\eq@topspace#1{%
   \begingroup
     \global\let\EQ@shortskips\@False
     \if\@And{\eq@group}{\@Not\GRP@top}%
       \parskip\intereqskip \penalty\intereqpenalty
     \else
-      \eq@setdisplayskips
+      \eq@check@shortskip
+      \if\EQ@shortskips
+        \parskip\abovedisplayshortskip
+        \aftergroup\belowdisplayskip\aftergroup\belowdisplayshortskip
+        % BRM: Not exactly TeX's approach, but seems right...
+        \ifdim\predisplaysize>\z@\nointerlineskip\fi
+      \else
+        \parskip\abovedisplayskip
+      \fi
     \fi
-    \ifx F\eq@frame
+    \if F\eq@frame
     \else
       \advance\parskip\eq@framesep \advance\parskip\eq@framewd\relax
     \fi
+\debugmsg{Topspace: \theb@@le\EQ@shortskips, \parskip=\the\parskip, \predisplaysize=\the\predisplaysize}%
     #1%
   \endgroup
 }
-\def\eq@setdisplayskips{%
-  \if \if@eq@number\eqnumside \else F\fi L%
-    \parskip\abovedisplayskip
-  \else
-    \afterassignment\eq@firstindent % sets \dim@a
-    \int@a\eq@parshape \relax
-\debugwr{first indent \the\dim@a, predisplaysize \the\predisplaysize}%
-    \advance\dim@a-2em % standard TeX value
-    \ifdim\dim@a>\predisplaysize
+\def\eq@check@shortskip{%
+  \global\let\EQ@shortskips\@False
+  \dim@a\abovedisplayskip\advance\dim@a\ht\EQ@numbox
+  \advance\leftskip-2em % standard TeX value
+  \ifdim\leftskip<\predisplaysize
+  \else\if R\eqnumside  \global\let\EQ@shortskips\@True
+  \else\if\eq@shiftnumber
+  \else\if T\eqnumplace
+    \ifdim\dim@a<\eq@firstht
       \global\let\EQ@shortskips\@True
-      \parskip\abovedisplayshortskip
-      \aftergroup\belowdisplayskip\aftergroup\belowdisplayshortskip
-    \else
-      \parskip\abovedisplayskip
     \fi
-\debugwr{parskip \the\parskip}%
-  \fi
+  \else
+    \dim@b\eq@vspan\divide\dim@b 2\relax
+    \ifdim\dim@a<\dim@b
+      \global\let\EQ@shortskips\@True
+    \fi
+  \fi\fi\fi\fi
 }
-\def\eq@firstindent#1 #2 #3\relax{\dim@a#2\relax}
 \def\eq@botspace{%
   \penalty\postdisplaypenalty
-  \ifx F\eq@frame
+  \if F\eq@frame
   \else
     \advance\belowdisplayskip\eq@framesep
     \advance\belowdisplayskip\eq@framewd\relax
@@ -1473,10 +1578,10 @@ Q\relax
   \global\@ignoretrue % ignore following spaces
   \eq@resume@parshape
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\eq@resume@parshape{}
 \def\eq@startup{%
   \global\let\EQ@hasLHS\@False
-  \global\let\found@punct\@empty
   \setbox\z@\vbox\bgroup
     \noindent \@@math \displaystyle
     \penalty-\@Mi
@@ -1493,60 +1598,66 @@ Q\relax
   \global\let\EQ@prebin@space\relax
   \binoppenalty\@M \relpenalty\@M
 }
-\def\eq@unclosed@left{%
-  \PackageError{breqn}{%
-    Delimiter mismatch---not enough closing delimiters%
-  }{%
-   Or perhaps too many open delimiters, somewhere in this
-equation.\MessageBreak
-   \@ehc
-  }%
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Capturing the equation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BRM: There's a problem here (or with \ss@scan).  If the LHS has
+% \left \right pairs, \ss@scan gets involved.  It seems to produce
+% a separate box marked w/\penalty 3.  But it appears that \eq@repack
+% is only expecting a single box for the LHS; when it measures that
+% box it's missing the (typically larger) bracketted section,
+% so the LHS is measured => 0pt (or very small).
+%  I'm not entirely clear what Michael had in mind for this case;
+% whether it's an oversight, or whether I've introduced some other bug.
+% At any rate, my solution is to measure the RHS (accumulated in \EQ@box),
+% at the time of the relation, and subtract that from the total size.
+\newdimen\eq@wdR\eq@wdR\z@%BRM
 \def\eq@capture{%
-  \ifnum\lr@level>\z@ \eq@unclosed@left \global\lr@level\z@ \fi
   \ifnum\lastpenalty>-\@M \penalty-\@Mi \fi
   \keep@glue\@@endmath
   \eq@addpunct
   \@@par
   \eq@wdL\z@
-  \global\let\EQ@setwdL\@empty
-  \global\let\EQ@thickmuskip\@empty
-\debug
-\batchmode\showboxbreadth\maxdimen\showboxdepth99\showlists\errorstopmode
-\gubed
   \setbox\tw@\lastbox
   \global\setbox\EQ@box\hbox{\unhbox\tw@\unskip\unskip\unpenalty}%
   \unskip\unpenalty
   \global\setbox\EQ@copy\copy\EQ@box
 %%  \global\setbox\EQ@vimcopy\copy\EQ@vimbox
   \clubpenalty\z@
+%\batchmode\showboxbreadth\maxdimen\showboxdepth99\showlists\errorstopmode
+  \eq@wdR\z@%BRM: eq@wdL patch
   \eq@repack % recursive
   \setbox\tw@\lastbox
   \global\setbox\EQ@box\hbox{\unhcopy\tw@\unskip\unpenalty \unhbox\EQ@box}%
   \global\setbox\EQ@copy\hbox{\unhbox\tw@\unskip\unpenalty \unhbox\EQ@copy}%
-\debug
-\batchmode\showbox\EQ@copy \showthe\eq@wdL\errorstopmode
-\gubed
+%\batchmode\showbox\EQ@copy \showthe\eq@wdL\errorstopmode
+  \ifdim\eq@wdR>\z@% BRM:  eq@wdL patch
+    \dim@a\wd\EQ@box\advance\dim@a-\eq@wdR
+    % Apparently missing a \thickmuskip = 5mu = 5/18em=0.27777777777.. ?
+    \advance\dim@a0.2777777777777em\relax% FUDGE??!?!?!
+    \ifdim\dim@a>\eq@wdL
+      \debugmsg{Correcting LHS from \the\eq@wdL\space to \the\dim@a = \the\wd\EQ@box - \the\eq@wdR}%
+      \eq@wdL\dim@a
+      \xdef\EQ@setwdL{\eq@wdL\the\eq@wdL\relax}%
+    \fi
+  \fi
+  \debugmsg{Capture: total length=\the\wd\EQ@box
+           ^^J||===== has LHS=\theb@@le\EQ@hasLHS, \eq@wdL=\the\eq@wdL, \eq@wdR=\the\eq@wdR,
+           ^^J||===== \eq@wdCond=\the\eq@wdCond}%
   \egroup % end vbox started earlier
+%\debugwr{EQ@box}\debug@box\EQ@box
+%\debugwr{EQ@copy}\debug@box\EQ@copy
 }
 \def\eq@addpunct{%
   \ifx\found@punct\@empty
   \else \eqpunct{\found@punct}%
   \fi
+  % BRM: Added; the punctuation kept  getting carried to following environs
+  \xdef\found@punct{\@empty}%
   \EQ@afterspace
 }
 \global\let\EQ@afterspace\@empty
-\global\let\EQ@setwdL\@empty
-\global\let\EQ@thickmuskip\@empty
-\def\eq@LHS@check{%
-  \if\EQ@hasLHS
-    \setbox\z@\hbox{\unhcopy\EQ@copy\setbox\tw@\lastbox
-      \EQ@thickmuskip}%
-    \eq@wdL\wd\z@
-    \xdef\EQ@setwdL{\eq@wdL\the\eq@wdL\relax}%
-\debugwr{Changed wdL to \the\eq@wdL}%
-  \fi
-}
+% TeX Note: this scans BACKWARDS from the end of the math.
 \def\eq@repack{%
   \ifcase\lastpenalty
      % case 0: normal case
@@ -1557,18 +1668,16 @@ equation.\MessageBreak
     \unpenalty
     \setbox\tw@\lastbox
     \eq@repacka\EQ@copy \eq@repacka\EQ@box
-    \eq@LHS@check
     \@xp\@gobble
   \or % case 2: save box width = LHS width
     \unpenalty
     \setbox\tw@\lastbox
     \setbox\z@\copy\tw@ \setbox\z@\hbox{\unhbox\z@\unskip\unpenalty}%
     \advance\eq@wdL\wd\z@
+    \eq@wdR\wd\EQ@box% BRM:  eq@wdL patch
     \xdef\EQ@setwdL{\eq@wdL\the\eq@wdL\relax}%
     \global\setbox\EQ@copy\hbox{%
-      \hbox{\unhcopy\tw@\unskip\unpenalty
-        \xdef\EQ@thickmuskip{\hskip\the\lastskip\relax}%
-        \unskip}%
+      \hbox{\unhcopy\tw@\unskip\unpenalty\unskip}%
       \box\EQ@copy
     }%
     \global\setbox\EQ@box\hbox{%
@@ -1657,19 +1766,45 @@ equation.\MessageBreak
 \def\eq@measure{%
   \ifdim\eq@indentstep=\maxdimen \eq@indentstep\eqindentstep \fi
   \ifdim\eq@linewidth=\z@ \else \edef\eq@linewidths{{\the\eq@linewidth}}\fi
-  \eqrightskip \z@\@plus.2\columnwidth
   \begingroup \eq@params
-  \leftskip\z@skip
-  \debug\eqinfo\gubed
+  \leftskip\z@skip \rightskip\z@\@plus\columnwidth\@minus\hfuzz
+%  \eqinfo
   \global\EQ@continue{\eq@trial}%
   \eq@trial % uses \eq@linewidths
   \eq@failout % will be a no-op if the trial succeeded
   \endgroup
   \EQ@trial
 }
+\def\debug@showmeasurements{%
+  \debugmsg{=> \number\eq@lines\space lines}%
+  \debug
+  \def\@elt##1^^J##2{^^J||===== \space\space##1/##2}%
+  \let\@endelt\@empty
+  \debugmsg{=> trial info:\eq@measurements}%
+  \debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness}%
+  \let\@elt\relax \let\@endelt\relax
+  \gubed
+}
+\def\debug@showmeasurements{%
+  \begingroup
+  \def\@elt##1^^J##2{^^J||=====   ##1/##2}%
+  \let\@endelt\@empty
+  \debugmsg{===> Measurements: \number\eq@lines\space lines
+           \eq@measurements
+           ^^J||===== bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness
+           ^^J||===== \leftskip=\the\leftskip, \rightskip=\the\rightskip}%
+ \endgroup
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Layout Trials Driver
+% Basically, trying different sequences of parshapes.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \let\EQ@trial\@empty
 \newtoks\EQ@continue
 \let\EQ@widths\@empty
+\let\EQ@fallback\@empty
+%========================================
+% BRM: Odd; I don't think I've seen this use anything but \displaywidth...
 \def\eq@linewidths{\displaywidth\linewidth\columnwidth}
 \def\eq@trial{%
   \ifx\@empty\eq@linewidths
@@ -1681,101 +1816,221 @@ equation.\MessageBreak
 }
 \def\eq@trial@a#1{%
   \dim@c#1\relax
-\debugwr{trial-A: width #1 (\the\dim@c)}%
-  \ifx T\eq@frame \eq@frame@adjust\dim@c \fi
+  \if T\eq@frame \eq@frame@adjust\dim@c \fi
   \ifdim\dim@c>\eq@linewidth
-    \eq@linewidth\dim@c \eq@freewidth\eq@linewidth
-    \if@eq@number
-      \advance\eq@freewidth-\eqnumsep
-      \advance\eq@freewidth-\wd\EQ@numbox
-    \fi
+    \eq@linewidth\dim@c 
+    \debugmsg{Choose Shape for width(#1)=\the\eq@linewidth}%
     \let\eq@trial@b\eq@trial@d
     \csname eq@try@layout@\eq@layout\endcsname
+  \else
+    \debugmsg{Next width (#1) is shorter; skip it}%
   \fi
   \edef\eq@linewidths{\iffalse}\fi
-}
-\@namedef{eq@try@layout@?}{%
-  \let\eq@trial@b\eq@trial@c
-  \if\EQ@hasLHS
-\debugmsg{trial-A: LHS present (\the\eq@wdL)}%
-    \ifdim\eq@wdL>\eq@linewidth
-\debugwr{trial-A: LHS > linewidth}%
-       \dim@a\wd\EQ@copy \advance\dim@a-\eq@wdL
-       \ifdim\dim@a<.25\eq@linewidth \eq@try@layout@S
-       \else \eq@try@layout@l
-       \fi
-    \else
-      \ifdim\eq@wdL>.7\eq@linewidth
-\debugmsg{trial-A: LHS > .7 linewidth (linewidth=\the\eq@linewidth)}%
-        \eq@try@layout@iS
-      \else
-\debugmsg{trial-A: LHS not extraordinarily wide}%
-        \eq@try@layout@L
-      \fi
-    \fi
-  \else
-\debugwr{trial-A: No LHS here}%
-    \eq@try@layout@iS
-  \fi
-}
-\def\eq@trial@done{%
-\debugwr{End trial: Success!}%
-  \let\eq@failout\relax
-}
-\def\eq@trial@init{\global\let\EQ@fallback\eq@nextlayout}
-\def\eq@trial@save#1{%
-\debug \def\eq@zek{^^J|== \space}\let\eq@kez\@empty\debugwr{trial info:\eq@measurements}\debugmsg{bounding box: \the\eq@bodywidth x\the\eq@vspan^^J}%
-  \let\eq@zek\relax \let\eq@kez\relax
-\gubed
-  \xdef#1{%
-    \eq@linewidth\the\eq@linewidth \eq@freewidth\the\eq@freewidth
-    \eq@lines\the\eq@lines \eq@badness\the\eq@badness
-    \eq@wdL\the\eq@wdL \eq@bodywidth\the\eq@bodywidth \eq@sidespace\the\eq@sidespace
-    \eq@vspan\the\eq@vspan \eq@dp\the\eq@dp \eq@firstht\the\eq@firstht
-    \prerelpenalty\the\prerelpenalty % might change during processing
-    \def\@nx\eq@badline{\eq@badline}%
-    \def\@nx\eq@layout{\eq@layout}%
-    \def\@nx\eq@parshape{\@parshape}%
-    \def\@nx\eq@measurements{\eq@measurements}%
-    \def\@nx\adjust@rel@penalty{\adjust@rel@penalty}%
-    \def\@nx\eq@shiftnumber{\eq@shiftnumber}%
-  }%
-}
-\def\eq@recalc{%
-  \eq@bodywidth\z@ \eq@vspan\z@skip \eq@badness\z@
-  \eq@wdRmax\z@
-  \let\eq@zek\eq@recalc@a \eq@measurements \let\eq@zek\relax
-  \ifdim\eq@bodywidth<\eq@linewidth
-    \eq@sidespace\eq@linewidth \advance\eq@sidespace -\eq@bodywidth
-    \divide\eq@sidespace\tw@
-  \else
-    \eq@sidespace\z@
-  \fi
-}
-\def\eq@recalc@a#1x#2+#3\eq@kez{%
-  \eq@firstht#2\relax
-  \let\eq@zek\eq@recalc@b
-  \eq@zek#1x#2+#3\eq@kez
-}
-\def\eq@recalc@b#1^^J#2,#3x#4+#5@#6\eq@kez{%
-  \dim@a#3\relax
-  \ifdim\dim@a>\eq@wdRmax \eq@wdRmax\dim@a\fi
-  \advance\dim@a#2\relax
-  \ifdim\dim@a>\eq@bodywidth \eq@bodywidth\dim@a \fi
-  \eq@dp#5\relax
-  \advance\eq@vspan#1\advance\eq@vspan#4\advance\eq@vspan#5\relax
-  \ifnum#6>\eq@badness \eq@badness#6\relax\fi
-}
-\let\EQ@last@trial\@empty
-\def\eq@failout{%
-\debugmsg{End trial: failout}%
-  \global\let\EQ@trial\EQ@last@trial
 }
 \def\eq@frame@adjust#1{%
   \dim@a\eq@framewd \advance\dim@a\eq@framesep
   \advance#1-2\dim@a
 }
+%========================================
+% Note curious control structure.
+% Try to understand interaction of \EQ@fallback, \EQ@continue, \eq@failout
+\def\eq@trial@succeed{%
+  \aftergroup\@gobbletwo % cancel the \EQ@fallback code; see \eq@trial@c (?)
+  \global\EQ@continue{\eq@trial@done}%
+}
+\def\eq@trial@done{%
+  \debugmsg{End trial: Success!}%
+  \let\eq@failout\relax
+}
+\def\eq@trial@init{%
+   \global\let\EQ@fallback\eq@nextlayout}
+\def\eq@nextlayout#1{% 
+  \endgroup
+  \debugmsg{Nope ... that ain't gonna work.}%
+  \begingroup #1%
+}
+\def\eq@failout{%
+  \debugmsg{End trial: failout}%
+  \global\let\EQ@trial\EQ@last@trial
+}
+%========================================
+\def\eq@trial@save#1{%
+%  \debug \def\@elt##1^^J##2{^^J||===== \space\space##1/##2}\let\@endelt\@empty\debugmsg{=> trial info:\eq@measurements}%
+%         \debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness^^J}%
+%         \let\@elt\relax \let\@endelt\relax
+%  \gubed
+  \xdef#1{%
+    \eq@linewidth\the\eq@linewidth
+    % save info about the fit
+    \eq@lines\the\eq@lines \eq@badness\the\eq@badness \def\@nx\eq@badline{\eq@badline}%
+    % save size info
+    \eq@wdT\the\eq@wdT \eq@wdMin\the\eq@wdMin
+    \eq@vspan\the\eq@vspan \eq@dp\the\eq@dp \eq@firstht\the\eq@firstht
+    % save info about the LHS
+    \eq@wdL\the\eq@wdL \def\@nx\EQ@hasLHS{\EQ@hasLHS}%
+    % save info about the numbering
+    \def\@nx\eq@hasNumber{\eq@hasNumber}%
+    % save info about the chosen layout
+    \def\@nx\eq@layout{\eq@layout}%
+    \def\@nx\eq@parshape{\@parshape}%
+    \def\@nx\eq@measurements{\eq@measurements}%
+    \def\@nx\adjust@rel@penalty{\adjust@rel@penalty}%
+    \def\@nx\eq@shiftnumber{\eq@shiftnumber}%
+    \def\@nx\eq@isIntertext{\@False}%
+  }%
+}
+%========================================
+\def\eq@trial@b{\eq@trial@c}
+\def\eq@trial@d#1#2{\eq@trial@c{#1}{}}
+
+\def\eq@trial@c#1#2{%
+  \debugmsg{Trying layout "#1" with^^J||===== parshape\space\@xp\@gobble\@parshape}%
+  \begingroup
+  \eq@trial@init
+  \def\eq@layout{#1}%
+  \setbox\z@\vbox{%
+    \hfuzz\maxdimen
+    \eq@trial@p % run the given parshape
+    \if\@Not{\eq@badline}%
+      \eq@trial@save\EQ@trial
+      % This is an awkward place for this:
+      % It only allows trying to fit the number w/the SAME layout shape!
+      \if\eq@hasNumber\eq@retry@with@number\fi
+      \if L\eq@layout \eq@check@density
+      \else
+        \if\@Not{\eq@badline}%
+           \eq@trial@succeed
+        \fi
+      \fi
+    \else
+      \eq@trial@save\EQ@last@trial
+    \fi
+  }%
+  \EQ@fallback{#2}%
+  \endgroup
+}
+\def\eq@check@density{%
+  \debugmsg{Checking density for layout L}%
+  \if\@Or{\@Not\EQ@hasLHS}{\eq@shortLHS}%
+    \debugmsg{Density check: No LHS, or is short; OK}%
+    \eq@trial@succeed
+  \else\if\eq@dense@enough
+    \eq@trial@succeed
+  \fi\fi
+}
+\def\eq@shortLHS{\ifdim\eq@wdL>.44\eq@wdT 1\else 0\fi 0}
+%\def\eq@shortLHS{\@False}
+%========================================
+% Run a trial with the current \@parshape and measure it.
+\def\eq@trial@p{%
+  \@parshape %
+  \eq@dump@box\unhcopy\EQ@copy
+  {\@@par}% leave \parshape readable
+  \eq@lines\prevgraf
+  \eq@fix@lastline
+  \let\eq@badline\@False
+  \if i\eq@layout \ifnum\eq@lines>\@ne \let\eq@badline\@True \fi\fi
+  \eq@curline\eq@lines % loop counter for eq@measure@lines
+  \let\eq@measurements\@empty
+  \eq@ml@record@indents
+  \eq@measure@lines
+  \eq@recalc
+  \debug@showmeasurements
+}
+\let\adjust@rel@penalty\@empty
+%========================================
+\def\eq@fix@lastline{%
+  \setbox\tw@\lastbox \dim@b\wd\tw@
+  \eq@dp\dp\tw@
+  \nointerlineskip\hbox to\dim@b{\unhbox\tw@
+    \skip@c\lastskip \unskip\unskip\hskip\skip@c
+  }%
+}
+%========================================
+\def\eq@recalc{%
+  \eq@wdT\z@ \eq@wdMin\maxdimen \eq@vspan\z@skip \eq@badness\z@
+  \let\@elt\eq@recalc@a \eq@measurements \let\@elt\relax
+}
+\def\eq@recalc@a#1x#2+#3\@endelt{%
+  \eq@firstht#2\relax
+  \let\@elt\eq@recalc@b
+  \@elt#1x#2+#3\@endelt
+}
+\def\eq@recalc@b#1^^J#2,#3x#4+#5@#6\@endelt{%
+  \dim@a#2\advance\dim@a#3\relax
+  \ifdim\dim@a>\eq@wdT \eq@wdT\dim@a \fi
+  \ifdim\dim@a<\eq@wdMin \eq@wdMin\dim@a \fi
+  \eq@dp#5\relax
+  \advance\eq@vspan#1\advance\eq@vspan#4\advance\eq@vspan#5\relax
+  \ifnum#6>\eq@badness \eq@badness#6\relax\fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Layout Definitions.
+% Based on initial equation measurements, we can choose a sequence of
+% candidate parshapes that the equation might fit into.
+% We accept the first shape that `works', else fall to next one.
+% [The sequence is hardcoded in the \eq@try@layout@<shape>
+%  Would it be useful be more flexible? (eg. try layouts LDA, in order...)]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\eq@layout{?}
+
+% Default layout:
+%  Try Single line layout first, else try Multiline layouts
+\@namedef{eq@try@layout@?}{%
+  \let\eq@trial@b\eq@trial@c
+  \edef\@parshape{\parshape 1 0pt \the\eq@linewidth\relax}%
+%  \eq@trial@b{i}{\eq@try@layout@multi}%
+  \dim@a\wd\EQ@copy\advance\dim@a-2em\relax% Fudge; can't shrink more than this?
+  % if we're in a numbered group, try hard to fit within the numbers
+  \dim@b\eq@linewidth
+  \if\eq@shiftnumber\else\if\eq@group
+    \if\eq@hasNumber\advance\dim@b-\wd\EQ@numbox\advance\dim@b-\eqnumsep
+    \else\if\grp@hasNumber\advance\dim@b-\wd\GRP@numbox\advance\dim@b-\eqnumsep
+  \fi\fi\fi\fi
+  \ifdim\dim@a<\dim@b% Do we even have a chance of fitting to one line?
+    \debugmsg{Choose Shape: (\the\wd\EQ@copy) may fit in \the\dim@b}%
+%BRM%
+    % assuming it might fit, don't push too hard
+    \dim@b\columnwidth\advance\dim@b-\dim@a\advance\dim@b\eq@wdCond
+    \rightskip\z@\@plus\dim@b\@minus\hfuzz
+%
+    \eq@trial@b{i}{\eq@try@layout@multi}%
+  \else
+    \debugmsg{Choose Shape: Too long (\the\wd\EQ@copy) for one line (free width=\the\dim@b)}%
+   \eq@try@layout@multi
+  \fi
+}
+
+% Layout Multiline layout:
+%  If no LHS, try Stepped(S) layout
+%  Else try Stepped(S), Ladder(L), Drop-ladder(D) or Stepladder(l), depending on LHS length.
+\def\eq@try@layout@multi{%
+  \if\EQ@hasLHS
+    \ifdim\eq@wdL>\eq@linewidth
+       \debugmsg{Choose Shape: LHS \the\eq@wdL > linewidth}%
+       \dim@a\wd\EQ@copy \advance\dim@a-\eq@wdL
+       \ifdim\dim@a<.25\eq@linewidth \eq@try@layout@S
+       \else \eq@try@layout@l
+       \fi
+    % BRM: Originally .7: Extreme for L since rhs has to wrap within the remaining 30+%!
+    \else\ifdim\eq@wdL>.50\eq@linewidth
+      \debugmsg{Choose Shape: LHS (\the\eq@wdL) > .50 linewidth (linewidth=\the\eq@linewidth)}%
+      \eq@try@layout@D
+    \else
+      \debugmsg{Choose Shape: LHS (\the\eq@wdL) not extraordinarily wide}%
+      \eq@try@layout@L
+    \fi\fi
+  \else
+    \debugmsg{Choose Shape: No LHS here}%
+    \eq@try@layout@S % (already checked case i)
+  \fi
+}
+% Layout D=Drop-Ladder Layout, for wide LHS.
+%   LOOOOOOOONG LHS
+%    = RHS
+%    = ...
+% If fails, try Almost-Columnar layout
 \def\eq@try@layout@D{%
   \dim@a\eq@linewidth \advance\dim@a-\eq@indentstep
   \edef\@parshape{\parshape 2
@@ -1784,20 +2039,13 @@ equation.\MessageBreak
   \def\adjust@rel@penalty{\penalty-99 }%
   \eq@trial@b{D}{\eq@try@layout@A}%
 }
-\def\eq@try@layout@A{%
-  \edef\@parshape{\parshape 1 0pt \the\eq@linewidth\relax}%
-  \if\EQ@hasLHS \def\adjust@rel@penalty{\penalty-99 }\fi
-  \eq@trial@b{A}{}%
-}
-\def\eq@reindent@A{%
-  \dim@a\eq@linewidth \advance\dim@a-\eq@bodywidth
-  \edef\eq@parshape{%
-    \parshape 2
-      0pt \the\eq@bodywidth\space
-      \the\dim@a\space \the\eq@bodywidth\relax
-  }%
-  \leftskip\z@skip
-}
+% Layout L=Ladder layout
+%  LHS = RHS
+%      = RHS
+%      ...
+% If fails, try Drop-ladder layout.
+% NOTE: This is great for some cases (multi relations?), but
+% tends to break really badly when it fails....
 \def\eq@try@layout@L{%
   \dim@b\eq@linewidth \advance\dim@b-\eq@wdL
   \edef\@parshape{\parshape 2 0pt \the\eq@linewidth\space
@@ -1805,17 +2053,19 @@ equation.\MessageBreak
   }%
   \eq@trial@b{L}{\eq@try@layout@D}%
 }
-\def\eq@try@layout@iS{%
-  \edef\@parshape{\parshape 1 0pt \the\eq@freewidth\relax}%
-  \eq@trial@b{i}{\eq@try@layout@S}%
-}
+% Layout S=Stepped layout, typically no LHS or very long, variations on
+%  STUFF ....
+%    + MORE STUFF ...
+%      + MORE STUFF ...
+% If fails, try Almost-Columnar layout
 \def\eq@try@layout@S{%
-  \dim@b\eq@linewidth \advance\dim@b-2\eqmargin \advance\dim@b-1em%
+  \dim@b\eq@linewidth \advance\dim@b-2\eqmargin% \advance\dim@b-1em%
   \int@a\wd\EQ@copy \divide\int@a\dim@b
   \advance\dim@b-\int@a\eq@indentstep\relax
-  \if@eq@number
+  \if\eq@hasNumber
     \ifdim\dim@b>15em%
-      \advance\dim@b-\eqnumsep \advance\dim@b-\wd\EQ@numbox
+%      \advance\dim@b-\eqnumsep \advance\dim@b-\wd\EQ@numbox
+      \advance\dim@b-\eq@wdNum
     \fi
   \fi
   \int@b\z@
@@ -1824,6 +2074,9 @@ equation.\MessageBreak
     \the\eqmargin\space\the\dim@b\relax}%
   \eq@trial@b{S}{\eq@try@layout@A}%
 }
+% Layout l = Stepladder
+% Similar to Drop-Ladder, but LHS is long and needs to be broken up.
+% If fails, try Almost-Columnar layout
 \def\eq@try@layout@l{%
   \dim@a\eq@linewidth \advance\dim@a-\eq@indentstep
   \int@a\eq@wdL \divide\int@a\dim@a
@@ -1835,183 +2088,117 @@ equation.\MessageBreak
   \dim@b=2\eq@indentstep
   \dim@c\eq@linewidth \advance\dim@c-\dim@b
   \edef\@parshape{\@parshape
-    \replicate{\int@a}{ \the\eq@indentstep\space\the\dim@a}%
-    \space\the\dim@b\space\the\dim@c
+    \replicate{\int@a}{\space\the\eq@indentstep\space\the\dim@a}%
+    \space\the\dim@b\space\the\dim@c\relax
   }%
   \eq@trial@b{l}{\eq@try@layout@A}%
 }
-\def\eq@fix@lastline{%
-  \setbox\tw@\lastbox \dim@b\wd\tw@
-  \eq@dp\dp\tw@
-  \nointerlineskip\hbox to\dim@b{\unhbox\tw@
-    \skip@c\lastskip \unskip\unskip\hskip\skip@c
-  }%
+% Layout A = Almost-Columnar layout.
+% Pretty much straight full width, more of a last-resort.
+% If fails, give up.
+\def\eq@try@layout@A{%
+  \edef\@parshape{\parshape 1 0pt \the\eq@linewidth\relax}%
+  \if\EQ@hasLHS \def\adjust@rel@penalty{\penalty-99 }\fi
+  \eq@trial@b{A}{}%
 }
-\def\eq@trial@b{\eq@trial@c}
-\def\eq@compact@test{%
-  \debugwr{wdRmax: \the\eq@wdRmax}%
-  \let\@tempa\@empty
-  \if L\eq@layout
-    \ifnum\prerelpenalty=-\@M % standard noncompact value
-      \ifdim\eq@wdRmax>\eqcompactzone\relax
-      \else
-        \prerelpenalty=-99
-        \def\EQ@fallback{\endgroup
-          \begingroup \@firstoftwo{\eq@try@layout@L}}%
-        % This is sensitively dependent on the code that currently
-        % follows! Talk about bug prone! Watch out!
-        \def\@tempa##1{\csname iffalse\endcsname}%
-        \eq@repack@compact
-      \fi
-    \fi
-  \fi
-  \@tempa
-}
-\def\eq@trial@c#1#2{%
-\debug\message{^^J}\gubed
-\debugwr{Trying layout "#1" with parshape^^J|== \space\@xp\@gobble\@parshape}%
-  \begingroup
-  \eq@trial@init
-  \def\eq@layout{#1}%
-  \setbox\z@\vbox{%
-    \hfuzz\maxdimen
-    \eq@trial@p % run the given parshape
-%    \ifnum\eq@lines>\@ne \@xp\eq@compact@test \fi
-    \if\@Not{\eq@badline}%
-      \eq@trial@save\EQ@trial
-      \if@eq@number
-        \if i\eq@layout
-        \else
-          \if A\eq@layout \let\eq@shiftnumber\@True
-          \else           \eq@retry@with@number
-          \fi
-          \if\eq@shiftnumber
-            \begingroup
-            \EQ@trial
-            \let\@parshape\eq@parshape \let\eq@shiftnumber\@True
-            \eq@trial@save\EQ@trial
-            \endgroup
-          \fi
-        \fi
-      \fi
-      \if L\eq@layout \eq@check@density
-      \else
-        \if\@Not{\eq@badline}%
-          \aftergroup\@gobbletwo
-          \global\EQ@continue{\eq@trial@done}%
-        \fi
-      \fi
-    \else
-      \eq@trial@save\EQ@last@trial
-    \fi
-  }% end of vbox
-  \EQ@fallback{#2}%
-  \endgroup
-}
-\def\eq@check@density{%
-  \if\@Or{\@Not\EQ@hasLHS}{\eq@shortLHS}%
-    \aftergroup\@gobbletwo % cancel the \EQ@fallback code
-    \global\EQ@continue{\eq@trial@done}%
-  \else
-    \if\eq@dense@enough
-      \aftergroup\@gobbletwo % cancel the \EQ@fallback code
-      \global\EQ@continue{\eq@trial@done}%
-    \fi
-  \fi
-}
-\def\eq@retry@with@number{%
-\debugwr{Retry-with-number: wdT=\the\eq@bodywidth, freewidth=\the\eq@freewidth}%
-\toks@\@xp{\EQ@trial}\debugwr{EQ@trial: \the\toks@}%
-  \ifdim\eq@bodywidth>\eq@freewidth \eq@retry@with@number@a \fi
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Number placement adjustments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \let\eq@shiftnumber\@False
-\def\eq@retry@with@number@a{%
-  \adjust@for@number % depends on number placement
-\debug\message{^^J}\gubed\debugwr{Retrying (to make room for the number) with parshape^^J|== \space\@xp\@gobble\@parshape}%
-  \nointerlineskip
-  \edef\eq@prev@lines{\the\eq@lines}%
-  \eq@trial@p
-  \int@b\eq@prev@lines \advance\int@b\@ne
-  \ifnum\eq@lines>\int@b
-    \let\eq@shiftnumber\@True
-  \else
-    \if\@Not{\eq@badline}%
-      \let\eq@shiftnumber\@False
-      \eq@trial@save\EQ@trial
-    \else
+\def\eq@retry@with@number{%
+ \if\eq@shiftnumber
+   \debugmsg{Place number: Shifted number requested}%
+ \else
+    % Condition and right numbers? We're just going to have to shift.
+    \ifdim\eq@wdCond>\z@\if R\eqnumside
+      \debugmsg{Place number: Condition w/Right number => Shift number}%
       \let\eq@shiftnumber\@True
+    \fi\fi
+    % Compute free space.
+%    \dim@b\eqnumsep\advance\dim@b\wd\EQ@numbox
+    \dim@b\eq@wdNum
+    \if L\eqnumside
+      \ifdim\@totalleftmargin>\dim@b\dim@b\@totalleftmargin\fi
+    \else
+      \advance\dim@b\@totalleftmargin
     \fi
-  \fi
+    \dim@a\eq@linewidth\advance\dim@a-\dim@b%\advance\dim@a1em\relax% Allowance for shrink?
+    % Set up test against 1-line case only if not in a group
+    \int@a\@ne\if\eq@group\int@a\maxint\fi
+    % Now check for cases.
+    \if\eq@shiftnumber               % Already know we need to shift
+    \else\ifdim\eq@wdT<\dim@a % Fits!
+      % left & right skips will be done later, and parshape adjusted if needed.
+      \debugmsg{Place number: eqn and number fit together}%
+%    \else\ifnum\eq@lines=\int@a %  Shift, if single line, unless inside a dgroup.
+      % NOTE: this is too strong for dgroup!
+%      \debugmsg{Place number: single line too long with number => Shift number \the\int@a}%
+%      \let\eq@shiftnumber\@True
+    \else
+       % Retry: use leftskip for space for number(for now; whether right/left) & adjust parshape
+%      \leftskip\wd\EQ@numbox\advance\leftskip\eqnumsep
+      \leftskip\eq@wdNum
+      \rightskip\z@\@plus\dim@a
+      \adjust@parshape\@parshape
+      \debugmsg{Place number: Try with \leftskip=\the\leftskip, \rightskip=\the\rightskip,
+                ^^J||===== parshape\space\@xp\@gobble\@parshape}%
+      \nointerlineskip
+      \edef\eq@prev@lines{\the\eq@lines}%
+      \edef\eq@prev@badness{\the\eq@badness}% BRM
+      \eq@trial@p
+      \int@a\eq@prev@badness\relax\advance\int@a 50\relax%?
+      \int@b\eq@prev@lines  \if\eq@group\advance\int@b\@ne\fi% Allow 1 extra line in group
+      \ifnum\eq@lines>\int@b % \eq@prev@lines
+        \debugmsg{Adjustment causes more breaks => Shift number}%
+        \let\eq@shiftnumber\@True
+      \else\if\eq@badline
+        \debugmsg{Adjustment causes bad lines (\the\eq@badness) => Shift}%
+        \let\eq@shiftnumber\@True
+      \else\ifnum\eq@badness>\int@a % BRM: New case
+        \debugmsg{Adjustment is badder than previous (\the\eq@badness >> \eq@prev@badness) => Shift}%
+        \let\eq@shiftnumber\@True
+      \else
+        \debugmsg{Adjustment succeeded}%
+      \fi\fi%\fi
+   \fi\fi\fi
+   % If we got shifted, restore parshape, etc, 
+   \if\eq@shiftnumber
+     \EQ@trial% Restore parshape & other params,
+     \leftskip\z@\let\eq@shiftnumber\@True % But set shift & leftskip
+     \edef\@parshape{\eq@parshape}% And copy saved parshape back to `working copy' !?!?
+   \fi
+   \eq@trial@save\EQ@trial      % Either way, save the trial state.
+ \fi
 }
-\def\adjust@for@number{%
-\debugwr{eq@freewidth=\the\eq@freewidth??}%
-  \dim@d\wd\EQ@numbox \advance\dim@d\eqnumsep
-\debugwr{Adjusting by +\the\dim@d}%
-  \@xp\let\@xp\adjust@for@number@b
-    \csname adjust@for@number@\eqnumside\eqnumplace\endcsname
-  \@xp\adjust@for@number@a\@parshape\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Adjust a parshape variable for a given set of left|right skips.
+% Note that the fixed part of the left|right skips effectively
+% comes out of the parshape widths (NOT in addition to it).
+% We also must trim the widths so that the sum of skips, indents 
+% and widths add up to no more than the \eq@linewidth.
+\def\adjust@parshape#1{%
+  \@xp\adjust@parshape@a#1\relax
+  \edef#1{\temp@a}%
 }
-\def\adjust@for@number@a#1 #2\relax{%
-  \edef\@parshape{#1}%
-  \adjust@for@number@b#2 @ @ \relax
+\def\adjust@parshape@a#1 #2\relax{%
+  \dim@a\leftskip\advance\dim@a\rightskip
+  \edef\temp@a{#1}%
+  \adjust@parshape@b#2 @ @ \relax
 }
-\def\adjust@for@number@LT#1 #2 {%
-  \ifx @#1\edef\@parshape{\@parshape\relax}%
+\def\adjust@parshape@b#1 #2 {%
+  \ifx @#1\edef\temp@a{\temp@a\relax}%
     \@xp\@gobble
   \else
-    \dim@a#1\advance\dim@a\dim@d
-    \dim@b#2\advance\dim@b-\dim@d
-    \edef\@parshape{\@parshape\space\the\dim@a\space\the\dim@b}%
-  \fi
-  \adjust@for@number@LT
-}
-\def\adjust@for@number@LM{%
-  \ifnum\eq@lines>\tw@
-    \advance\dim@d\eq@bodywidth
-    \advance\dim@d-\eq@linewidth
-  \fi
-\debugwr{No, adjusting by +\the\dim@d\space instead}%
-  \adjust@for@number@LT
-}
-\def\adjust@for@number@RM#1 #2 {%
-  \ifx @#1\edef\@parshape{\@parshape\relax}%
-    \@xp\@gobble
-  \else
+    \dim@b#1\relax
     \dim@c#2\relax
-    \dim@b\eq@freewidth
-    \advance\dim@b-#1\advance\dim@b-\dim@c
-    \ifdim\dim@b<\z@ \advance\dim@c\dim@b
-      \ifdim\dim@c<\p@ \dim@c\p@\relax \fi
-    \fi
-    \edef\@parshape{\@parshape\space#1 \the\dim@c}%
+    \advance\dim@c\dim@a\advance\dim@c\dim@b
+    \ifdim\dim@c>\eq@linewidth\dim@c\eq@linewidth\fi
+     \advance\dim@c-\dim@b
+    \edef\temp@a{\temp@a\space\the\dim@b\space\the\dim@c}%
   \fi
-  \adjust@for@number@RM
+  \adjust@parshape@b
 }
-\def\eq@trial@p{%
-  \@parshape %
-  \eq@dump@box\unhcopy\EQ@copy
-  {\@@par}% leave \parshape readable
-  \eq@lines\prevgraf
-\debugmsg{Number of lines: \number\eq@lines}%
-  \eq@fix@lastline
-  \let\eq@badline\@False
-  \if i\eq@layout \ifnum\eq@lines>\@ne \let\eq@badline\@True \fi\fi
-  \eq@curline\eq@lines % loop counter for eq@measure@lines
-  \let\eq@measurements\@empty
-  \eq@ml@record@indents
-  \eq@measure@lines
-  \eq@recalc
-}
-\let\adjust@rel@penalty\@empty
-\def\eq@shortLHS{0\ifdim\eq@wdL>.44\eq@bodywidth \@xp 1\else \@xp 0\fi}
-\def\eq@longLHS{0\ifdim\eq@wdL>6em \@xp 0\else \@xp 1\fi}
-\def\eq@nextlayout#1{%
-  \endgroup
-\debugwr{Nope ... that ain't gonna work.}%
-  \begingroup #1%
-}
-\def\eq@trial@d#1#2{\eq@trial@c{#1}{}}
-\let\EQ@fallback\@empty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\eq@ml@record@indents{%
   \int@a\z@
   \def\@tempa{%
@@ -2024,10 +2211,9 @@ equation.\MessageBreak
   \def\@tempc##1##2 {\int@b##2\afterassignment\@tempa\dim@a}%
   \@xp\@tempc\@parshape
 }
-\chardef\eq@zek=`\!
-\chardef\eq@kez=`\?
+\chardef\@endelt=`\?
 \def\eq@measurements{%
-  \eq@zek 4.5pt/5.0pt,66.0ptx6.8pt+2.4pt@27\eq@kez
+  \@elt 4.5pt/5.0pt,66.0ptx6.8pt+2.4pt@27\@endelt
   ...
 }
 \def\eq@measure@lines{%
@@ -2040,10 +2226,11 @@ equation.\MessageBreak
 }
 \def\eq@ml@a{%
   \setbox\tw@\hbox{\unhbox\z@ \unskip}% find natural width
-\debug\ifnum\eq@badness<\inf@bad\else\debugmsg{!?! Overfull: \the\wd\tw@ >\the\dim@b}\fi\gubed
+  \debug\ifnum\eq@badness<\inf@bad\else\debugmsg{!?! Overfull: \the\wd\tw@ >\the\dim@b}\fi\gubed
   \ifdim\dim@b<\wd\tw@ \dim@a\dim@b  % shrunken line
   \else                \dim@a\wd\tw@ % OK to use natural width
   \fi
+  \advance\dim@a-\leftskip% BRM: Deduct the skip if we're retrying w/number
   \skip@a\lastskip \unskip \unpenalty
   \ifdim\skip@a=\z@
     \let\eq@ml@continue\relax % end the recursion
@@ -2055,14 +2242,14 @@ equation.\MessageBreak
       \fi
     }%
   \fi
-  \edef\eq@measurements{\eq@zek
+  \edef\eq@measurements{\@elt
     \the\skip@a\space^^J% extra space to facilitate extracting only the
                         % dimen part later
     \csname eq@i%
       \ifnum\eq@curline<\parshape \number\eq@curline
       \else\number\parshape
       \fi
-    \endcsname,\the\dim@a x\the\ht\tw@+\the\dp\tw@ @\the\eq@badness\eq@kez
+    \endcsname,\the\dim@a x\the\ht\tw@+\the\dp\tw@ @\the\eq@badness\@endelt
     \eq@measurements
   }%
   \advance\eq@curline\m@ne
@@ -2072,10 +2259,15 @@ equation.\MessageBreak
   \global\advance\eq@vspan\lastskip \unskip\unpenalty
   \ifdim\lastskip=\z@ \else \@xp\eq@ml@vspace \fi
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\eq@dense@enough{%
-  \ifnum\eq@lines<\thr@@ \@True
+  \ifnum\eq@lines<\thr@@ 
+    \debugmsg{Density check: less than 3 lines; OK}%
+    \@True
   \else
-    \ifdim\eq@wdL >.7\eq@bodywidth \@False
+    \ifdim\eq@wdL >.7\eq@wdT 
+     \debugmsg{Density check: LHS too long; NOT OK}%
+      \@False
     \else \@xp\@xp\@xp\eq@dense@enough@a
     \fi
   \fi
@@ -2089,363 +2281,309 @@ equation.\MessageBreak
   \ifnum\eq@lines>\sixt@@n
     \eq@dense@enough@b
   \else
-    \dim@b\z@ \let\eq@zek\eq@delt \eq@measurements
-    \dim@c\eq@density@factor\eq@bodywidth \multiply\dim@c\eq@lines
-\debugwr{black \the\dim@b/\eq@density@factor total \the\dim@c}%
+    \dim@b\z@ \let\@elt\eq@delt \eq@measurements
+    \dim@c\eq@density@factor\eq@wdT \multiply\dim@c\eq@lines
+    \debugmsg{Density check: black \the\dim@b/\eq@density@factor total \the\dim@c}%
     \ifdim\dim@b>\dim@c \true@false@true \else \false@false@false \fi
   \fi
 }
-\def\eq@delt#1^^J#2,#3x#4+#5@#6\eq@kez{\advance\dim@b#3\relax}%
+\def\eq@delt#1^^J#2,#3x#4+#5@#6\@endelt{\advance\dim@b#3\relax}%
 \def\eq@dense@enough@b{%
-  \int@b\eq@bodywidth \divide\int@b\p@
+  \int@b\eq@wdT \divide\int@b\p@
   \dim@b\eq@wdL \divide\dim@b\int@b
   \dim@c\eq@lines\p@ \multiply\dim@c\f@ur
   \int@b\eq@lines \multiply\int@b 9 \advance\int@b -10%
   \divide\dim@c\int@b
-\debugwr{l/t \the\dim@b\space< \the\dim@c\space 4n/(9n-10)?}%
+  \debugmsg{Density check: l/t \the\dim@b\space< \the\dim@c\space 4n/(9n-10)?}%
   \ifdim\dim@b<\dim@c \true@true@true \else \false@true@false \fi
 }
-\def\adjust@parshape#1{%
-  \@xp\adj@psh@a \csname adjust@parshape@#1@\eq@layout\endcsname
-}
-\def\adj@psh@a#1{%
-  \ifx\@@undefined#1\relax
-\debugmsg{UNDEFINED: \string#1}%
-  \else \@xp#1\eq@parshape
-  \fi
-}
-\def\adj@psh@b#1{%
-\debugmsg{Adjusting parshape (\eqindent\if@eq@number\eqnumside\eqnumplace\fi @\eq@layout)}%
-  \edef\eq@parshape{\parshape \number\eq@lines}%
-  \let\eq@zek#1\eq@measurements \let\eq@zek\relax
-  \edef\eq@parshape{\eq@parshape\relax}%
-  \leftskip\z@skip
-}
-\def\adjust@parshape@C@L#1 #2 #3 #4 #5\relax{%
-  \dim@a\leftskip \advance\dim@a#4\relax
-  \edef\eq@parshape{#1 \the\leftskip\space#3 \the\dim@a\space#5\relax}%
-  \leftskip\z@skip
-}
-\def\adjust@parshape@C@D#1 #2 #3 #4 #5\relax{%
-  \dim@b\eq@linewidth \advance\dim@b-\eq@bodywidth
-\debugmsg{linewidth - wdT = \the\eq@linewidth\space- \the\eq@bodywidth\space=\the\dim@b}%
-  \advance\dim@b-\eqmargin
-\debugmsg{ - eqmargin (\the\eqmargin) = \the\dim@b}%
-  \advance\dim@b#4\relax
-\debugmsg{ + #4 = \the\dim@b}%
-  \dim@a\eqmargin
-  \adj@psh@b\C@Deq@zek
-}
-\def\C@Deq@zek#1^^J#2,#3x#4\eq@kez{%
-  \edef\eq@parshape{\eq@parshape\space \the\dim@a\space #3}%
-  \dim@a\dim@b % use dim@b for all remaining lines
-}
-\def\adjust@parshape@C@S#1 #2 #3 #4 #5\relax{%
-  \dim@b#4\relax % normally = \eqmargin
-  \dim@d\eq@linewidth \advance\dim@d-\eq@bodywidth
-  \ifdim\dim@d<2\dim@b
-    \dim@c\leftskip
-    \advance\dim@d-\dim@c
-  \else \advance\dim@d-2\dim@b
-    \dim@c\dim@b
-  \fi
-  \advance\dim@d-\dim@c \advance\dim@d\dim@b
-  \int@a\eq@lines \advance\int@a\m@ne
-  \ifnum\int@a>\@ne \divide\dim@d\int@a \fi
-\debugmsg{dim@d after dividing: \the\dim@d}%
-  \adj@psh@b\C@Seq@zek
-}
-\def\C@Seq@zek#1^^J#2,#3x#4+#5@#6\eq@kez{%
-  \edef\eq@parshape{\eq@parshape\space \the\dim@c\space #3}%
-  \advance\dim@c\dim@d
-}
-\def\adjust@parshape@CRM@D#1 #2 #3 #4 #5\relax{%
-  \dim@b\eq@linewidth \advance\dim@b-\eq@bodywidth
-\debugmsg{linewidth - wdT = \the\eq@linewidth\space- \the\eq@bodywidth\space=\the\dim@b}%
-  \advance\dim@b-\eqnumsep \advance\dim@b-\wd\EQ@numbox
-\debugmsg{ - numsep (\the\eqnumsep) - numwd (\the\wd\EQ@numbox) = \the\dim@b}%
-  \advance\dim@b#4\relax
-\debugmsg{ + #4 = \the\dim@b}%
-  \dim@a\eqmargin
-  \adj@psh@b\C@Deq@zek
-}
-\def\adjust@parshape@CRM@L{\adjust@parshape@C@L}
-\def\adjust@parshape@CRM@S#1 #2 #3 #4 #5\relax{%
-  \dim@b#4\relax % normally = \eqmargin
-  \dim@d\eq@linewidth \advance\dim@d-\eq@bodywidth
-  \advance\dim@d-\eqnumsep \advance\dim@d -\wd\EQ@numbox
-  \ifdim\dim@d<\dim@b \dim@c\leftskip
-  \else \dim@c\dim@b
-  \fi
-  \advance\dim@d-\dim@c \advance\dim@d\dim@b
-  \int@a\eq@lines \advance\int@a\m@ne
-  \ifnum\int@a>\@ne \divide\dim@d\int@a \fi
-\debugmsg{dim@d after dividing: \the\dim@d}%
-  \adj@psh@b\C@Seq@zek
-}
-\def\adjust@parshape@CRM@A#1\relax{\debugmsg{CRM@A: #1}}
-\def\adjust@parshape@CRM@l#1\relax{\debugmsg{CRM@l: #1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \let\eq@parshape\@empty
 \def\eq@params{%
   \baselineskip\eqlinespacing
   \lineskip\eqlineskip \lineskiplimit\eqlineskiplimit
   \clubpenalty\@M \widowpenalty\@M \interlinepenalty\eqinterlinepenalty
-  \linepenalty\eqlinepenalty \exhyphenpenalty9999
-  \rightskip\eqrightskip
+  \linepenalty199 \exhyphenpenalty5000 % was 9999: make breaks at, eg. \* a bit easier.
   \ifdim\hfuzz<\p@ \hfuzz\p@ \fi
-  \advance\rightskip \z@\@minus\hfuzz
-  \hfuzz\z@
+%\hfuzz=2pt
+%  \ifdim\hfuzz<2pt\relax \hfuzz2pt \fi
   \parfillskip\z@skip
-  \if\eq@centerlines
-    \advance\leftskip\rightskip \advance\leftskip -1\rightskip
-  \fi
+%  \hfuzz\z@
   \tolerance9999 \pretolerance\m@ne
-  \hbadness\tolerance
 }
 \def\eq@dump@box#1#2{%
 %\debug@box#1%
-\debugwr{Dumping with leftskip = \the\leftskip,
-  \ifx\@empty\eq@parshape \else eq\fi @parshape =}%
-\debugwr{\ifx\@empty\eq@parshape \@parshape \else\eq@parshape\fi}%
   \noindent #1#2\setbox\f@ur\lastbox \setbox\tw@\lastbox
   \if L\eq@layout \box\tw@ \else\unhbox\tw@\fi
   \adjust@rel@penalty \unhbox\f@ur
 }
-\def\eq@C{%
-\debugmsg{\eq@sidespace\the\eq@sidespace, \eq@bodywidth\the\eq@bodywidth, \eq@linewidth\the\eq@linewidth}%
-  \eq@params
-  \leftskip\eq@sidespace
-  \adjust@parshape{C}%
-  \eq@parshape
-  \eq@topspace{\noindent}%
-  \ifx F\eq@frame
-  \else
-    \vbox to\eq@firstht{\hbox to\z@{\eq@addframe\hss}\vss}%
-  \fi
-  \eq@dump@box\unhbox\EQ@box \@@par
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Various typesetting bits, invoked from \eq@finish
+% BRM: This has been extensively refactored from the original breqn,
+% initially to get left|right skips and parshape used consistently,
+% ultimately to get most things handled the same way, in the same order.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Given that left and right skips have been set,
+% typeset the frame, number and equation with the
+% given number side and placement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\eq@typeset@Unnumbered{%
+  \eq@typeset@frame
+  \eq@typeset@equation
 }
-\def\eq@CRB{%
-  \if\eq@shiftnumber
-    \leftskip\eq@sidespace
-  \else
-    \ifnum\eq@lines=\@ne
-      \leftskip\eq@sidespace \advance\leftskip\eqnumsep
-      \ifdim\leftskip<3\wd\EQ@numbox
-        \multiply\leftskip\tw@ \divide\leftskip\thr@@
-        \ifdim\leftskip<2\eqnumsep
-          \leftskip\eq@sidespace \divide\leftskip\tw@
-        \fi
-\debugmsg{Shifting off-center: leftskip \the\leftskip}%
-      \else
-        \divide\leftskip\tw@
-\debugmsg{Plenty of room: leftskip \the\leftskip}%
-      \fi
-    \fi
-  \fi
-  \eq@CRBa
+\def\eq@typeset@LM{%
+  \dim@a\eq@vspan
+  \advance\dim@a\ht\EQ@numbox\advance\dim@a-\dp\EQ@numbox
+  \divide\dim@a\tw@
+  \eq@typeset@leftnumber
+  \eq@typeset@frame
+  \eq@typeset@equation
 }
-\def\eq@CRBa{%
-  \eq@topspace{\noindent}%
-  \ifx F\eq@frame
-  \else \vbox to\eq@firstht{\hbox to\z@{\eq@addframe\hss}\vss}%
-  \fi
-  \eq@params \eq@parshape
-  \add@grp@label
-  \eq@dump@box\unhbox\EQ@box \@@par
-  \penalty\@M
-  \if\eq@shiftnumber
-  \else
-    \lineskiplimit-\maxdimen \baselineskip\z@skip
-  \fi
-  \hbox to\eq@linewidth{\hfil\copy\EQ@numbox}%
+% Typeset equation and left-top number (and shifted)
+\def\eq@typeset@LT{%
+  \dim@a\eq@firstht
+  \eq@typeset@leftnumber
+  \eq@typeset@frame
+  \eq@typeset@equation
 }
-\def\eq@CRM{%
-\debug
-  \dim@a\eq@bodywidth \advance\dim@a\eqnumsep \advance\dim@a\wd\EQ@numbox
-\debugmsg{\hsize\the\hsize, \eq@linewidth\the\eq@linewidth}%
-\debugmsg{T+S+N = \the\eq@bodywidth+\the\eqnumsep+\the\wd\EQ@numbox\space= \the\dim@a}%
-\debugmsg{sidespace: \the\eq@sidespace}%
-\gubed
-  \ifnum\eq@lines<\tw@
-    \ifdim\eq@bodywidth>\eq@freewidth \let\eq@shiftnumber\@True\fi
-  \fi
-  \debugmsg{\rightskip=\the\rightskip??}%
-  \parfillskip\z@skip
-  \if\eq@shiftnumber
-    \@xp\eq@CRB % shifted number
-  \else
-    \set@leftskip@for@centering
-    \@xp\eq@CRMa % nonshifted number
-  \fi
-}
-\def\set@leftskip@for@centering{%
-  \leftskip\eq@sidespace\relax
-  \ifdim\leftskip>\z@ % when not true?
-    % Skip quickly past the more complicated stuff if not needed (which
-    % is true most of the time)
-    \ifdim\leftskip<2\wd\EQ@numbox
-      \set@leftskip@fca
-    \else
-\debugwr{Plenty of room: leftskip \the\leftskip}%
-    \fi
-  \fi
-}
-\def\set@leftskip@fca{%
-  % Save free space = linewidth - bodywidth - numberwidth in \dim@a
-  \dim@a\eq@linewidth \advance\dim@a-\eq@bodywidth
-  \advance\dim@a-\wd\EQ@numbox
-  \ifdim\dim@a<\eqnumsep
-    \leftskip\z@skip
-\debugwr{Not enough room, wha happend?}%
-  \else
-    % Put two thirds of the free space on the side opposite to the number
-    \leftskip\dim@a \multiply\leftskip\tw@ \divide\leftskip\thr@@
-    \dim@b\dim@a \advance\dim@b-\leftskip
-    % But if that leaves less than eqnumsep for the other side, we need
-    % to do some more adjusting.
-    \ifdim\dim@b<\eqnumsep
-      \leftskip\dim@a \advance\leftskip-\eqnumsep
-\debugwr{Off-center: far side \the\leftskip, near side \the\eqnumsep
-(\string\eqnumsep)}%
-    \else
-\debugwr{Off-center: far side \the\leftskip\space (2/3 F), near side \the\dim@b\space (1/3 F)}%
-    \fi
-  \fi
-  \if L\eqnumside
-    % leftskip=.67F dim@a=.33F (e.g.)
-    % swap dim@a and leftskip, then add number width to leftskip
-    % and subtract it from rightskip
-    \dim@b\dim@a \advance\dim@b-\leftskip
-    \dim@a\leftskip \leftskip\dim@b
-    \advance\leftskip\wd\EQ@numbox
-    \edef\rightskip@shift{\advance\rightskip-\wd\EQ@numbox}%
-  \fi
-  \relax % watch it!
-}
-\let\rightskip@shift\@empty
-\def\eq@CRMa{%
-  \eq@topspace{\vskip\parskip}%
-  \vbox to\eq@firstht{%
-    \ifx F\eq@frame
-    \else
-      \moveright\leftskip\hbox to\z@{\eq@addframe\hss}%
-    \fi
-    \vss}%
-  \penalty\@M
-  \skip@c\eq@vspan
-  \advance\skip@c-\ht\EQ@numbox \advance\skip@c-\dp\EQ@numbox
-  \divide\skip@c\tw@
-  \parskip-\skip@c
-  \advance\parskip-\ht\EQ@numbox \advance\parskip-\dp\EQ@numbox
-  \advance\skip@c-\eq@firstht
-  \vskip\skip@c \nointerlineskip
-  \hbox to\hsize{\hfil\copy\EQ@numbox}%
-  \nobreak
-  \eq@params
-  \adjust@parshape{CRM}%
-  \eq@parshape
-  \nointerlineskip \noindent\add@grp@label \eq@dump@box\unhbox\EQ@box %
-%  \tracingparagraphs=2 \@@par \tracingparagraphs=0%
-  \@@par
-}
-\def\eq@CLM{%
-  \ifnum\eq@lines=\@ne
-    \ifdim\eq@freewidth<\wd\EQ@box
-      \let\eq@shiftnumber\@True
-    \fi
-  \fi
-  \if\eq@shiftnumber
-    \eq@CLT
-  \else
-    \set@leftskip@for@centering
-    \rightskip\eqrightskip % see also \eq@params
-    \parfillskip\z@skip
-    \ifnum\eq@lines>\@ne \eq@topspace{\vskip\parskip}%
-    \else \vskip\abovedisplayskip
-    \fi
-    \vbox to\eq@firstht{%
-      \ifx F\eq@frame
-      \else
-        \moveright\leftskip\hbox to\z@{\eq@addframe\hss}%
-      \fi
-      \vss}%
-    \nointerlineskip
-    \penalty\@M
-    \vskip@for@number % also sets parskip for the following material
-    \copy\EQ@numbox
-    \nobreak
-    \eq@params
-    \rightskip@shift % compensate for left-hand number
-\debugmsg{\rightskip=\the\rightskip}%
-    \eq@parshape
-%\debug@box\EQ@box\tracingparagraphs\@ne\debug@para
-    \nointerlineskip
-    \noindent\add@grp@label \eq@dump@box\unhbox\EQ@box \@@par
-  \fi
-}
-\def\vskip@for@number{%
-  \skip@c\eq@vspan \advance\skip@c-\ht\EQ@numbox
-  \advance\skip@c-\dp\EQ@numbox \divide\skip@c\tw@
-  \parskip-\skip@c
-  \advance\parskip-\ht\EQ@numbox \advance\parskip-\dp\EQ@numbox
-  \advance\skip@c-\eq@firstht
-  \vskip\skip@c
-}
-\def\eq@CLT{%
-  \if\eq@shiftnumber
-    \if A\eq@layout \eq@reindent@A
-    \else \leftskip\eq@sidespace \divide\leftskip\tw@
-    \fi
-  \else
-    \leftskip\eq@sidespace \advance\leftskip\eqnumsep
-    \ifnum\eq@lines=\@ne
-      \ifdim\eq@sidespace<2\wd\EQ@numbox
-        \multiply\leftskip\tw@ \divide\leftskip\thr@@
-%\debugmsg{Shifting off-center: leftskip \the\leftskip}%
-      \else
-        \divide\leftskip\tw@
-%\debugmsg{Plenty of room: leftskip \the\leftskip}%
-      \fi
-    \else
-      \divide\leftskip\tw@
-    \fi
-  \fi
-  \eq@CLTa
-}
-\def\eq@CLTa{%
-  \vskip\abovedisplayskip
+% Typeset equation and left shifted number
+\def\eq@typeset@LShifted{%
+  % place number
   \copy\EQ@numbox \penalty\@M
-  \if\eq@shiftnumber \else \kern-\eq@firstht \nointerlineskip \fi
-  \noindent
-  \ifx F\eq@frame
-  \else \vbox to\eq@firstht{\hbox to\z@{\eq@addframe\hss}\vss}%
+  \dim@a\eqlineskip
+  \if F\eq@frame\else
+   \advance\dim@a\eq@framesep\advance\dim@a\eq@framewd
   \fi
-  \eq@params \eq@parshape
-  \add@grp@label \eq@dump@box\unhbox\EQ@box\@@par
+  \kern\dim@a
+  \eq@typeset@frame
+  \eq@typeset@equation
 }
-\def\eq@IRM{\leftskip\mathindent \eq@CRMa}
-\def\eq@IRB{\leftskip\mathindent \eq@CRBa}
-\def\eq@I{%
-  \leftskip\mathindent
-  \eq@params
-  \eq@topspace{\noindent}%
-  \ifx F\eq@frame
-  \else
-    \vbox to\eq@firstht{\hbox to\z@{\eq@addframe\hss}\vss}%
+% Typeset equation and right middle number
+\def\eq@typeset@RM{%
+  \dim@a\eq@vspan
+  \advance\dim@a\ht\EQ@numbox\advance\dim@a-\dp\EQ@numbox
+  \divide\dim@a\tw@
+  \eq@typeset@rightnumber
+  \eq@typeset@frame
+  \eq@typeset@equation
+}
+% Typeset equation and right bottom number
+\def\eq@typeset@RB{%
+  % NOTE: is \eq@dp useful here
+  \dim@a\eq@vspan\advance\dim@a-\ht\EQ@numbox\advance\dim@a-\dp\EQ@numbox
+  \eq@typeset@rightnumber
+  \eq@typeset@frame
+  \eq@typeset@equation
+}
+% Typeset equation and right shifted number
+\def\eq@typeset@RShifted{%
+  % place number
+  \eq@typeset@frame
+  \eq@typeset@equation
+  \penalty\@M
+  \dim@a\eqlineskip
+  \if F\eq@frame\else
+    \advance\dim@a\eq@framesep\advance\dim@a\eq@framewd
   \fi
+  \parskip\dim@a
+  \hbox to\hsize{\hfil\copy\EQ@numbox}\@@par%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Debugging aid to show all relevant formatting info for a given eqn.
+\def\debug@showformat{%
+  \debugmsg{Formatting Layout:\eq@layout\space Center/indent: \eqindent\space Number placement \eqnumside\eqnumplace: 
+           ^^J||===== \eq@linewidth=\the\eq@linewidth, \@totalleftmargin=\the\@totalleftmargin,
+           ^^J||===== Centered Lines=\theb@@le\eq@centerlines, Shift Number=\theb@@le\eq@shiftnumber,
+           ^^J||===== \eq@wdT=\the\eq@wdT, \eq@wdMin=\the\eq@wdMin,
+           ^^J||===== LHS=\theb@@le\EQ@hasLHS: \eq@wdL=\the\eq@wdL, 
+           ^^J||===== \eq@firstht=\the\eq@firstht, \eq@vspan=\the\eq@vspan
+           ^^J||===== \eq@wdNum=\the\eq@wdNum
+           ^^J||===== \eq@wdCond=\the\eq@wdCond, \conditionsep=\the\conditionsep,
+           ^^J||===== \leftskip=\the\leftskip, \rightskip=\the\rightskip,
+           ^^J||===== \abovedisplayskip=\the\abovedisplayskip,
+           ^^J||===== \belowdisplayskip=\the\belowdisplayskip
+           ^^J||===== parshape=\eq@parshape}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set left & right skips for centered equations, 
+% making allowances for numbers (if any, right, left) and constraint.
+% ===
+% Amazingly, I've managed to collect all the positioning logic for
+% centered equations in one place, so it's more manageable.
+% Unfortunately, by the time it does all it needs to do,
+% it has evolved I'm (re)using so many temp variables, it's becoming
+% unmanageble!
+\def\eq@C@setsides{%
+  % \dim@c = space for number, if any, and not shifted.
+  \dim@c\z@
+  \if\eq@hasNumber\if\eq@shiftnumber\else
+    \dim@c\eq@wdNum
+  \fi\fi
+  % \dim@e = space for condition(on right), if any and formula is only a single line.(to center nicely)
+  % but only count it as being right-aligned if we're not framing, since the frame must enclose it.
+  \dim@e\z@
+  \if F\eq@frame
+    \ifnum\eq@lines=\@ne\ifdim\eq@wdCond>\z@
+      \dim@e\eq@wdCond\advance\dim@e\conditionsep
+  \fi\fi\fi
+  % \dim@b = minimum needed on left max(totalleftmargin, left number space)
+  \dim@b\z@
+  \if L\eqnumside\ifdim\dim@b<\dim@c
+    \dim@b\dim@c
+  \fi\fi
+  \ifdim\dim@b<\@totalleftmargin
+    \dim@b\z@
+  \else
+    \advance\dim@b-\@totalleftmargin
+  \fi
+  % \dim@d = minimum needed on right max(condition, right number space)
+  \dim@d\dim@e
+  \if R\eqnumside\ifdim\dim@d<\dim@c
+    \dim@d\dim@c
+  \fi\fi
+  % \dim@a = left margin; initially half available space
+  % \dim@c = right margin;  ditto
+  \dim@a\eq@linewidth\advance\dim@a-\eq@wdT\advance\dim@a\dim@e
+  \advance\dim@a\@totalleftmargin
+  \divide\dim@a2\relax
+  \dim@c\dim@a
+  % If too far to the left
+  \ifdim\dim@a<\dim@b
+     \advance\dim@c\dim@a\advance\dim@c-\dim@b
+     \ifdim\dim@c<\z@\dim@c\z@\fi
+     \dim@a\dim@b
+  % Or if too far to the right
+  \else\ifdim\dim@c<\dim@d
+     \advance\dim@a\dim@c\advance\dim@a-\dim@d
+     \ifdim\dim@a<\z@\dim@a\z@\fi
+     \dim@c\dim@d
+  \fi\fi
+  % Now, \dim@d,\dim@e is the left & right glue to center each line for centerlines
+  \dim@e\eq@wdT\advance\dim@e-\eq@wdMin\dim@d\z@
+% NOTE: Need some work here centering when there's a condition
+%  \advance\dim@e-\eq@wdT\multiply\dim@e-1\relax
+%  \if\eq@wdMin<\dim@e\dim@e\eq@wdMin\fi
+%  \multiply\dim@e-1\relax\advance\dim@e\eq@wdT
+  \dim@d\z@
+  \if\eq@centerlines
+    \divide\dim@e2\relax\dim@d\dim@e
+  \fi
+  \leftskip\dim@a\@plus\dim@d
+  \advance\dim@e\dim@c
+  \rightskip\z@\@plus\dim@e%\@minus5\p@
+  % Special case: if framing, reduce the stretchiness of the formula (eg. condition)
+  % Or if we have a right number, FORCE space for it
+  \dim@b\z@
+  \if F\eq@frame\else
+    \dim@b\dim@c
+  \fi
+  \if\eq@hasNumber\if\eq@shiftnumber\else\if R\eqnumside
+    \dim@c\eq@wdNum
+    \ifdim\dim@c>\dim@b\dim@b\dim@c\fi
+  \fi\fi\fi
+  % If either of those cases requires hard rightskip, move that part from glue.
+  \ifdim\dim@b>\z@
+    \advance\dim@e-\dim@c
+    \rightskip\dim@b\@plus\dim@e%\@minus5\p@
+  \fi
+  % And peculiar further special case: in indented environs, width isn't where it would seem
+  \ifdim\eq@wdCond>\z@
+     \advance\rightskip-\@totalleftmargin
+  \fi
+  \parfillskip\z@skip
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set the left and right side spacing for indented equations
+% Some things handled by eq@C@setsides that probably apply here????
+%  * centerlines
+%  * \@totalleftmargin: SHOULD we move farther right? 
+\def\eq@I@setsides{%
+  % Leftskip is normally just the requested indentation
+  \leftskip\mathindent
+  % But move left, if shifted number presumably because of clashed w/ number?
+  \if\eq@shiftnumber
+    \dim@a\eq@linewidth\advance\dim@a-\eq@wdT\advance\dim@a-\mathindent
+    \ifdim\dim@a<\z@
+      \leftskip\z@ % Or something minimal?
+  \fi\fi
+  % Push gently from right.
+  \dim@a\z@
+  \dim@b\eq@linewidth\advance\dim@b-\leftskip\advance\dim@b-\eq@wdMin
+  % Special case: if framing be much more rigid(?)
+  \if F\eq@frame\else
+    \dim@a\eq@linewidth\advance\dim@a-\leftskip\advance\dim@a-\eq@wdT
+    \advance\dim@b-\dim@a
+  \fi
+  % Or force the space for right number, if needed
+  \if\eq@hasNumber\if\eq@shiftnumber\else\if R\eqnumside
+    \dim@c\eq@wdNum
+    \if\dim@c>\dim@a
+      \advance\dim@b-\dim@c\dim@a\dim@c
+  \fi\fi\fi\fi
+  \rightskip\dim@a\@plus\dim@b \@minus\hfuzz %\hfuzz\z@
+  \parfillskip\z@skip
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Typesetting pieces: frame, equation and number (if any)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \dim@a should contain the downward displacement of number's baseline
+\def\eq@typeset@leftnumber{%
+  \skip@c\dim@a\advance\skip@c-\ht\EQ@numbox
+  \vglue\skip@c% NON discardable
+  \copy\EQ@numbox \penalty\@M
+  \kern-\dim@a
+}
+\def\eq@typeset@rightnumber{%
+  \skip@c\dim@a\advance\skip@c-\ht\EQ@numbox
+  \vglue\skip@c% NON discardable
+  \hbox to \hsize{\hfil\copy\EQ@numbox}\penalty\@M
+  \kern-\dim@a
+}
+\def\eq@typeset@equation{%
+  \nobreak
+  \eq@params\eq@parshape
+  \nointerlineskip\noindent
+  \add@grp@label
   \eq@dump@box\unhbox\EQ@box\@@par
 }
-\newcommand\eqframe[2]{\framebox{\z@rule\@height#2\kern#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+% \changes{v0.95}{2007/12/03}{Made \cs{eqframe} obey the key settings
+%   for frame and framesep.}
+%    \begin{macrocode}
+\newcommand\eqframe[2]{%
+  \begingroup
+  \fboxrule=\eq@framewd\relax\fboxsep=\eq@framesep\relax
+  \framebox{\z@rule\@height#2\kern#1}%
+  \endgroup
+}
 \def\eq@addframe{%
-  \hbox to\z@{\dim@a\fboxsep \advance\dim@a\fboxrule
+  \hbox to\z@{\dim@a\eq@framesep\relax \advance\dim@a\eq@framewd\relax
     \kern-\dim@a
     \vbox to\z@{\kern-\dim@a
-      \hbox{\eqframe{\eq@bodywidth}{\eq@vspan}}%
+      \hbox{\eqframe{\eq@wdT}{\eq@vspan}}%
       \vss
     }%
     \hss
   }%
 }
+\def\eq@typeset@frame{%
+  \if F\eq@frame\else
+   % Tricky: put before \noindent, so it's not affected by glue in \leftskip
+   \nobreak\nointerlineskip
+   \vbox to\eq@firstht{\moveright\leftskip\hbox to\z@{\eq@addframe\hss}\vss}%
+   \kern-\eq@firstht
+  \fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Delimiter measurements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \@saveprimitive\left\@@left
 \@saveprimitive\right\@@right
 \newcount\lr@level
@@ -2457,7 +2595,7 @@ equation.\MessageBreak
 }
 \def\eq@left@a#1 #2{\endgroup\@@left\delimiter#1 \after@open}
 \def\eq@right@a#1 #2{\endgroup
-  \@@right\delimiter#1 \after@close\ss@scan{#1}%
+  \@@right\delimiter#1 \after@close \ss@scan{#1}%
 }
 \def\eq@nullleft#1{\@@left#1\after@open}
 \def\eq@nullright#1{\@@right#1\after@close}
@@ -2509,6 +2647,10 @@ equation.\MessageBreak
 \def\d@@DeB#1#2#3{%
   \delimiter"0\@xp\delim@a\csname sd@#1#2#3\endcsname #1#2#3 \after@bidir
 }
+%%BRM: These weren't defined, but apparently should be.
+% Are these the right values???
+\let\m@@DeA\m@DeA\let\d@@DeA\m@DeA%
+
 \let\after@bidir\@empty
 \mathchardef\zero@bop=888 \relax
 \mathchardef\bop@incr=4444 \relax
@@ -2523,11 +2665,10 @@ equation.\MessageBreak
     \advance\eq@binoffset\lr@level\eqdelimoffset plus1fill\relax
     \def\dt@fill@cancel{\hskip\z@ minus1fill\relax}%
   \fi
-  \nobreak
+  \penalty\@M % BRM: discourage break after an open fence?
 }
 \def\after@close{%
   \global\advance\lr@level\m@ne
-  \ifnum\lr@level<\z@ \eq@lrbad \global\lr@level\z@ \fi
   \prebinoppenalty\bop@incr \multiply\prebinoppenalty\lr@level
   \advance\prebinoppenalty\zero@bop
   \ifnum\eqbreakdepth<\lr@level
@@ -2535,12 +2676,15 @@ equation.\MessageBreak
   \fi
   \ifnum\lr@level<\@ne \eq@binoffset=\eqbinoffset\relax \fi
 }
-\def\eq@lrbad{%
-  \PackageError{breqn}{Too many closing delimiters?}{%
-    The unmatched delimiter might be further back.\MessageBreak
-    \@ehc
-  }%
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sub/Superscript measurement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BRM: There's possibly a problem here.
+% When \ss@scan gets invoked after a \left...\right pair in the LHS
+% during \eq@measure, it produces an extra box (marked with \penalty 3);
+% Apparently \eq@repack expects only one for the LHS.  
+% The end result is \eq@wdL => 0.0pt !!! (or at least very small)
+
 \let\subsup@flag=\count@
 \def\ss@delim@a#1#2#3#4{\xdef\right@delim@code{\number"#2#3#4}}
 \def\ss@scan#1{%
@@ -2637,43 +2781,71 @@ equation.\MessageBreak
     }%
   \endgroup
 }
-\edef\next{\catcode0=\the\catcode0\relax}
-\catcode0=\active\let^^@\@empty
 \newcommand{\DeclareTwang}[2]{%
   \ifcat.\@nx#1\begingroup
-    \lccode0=`#1\lowercase{\endgroup \DeclareTwang{^^@}}{#2}%
+    \lccode`\~=`#1\lowercase{\endgroup \DeclareTwang{~}}{#2}%
   \else
     \@xp\decl@twang#1?\@nil{#2}%
   \fi
 }
-\next
 \def\decl@twang#1#2#3#4#5#6#7\@nil#8{%
-  \global\@namedef{twang@\number"#4#5#6}{#8}%
+  \@namedef{twang@\number"#4#5#6}{#8}%
 }
 \DeclareTwang{\rangle}{-.4}
 \DeclareTwang{)}{-.33}
 \DeclareTwang{\rbrace}{-.25}
-\newenvironment{dseries}{\@eq@numbertrue \@optarg\@dseries{}}{}%
-\def\enddseries#1{\check@punct@or@qed}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% dseries environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{dseries}{\let\eq@hasNumber\@True \@optarg\@dseries{}}{}%
+\def\enddseries#1{\check@punct@or@qed}%
+
+\newenvironment{dseries*}{\let\eq@hasNumber\@False \@optarg\@dseries{}}{}%
+\@namedef{enddseries*}#1{\check@punct@or@qed}%
+\@namedef{end@dseries*}{\end@dseries}%
+
 \def\@dseries[#1]{%
-  \def\display@setup{\displaystyle}%
-  \let\eq@centerlines\@True
-  \@dmath[#1]%
+%BRM: DS Expermient: Use alternative display setup.
+%  \def\display@setup{\displaystyle}%
+  \let\display@setup\dseries@display@setup
+  % Question: should this be the default for dseries???
+%  \let\eq@centerlines\@True
+  \global\eq@wdCond\z@
+% BRM: use special layout for dseries
+%  \@dmath[#1]%
+  \@dmath[layout={M},#1]%
   \mathsurround\z@\@@math \penalty\@Mi
   \let\endmath\ends@math
   \def\premath{%
-    \ifdim\lastskip<.49em \unskip\fi
-    \ifnum\lastpenalty<\@M\dquad\fi
-  }%
-  \def\postmath{\eq@addpunct \penalty-99 \dquad \@ignoretrue }%
+    % BRM: Tricky to cleanup space OR add space ONLY BETWEEN math!
+    \ifdim\lastskip<.3em \unskip
+    \else\ifnum\lastpenalty<\@M \dquad\fi\fi
+}%
+%BRM: Tricky; if a subformula breaks, we'd like to start the next on new line!
+  \def\postmath{\unpenalty\eq@addpunct \penalty\intermath@penalty \dquad \@ignoretrue}%
+\ignorespaces
 }
 \def\end@dseries{%
   \unskip\unpenalty
   \@@endmath \mathsurround\z@ \end@dmath
 }
-\newenvironment{dseries*}{\@eq@numberfalse \@optarg\@dseries{}}{}
-\@namedef{enddseries*}#1{\check@punct@or@qed}
-\@namedef{end@dseries*}{\end@dseries}
+%BRM: Try this layout for dseries: Essentially layout i, but w/o limit to 1 line.
+% And no fallback!
+\def\eq@try@layout@M{%
+  \edef\@parshape{\parshape 1 0pt \the\eq@linewidth\relax}%
+  \eq@trial@b{M}{}%
+}
+% BRM: Tricky to get right value here. 
+% Prefer breaks between formula if we've got to break at all.
+%\def\intermath@penalty{-201}%
+\def\intermath@penalty{-221}%
+% BRM: A bit tighter than it was ( 1em minus.25em )
+%\newcommand\dquad{\hskip0.4em}
+\newcommand\dquad{\hskip0.6em minus.3em}
+\newcommand\premath{}\newcommand\postmath{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Redefinition of math environment to take advantage of dseries env.
 \renewenvironment{math}{%
   \leavevmode \premath
   \ifmmode\@badmath\else\@@math\fi
@@ -2685,33 +2857,75 @@ equation.\MessageBreak
   \ifmmode\@@endmath\else\@badmath\fi
   \postmath
 }
-\newcommand\dquad{\hskip1em minus.25em }
-\newcommand\premath{}\newcommand\postmath{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% dgroup environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BRM: Fairly broad changes; it mostly didn't work before (for me).
+%
+% \begin{dgroup} produces a `numbered' group
+%   The number is the next equation number.
+%   There are 2 cases:
+%    * If ANY contained equations are numbered (\begin{dmath}), 
+%      then they will be subnumbered: eg 1.1a
+%      and the group number is not otherwise displayed.
+%    * If ALL contained equations are unnumbered (\begin{dmath*})
+%      then the group, as a whole, gets a number displayed,
+%      using the same number placement as for equations.
+% \begin{dgroup*} produces an unnumbered group.
+%    Contained equations are numbered, or not, as normal.
+%    But note that in the mixed case, it's too late to
+%    force the unnumbered eqns to \retry@with@number
+%    We'll just do a simple check of dimensions, after the fact,
+%    and force a shiftnumber if we're stuck.
+% NOTE: Does this work for dseries, as well? (alignment?)
+% NOTE: Does \label attach to the expected thing?
+%
+% For number placement: We use shiftnumber placement on ALL equations
+%    if ANY equations need it, or if an unnumbered equation is too 
+%    wide to be aligned, given that the group or other eqns are numbered.
+%    [does this latter case interract with the chosen alignment?]
+%
+% For Alignment:
+%   As currently coded, it tries to align on relations, by default.
+%   If LHS's are not all present, or too long, it switches to left-justify.
+%   Maybe there are other cases that should switch?
+%   Should there be a case for centered?
+% NOTE: Should there be some options to choose alignment?
+%
 \let\eq@group\@False
+\let\grp@shiftnumber\@False
+\let\grp@hasNumber\@False
+\let\grp@eqs@numbered\@False
+\let\grp@aligned\@True
 \global\let\GRP@top\@True
 \newenvironment{dgroup}{%
-  \@eq@numbertrue \@optarg\@dgroup{}%
+  \let\grp@hasNumber\@True\@optarg\@dgroup{}%
 }{%
-  \end@dgroup{\grp@resetnumber}%
+  \end@dgroup
 }
 \newtoks\GRP@queue
 \newenvironment{dgroup*}{%
-  \@eq@numberfalse \@optarg\@dgroup{}%
-}{
-  \end@dgroup{}%
+  \let\grp@hasNumber\@False\@optarg\@dgroup{}%
+}{%
+  \end@dgroup
 }
 \def\@dgroup[#1]{%
+  \debugmsg{=== DGROUP ==================================================}%
   \let\eq@group\@True \global\let\GRP@top\@True
   \global\GRP@queue\@emptytoks \global\setbox\GRP@box\box\voidb@x
   \global\let\GRP@label\@empty
-  \gdef\GRP@info{\grp@wdL\z@ \grp@bodywidth\z@ \grp@linewidth\z@}%
+  \global\grp@wdL\z@\global\grp@wdR\z@\global\grp@wdT\z@
+  \global\grp@linewidth\z@\global\grp@wdNum\z@
+  \global\let\grp@eqs@numbered\@False
+  \global\let\grp@aligned\@True
+  \global\let\grp@shiftnumber\@False
   \eq@prelim
   \setkeys{breqn}{#1}%
-  \if@eq@number \grp@setnumber \fi
+  \if\grp@hasNumber \grp@setnumber \fi
 }
-\def\end@dgroup#1{%
+\def\end@dgroup{%
   \EQ@displayinfo \grp@finish
-  #1% \grp@resetnumber
+  \if\grp@hasNumber\grp@resetnumber\fi
 }
 \@ifundefined{c@parentequation}{\newcounter{parentequation}}{}
 \global\let\GRP@label\@empty
@@ -2722,57 +2936,120 @@ equation.\MessageBreak
 }
 \def\grp@setnumber{%
   \global\let\GRP@label\next@label \global\let\next@label\@empty
+  % Trick \eq@setnumber to doing our work for us.
+  \let\eq@hasNumber\@True
   \eq@setnumber
+  \global\sbox\GRP@numbox{\unhbox\EQ@numbox}%
+  \grp@wdNum\eq@wdNum
+  \let\eq@hasNumber\@False
+  \let\eq@number\@empty
+  \eq@wdNum\z@
+%
   \protected@edef\theparentequation{\theequation}%
   \setcounter{parentequation}{\value{equation}}%
   \setcounter{equation}{0}%
   \def\theequation{\theparentequation\alph{equation}}%
+  \debugmsg{Group Number \theequation}%
 }
 \def\grp@resetnumber{%
   \setcounter{equation}{\value{parentequation}}%
 }
-\gdef\GRP@info{\grp@wdL\z@ \grp@bodywidth\z@ \grp@linewidth\z@}
 \newbox\GRP@box
+\newbox\GRP@wholebox
+% Save data for this equation in the group
+%  * push the trial data onto end of \GRP@queue
+%  * push an hbox onto the front of \GRP@box
+%    containing: \EQ@box, \EQ@copy, \penalty 1 and \EQ@numbox
 \def\grp@push{%
   \global\GRP@queue\@xp\@xp\@xp{\@xp\the\@xp\GRP@queue
-    \@xp\eq@zek\@xp{\EQ@trial}%
+    \@xp\@elt\@xp{\EQ@trial}%
   }%
   \global\setbox\GRP@box\vbox{%
     \hbox{\box\EQ@box\box\EQ@copy\penalty\@ne\copy\EQ@numbox}%
     \unvbox\GRP@box
   }%
-  \EQ@trial \GRP@info
-  \xdef\GRP@info{%
-    \grp@wdL=\ifdim\eq@wdL>\grp@wdL \the\eq@wdL \else \the\grp@wdL \fi
-    \grp@bodywidth=\ifdim\eq@bodywidth>\grp@bodywidth \the\eq@bodywidth \else \the\grp@bodywidth \fi
-    \grp@linewidth=%
-      \ifdim\eq@linewidth>\grp@linewidth \the\eq@linewidth
-      \else \the\grp@linewidth
-      \fi
-    \relax
-  }%
+ \global\let\GRP@top\@False
+ \EQ@trial
+  \if\eq@isIntertext\else
+    \ifdim\eq@wdL>\grp@wdL \global\grp@wdL\eq@wdL \fi
+    \ifdim\eq@wdT>\grp@wdT \global\grp@wdT\eq@wdT \fi
+    \dim@a\eq@wdT \advance\dim@a-\eq@wdL
+    \ifdim\dim@a>\grp@wdR \global\grp@wdR\dim@a \fi
+    \ifdim\eq@linewidth>\grp@linewidth \global\grp@linewidth\eq@linewidth\fi
+    \if\eq@hasNumber
+       \global\let\grp@eqs@numbered\@True
+       \ifdim\eq@wdNum>\grp@wdNum\global\grp@wdNum\eq@wdNum\fi
+    \fi
+    \if\EQ@hasLHS\else\global\let\grp@aligned\@False\fi
+    \if D\eq@layout \global\let\grp@aligned\@False\fi % Layout D (usually) puts rel on 2nd line.
+    \if\eq@shiftnumber\global\let\grp@shiftnumber\@True\fi % One eq shifted forces all.
+  \fi
 }
+% BRM: Questionable patch!!
+% When processing the \GRP@queue, put it into a \vbox, then \unvbox it.
+% This since there's a bizarre problem when the \output routine
+% gets invoked at an inopportune moment: All the not-yet-processed
+% \GRP@queue ends up in the \@freelist and bad name clashes happen.
+% Of course, it could be due to some other problem entirely!!!
 \def\grp@finish{%
-\debug@box\GRP@box
-%\debugmsg{\GRP@queue: \the\GRP@queue}%
-  \GRP@info
-  \grp@wdL\z@ \grp@bodywidth\z@
-  \let\eq@zek\eqgrp@prelim
-  \the\GRP@queue
-  \advance\grp@bodywidth\grp@wdL
-\debugmsg{grp@wdL \the\grp@wdL, grp@bodywidth \the\grp@bodywidth}%
-  \let\eq@zek\eqgrpeq@zek
-  \the\GRP@queue
-  \let\eq@zek\relax
-  \eq@botspace
+%  \debug@box\GRP@box
+%  \debugmsg{\GRP@queue: \the\GRP@queue}%
+  % == Now that we know the collective measurements, make final decision about alignment & shifting.
+  % Check if alignment is still possible
+  \dim@a\grp@wdL\advance\dim@a\grp@wdR\advance\dim@a-4em\relax% Allowance for shrink?
+  \if\grp@aligned\ifdim\dim@a>\grp@linewidth
+     \global\let\grp@aligned\@False     
+  \fi\fi
+  % If we're adding an unshifted group number that equations didn't know about, re-check shifting
+  \advance\dim@a\grp@wdNum % Effective length
+  \if\grp@shiftnumber\else\if\grp@hasNumber\if\grp@eqs@numbered\else\ifdim\dim@a>\grp@linewidth
+     \global\let\grp@shiftnumber\@True
+  \fi\fi\fi\fi
+  % If we can still align, total width is sum of maximum LHS & RHS
+  \if\grp@aligned
+     \global\grp@wdT\grp@wdL\global\advance\grp@wdT\grp@wdR
+  \fi
+  \debugmsg{======= DGROUP Formatting
+          ^^J||===== \grp@wdL=\the\grp@wdL, \grp@wdR=\the\grp@wdR
+          ^^J||===== Shift Number=\theb@@le\grp@shiftnumber, Eqns. numbered=\theb@@le\grp@eqs@numbered
+          ^^J||===== Aligned=\theb@@le\grp@aligned
+          ^^J||===== \grp@wdNum=\the\grp@wdNum}%
+  % BRM: Originally this stuff was dumped directly, without capturing it in a \vbox
+  \setbox\GRP@wholebox\vbox{%
+    \let\@elt\eqgrp@elt
+    \the\GRP@queue
+  }%
+  % If we're placing a group number (not individual eqn numbers)
+  % NOTE: For now, just code up LM number
+  % NOTE: Come back and handle other cases.
+  % NOTE: Vertical spacing is off, perhaps because of inter eqn. glue
+    \eq@topspace{\vskip\parskip}%
+  \if\grp@hasNumber\if\grp@eqs@numbered\else
+%    \eq@topspace{\vskip\parskip}%
+    \if\grp@shiftnumber
+      \copy\GRP@numbox \penalty\@M
+      \kern\eqlineskip
+    \else
+      \dim@a\ht\GRP@wholebox\advance\dim@a\dp\GRP@wholebox
+      \advance\dim@a\ht\GRP@numbox\advance\dim@a-\dp\GRP@numbox
+      \divide\dim@a\tw@
+      \skip@c\dim@a\advance\skip@c-\ht\GRP@numbox
+      \vglue\skip@c% NON discardable
+      \copy\GRP@numbox \penalty\@M
+\debugmsg{GROUP NUMBER: preskip:\the\skip@c,  postkern:\the\dim@a, height:\the\ht\GRP@wholebox,
+         ^^J||===== box height:\the\ht\GRP@numbox, box depth:\the\dp\GRP@numbox}%
+      \kern-\dim@a
+      \kern-\abovedisplayskip % To cancel the topspace above the first eqn.
+    \fi
+  \fi\fi
+%\debug@box\GRP@wholebox
+  \unvbox\GRP@wholebox
+  \let\@elt\relax
+  % We'd need to handle shifted, right number here, too!!!
+  \eq@botspace % not needed unless bottom number?
 }
-\def\eqgrp@prelim#1{%
-  #1%
-  \ifdim\eq@wdL>\grp@wdL \grp@wdL\eq@wdL \fi
-  \dim@a\eq@bodywidth \advance\dim@a-\eq@wdL
-  \ifdim\dim@a>\grp@bodywidth \grp@bodywidth\dim@a \fi
-}
-\def\eqgrpeq@zek#1{%
+% The arg is an \EQ@trial
+\def\eqgrp@elt#1{%
   \global\setbox\GRP@box\vbox{%
     \unvbox\GRP@box
     \setbox\z@\lastbox
@@ -2788,9 +3065,47 @@ equation.\MessageBreak
   }%
   \begingroup \let\eq@botspace\relax
   #1%
-  \eq@finish
+  \if\eq@isIntertext
+    \vskip\belowdisplayskip
+    \unvbox\EQ@copy
+  \else
+    \grp@override
+    \eq@finish
+  \fi
   \endgroup
 }
+% Override the \eq@trial data as needed for this equation in this group
+% NOTE: w/ numbering variations (see above), we may need to tell
+%  \eq@finish to allocate space for a number, but not actually have one
+\def\grp@override{%
+ % For aligned (possibly becomes an option?)
+ % For now ASSUMING we started out as CLM!!!
+  \def\eqindent{I}%
+  % compute nominal left for centering the group
+  \dim@a\grp@linewidth\advance\dim@a-\grp@wdT\divide\dim@a2\relax
+  % Make sure L+R not too wide; should already have unset alignment
+  \ifdim\dim@a<\z@\dim@a\z@\fi
+  \dim@b\if L\eqnumside\grp@wdNum\else\z@\fi
+  % make sure room for number on left, if needed.
+  \if\grp@shiftnumber\else
+    \ifdim\dim@b>\dim@a\dim@a\dim@b\fi
+  \fi
+  \if\grp@aligned
+    \advance\dim@a\grp@wdL\advance\dim@a-\eq@wdL
+  \fi
+  \mathindent\dim@a
+  \ifdim\dim@b>\dim@a
+    \let\eq@shiftnumber\@True
+  \fi
+% Could set \def\eqnumplace{T} (or even (m) if indentation is enough.
+%
+% NOTE: Work out how this should interact with the various formats!!!
+% NOTE: should recognize the case where the LHS's are a bit Wild,
+%  and then do simple left align (not on relation)
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% darray environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newskip\darraycolsep \darraycolsep 20pt plus1fil minus12pt
 \newcount\cur@row \newcount\cur@col
 \def\@tempa#1#2#3{%
@@ -2816,6 +3131,7 @@ equation.\MessageBreak
 }
 \newenvironment{darray}{\@optarg\@darray{}}{}
 \def\@darray[#1]{%
+  \debugmsg{=== DARRAY ==================================================}%
   \if\eq@group\else\eq@prelim\fi
   \global\let\@preamble\@empty
   \setkeys{breqn}{#1}%
@@ -2839,7 +3155,7 @@ equation.\MessageBreak
 }
 \def\dar@capture{%
 %% \showboxbreadth\maxdimen\showboxdepth99\showlists
-  \eq@wdL\z@ \eq@wdRmax\z@ \eq@sidespace\maxdimen
+  \eq@wdL\z@ \eq@wdRmax\z@
   \dar@repack
 }
 \def\dar@repack{%
@@ -2854,6 +3170,11 @@ equation.\MessageBreak
   \ifcase\lastpenalty \else\@xp\@gobble\fi
   \dar@repack
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Conditions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BRM: Some modifications here, since I like for the condition
+% to go flush right. (thus, it also affects centering, margins, etc)
 \newskip\conditionsep \conditionsep=10pt minus5pt%
 \newcommand{\conditionpunct}{,}
 \let\cond@gobble\@firstofone
@@ -2862,17 +3183,27 @@ equation.\MessageBreak
     \@ifstar{\@tempswafalse \condition@a}\condition@a
 }
 \newcommand\condition@a[2][\conditionpunct]{%
-  \hbox{#1}\hskip\conditionsep
+  \unpenalty\unskip\unpenalty\unskip % BRM Added
+  \hbox{#1}%
+  \penalty -201\relax\hbox{}% Penalty to allow breaks here.
+  \hskip\conditionsep
   \if@tempswa \@xp\hbox \else \@xp\condition@b\fi
   {#2}%
   \endgroup
+  % BRM: Testing if I can measure conditions?
+  \setbox\z@\if@tempswa\hbox{#2}\else\hbox{\textmath@setup #2}\fi
+  \global\eq@wdCond\wd\z@
   \let\cond@gobble\@gobble
 }
+
 \newcommand\condition@b[1]{%
   \cond@gobble{\hskip\conditionsep}%
   \textmath@setup #1%
 }
-\newenvironment{dsuspend}{%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Intertext and other insertions.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{XXXXdsuspend}{%
   \global\setbox\EQ@box\vbox\bgroup \@parboxrestore
     \parshape 1 \displayindent \displaywidth\relax
     \hsize=\columnwidth \noindent\ignorespaces
@@ -2883,10 +3214,26 @@ equation.\MessageBreak
     \unvbox\GRP@box
   }%
   \global\GRP@queue\@xp{\the\GRP@queue
-    \eq@zek{\gdef\EQ@trial{}}%
+    \@elt{\gdef\EQ@trial{}}%
+  }%
+}
+\newenvironment{dsuspend}{%
+  \global\setbox\EQ@box\vbox\bgroup \@parboxrestore
+    \parshape 1 \displayindent \displaywidth\relax
+    \hsize=\columnwidth \noindent\ignorespaces
+}{%
+  \par\egroup
+  \global\setbox\GRP@box\vbox{%
+    \hbox{\copy\EQ@box\vtop{\unvbox\EQ@box}}%
+    \unvbox\GRP@box
+  }%
+  \global\GRP@queue\@xp{\the\GRP@queue
+%    \@elt{\gdef\EQ@trial{\let\eq@isIntertext\@True}}%
+     \@elt{\let\eq@isIntertext\@True}%
   }%
 }
 \newcommand\breqn@intertext[1]{\dsuspend#1\enddsuspend}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\*}{%
   \if@display
     \setbox\z@\hbox{\mathsurround\z@$\mkern\eq@binoffset$}%
@@ -2899,8 +3246,12 @@ equation.\MessageBreak
   \fi
 }
 \newcommand{\discretionarytimes}{\times}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\nref#1{\@xp\@nref\csname r@#1\endcsname}
 \def\@nref#1#2{\ifx\relax#1??\else \@xp\@firstoftwo#1\fi}
-\breqnpopcats
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\endinput
 %</package>
 %    \end{macrocode}

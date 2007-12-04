@@ -1,0 +1,1587 @@
+% Usage:
+% \input{lls.deh}
+% ^^05(document^^01OPTIONS ...^^02^^06 text ... ^^05<document)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TO DO:
+% ---Separate layers so an XML interface could be used.
+% ---Anything after end-code, such as "<code)%", leads to an error.
+% ---Section heads etc: Stack objects in box queue for dumping (or
+% possibly appending, in the "run-in" case) when the
+% next text object comes along.
+% ---Nugget/entity ref at beginning of sentence may need to inherit
+%    capitalization (e.g., "cf")
+% ---Allow parens (brackets, quoted?) element to occur equally
+% outside or inside sentences. Call it a sentence group? Use different
+% element names? Parens and quotes at start of sentence should be
+% transparent to capitalization operations.
+% ---Better list environment
+% ---Removal of first indent after a section head
+% ---Rationalize toc, index, biblio handling
+% ---Problem of start tag containing embedded start tags in its
+% replacement text. Need to differentiate the overt stack from the inner
+% stack.
+% ---? Choose higher character numbers \246 ^^a6 &brvbar; \274 ^^bc
+%    &frac14; \275 ^^bd &frac12; \276 ^^be &frac34;? Or maybe ^^81
+%    ^^82 ^^85 ^^86 to get into the range of character numbers that are
+%    not used by HTML?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}[1995/06/01]
+\errorcontextlines=99 
+\makeatletter
+
+% Reenable "invalid" characters
+
+\def\do{\catcode\fam=12 \advance\fam\@ne
+  \ifnum\fam<32
+%    Restore the catcodes for RET and TAB that just got clobbered
+  \else \catcode13=5 \catcode9=10 \let\do\relax
+  \fi
+  \do
+}
+\fam=\z@ \do
+
+% (.>...<.)
+
+% (para>...<para)
+% (item{number.{auto}}>...<item)
+% (section>(title>...<title)
+% [tex]
+% [eg]
+
+\let\@xp\expandafter \let\@nx\noexpand
+\newtoks\emptyToks
+
+%    Maybe allow \new\gdef{foo}{...} and \new\let{foo}{...} And \fun =
+%    \@namedef? (previously defined is not an error).
+
+\newcommand*\new[1]{\@xp\@new\csname#1\endcsname}
+\newcommand\@new[1]{%
+  \ifx#1\relax \else \@xp\new@err \fi
+  \gdef #1}
+\long\def\new@err#1#2#3#{
+  \llsError{Already defined: \string#2}\@ehc\toks@=}
+
+\new{llsError}{\PackageError{lls}}
+
+\new{renew}#1{\@xp\gdef\csname#1\endcsname}
+
+\new{dehCatcodes}{
+  \catcode32=9 \catcode\endlinechar=9 \catcode`\_=10
+  \makeatletter
+}
+
+\dehCatcodes
+
+\catcode1=1 \catcode2=2
+\catcode5=0 \catcode6=\active
+\new{loneControlF}#1{
+  \llsError{Corrupted_start_tag?_Lone_Control-F_character}\@ehc
+}
+\def^^06{\@exec\loneControlF ^^06}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% All visible non-alphanumeric ASCII characters have catcode 13 in lls
+% documents, except space (10), tab (10), period (12), hyphen (12),
+% comma (12). The last three exceptions allow numbers with
+% decimal points and minus signs to be used directly by TeX.
+% 
+% At the present time [mjd,1998/12/16] also the hat char ^ retains
+% catcode 7 in order for LaTeX to successfully read the .aux file.
+% If I had a version of TeX that would write the escapechar as character
+% 5 instead of the string "^^E" this might not be necessary.
+% On the other hand, given the way that ^ is hardwired into TeX for
+% character escape purposes perhaps it's just as well.
+%
+% The normal definition for an active character such as / is
+%
+%  \@exec \@slash /
+%
+% where \@exec is \@empty for normal execution and \@gobble otherwise,
+% so that if active / occurs in a \csname it will resolve to a suitable
+% character. The default definition for things like \@slash is just
+% \string. 
+
+\let\@exec\@empty
+
+% The functions latexCatcodes and llsCatcodes are written to maximize
+% execution speed and minimize the amount of space they take up in macro
+% traces.
+
+\def\latexCatcodes{\let\do\catcode
+  \do`\^^M 5_\do`\ 10_
+  \do`\!12_\do`\"12_\do`\#6_\do`\$3_\do`\%14_\do`\&4_\do`\'12_
+  \do`\(12_\do`\)12_\do`\*12_\do`\+12_\do`\/12_\do`\:12_\do`\;12_
+  \do`\<12_\do`\=12_\do`\>12_\do`\?12_\do`\@12_\do`\[12_\do`\\0_
+  \do`\]12_\do`\^7_\do`\_8_\do`\`12_\do`\{1_\do`\|12_\do`\}2_\do`\~13_
+  \escapechar 92_\catcode13=5_\endlinechar 13_\relax
+  \def\makeatother{\@makeother\@}
+}
+
+\def\llsCatcodes{\let\do\catcode
+  \do`\^^M13_\do`\^^^13_\do`\ 10_
+  \do`\!13_\do`\"13_\do`\#13_\do`\$13_\do`\%13_\do`\&13_\do`\'13_
+  \do`\(13_\do`\)13_\do`\*13_\do`\+13_\do`\/13_\do`\:13_\do`\;13_
+  \do`\<13_\do`\=13_\do`\>13_\do`\?13_\do`\@13_\do`\[13_\do`\\13_
+  \do`\]13_\do`\^7_\do`\_13_\do`\`13_\do`\{13_\do`\|13_\do`\}13_\do`\~13_
+  \escapechar 5_\endlinechar 32_\relax
+  \def\makeatother{\catcode`\@=\active}
+}
+
+\def\do#1#2{\fam=`#1\relax
+  \let#2\string % init
+  \begingroup\lccode126=\fam \lccode`\.=\fam
+    \lowercase{\endgroup\def~{\@exec#2.}}}
+
+%\do\^^I\@tab
+%\do\^^J\@newline
+%\do\^^L\@formfeed
+%\do\^^M\@return
+\do\^^^\@controlhat
+%\do\ \@space
+\do\!\@excl
+\do\"\@quot
+\do\#\@num
+\do\$\@dollar
+\do\%\@percnt
+\do\&\@amp
+\do\'\@apos
+\do\(\@lpar
+\do\)\@rpar
+\do\*\@ast
+\do\+\@plussign % \@plus = `plus' in latex2e
+%\do\,\@comma  % stays catcode 12 for decimal point
+%\do\-\@hyphen % stays catcode 12 for numbers
+%\do\.\@period % stays catcode 12 for decimal point
+\do\/\@sol
+%\do\0\@zero
+%\do\1\@one
+%\do\2\@two
+%\do\3\@three
+%\do\4\@four
+%\do\5\@five
+%\do\6\@six
+%\do\7\@seven
+%\do\8\@eight
+%\do\9\@nine
+\do\:\@colon
+\do\;\@semi
+\do\<\@lt
+\do\=\@equals
+\do\>\@gt
+\do\?\@quest
+\do\@\@commat
+\do\[\@lsqb
+\do\\\@bsol
+\do\]\@rsqb
+\do\^\@hat % \@circ is preempted for \circle use
+\do\^^1e\@hat % hex 1e = Control-^
+\do\_\@lowbar
+\do\`\@grave
+\do\{\@lcub
+\do\|\@verbar
+\do\}\@rcub
+\do\~\@tilde
+
+\new{specialCharSetup}{
+  \def\@lowbar##1{\textunderscore}
+  \def\@controlhat##1{\textasciicircum}
+}
+
+\new{withSpecialCatcodes}#1#{
+  \begingroup \def\do##1##2{\catcode`##1=##2\relax\do}
+    \do#1A{11\@firstoftwo}
+  \@xp\endgroup\@firstofone
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% If options x={...} y={...} are present on a start tag foo,
+% \startElement expands as
+%
+%             #1.#2...............#3#4.....
+%   \scanOpts foo{x={...} y={...}}{}\@empty\@nil
+%   
+% where the numbers indicates how the parts will be distributed as
+% \scanOpts arguments.
+%
+% If no options are present:
+%
+%             #1.#2#3.....
+%   \scanOpts foo{}\@empty\@nil
+%
+% with arg #4 empty and arg #3 = "\@empty".
+
+\new{startElement}#1^^06{\scanOpts#1^^A^^B\@empty\@nil}
+\new{altStart}#1{\startElement#1^^06}
+
+\DeclareRobustCommand\({\startElement}
+
+\let\dmsg\@gobble
+\let\stackmsg\message
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Element stack handling and element definitions
+%
+% Pushing and popping element name. Number is the starting line number.
+% \elStack = \@eltt{ack}{45}\@eltt{bar}{46}...
+
+\new{pushToks}{}\newtoks\pushToks
+
+\new{elPush}#1{
+  \global\let\elParent\elName
+  \xdef\elStart{\the\inputlineno}
+  \gdef\elName{#1}
+  \pushToks\@xp{\elStack}
+  \xdef\elStack{\@nx\@eltt{#1}{\elStart}\the\pushToks}
+%\stackmsg{(\elName>\elStart}
+}
+
+\new{elStack}{\@eltt{Top Level}{0}}
+\new{savedElStack}{}
+\new{elName}{?!?}
+\new{elParent}{?!?}
+\new{elStart}{0}
+
+\new{elPopA}#1#2#3#4#5#6#7{
+  \gdef\elName{#4}\gdef\elStart{#5}\gdef\elParent{#7}
+  \@xp\gdef\@xp\elStack\@xp{\iffalse}\fi#3{#4}{#5}#6{#7}}
+
+\new{elPop}{
+%\stackmsg{<\elName)}
+  \let\@eltt\elPopA \iffalse{\fi\elStack}}
+
+\let\@elPop\elPop % saved version
+
+\new{noSuchElement}#1{
+  \llsError{Undefined_element:_#1}\@ehc
+}
+
+% Need to use the actual ^^01 character here for the #{ parameter
+% matching, using just any old begin-group character won't do.
+
+\new{scanOpts}#1#^^01\beginA{#1}^^02
+
+\new{endTag}{}
+
+\new{stringExec}#1{\string}
+\new{nxExec}#1{\noexpand}
+
+% Cf \scanOpts, \startElement.
+% 
+% Args: #1 element name as given (including catcodes); this needs to be
+%    kept for possible reference by \readTo
+% 
+\new{beginA}#1{
+  \def\endTagName{#1}
+  \begingroup
+  \let\@exec\stringExec
+  \edef\@tempa{\endgroup
+    \@nx\beginB\@xp\@nx\csname (#1\endcsname
+    \meaning\endTagName @
+  }
+  \@tempa
+}
+
+% #1 \(foo
+% #2 "macro:-"
+% #3 "foo" all catcode 12
+% #4 option list (possibly empty)
+% #5 empty, or "\@empty" if #4 is empty
+% #6 \@empty, or empty (always discarded)
+
+\withSpecialCatcodes \=\active {
+\new{beginB}#1#2>#3@#4#5#6\@nil{
+  \elPush{#3}
+  \ifx\relax#1
+    \@xp\beginC % Undefined element
+  \else
+    \ifx\@empty#5\relax \global\let\get@options\relax
+    \else \gdef\get@options{\parseOptions{#3}{#4}}
+    \fi
+  \fi
+  \begingroup#1
+}
+}
+
+% If \(foo is undefined, go ahead but arrange for \)foo to be a silent
+% no-op rather than producing additional error messages. Also if \(foo
+% occurs later, but at more outer level of grouping, make sure that the
+% "no such element" error is not redundantly repeated.
+
+\new{beginC}#1#2{
+  \noSuchElement\elName
+  #1#2 
+  \global\let#1\relax
+  \global\@xp\let\csname )\elName\endcsname\@empty
+}
+
+\withSpecialCatcodes\=\active{
+\new{parseOptions}#1#2{
+  \let\@exec\stringExec
+  \def\KV@prefix{KV@#1@}
+  \let\prev@exec\@exec \let\@exec\nxExec
+  \parseOptionsA #2={}@
+  \let\@exec\prev@exec % revert to normal meaning
+}
+}
+
+\withSpecialCatcodes \=\active {
+\new{parseOptionsA}#1=#2#3{
+  \ifx @#3\@xp\@gobbletwo
+  \else
+    \POSplit#1={#2}=\relax @
+  \fi
+  \parseOptionsA#3
+}
+}
+
+\withSpecialCatcodes \=\active {
+\new{POSplit}#1=#2=#3@}{
+  \KV@@sp@def\@tempa{#1}
+  \ifx\@tempa\@empty
+  \else
+    \expandafter\let\expandafter\@tempc\csname\KV@prefix\@tempa\endcsname
+    \ifx\@tempc\relax \KV@err{\@tempa\space undefined}
+    \else
+      \ifx\@empty#3\@empty \KV@default
+      \else
+        \KV@@sp@def\@tempb{#2}
+        \expandafter\@tempc\expandafter{\@tempb}\relax
+      \fi
+    \fi
+  \fi 
+}
+
+\begingroup \lccode`\~=`\) \lccode`\E=`\E \lowercase{\endgroup
+\new{endElement}#1~}{
+  \def\@tempa{#1}
+  \@xp\endElemB \csname )\string#1\@xp\endcsname \meaning\@tempa\@nil
+}
+
+\withSpecialCatcodes\)\active{
+\new{endElemA}#1{\endElement#1)}
+}
+
+% These tests have to be done every time, so this section of code can't
+% be reduced much.
+
+\new{endElemB}#1#2>#3\@nil{
+  \ifx\relax#1
+    % This is the case where \(foo was defined but we now have a
+    % misspelling such as \)fop or something even more peculiar.
+    % If \(foo had been undefined, \)foo would be \@empty now, not
+    % \relax.
+    \def#1{\endElemC#1{#3}} 
+  \else
+    % Check for \(foo ... \)bar where foo and bar are both valid element
+    % names. Simply inserting \)foo won't always be the best, but ...
+    \@xp\ifx\csname )\elName\endcsname #1
+    \else
+      \def#1{\endElemD#1{#3}}
+    \fi
+  \fi
+  #1 \endgroup \elPop
+}
+
+% #1 is \)foo ; #2 is "foo"
+\new{endElemC}#1#2{
+  \let#1\relax
+  \llsError{Misspelled_element_name_"#2"?}\@ehc
+  \csname )\elName\endcsname
+}
+
+% #1 is \)foo ; #2 is "foo"
+\new{endElemD}#1#2{
+  \llsError
+    {(\elName>_on_line_\elStart\space ended_by_<#2);_will_try_to_recover}
+    \@ehc
+  \@xp\ifx\csname )document\endcsname#1 \@xp\@gobblefour \fi
+  \csname )\elName\endcsname
+}
+
+\DeclareRobustCommand\<{\endElement}
+
+\long
+\new{element}#1#2#3{
+  \@ifundefined{(#1}{}{\PackageWarning{lls}{Element_#1_already_defined}}
+  \long\@xp\gdef\csname (#1\endcsname{#2}
+  \@xp\gdef\csname )#1\endcsname{#3}
+}
+
+\long
+\new{elementsynonym}#1#2{
+  \@ifundefined{(#1}{}{\PackageWarning{lls}{Element_#1_already_defined}}
+  \global\expandafter
+    \let\csname (#1\expandafter\endcsname\csname (#2\endcsname
+  \global\expandafter
+    \let\csname )#1\expandafter\endcsname\csname )#2\endcsname
+}
+
+% A minor element doesn't enclose its contents in a TeX group.
+
+\long
+\new{minorelement}#1#2#3{
+  \@ifundefined{(#1}{}{\PackageWarning{lls}{Element_#1_already_defined}}
+  \@xp\gdef\csname (#1\endcsname{\endgroup#2}
+  \@xp\gdef\csname )#1\endcsname{#3\begingroup}
+}
+
+%    Elements declared with displayelement need special group handling
+%    in their definition. I think. [mjd,1998/09/14]
+\new{displayelement}{\minorelement}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Paragraph handling
+
+\let\@@everypar\everypar
+
+\new{paraBox}{}\newbox\paraBox
+
+\new{@parshape}{}\newtoks\@parshape
+
+\new{nextIndent}{\hskip\parindent}
+
+\minorelement{para}{\paraStart}{\paraEnd}
+
+\new{paraStack}{}
+
+\new{paraPushSetup}{
+  \pushToks\@xp{\paraStack}
+  \edef\paraSetup{
+    \hsize\the\hsize \parfillskip\the\parfillskip
+    \rightskip\the\rightskip \leftskip\the\leftskip
+    \@parshape{\the\@parshape}
+    \parindent\the\parindent
+  }
+  \let\@elt\relax
+  \xdef\paraStack{\@elt{\paraSetup}\paraStack}
+}
+
+\new{paraPushFake}{
+  \pushToks\@xp{\paraStack}
+  \xdef\paraStack{\@nx\@elt{}\the\pushToks}
+}
+
+\new{paraPopSetup}{\let\@elt\paraPopA \iffalse{\fi\paraStack}}
+\new{paraPopA}{\afterassignment\paraPopB\edef\paraSetup}
+\new{paraPopB}{\paraSetup \let\@elt\relax \xdef\paraStack{\iffalse}\fi}
+
+\new{paraBoxStack}{}\newbox\paraBoxStack
+\setbox\paraBoxStack\vbox{\hrule width\@ne sp}
+
+\new{paraBoxPush}{
+  \global\setbox\paraBoxStack\vbox{\unvbox\paraBoxStack \box\paraBox}
+}
+
+\new{paraBoxPop}{
+  \global\setbox\paraBoxStack\vbox{\unvbox\paraBoxStack
+    \global\setbox\paraBox\lastbox
+  }
+}
+
+\new{showParaBoxStack}{
+  \scrollmode\begingroup
+  \showboxbreadth\maxdimen\showboxdepth99
+  \showbox\paraBox \showbox\paraBoxStack
+  \endgroup \errorstopmode
+}
+
+\new{ifInPara}{}\newif\ifInPara
+
+% In \paraStart we fire up a vbox so that between-element spaces will be
+% ignored, even between sentences. And set paragraph params like \hsize
+% to values suitable for collecting text with line-breaking postponed
+% till later.
+
+\new{paraStart}{
+  \ifdim\hsize<\maxdimen \paraPushSetup \else \paraPushFake \fi
+  \ifvoid\paraBox
+  \else \paraBoxPush
+%    \showParaBoxStack
+  \fi
+  \ifnum\wd\paraBoxStack=\@ne
+  \else
+%    \showParaBoxStack
+    \paraBoxPop
+  \fi
+  \setbox\z@\vbox\bgroup
+    \InParatrue
+    \hsize\maxdimen \leftskip\z@skip \rightskip\z@skip
+    \parfillskip\z@ plus\hsize minus\hsize
+    \linepenalty\@M \parindent\z@
+}
+
+\new{paraEnd}{\@@par % should be redundant
+  \egroup % close temp box
+  \ifvoid\paraBox
+    % might be empty if a paragraph-interrupting object like equation or
+    % list occurred at the end of the para.
+  \else
+    \paraPopSetup \@@everypar\emptyToks \noindent \nextIndent
+    \unhbox\paraBox \@@par
+  \fi
+  \gdef\nextIndent{\hskip\parindent}
+}
+
+\new{resumeSomething}{}
+
+\new{resumeStack}{}
+
+\new{resumePop}{
+  \ifx\@empty\resumeStack \resumeError \fi
+  \def\@elt##1{\gdef\resumeSomething{##1}
+    \@xp\gdef\@xp\resumeStack\@xp{\iffalse}\fi}
+  \iffalse{\fi\resumeStack}
+}
+
+\new{resumeError}{\llsError{Empty_resume_stack}\@ehc}
+
+\new{resumePush}#1{
+  \pushToks\@xp{\resumeStack}
+  \toks@{\@elt{#1}}
+  \xdef\resumeStack{\the\toks@\the\pushToks}
+}
+
+% The \resumeAlt function substitutes the current top of the resumeStack
+% with a different value.
+\new{resumeAlt}#1{
+  \resumePop \resumePush{#1}
+}
+
+\new{breakPara}{
+  \ifhmode \@xp\breakParaA \else\ifinner\@xp\@xp\@xp\breakParaA\fi\fi
+}
+
+\new{breakParaA}{
+  \resumePush{\paraStart}
+  \ifInSentence \@xp\breakSentence
+  \else
+    \setTitle
+%    \showParaBoxStack
+  \fi
+  \paraEnd \gdef\nextIndent{\noindent}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sentence handling, initial cap handling
+%
+%    Before line-breaking is attempted, each paragraph is first stored
+%    in an hbox, adding one sentence at a time. Sentence processing
+%    involves descending one level further, starting a vbox in order to
+%    use \everypar for triggering initial-cap processing. If a
+%    vertical-mode interruption occurs in mid-sentence, such as a
+%    displayed equation, a quotation, or verbatim text, we treat the
+%    partial paragraph-so-far and sentence-so-far as a separate
+%    paragraph (as far as line-breaking is concerned). The alternative
+%    of simulating the proper line-for-line setup within the current
+%    paragraph is a nice idea as far as it goes but has certain
+%    technical difficulties in the prevention of widows and orphans.
+
+\new{sentenceBox}{}\newbox\sentenceBox
+
+\new{lastCharSf}{}\mathchardef\lastCharSf=1000_
+
+\new{setTitle}{}
+
+\new{sentenceTopFlag}{} \newskip\sentenceTopFlag
+  \sentenceTopFlag=11111sp\relax
+
+\new{ifInSentence}{}\newif\ifInSentence
+
+\new{nonParaError}{
+  \PackageError{lls}{Element must occur inside a paragraph}\@ehc
+}
+
+\new{startSentence}#1#2{
+  \ifInPara \else \nonParaError \fi
+  \ifInSentence
+  \else
+    \setbox\z@\vbox\bgroup
+      \InSentencetrue
+      \penalty\z@ \parskip\sentenceTopFlag
+      \@@everypar{#1\setTitle#2}
+  \fi
+}
+
+\new{startSentenceA}{}
+
+\new{startSentenceB}{\iniCap}
+
+\new{mathCharMax}{} \mathchardef\mathCharMax="7FFF\relax
+
+%    At the end of a sentence, append it to the current paragraph hlist.
+%    Arg 1 is end-of-sentence punctuation.
+%    End of sentence might follow immediately after a list or code
+%    section, in which case the punctuation should be suppressed.
+
+\new{endSentence}#1{\relax
+  \ifhmode \unskip
+    \ifnum\spacefactor>\mathCharMax
+      \global\mathchardef\lastSpaceFactor\z@
+    \else
+      \global\mathchardef\lastSpaceFactor\spacefactor
+    \fi
+    \ifnum\spacefactor>\@m \else #1\fi
+    \kern\spacefactor sp\relax
+    \@@par\addSentence
+  \else
+    \egroup % just close the temp box
+  \fi
+}
+
+% Assumption: Sentence always occurs inside Para. This is significant
+%    for the proper resumeSomething
+
+\new{breakSentence}{
+  \endSentence{}
+  \resumeAlt{\paraStart\resumeSentence}
+}
+
+\new{resumeSentence}{\setbox\z@\vbox\bgroup
+  \InSentencetrue
+  \penalty\z@ \parskip\sentenceTopFlag
+}
+
+\new{errAppSent}{
+  \llsError{addSentence:_can't_grab_last_box}\@ehc
+}
+
+\new{addSentence}{
+  \global\setbox\sentenceBox\lastbox
+  \ifdim\lastskip=\sentenceTopFlag
+  \else \lineLoopError
+  \fi
+  \egroup % close vbox
+  \ifvoid\sentenceBox \errAppSent \fi
+  \ifvoid\paraBox
+    \global\setbox\paraBox\hbox{
+      \unhbox\sentenceBox\unskip\unskip\unpenalty
+    }
+  \else
+    \global\setbox\paraBox\hbox{
+      \unhbox\paraBox
+      \count@\lastkern \unkern
+      \ifnum\count@=\z@ \else \spacefactor\count@ \space \fi
+      \unhbox\sentenceBox \unskip\unskip\unpenalty
+    }
+  \fi
+}
+
+\new{lineLoopError}{
+  \llsError{Sentence_processing_doesn't_handle_special_cases_yet}\@ehb
+}
+
+\minorelement{.}{
+  \startSentence\startSentenceA\startSentenceB
+}{\endSentence{.}}
+\minorelement{!}{
+  \startSentence\startSentenceA\startSentenceB
+}{\endSentence{!}}
+\minorelement{?}{
+  \startSentence\startSentenceA\startSentenceB
+}{\endSentence{?}}
+\minorelement{frag}{\startSentence\startSentenceA{}}{\endSentence{}}
+\minorelement{Frag}{
+  \startSentence\startSentenceA\startSentenceB
+}{\endSentence{}}
+
+\new{iniCap}#1{\ifcat\@nx#1A\uppercase{#1}\else\@xp#1\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lists
+
+\new{indented}#1#2{
+  \advance\@totalleftmargin#1
+  \linewidth\hsize \advance\linewidth-#2
+  \advance\linewidth-\@totalleftmargin
+  \@parshape{
+    \parshape \@ne\the\@totalleftmargin\space \the\linewidth\relax
+  }
+  \the\@parshape \@setpar{{\@@par}}
+}
+
+\displayelement{enumerate}{\breakPara}{\resumePop\resumeSomething}
+
+\displayelement{itemize}{\breakPara}{\resumePop\resumeSomething}
+
+\displayelement{description}{
+  \breakPara
+  \def\@title{\textemdash}%
+  \def\itemTitle{\ifx\@empty\@title 
+    \else {\bfseries\@title}\enspace\fi}
+  \let\doTitle\relax % all the work is handled by \itemTitle
+  \indented{1em}{\z@}
+}{
+  \@restorepar
+  \resumePop\resumeSomething
+}
+
+\new{flushTitle}{\startSentence\startSentenceA{}\noindent\endSentence{}}
+
+\minorelement{item}{
+  \paraStart \addTitle{\itemTitle}
+}{
+  % If there was no body text, print the title anyway.
+  \ifx\@empty\setTitle \else \flushTitle\fi
+  \paraEnd
+}
+
+\new{itemTitle}{\textbullet\enspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other stuff
+
+% Typical usage of the macros element:
+%
+% (macros>(def>aaa<def)(def>bbb<def)...
+% (para>...
+% 
+% The def objects should be stored up and printed at the beginning of
+% the next paragraph.
+
+
+
+\minorelement{define}{
+  \par\medskip
+  \global\let\macrosNamesList\@empty
+  \addTitle{\printMacroNames}
+}{
+}
+
+\minorelement{macros}{\readTo\addDef}{}
+\minorelement{cmd}{\readTo\addDef}{}
+\minorelement{toks}{\readTo\addDef}{}
+\minorelement{const}{\readTo\addDef}{}
+\minorelement{set}{\readTo\addDef}{}
+
+\new{addDef}#1{
+  \xdef\macrosNamesList{
+    \ifx\@empty\macrosNamesList\else\macrosNamesList,\fi\fi#1
+  }
+}
+
+
+%    Stuff the macro names into paraBox
+\new{printMacroNames}{
+  \global\setbox\paraBox\hbox{
+    \ifvoid\paraBox \else \unhbox\paraBox\penalty-\@M \fi
+    \dimen@1em \advance\dimen@\parindent \kern-\dimen@
+    \normaltt
+    \fboxsep1.5\p@ \relax
+    \@for\@tempa:=\macrosNamesList\do{
+      \colorbox{Agray}{\char92_\@tempa}\quad
+    }
+    \unskip \hfil\vrule width\z@ depth1ex \relax\penalty-\@Mi
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Callin handling
+
+\withSpecialCatcodes\]\active{
+\new{startCallin}#1]}{
+  \@xp\callinCheck\csname [#1\endcsname}
+
+\DeclareRobustCommand\[{\startCallin}
+
+\new{barestring}{\@xp\@gobble\string}
+
+% Here we could maybe invoke a lookup operation for symbols that are not
+% already defined. [mjd,1997/08/20]
+
+\new{callinCheck}#1{\ifx#1\relax \@xp\callinCheckA\fi#1}
+\new{callinCheckA}#1{
+  \PackageWarning{llssetup}{Undefined_nugget:_\barestring#1]}
+  \@xp\callinCheckB\string#1\@nil
+}
+
+% Discard leading escapechar and [ char.
+\new{callinCheckB}#1#2#3\@nil{\callin{#3}{[#3 ??]}}
+
+\new{textCmd}{\ifmmode \@nomath{}\else\leavevmode\fi}
+\new{textcallin}#1#2{
+  \@xp\gdef\csname [#1\endcsname{\textCmd#2}
+}
+\new{callin}#1#2{
+  \@xp\gdef\csname [#1\endcsname{#2}
+}
+\new{mathcallin}#1#2{
+  \@xp\gdef\csname [#1\endcsname{\mathCmd#2}
+}
+
+\new{mathCmd}{\ifmmode\else\mathError\fi}
+
+\new{mathError}{\PackageError{llssetup}{Misplaced math command}{}}
+
+\new{callchar}#1#2{\global\@xp\chardef\csname[#1\endcsname=#2\relax}
+
+%    Font encoding complications here, needs work. Also double quotes
+%\callchar{ndash}{"7B}
+%\callchar{mdash}{"7C}
+\textcallin{ndash}{\unskip\char"7B_\ignorespaces}
+\textcallin{mdash}{\unskip\char"7C_\ignorespaces}
+\textcallin{lbrace}{
+  \begingroup\normaltt\symbol{123}\endgroup}
+\textcallin{rbrace}{
+  \begingroup\normaltt\symbol{125}\endgroup}
+
+\textcallin{ie}{i.e.}
+\textcallin{etc}{etc.}
+\textcallin{eg}{e.g.}
+\textcallin{cf}{cf.}
+
+\callin{dots}{\ifmmode\ldots\else\dots\fi}
+% Patch!
+\renew{textellipsis}{\mbox{$\ldots$}}
+\renew{textbullet}{\mbox{$\bullet$}}
+\textcallin{slash}{\slash}
+\textcallin{hat}{\texttt{\string ^}}
+\textcallin{percent}{\char`\%\relax}
+\textcallin{lparen}{(}\textcallin{rparen}{)}
+\textcallin{lp}{(}\textcallin{rp}{)}
+\textcallin{lc}{\begingroup\normaltt\symbol{123}\endgroup}
+\textcallin{rc}{\begingroup\normaltt\symbol{125}\endgroup}
+\textcallin{dq}{\texttt{"}}
+\textcallin{underscore}{\begingroup\normaltt\symbol{95}\endgroup}
+
+\textcallin{dbldollars}{\texttt{\string $\string $}}
+
+\mathcallin{leq}{\leq}
+\mathcallin{geq}{\geq}
+\mathcallin{langle}{\langle}
+\mathcallin{rangle}{\rangle}
+\mathcallin{times}{\times}
+\mathcallin{in}{\in}
+
+\textcallin{textprime}{\mbox{$\sp\prime$}}
+
+\textcallin{tex}{\protect\TeX{}}
+\textcallin{latex}{\protect\LaTeX{}}
+\textcallin{latex2e}{\protect\LaTeX{}\nobreak\thinspace 2e}
+\textcallin{amstex}{AMS-\protect\TeX{}}
+\textcallin{texbook}{\textsl{The \protect\TeX{}book}}
+
+\textcallin{tfm}{\begingroup\normaltt tfm\endgroup}
+\textcallin{ascii}{\textsc{ascii}}
+
+\textcallin{dbslash}{\begingroup\normaltt\symbol{92}\symbol{92}\endgroup}
+\textcallin{bslash}{\begingroup\normaltt\symbol{92}\endgroup}
+
+\new{macarg}#1{\begingroup\normaltt\symbol{35}#1\endgroup}
+\textcallin{arg1}{\macarg{1}}
+\textcallin{arg2}{\macarg{2}}
+\textcallin{arg3}{\macarg{3}}
+\textcallin{arg4}{\macarg{4}}
+\textcallin{arg5}{\macarg{5}}
+\textcallin{arg6}{\macarg{6}}
+\textcallin{arg7}{\macarg{7}}
+\textcallin{arg8}{\macarg{8}}
+\textcallin{arg9}{\macarg{9}}
+
+\textcallin{visiblespace}{\begingroup\normaltt\char32 \endgroup}
+
+\callin{trace220}{
+  \escapechar92
+  \global\tracingmacros2\global\tracingcommands2\global\tracingonline\z@
+  
+}
+\callin{traceoff}{
+  \escapechar5
+  \global\tracingmacros0\global\tracingcommands0\global\tracingonline\z@
+}
+\callin{showlists}{
+  \begingroup
+    \escapechar92
+    \showboxbreadth\maxdimen\showboxdepth99\showlists
+  \endgroup
+}
+
+\latexCatcodes
+\RequirePackage{keyval}\relax
+\RequirePackage{amstext}\relax
+\dehCatcodes
+
+% |(calldef{name={foo}}>...|<calldef)
+\minorelement{calldef}{\get@options\readTo{\readHandler}}{}
+\define@key{calldef}{name}{\def\readHandler{\callin{#1}}}
+
+\define@key{tracing}{macros}{\global\tracingmacros=#1\relax}
+\define@key{tracing}{commands}{\global\tracingcommands=#1\relax}
+\define@key{tracing}{online}{\global\tracingonline=#1\relax}
+\define@key{tracing}{paragraphs}{\global\tracingparagraphs=#1\relax}
+\define@key{tracing}{pages}{\global\tracingpages=#1\relax}
+\define@key{tracing}{output}{\global\tracingoutput=#1\relax}
+\define@key{tracing}{boxbreadth}{\global\showboxbreadth=#1\relax}
+\define@key{tracing}{boxdepth}{\global\showboxdepth=#1\relax}
+
+\element{tracing}{}{}
+
+\callin{debugPara}{
+%  \message{\string\par:_\meaning\par}
+%  \message{\string\everypar:_\the\@@everypar}
+%  \message{\string\parindent:_\the\parindent}
+  \message{\string\hsize:_\the\hsize}
+  \message{\string\pretolerance:_\the\pretolerance}
+  \message{\string\tolerance:_\the\tolerance}
+  \message{\string\emergencystretch:_\the\emergencystretch}
+  \message{\string\linepenalty:_\the\linepenalty}
+  \message{\string\doublehyphendemerits:_\the\doublehyphendemerits}
+  \message{\string\finalhyphendemerits:_\the\finalhyphendemerits}
+  \message{\string\adjdemerits:_\the\adjdemerits}
+  \message{\string\looseness:_\the\looseness}
+  \message{\string\hangindent:_\the\hangindent}
+  \message{\string\hangafter:_\the\hangafter}
+  \message{\string\parshape:_\the\parshape}
+  \message{\string\parfillskip:_\the\parfillskip}
+  \message{\string\leftskip:_\the\leftskip}
+  \message{\string\rightskip:_\the\rightskip}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    The `prolog' element is used for encapsulating top-level
+%    information about the whole document such as title, author, key
+%    words, administrative notes, etc. This is for anything that cannot
+%    go into the qualifiers of the `document' element, because of
+%    containing element tags.
+
+\element{prolog}{}{\maketitle\thispagestyle{empty}}
+
+\element{epilog}{}{}
+
+\minorelement{title}{\readTo{\def\@title}}{\doTitle}
+\let\doTitle\relax % changed by (section:
+
+\minorelement{author}{\readTo\author}{}
+\minorelement{date}{\readTo\date}{}
+
+\minorelement{sb}{\sb\bgroup}{\egroup}
+\minorelement{sp}{\sp\bgroup}{\egroup}
+
+\minorelement{text}{\readTo\vtext}{}
+
+\new{vtext}#1{
+  \text{\let\chg@font\@empty \get@options \chg@font#1}
+}
+
+\withSpecialCatcodes\/\active{
+\define@key{text}{font}{\def\chg@font{\vselect@font#1///\@nil}}
+}
+
+% #1 family #2 series #3 shape
+\withSpecialCatcodes\/\active{
+\new{vselect@font}#1/#2/#3/#4\@nil{%
+  \if !\noexpand#1!\else\fontfamily{#1}\fi
+  \if !\noexpand#2!\else\fontseries{#2}\fi
+  \if !\noexpand#3!\else\fontshape{#3}\fi
+  \selectfont
+}
+}
+
+\withSpecialCatcodes\)\active{
+\new{readTo}#1{
+  \begingroup
+  \toks@\@xp{\endTagName}
+  \edef\@tempb##1##{
+    \def\@nx\@tempa####1####2\@nx\<\the\toks@\@nx)}
+  \@tempb
+  \def\@tempa...{\endgroup ##1{##2}\@xp\endElement\elName)}
+  \@tempa{#1}
+}
+}% end special catcodes
+
+\new{capTitle}#1{
+  \def\@tempa##1##2\@nil{
+    \uppercase{\toks@{##1}}\@temptokena{##2}
+    \edef\@tempb{\@nx#1{\the\toks@\the\@temptokena}}
+    \@tempb
+  }
+  \@xp\@tempa\@title\@nil
+}
+
+\element{section}{
+  \par\bigskip
+  \def\doTitle{\capTitle\section}
+}{}
+
+\element{subsection}{
+  \par\medskip
+  \def\doTitle{\capTitle\subsection}
+}{}
+
+\new{addTitle}#1{
+  \ifx\@empty\setTitle
+    \gdef\setTitle{\global\let\setTitle\@empty #1}
+  \else
+    \g@addto@macro\setTitle{#1}
+  \fi
+}
+
+\new{testTitle}{
+  \par\begingroup \itshape
+  \paraStart\startSentence\startSentenceA\startSentenceB
+    \@title\endSentence{}\paraEnd
+  \endgroup
+}
+
+\element{test}{\let\doTitle\testTitle}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figures
+
+\define@key{figure}{id}{\idLabel{#1}}
+
+% Save figure title and put it below, with \caption.
+
+\element{figure}{
+  \def\doTitle{
+    \refstepcounter{figure}\nextLabel\addtocounter{figure}{-1}
+    \toks@\@xp{\@title}
+    \xdef\figTitle{\@nx\caption[]{\@nx\iniCap\the\toks@}}
+  }
+  \get@options
+  \begin{figure}
+}{
+  \figTitle
+  \end{figure}
+}
+
+% Element "float" is for calling in a predefined referenceable object at
+% a given point.
+
+\element{float}{\readTo\toks@}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Labels and refs
+\new{nextLabel}{}
+
+\new{idLabel}#1{
+  \gdef\nextLabel{
+    \global\let\nextLabel\@empty
+    \label{#1}}}
+
+\minorelement{ref}{\readTo\ref}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\new{normaltt}{\normalfont\ttfamily}
+
+\element{pkg}{\normaltt}{}
+\elementsynonym{cls}{pkg}
+\elementsynonym{opt}{pkg}
+\elementsynonym{env}{pkg}
+\element{fn}{\normaltt}{}
+\element{cs}{
+  \@makeother\ \@makeother\^\readTo{\def\@verb}
+}{
+  \normaltt\symbol{92}\@xp\strip@prefix\meaning\@verb
+}
+\elementsynonym{cn}{cs}
+
+\element{arg}{\normaltt\symbol{35}}{}
+
+%    In the argument of qc it may be necessary to use references like
+%    [lp] for left-paren or [hat] for hat.
+\element{qc}{\normaltt}{}
+
+\element{eqtype}{\bfseries}{}
+
+\displayelement{aside}{
+  \breakPara
+  \begingroup
+  \bfseries \medskip
+  \@parboxrestore \advance\leftskip 2em\relax
+  \paraStart
+}{
+  \paraEnd 
+  \medskip
+  \endgroup
+  \resumePop\resumeSomething
+}
+
+\new{@@display}{$$}
+\let\@@enddisplay\@@display
+
+\new{@nulldisplay}{
+  \edef\@revert{\frozenEverydisplay{\the\frozenEverydisplay}}
+  \frozenEverydisplay\@emptytoks
+  \@@display
+  \predisplaypenalty\@M \postdisplaypenalty\@M
+  \abovedisplayskip\z@skip \abovedisplayshortskip\z@skip
+  \xdef\@displayinfo{
+    \prevgraf\the\prevgraf \predisplaysize\the\predisplaysize
+    \displaywidth\the\displaywidth \displayindent\the\displayindent}
+  \everycr{}
+  \halign{##\cr}
+  \@@enddisplay
+  \@revert
+  \par
+  \@displayinfo
+}
+
+%    Suppose we have the structure
+%
+%    (para> (.>text ... (d> ... <d) <.) <para)
+%
+%    Then when element "d" commences we get
+%
+%    elStack = ("d" "." "para" ... "document")
+%
+%    and the state is
+%
+%    \setbox\z@\vbox\bgroup (para)
+%    (.)
+%    \setbox\z@\vbox\bgroup (startSentence)
+%
+%    We want to print the accumulated sentences in the current para,
+%    typeset the "d" element, and then revert to the in-sentence state
+%    that prevailed before.
+%
+%    Then from \paraBreak we get
+%
+%    \endgroup (abort d)
+%    \breakSentence (addSentence, \endSentenceGroup = \egroup)
+%    \partialPara (plunk stuff on the vlist)
+%
+%    and now we can resume working on element "d":
+%    
+%    \@restart \begingroup
+%
+%    which leaves us in the situation
+%
+%    \begingroup (para)
+%    \begingroup (.)
+%      \resumeSentence = T
+%    \begingroup (d)
+%
+%    with \elStack properly synchronized we hope.
+%
+%    Element d then continues with *another* paraStart but if
+%    everything is nicely encapsulized we get down to \paraEnd
+%    routinely and then continue with \paraRestart which does
+%
+%    \endgroup (finish off "d" element)
+%    \elPop (now "." is current element)
+%    \resumePara (set \hsize, \nextIndent)
+%    \startSentence --> \setbox\z@\vbox\bgroup
+
+\element{d}{
+  \breakPara \begingroup
+%  \bfseries
+  \advance\leftmargin 2em\relax
+  \paraStart
+}{
+  \paraEnd \endgroup \resumePop \resumeSomething
+}
+
+\new{errInSentence}#1{
+  \llsError{Element_`#1'_not_allowed_inside_a_sentence}\@ehc}
+
+\displayelement{dn}{
+  \breakPara \begingroup \bfseries
+}{
+  \endgroup \resumePop \resumeSomething
+}
+
+\element{"}{
+  \@makeother\ \@makeother\^\readTo{\def\@verb}
+}{
+  \normaltt\@xp\strip@prefix\meaning\@verb
+}
+
+%    A comment
+\minorelement{|}{\readTo\@gobble}{}
+
+%    \litSetup corresponds more or less to \@verbatim
+\new{litSetup}{
+  \@@par
+  \let\@exec\stringExec % handle activated chars
+  \@makeother\^% special case
+  \hsize\columnwidth
+%    From here we have a copy of \@verbatim with some stuff dropped out.
+  \leftskip\@totalleftmargin \rightskip\z@skip
+  \parindent\z@ \parfillskip\@flushglue \parskip\z@skip
+  \verbatim@font \@noligs
+%    Note that normal endlinechar is space (32)
+  \endlinechar=13\relax
+  \def\@ControlM{\leavevmode\null\@@par \penalty\interlinepenalty}
+  \clubpenalty\@M
+  \@vobeyspaces % changes <space> to active
+%    Define the first space (from endlinechar) to do nothing
+  \begingroup \endgroupSpace
+}
+
+\withSpecialCatcodes \ \active{\def\endgroupSpace{\let \endgroup}}
+
+\begingroup \catcode`\ =\active \gdef {\@space}\endgroup
+\begingroup \catcode`\^^M=\active \gdef^^M{\@ControlM}\endgroup
+\let\@space=\space
+\let\@ControlM=\space
+
+\def\@xobeysp{\unhbox\voidb@x \penalty\@M \ }
+
+\new{litEnd}{\par}
+
+\displayelement{literal}{
+  \breakPara
+  \get@options
+  \medskip\begingroup \litSetup \ignorespaces
+}{
+  \litEnd \endgroup \medskip \resumePop \resumeSomething
+}
+
+\define@key{literal}{size}{%
+  \ifcase#1\relax\or\or\or\or\or\or\or
+  \or \def\verbatim@font{\footnotesize}% size 8
+  \or \def\verbatim@font{\small}       % size 9
+  \else \def\verbatim@font{\normalsize}% size 10
+  \fi
+}
+
+\displayelement{code}{
+  \breakPara \get@options
+  \medskip \begingroup \litSetup \ignorespaces
+}{
+  \litEnd \endgroup \medskip \resumePop \resumeSomething
+}
+
+\define@key{code}{size}{%
+  \ifcase#1\relax\or\or\or\or\or\or\or
+  \or \def\verbatim@font{\footnotesize}% size 8
+  \or \def\verbatim@font{\small}       % size 9
+  \else \def\verbatim@font{\normalsize}% size 10
+  \fi
+}
+
+%    Special function for parens and such that might occur either inside
+%    or outside of a sentence structure.
+\new{startBrace}{
+  \ifmmode\@xp\mathStartBrace\else\@xp\textStartBrace\fi
+}
+\new{textStartBrace}#1{
+  \ifInSentence #1\ignorespaces
+  \else \startSentence\startSentenceA{#1\iniCap}
+  \fi
+}
+\new{mathStartBrace}#1{#1}
+
+\new{endBrace}{
+  \ifmmode\@xp\mathEndBrace\else\@xp\textEndBrace\fi
+}
+\new{textEndBrace}#1{
+  \ifInSentence \unskip\@@italiccorr #1
+  \else
+    \startSentence\startSentenceA\startSentenceB
+    \ifvoid\paraBox
+    \else
+      \noindent \unhbox\paraBox
+      \count@\lastkern \unkern \spacefactor\count@
+    \fi
+    #1\endSentence{}
+  \fi
+}
+\new{mathEndBrace}#1{#1}
+
+\element{q}{\startBrace{`}}{\endBrace{'}}
+\element{qq}{\startBrace{``}}{\endBrace{''}}
+\element{p}{\startBrace{(}}{\endBrace{)}}
+\element{b}{\startBrace{[}}{\endBrace{]}}
+\element{cb}{\startBrace{\{}}{\endBrace{\}}}% curly braces
+\element{m}{$}{$}
+\element{t}{\hbox\bgroup}{\egroup}
+
+% code fragment:
+\element{c}{\normaltt}{}
+
+\element{emph}{\em}{\@@italiccorr}
+\element{ttq}{\normaltt}{}
+\element{booktitle}{\em}{\@@italiccorr}
+
+\element{displaymath}{\startVbox\noindent\displaymath}{\enddisplaymath\appendVbox}
+
+% Need \vadjust \insert \mark handling for proper handling of footnotes etc.
+\minorelement{footnote}{\readTo\footnote}{}
+
+\minorelement{style}{\readTo\@gobble}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\oPackages\@empty
+\def\loadPackages{
+  \@for\@tempa:=\oPackages\do{
+    \@xp\usepackage\@xp{\@tempa}
+  }
+}
+
+\define@key{document}{filename}{\gdef\document@filename{#1}}
+\define@key{document}{version}{\gdef\document@version{#1}}
+\define@key{document}{date}{\gdef\document@date{#1}}
+
+\element{document}{
+  \endgroup
+  \get@options
+  \latexCatcodes
+  \ifx\@empty\oPackages \else\@xp\loadPackages\fi
+  \llsCatcodes
+  \begingroup
+  \document
+}{
+  \enddocument
+}
+
+% Older versions of LaTeX (e.g., 1995/06/01) didn't have \nobreakspace
+\@ifundefined{nobreakspace}{
+  \DeclareRobustCommand\nobreakspace{
+    \ifhmode\unskip\penalty\@M\fi\ \ignorespaces
+  }
+}
+
+\element{latexfile}{\readTo\latexFileA}{}
+\new{latexFileA}#1{\latexCatcodes\input{#1}}
+
+\element{latex}{
+  \latexCatcodes \let\@oldend\<
+  \def\<{\llsCatcodes \let\<\@oldend\<}
+}{
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Patch some protective stuff.
+
+\def\protected@write#1#2#3{
+  \begingroup \let\thepage\relax #2%
+    \let\protect\@unexpandable@protect \let\@exec\@gobble
+    \setEscapechar % for anything that gets \string'd in the edef
+    \edef\reservedA{\write#1{#3}}
+    \reservedA
+  \endgroup
+  \if@nobreak\ifvmode\nobreak\fi\fi
+}
+
+\def\markboth#1#2{\toks@{{#1}{#2}}\xdef\@themark{\the\toks@}\mark{\the\toks@}}
+\def\markright{\markboth{}}
+
+\def\setEscapechar{\escapechar=5 }
+
+\let\normalsfcodes\relax % recent addition to LaTeX [mjd,1997/08/20]
+
+\def\@outputpage{
+\begingroup           % the \endgroup is put in by \aftergroup
+  \let \protect \noexpand
+  \setEscapechar % for non-immediate \write's
+  \@resetactivechars
+  \@parboxrestore
+  \shipout \vbox{
+    \escapechar=`\\\relax % for processing \@thehead, \@thefoot
+    \set@typeset@protect
+    \aftergroup \endgroup
+    \aftergroup \set@typeset@protect
+  \if@specialpage
+    \global\@specialpagefalse\@nameuse{ps@\@specialstyle}
+  \fi
+  \if@twoside
+    \ifodd\count\z@ \let\@thehead\@oddhead \let\@thefoot\@oddfoot
+         \let\@themargin\oddsidemargin
+    \else \let\@thehead\@evenhead
+       \let\@thefoot\@evenfoot \let\@themargin\evensidemargin
+    \fi
+  \fi
+  \reset@font
+  \normalsize
+  \normalsfcodes
+  \let\label\@gobble
+  \let\index\@gobble
+  \let\glossary\@gobble
+  \baselineskip\z@skip \lineskip\z@skip \lineskiplimit\z@
+    \@begindvi
+    \vskip \topmargin
+    \moveright\@themargin \vbox {
+      \setbox\@tempboxa \vbox to\headheight{
+        \vfil
+        \color@hbox
+          \normalcolor
+          \hb@xt@\textwidth{\@thehead}
+        \color@endbox
+        }%                        %% 22 Feb 87
+      \dp\@tempboxa \z@
+      \box\@tempboxa
+      \vskip \headsep
+      \box\@outputbox
+      \baselineskip \footskip
+      \color@hbox
+        \normalcolor
+        \hb@xt@\textwidth{\@thefoot}
+      \color@endbox
+      }
+    }
+  \global \@colht \textheight
+  \stepcounter{page}
+  \let\firstmark\botmark
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\new{unusedOptions}{
+  \@latex@warningnoline{Unused global option(s):\MessageBreak
+    \@spaces[\@unusedoptionlist]}
+}
+
+\def\document{\endgroup
+  \ifx\@unusedoptionlist\@empty\else \unusedOptions \fi
+  \@colht\textheight \@colroom\textheight \vsize\textheight
+  \columnwidth\textwidth
+  \@clubpenalty\clubpenalty
+  \if@twocolumn
+    \advance\columnwidth -\columnsep
+    \divide\columnwidth\tw@ \hsize\columnwidth \@firstcolumntrue
+  \fi
+  \hsize\columnwidth \linewidth\hsize
+  \begingroup \@floatplacement \@dblfloatplacement
+    \makeatletter \let\@writefile\@gobbletwo
+    \global\let\@multiplelabels\relax
+    \catcode`\{=\@ne \catcode`\}=\tw@ %% hack! coff!
+    \@input{\jobname.aux}
+  \endgroup
+  \if@filesw
+    \begingroup \escapechar=5
+    \immediate\openout\@mainaux\jobname.aux
+    \immediate\write\@mainaux{\relax}
+    \endgroup
+  \fi
+  \process@table
+  \let\glb@currsize\@empty  %% Force math initialisation.
+  \normalsize
+  \everypar{}\@noskipsecfalse
+  \let\@nodocument\relax
+  \let\@refundefined\relax
+  \let\AtBeginDocument\@firstofone
+  \@begindocumenthook
+  \ifdim\topskip< 1sp\global\topskip 1sp\relax\fi
+  \global\@maxdepth\maxdepth
+  \global\let\@begindocumenthook\@undefined
+  \ifx\@listfiles\@undefined
+    \global\let\@filelist\relax
+    \global\let\@addtofilelist\@gobble
+  \fi
+  \gdef\do##1{\global\let ##1\@notprerr}
+  \@preamblecmds
+  \global\let\do\@nx
+  \ignorespaces}
+
+\new{@fontSubWarning}{
+  \@font@warning{Size_substitutions_with_differences\MessageBreak
+    up_to_\font@submax\space have_occurred.\@gobbletwo}
+}
+
+\new{rerunWarning}{
+  \@latex@warning@no@line{Label(s)_may_have_changed._
+    Rerun_to_get_cross-references_right}
+}
+
+\def\enddocument{
+   \@enddocumenthook
+   \@checkend{document}
+   \clearpage
+   \begingroup
+     \if@filesw
+       \immediate\closeout\@mainaux
+       \let\@setckpt\@gobbletwo
+       \let\@newl@bel\@testdef
+       \@tempswafalse
+       \makeatletter
+       \catcode`\{=\@ne \catcode`\}=\tw@ %% hack! coff!
+       \@@input\jobname.aux \relax
+     \fi
+     \@dofilelist
+     \ifdim \font@submax >\fontsubfuzz\relax \@fontSubWarning \fi
+%     \@defaultsubs
+     \@refundefined
+     \if@filesw
+       \ifx \@multiplelabels \relax
+         \if@tempswa \rerunWarning \fi
+       \else
+         \@multiplelabels
+       \fi
+     \fi
+   \endgroup
+   \deadcycles\z@\@@end}
+
+\def\set@display@protect{\let\protect\string \escapechar92_}
+\def\restore@protect{\let\protect\@@protect \escapechar5_}
+
+% Suppress toc creation until this can be better rewritten.
+
+\let\addtocontents\@gobbletwo
+
+\latexCatcodes
+\documentclass[twocolumn,landscape]{report}\relax
+\RequirePackage[dvips]{color}
+\escapechar=5
+\definecolor{Agray}{gray}{0.95}
+\definecolor{Bgray}{gray}{0.75}
+\escapechar=92
+\makeatletter
+
+% reduce font sizes
+\let\Huge\large\let\huge\large\let\LARGE\large\let\Large\large
+%\let\large\normalsize \let\normalsize\small \let\small\footnotesize
+
+\textwidth=10in \oddsidemargin=-.5in \evensidemargin\oddsidemargin
+\textheight=7in \topmargin=-.5in
+\headheight=6.5pt \headsep=10pt
+
+\def\ps@headings{%
+  \def\@oddhead{\qquad\leftmark{}{}\qquad\hfill
+    \qquad\rightmark{}{}\qquad\thepage}%
+  \let\@evenhead\@oddhead
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+  \def\sectionmark{\markright}%
+}
+\pagestyle{headings}
+
+\new{raggedrightcustom}{
+  \leftskip\z@skip \rightskip=\z@ plus3em \relax
+  \pretolerance=50 \tolerance=9999 \hbadness=\tolerance
+  \parfillskip\z@ plus1fil\relax
+  \hyphenpenalty=2222\relax
+}
+
+%    Default is ragged right text with no extra inter-sentence space.
+\frenchspacing
+\raggedrightcustom
+
+\DeclareFixedFont{\cmsyten}{OMS}{cmsy}{m}{n}{10}
+\new{dbullet}{
+  \begingroup\cmsyten\char"05 \kern-.1em \char"1F \endgroup
+}
+
+\renewcommand\thesection{\arabic{section}}
+
+\def\maketitle{%
+  \begingroup \Large \centering
+    {\bfseries\@title\par}%
+    \begingroup \toks@\@xp{\@title}%
+      \edef\@tempa{\@nx\markboth{\the\toks@}{\the\toks@}}%
+      \@tempa
+    \endgroup
+    \medskip
+    \@author\par
+    \bigskip
+    {\small\@date\par}%
+    \vskip2\baselineskip plus.5\baselineskip\relax
+  \endgroup
+  \global\@topnum\z@
+}
+
+\def\fnum@figure{\figurename\nobreakspace\thefigure}
+\def\fnum@table{\tablename\nobreakspace\thetable}
+
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \paraStart\startSentence\startSentenceA\startSentenceB
+    \begingroup\bfseries#1.\endgroup\space
+    \iniCap#2\endSentence{}\paraEnd
+  \vskip\belowcaptionskip
+}
+
+\endinput \llsCatcodes

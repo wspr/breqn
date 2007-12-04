@@ -1,0 +1,868 @@
+% requires LaTeX format (1995 or later)
+\input{lls.deh}
+(document
+  filenameflexisym.lls
+  version1.0 1999-11-30
+
+(prolog
+(titleThe (pkgflexisym<pkg) package<title)
+(authorDownes, Michael J.<author)
+<prolog)
+(section(titleintroduction<title)
+(para(.the (pkgflexisym<pkg) package makes it possible to
+redefine all math symbol commands in such a way that their action can
+change dynamically at run-time<.)
+(.the initial motivation was to allow math symbols of classes 2, 3, 4,
+and 5 to perform relatively complex operations in a displayed equation,
+to support automatic line breaking<.)
+(.another potential application would be smarter handling of line
+breaks in inline math formulas: forbidding line breaks within
+parenthesized expressions such as (mf(pa+b<p)<m), or allowing them
+in a comma-separated list<.)
+<para)
+(para(.one of the more significant technical constraints is that
+we would like math symbols to continue to work reliably in (qmoving
+arguments<q) without having to be made all into (csprotect<cs)ed
+commands[mdash]which would be costly in terms of hash size and string
+pool<.) (.furthermore, the normal definition of (csprotect<cs) is
+(csrelax<cs), and if (csalpha<cs) expands to
+(literal
+\protect\mathsym....
+<literal)
+then ("x^\alpha<") expands to
+(literal
+x^\relax\mathsym....
+<literal)
+which is unfortunately not too successful at getting the alpha symbol
+into the superscript where it belongs<.)
+(.in fact if there is any sort of assignment or other nonexpandable
+operation preceding the internal call to (csmathchar<cs),
+superscripting gets broken<.) (.we could arrange to include an extra
+pair of braces in the definition, so that (csalpha<cs) expands to
+something like
+(literal
+{\protect\mathsym....}
+<literal)
+but this is only useful for symbols of class mathord; for a symbol of
+class mathbin, mathrel, or anything else, the extra braces reduce the
+symbol to a mathord and destroy the natural spacing for its class that it
+ought to have had if used anywhere (emphother<emph) than a sub or
+superscript<.)
+(.the only practicable solution that I can see, apart from using an
+extended version of [tex], is to change the sub and superscript
+operators to read their argument as a macro argument and supply the
+needed braces<.) (.furthermore, in conjunction with suitable syntax
+changes for [tex]'s generalized fraction functions, this makes it
+possible to maintain a current mathstyle variable and do away with all
+the wide-ranging restrictions that the lack of such a variable currently
+places on mathematical typesetting in [tex]<.) (p(.for example,
+the multiple typesetting done by the (csmathchoice<cs)
+primitive[mdash]which is the reason that the (pkgamstext<pkg)
+package (pcirca 1995<p) is forced to set up an
+(csiffirstchoice@<cs) test and redefine some key [latex] functions,
+which would otherwise not be necessary; or the very fact that mathgroup
+font assignments are unresolved until the end of a math formula, which
+is responsible for a lot of complex, bug-prone overhead in the [latex]
+font selection scheme<.)<p)
+<para)
+(para
+(.let us start by considering the standard definitions of some common
+math symbols:
+(literal
+      e: mathcode "7165
+      1: mathcode "7031
+    \pi: mathchar"119
+      -: mathcode "2200
+      =: mathcode "303D
+   \sum: mathchar"1350
+   \int: \intop\nolimits
+      (: mathcode "4028, delcode "028300
+     \}: \ifmmode \rbrace \else \textbraceright \fi
+\rbrace: \delimiter "5267309
+   \neq: \not =
+   \hat: \mathaccent "705E\relax
+<literal)
+<.) (.these symbols (pexcept for (cs}<cs), which is a different
+sort of beast<p) are redefined by the (pkgflexisym<pkg)
+package as follows<.) (.first, all non-control-sequence symbols such
+as ("e 1 - = (<") get the magic mathcode of (""8000<") so that
+they will run a custom function if executed in math mode, and the active
+version of each of those characters is defined to run the desired
+function<.)
+(.this unifies the handling of control-sequence and
+non-control-sequence math symbol commands<.)
+(.it does, however, require some synchronization with packages such as
+Babel that make certain punctuation characters active[mdash][eg],
+(qc:<qc) or (qc!<qc)<.)
+<para)
+(para(.then the problem is reduced to the problem of providing a
+suitable macro definition for a math symbol command such as
+(cspi<cs)<.) (?what do we want the definition to look like<?)
+(.here are examples<.)
+(literal
+      e: \@sym        e\m@Var \mg@latin 65
+      1: \@sym        1\m@Var \mg@digit 31
+    \pi: \@sym     \pi \m@Ord \mg@greek 19
+      -: \@sym        -\m@Bin \mg@bin   00
+      =: \@sym        =\m@Rel \mg@rel   3D
+   \sum: \@sym    \sum \m@COs \mg@cop   50
+   \int: \@sym    \int \m@COi \mg@cop   52
+      (: \@sym        (\m@DeL \mg@del   00
+      ): \@sym        )\m@DeR \mg@del   01
+  \vert: \@sym   \vert \m@DeB \mg@del   0C
+\rbrace: \@sym \rbrace \m@DeR \mg@del   09
+   \neq: \@symRel \neq {\OrdSymbol{\notRel =}}
+   \hat: \@symAc  \hat \m@Acc \mg@accent 5E
+<literal)
+(.the (cs@sym<cs) function is a general math symbol prefix
+function that might be used to allocate mathgroup numbers on demand, or
+apply protection if it's really wanted (pthere is a speed cost<p),
+or to modify following parts of a math symbol definition, [eg]to switch
+to a bold version of the symbol<.)
+(.the next token in each definition is the name of the symbol, repeated<.)
+(.this allows math symbols to be made robust via essentially the same
+mechanism as that of (csDeclareTextSymbol<cs)<.)
+(.the third component is a function that resolves to something like
+(literal
+\mathchar"3
+<literal)
+but it provides a slight generalization of the fixed set of eight math
+classes that [tex] provides, which we will use to advantage in
+discriminating between sum-style large operators and integral-style
+large operators, and elsewhere<.)
+(.the remaining tokens are read as arguments of the mathclass
+function<.)
+(.the last two tokens in a math symbol definition are hexadecimal
+digits indicating a font slot, while the token preceding them is a
+symbol-group indicator<.)
+(.this is a slight generalization of the [tex] (csfam<cs), an
+integer 0[ndash]15 pointing to a 256-character font<.)
+(.our symbol groups provide an extra level of indirection that allow
+us to break down our total symbol set along natural lines instead of
+along lines dictated by arbitrary encodings of length 256<.)
+(.these extra bits of indirection make it possible in principle to
+allocate mathgroups for bold math fonts on the fly, from within a math
+formula<.)
+<para)
+<section)
+
+(section(titlecode<title)
+(para(.the usual package ident<.)
+(code
+\ProvidesPackage{flexisym}[1999/11/30 v1.0]
+<code)
+<para)
+(para(.make sure these are available:<.)
+(code
+\let\@xp\expandafter \let\@nx\noexpand
+<code)
+<para)
+(para(.in case the double quote character has been turned into an
+active character, we make sure it gets catcode 12 here and arrange to
+restore the old value at the end of this package<.)
+(code
+\edef\do{%
+  \@nx\AtEndOfPackage{%
+    \catcode\number`\"=\number\catcode`\"
+    \relax
+  }%
+}
+\do \let\do\relax
+\catcode`\"=12
+<code)
+<para)
+(macros
+(def@sym<def)
+(para(.the (cs@sym<cs) function is a general math symbol prefix
+function that serves as a hook for making wide-ranging changes in math
+symbol handling[mdash][eg], it could be used for implementing a
+(csboldsymbol<cs) command in a way that would not require any
+special examination of the argument<.)
+(.the default definition of (cs@sym<cs) is (cs@gobble<cs) to
+fit in with support for a protection mechanism like the one used for
+characters declared by (csDeclareTextSymbol<cs)<.)
+(code
+\let\@sym\@gobble
+<code)
+(.the (optrobust<opt) option robustifies math symbols in a
+way that makes symbol commands run slightly slower, but avoids
+the cost in control sequence names and string pool that would be paid by
+using (csDeclareRobustCommand<cs) on each symbol command<.)
+(code
+\DeclareOption{robust}{%
+  \def\@sym#1{%
+    \ifx\protect\@typeset@protect \else\protect#1\@xp\@gobblefour\fi
+  }%
+}
+<code)
+<para)
+<macros)
+
+(macros
+(defmg@bin<def) (defmg@rel<def) (defmg@negrel<def)
+(defmg@del<def) (defmg@arrow<def) (defmg@accent<def)
+(defmg@cop<def)
+(defmg@latin<def) (defmg@Latin<def) (defmg@greek<def)
+(defmg@Greek<def) (defmg@bflatin<def) (defmg@Bbb<def)
+(defmg@cal<def) (defmg@frak<def) (defmg@digit<def)
+(para(.initially we define only the math groups covered by the four
+base Computer Modern math font encodings (pcmr, cmmi, cmsy, cmex<p);
+the other math group pointers start out undefined<.)
+(.for the mathgroup numbers 0[ndash]3 we just plug them in directly
+because by convention they get special handling and we can expect
+suitable fonts to be loaded<.)
+(code
+\def\mg@bin{2}% binary operators
+\def\mg@rel{2}% relations
+%%\def\mg@nre{B}% negated relations
+\def\mg@del{3}% delimiters
+%%\def\mg@arr{B}% arrows
+\def\mg@acc{0}% accents
+\def\mg@cop{3}% cumulative operators (sum, int)
+\def\mg@latin{1}% (Latin) letters
+\def\mg@greek{1}% (lowercase) Greek
+\def\mg@Greek{0}% (capital) Greek
+%%\def\mg@bflatin{4}% bold upright Latin letters ?
+%%\def\mg@Bbb{B}% blackboard bold
+\def\mg@cal{2}% script/calligraphic
+%%\def\mg@frak{5}% Fraktur letters
+\def\mg@digit{0}% decimal digits % 1 = oldstyle, 0 = capital
+<code)
+<para)<macros)
+(macros
+(defMathChar<def)
+(defDelimiter<def)
+(defRadical<def)
+(defMathChar <def)
+(defDelimiter <def)
+(defRadical <def)
+(para
+(.these macros provide extra robustification against the possibility
+of active double-quote character<.)
+(.a math symbol such as (csinfty<cs) in a section title will be
+written to the (fnaux<fn) file as
+(literal
+\mathchar"0231
+<literal)
+<.)
+(.there are two ways in which this can go wrong: one, the math group is
+frozen in its state as of the time of the (csprotected@write<cs),
+which might not be correct (palthough it often is<p); and two, if the
+double quote character is active then it could cause trouble<.)
+(.we work around the latter problem by making an alias
+(csMathChar[visiblespace]<cs) for the standard (csmathchar<cs)<.)
+(.when it is written to the (fnaux<fn) file, it is a nonexpandable
+primitive; when it is read back, the extra space at the end is not
+included in the command name, and we define the function
+(csMathChar<cs) to do what we want with the double quote character<.)
+(.this is essentially the same mechanism as in
+(csDeclareRobustCommand<cs), in a backward way,
+except that (csprotect<cs) is not
+needed in this case<.)
+(code
+\expandafter\let\csname MathChar \endcsname\mathchar
+\expandafter\let\csname Delimiter \endcsname\delimiter
+\expandafter\let\csname Radical \endcsname\radical
+\newcommand{\MathChar}{}
+\edef\MathChar{\csname MathChar \endcsname\noexpand\string}
+\newcommand{\Delimiter}{}
+\edef\Delimiter{\csname Delimiter \endcsname\noexpand\string}
+\newcommand{\Radical}{}
+\edef\Radical{\csname Radical \endcsname\noexpand\string}
+<code)
+<para)
+<macros)
+
+(macros
+(defsumlimits<def)
+(defintlimits<def)
+(defnamelimits<def)
+(para(.these are needed for (csmCOs<cs) and (csmCOi<cs) to
+support different default placement of limits for different kinds of
+Op class symbols (psums, integrals, other<p)<.) (.the standard
+settings make integral limits stay on the side even in a displayed math
+formulas, while limits for the other kinds of Op class symbols go above
+and below<.)
+(code
+\let\sumlimits\displaylimits
+\let\intlimits\nolimits
+\let\namelimits\displaylimits
+<code)
+<para)
+<macros)
+
+(macros
+(defm@Ord<def) (defm@Bin<def) (defm@Rel<def) (defm@Pun<def)
+(defm@Var<def) (defm@COs<def) (defm@COi<def)
+(para(.default definitions<.) (.let's see: if all the math symbol
+definitions got a (qsuperfluous<q) space at the end, then many of
+these internal functions wouldn't need to read the three args in order
+to add the stop-number-scanning space at the end<.)
+(code
+\edef\m@Ord#1#2#3{\csname MathChar \endcsname"0#1#2#3 }
+\edef\m@Var#1#2#3{\csname MathChar \endcsname"7#1#2#3 }
+\edef\m@Bin#1#2#3{\csname MathChar \endcsname"2#1#2#3 }
+\edef\m@Rel#1#2#3{\csname MathChar \endcsname"3#1#2#3 }
+\edef\m@Pun#1#2#3{\csname MathChar \endcsname"6#1#2#3 }
+\edef\m@COs#1#2#3{\csname MathChar \endcsname"1#1#2#3 \sumlimits}
+\edef\m@COi#1#2#3{\csname MathChar \endcsname"1#1#2#3 \intlimits}
+<code)
+<para)
+<macros)
+(macros
+(def@DeL<def) (def@DeR<def) (def@DeB<def) (defdelim@a<def)
+(def@Rad<def)
+(para(.the fact that small and large variants of a delimiter
+normally come from different fonts looks to me like an inconvenient and
+unnecessary wrinkle in the design of [tex]<.) (.otherwise delimiters
+could have gotten an ordinary fifteen-bit mathcode like all the other
+math symbols<.)
+(.and if you try to use cmex large parens with Times Roman small parens
+their visual incompatibility quickly becomes apparent<.)
+(.the only reason I can see for the delimiter code handling of [tex]
+3.x is that Knuth could not bear to redundantly repeat the text paren
+glyphs, which serve as the base size of the math parens, in both
+(fncmr10<fn) and (fncmex10<fn)<.) (.maybe he was running
+out of room in the 128-character (fncmex10<fn) font layout to include
+all the desired sizes<.)
+<para)
+(para
+(.so here we attempt to define delimiter symbols in a way that is
+formally the same as for other symbols, and when necessary to
+accommodate cross-font delimiter linking, use a hidden method of looking
+up the link info<.)
+(code
+\def\delim@a#1#2#3#4{\ifx\relax#1#2#3#4\else#1\fi #2#3#4}
+\def\delim@b#1#2#3#4{\ifx\relax#1#2#3#4\else#1\fi }
+<code)
+(.a temporary function to help with expansion control<.)
+(code
+\def\@tempa{%
+  \@nx\@xp\@nx\delim@a\@nx\csname sd@##1##2##3\@nx\endcsname ##1##2##3 }
+\edef\m@DeL#1#2#3{\csname Delimiter \endcsname"4\@tempa}
+\edef\m@DeR#1#2#3{\csname Delimiter \endcsname"5\@tempa}
+\edef\m@DeB#1#2#3{\csname Delimiter \endcsname"0\@tempa}
+<code)
+(.DeA is a weird case for the arrowvert-like delimiters<.)
+(code
+\edef\m@DeA#1#2#3{\csname Delimiter \endcsname"3\@tempa}
+\edef\m@Rad#1#2#3{\csname Radical \endcsname"\@tempa}
+<code)
+(.here are the standard large-delimiter small-delimiter pairs of the
+OT1/OML/OMS/OMX math encoding<.)
+(code
+\def\do#1#2{\@xp\def\csname sd@#1\endcsname{#2}}
+\do{300}{028}
+\do{301}{029}
+\do{302}{05B}
+\do{303}{05D}
+\do{304}{262}
+\do{305}{263}
+\do{306}{264}
+\do{307}{265}
+\do{308}{266}
+\do{309}{267}
+\do{30A}{268}
+\do{30B}{269}
+\do{30C}{26A}
+\do{30D}{26B}
+\do{30E}{13D}
+\do{30F}{26E}
+<code)
+(.these are for the weird delimiterish things like lgroup and
+arrowvert<.)
+(code
+\do{340}{37A}
+\do{341}{37B}
+\do{33A}{33A}
+\do{33B}{33B}
+\do{33E}{33E}
+\do{33C}{26A}
+\do{33D}{26B}
+\do{378}{222}
+\do{379}{223}
+\do{33F}{26C}
+\do{37E}{22A}
+\do{37F}{22B}
+\do{377}{26D}
+\do{30F}{26E}
+<code)
+<para)
+<macros)
+
+(macros
+(def@Acc<def)
+(para(.math accents<.) (.to do: automatically handle doubled accents<.)
+(code
+\def\m@Acc#1#2#3#4{\mathaccent"#1#2#3{#4}}
+\def\@symAcc{\@sym}
+<code)
+<para)
+<macros)
+(macros
+(def@symtype<def)
+(def@symOrd<def)
+(def@symBin<def)
+(def@symRel<def)
+(def@symPun<def)
+(def@symCOi<def)
+(def@symCOs<def)
+(def@symDeL<def)
+(def@symDeR<def)
+(def@symDeB<def)
+(def@symInn<def)
+(para
+(.(cs@symtype<cs) is normally a no-op but it serves as a hook for
+changing the behavior of these math objects[mdash]see (cstextchar<cs)<.)
+(code
+\let\@symtype\@firstofone
+\def\@symOrd#1#2{\@symtype\mathord{\OrdSymbol{#2}}}
+\def\@symVar{\@symOrd}
+\def\@symBin#1#2{\@symtype\mathbin{\OrdSymbol{#2}}}
+\def\@symRel#1#2{\@symtype\mathrel{\OrdSymbol{#2}}}
+\def\@symPun#1#2{\@symtype\mathpunct{\OrdSymbol{#2}}}
+\def\@symCOi#1#2{\@symtype{\mathop{\OrdSymbol{#2}}\intlimits}}
+\def\@symCOs#1#2{\@symtype{\mathop{\OrdSymbol{#2}}\sumlimits}}
+\def\@symOpe#1#2{\@symtype\mathopen{\OrdSymbol{#2}}}
+\def\@symClo#1#2{\@symtype\mathclose{\OrdSymbol{#2}}}
+\def\@symDeL#1#2{\@symtype\mathopen{\OrdSymbol{#2}}}
+\def\@symDeR#1#2{\@symtype\mathclose{\OrdSymbol{#2}}}
+\def\@symDeB#1#2{\@symtype\mathord{\OrdSymbol{#2}}}
+\def\@symInn#1#2{\@symtype\mathinner{\OrdSymbol{#2}}}
+<code)
+<para)<macros)
+
+(macros
+(defDeclareFlexSymbol<def)
+(auxDeclFlexSym@a<aux)
+(def@xnce<def)
+(para(.this is a replacement for (csDeclareMathSymbol<cs) that
+takes slightly different arguments<.)
+(literal
+\DeclareFlexSymbol{\foo}{Class}{SymbolGroup}{Slot}
+<literal)
+<para)
+(para
+(.a small utility function<.)
+(code
+\def\@xnce#1{\@xp\@nx\csname#1\endcsname}
+<code)
+(.this use of (cssym@global<cs)is similar to (csaut@global<cs) in
+the [latex] autoload configuration<.)
+(code
+\let\sym@global\global
+<code)
+<para)
+(para(.[arg1] control sequence (por character<p); [arg2] math
+class; [arg3] symbol group; [arg4] font slot<.)
+(code
+\def\DeclareFlexSymbol#1#2#3#4{%
+  \begingroup
+  \edef\@tempb{\@nx\@sym\@nx#1\@xnce{m@#2}\@xnce{mg@#3}#4}%
+  \ifcat\@nx#1\relax
+    \sym@global\let#1\@tempb
+  \else
+    \sym@global\mathcode`#1="8000\relax
+    \lccode`\~=`#1\relax
+    \lowercase{\sym@global\let~\@tempb}%
+  \fi
+  \endgroup
+}
+<code)
+<para)
+<macros)
+
+(macros
+(defDeclareFlexCompoundSymbol<def)
+(para
+(.this command is for defining symbols that do not resolve to a simple
+(csmathchar<cs), (csdelimiter<cs), or (csradical<cs) call<.)
+(.we make compound symbols automatically robust<.)
+(.there is one unfortunate side effect: then they will not work
+properly if sub- or superscripted without enclosing braces<.)
+(.for most compound symbols in standard [latex], however, this is
+already true [mdash][eg], (csnotin<cs)<.)
+(code
+\def\DeclareFlexCompoundSymbol#1#2#3{%
+  \@xp\DeclareRobustCommand\@xp#1\@xp{\csname @sym#2\endcsname#1{#3}}%
+  \sym@global\let#1#1\relax
+}
+<code)
+<para)
+(para(.the following symbols as defined in standard [latex] fail
+with an error message or produce wrong output if placed in a superscript
+without enclosing braces, when [hat] and [underscore] run the
+primitive [tex] operations<.)
+(literal
+\doteq \rightleftharpoons \notin \cong \mapsto \neq
+\models \bowtie \ldots \cdots \iff
+\hookleftarrow \hookrightarrow
+\longrightarrow \longleftarrow
+\Longrightarrow \Longleftarrow \Longleftrightarrow
+\longleftrightarrow \longmapsto
+<literal)
+(.braces cannot be wrapped around the contents of their definitions
+because that coerces them to mathords and these are not intended to have
+mathord spacing<.)
+<para)
+<macros)
+
+(macros
+(deftextchar<def)
+(defscriptchar<def)
+(deftext@char<def)
+(deftext@char@a<def)
+(deftext@char@defs<def)
+(para(.the (cntextchar<cn) command takes its argument which is
+expected to be a math symbol and prints a text-mode version of it<.)
+(code
+\DeclareRobustCommand\textchar{\text@char\textfont}
+\DeclareRobustCommand\scriptchar{\text@char\scriptfont}%
+\def\text@char@a{\?\endgroup}%
+\def\text@char@sym#1#2#3{%
+  \begingroup
+    \let\@sym\relax % defense against infinite loops
+    \the\text@script@char#3%
+    \afterassignment\text@char@a
+    \chardef\?="%
+}
+\def\text@char#1#2{\begingroup\check@mathfonts
+  \let\text@script@char#1\let\@sym\text@char@sym
+  \let\@symtype\@secondoftwo \let\OrdSymbol\@firstofone
+<code)
+(.the everymath setting deals with sub or superscript tokens embedded
+in definitions, or other weird math things<.)
+(code
+  \let\ifmmode\iftrue \everymath{$\@gobble}%
+  \def\mkern{\muskip\z@}\let\mskip\mkern
+  \ifcat\relax\noexpand#2#2%
+  \else
+    \lccode`\~=\expandafter`\string#2\relax
+    \lowercase{~}%
+  \fi
+  \endgroup
+}
+<code)
+(.if there is a trailing space, it will be consumed by the action of
+(cschar<cs)<.)
+<para)<macros)
+
+(macros
+(deftextprime<def)
+(para(.let's provide (cntextprime<cn) if it's not already defined
+(pprobably by (clsamsart<cls)<p)<.)
+(code
+\providecommand\textprime{}
+\DeclareRobustCommand\textprime{\leavevmode
+  \raise.8ex\hbox{\text@char\scriptfont\prime}%
+}
+<code)
+<para)<macros)
+
+(para(.The (csresetMathstrut@<cs) function from
+(pkgamsmath<pkg) needs to be reworked if the mathcode of the
+(qc[lp]<qc) character is [dq]8000<.)
+(.in that case the (csmathchardef<cs) in the old definition will
+lead to an error message<.)
+(literal
+\resetMathstrut@ ->
+  \setbox\z@\hbox{
+    \mathchardef\@tempa\mathcode`\(\relax
+    \def\@tempb##1"##2##3{\the\textfont"##3\char"}
+    \expandafter\@tempb\meaning\@tempa\relax
+  }
+  \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@
+<literal)
+(.in the standard CM font setup the height of the vert bar is the same
+as the height of the math paren<.)
+(code
+\@ifundefined{resetMathstrut@}{}{%
+  \def\resetMathstrut@{%
+    \setbox\z@\hbox{\textchar\vert}%
+    \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@
+  }%
+}
+<code)
+<para)
+(para
+(.some other things from (pkgamsmath<pkg) that need a bit of overhaul<.)
+(code
+\@ifundefined{rightarrowfill@}{}{%
+  \def\rightarrowfill@#1{\m@th\setboxz@h{$#1\relbar$}\ht\z@\z@
+    $#1\copy\z@\mkern-6mu\cleaders
+    \hbox{$#1\mkern-2mu\box\z@\mkern-2mu$}\hfill
+    \mkern-6mu\OrdSymbol{\rightarrow}$}
+  \def\leftarrowfill@#1{\m@th\setboxz@h{$#1\relbar$}\ht\z@\z@
+    $#1\OrdSymbol{\leftarrow}\mkern-6mu\cleaders
+    \hbox{$#1\mkern-2mu\copy\z@\mkern-2mu$}\hfill
+    \mkern-6mu\box\z@$}
+  \def\leftrightarrowfill@#1{\m@th\setboxz@h{$#1\relbar$}\ht\z@\z@
+    $#1\OrdSymbol{\leftarrow}\mkern-6mu\cleaders
+    \hbox{$#1\mkern-2mu\box\z@\mkern-2mu$}\hfill
+    \mkern-6mu\OrdSymbol{\rightarrow}$}
+}
+<code)
+<para)
+(macros
+(defbinrel@sym<def)
+(defbinrel@symtype<def)
+(para
+(.and this is from the (pkgamsbsy<pkg) package<.)
+(.the (csbinrel@<cs) function looks at its arg and tries to deduce
+if it is a mathbin or mathrel or something else<.)
+(.and its end result is to leave (csbinrel@@<cs) defined as
+(csmathbin<cs) or (csmathrel<cs) or (csmathord<cs)<.)
+(code
+\def\binrel@sym#1#2#3#4#5{%
+  \xdef\binrel@@##1{%
+    \ifx\m@Ord#2\@nx\@symOrd
+    \else\ifx\m@Var#2\@nx\@symVar
+    \else\ifx\m@COs#2\@nx\@symCOs
+    \else\ifx\m@COi#2\@nx\@symCOi
+    \else\ifx\m@Bin#2\@nx\@symBin
+    \else\ifx\m@Rel#2\@nx\@symRel
+    \else\ifx\m@Pun#2\@nx\@symPun
+    \else\@nx\@symErr \fi\fi\fi\fi\fi\fi\fi
+  ?{\@nx\OrdSymbol{##1}}}%
+}
+\def\binrel@a{%
+  \def\@symOrd##1##2{\gdef\binrel@@####1{\@symOrd##1{\OrdSymbol{####1}}}}%
+  \def\@symVar##1##2{\gdef\binrel@@####1{\@symVar##1{\OrdSymbol{####1}}}}%
+  \def\@symCOs##1##2{\gdef\binrel@@####1{\@symCOs##1{\OrdSymbol{####1}}}}%
+  \def\@symCOi##1##2{\gdef\binrel@@####1{\@symCOi##1{\OrdSymbol{####1}}}}%
+  \def\@symBin##1##2{\gdef\binrel@@####1{\@symBin##1{\OrdSymbol{####1}}}}%
+  \def\@symRel##1##2{\gdef\binrel@@####1{\@symRel##1{\OrdSymbol{####1}}}}%
+  \def\@symPun##1##2{\gdef\binrel@@####1{\@symPun##1{\OrdSymbol{####1}}}}%
+}
+\def\binrel@#1{%
+  \setbox\z@\hbox{$%
+    \let\mathchoice\@gobblethree
+    \let\@sym\binrel@sym \binrel@a
+    #1$}%
+}
+<code)
+<para)<macros)
+
+(para(.After you load the (pkgflexisym<pkg) package, you load
+your desired symbol sets with a (cnusesymbols<cn) command<.)
+(code
+\def\@symextension{sym}
+\newcommand\usesymbols[1]{%
+  \@for\@tempb:=#1\do{%
+    \@xp\@onefilewithoptions\@xp{\@tempb}[][]\@symextension
+  }%
+}
+<code)
+(.then of course we need a parallel (cnProvidesSymbols<cn)
+command<.)
+(code
+\newcommand\ProvidesSymbols[1]{\ProvidesFile{#1.sym}}
+<code)
+<para)
+(para(.for adjacent relation symbols such as (":=<") there can be
+trouble<.) (.the action that [tex] provides automatically in this
+case is to mash them together into a compound mathrel object, as it were
+(literal
+\mathrel{\colonglyph \equalsglyph}
+<literal)
+<.) (.in effect, the notation (":=<") is allowed as a sort of math
+ligature analogous to ("---<") in text: the [ascii] approximation is
+allowed as a convenience for the writer<.) (.like the semantically
+waffled text ligatures, however ("`` '' -- --- ?` !`<"), this would
+be better handled by the editing interface than by [tex]: typing
+(qc:<qc) and (qc=<qc) should cause the editor to insert
+(cscoloneq<cs), defined as
+(literal
+\DeclareCompoundMathSymbol{\coloneq}{\mathrel}{\OrdSymbol{:=}}
+<literal)
+or something to that effect that expresses the intent of getting a single
+math symbol<.)
+<para)
+(para(.we therefore provide a different, restricted version of the
+(csnot<cs) command<.) (.at present this version of (csnot<cs)
+assumes that its argument is a math symbol of a suitable type;
+need to add some additional checks [mjd,1998/10/14]<.)
+(code
+\DeclareRobustCommand{\not}[1]{\@symRel\not{\OrdSymbol{\notRel#1}}}
+<code)
+(.the (cnOrdSymbol<cn) function does not do any checking to
+make sure its arguments are of the right kind<.) (.maybe it
+should<.)
+(code
+\DeclareRobustCommand{\OrdSymbol}[1]{%
+  \begingroup\mathchars@reset#1\endgroup
+}
+\def\mathchars@reset{\let\@sym\@sym@ord \let\@symtype\@symtype@ord
+  \let\OrdSymbol\relax}
+\def\@symtype@ord#1#{}% a strange sort of \@gobble
+<code)
+(.if the symbol is a delimiter we have to do an unreasonable amount of
+extra work because of the splitting of the glyph series across different
+fonts in the standard CM math encodings<.)
+(code
+\def\@sym@ord#1#2{\@xp\@sym@ord@a\string#2\@nil}%
+\begingroup
+\lccode`\.=`\@ \lowercase{\endgroup
+\def\@sym@ord@a#1.}#2#3\@nil#4#5#6{%
+  \csname MathChar \endcsname"0%
+    \if D#2\@xp\delim@b\csname sd@#4#5#6\endcsname#4#5#6
+    \else #4#5#6
+    \fi
+}
+<code)
+<para)
+<section)
+(section(titleoptions<title)
+(para(.with the (optcmbase<opt) option, automatically load
+(fncmbase.sym<fn)<.)
+(code
+\DeclareOption{cmbase}{\usesymbols{cmbase}}
+\ProcessOptions\relax
+<code)
+<para)
+<section)
+(section(titlesome synonyms<title)
+(para(.these synonyms were conventionally defined with
+(cslet<cs)<.) (.but that invited problems: it's too easy for
+someone writing a math setup package to redefine (csleq<cs) and
+forget to re(cslet<cs) (csle<cs) afterwards<.)
+(code
+\renewcommand{\lnot}{\neg}
+\renewcommand{\land}{\wedge}
+\renewcommand{\lor}{\vee}
+\renewcommand{\le}{\leq}
+\renewcommand{\ge}{\geq}
+\renewcommand{\ne}{\neq}
+\renewcommand{\owns}{\ni}
+\renewcommand{\gets}{\leftarrow}
+\renewcommand{\to}{\rightarrow}
+\renewcommand{\|}{\Vert}
+<code)
+<para)
+<section)
+(section(titlewrapup<title)
+(para(.the usual (csendinput<cs) line<.)
+(code
+\endinput %
+<code)
+<para)
+<section)
+(section(titleto do<title)
+(para(.to do<.)
+(enumerate
+(item
+(?don't make symbol definitions always global<?)
+(.maybe a package option<.)<item)
+(item
+(.use newcommand instead of just def in DeclareFlexSymbol<.)
+(.perhaps make std-clr.sym and ams-clr.sym to undefine pre-existing
+symbol names<.)
+<item)
+(item(.cmbase option should probably be default if no other symbol set is
+given in the usepackage{flexisym} call<.)
+<item)
+(item(.if protect is unnecessary then things could be made to run rather
+faster<.)
+<item)
+(item
+(.pkg option to skip code that is unnecessary when using delimiter
+font encodings that don't have delimiter size series split across
+fonts<.)<item)
+(item(.give a suitable redefinition for (csDeclareMathSymbol<cs)<.)
+<item)
+(item(.subvert vert bar and (cs|<cs) to discourage poor usage<.)
+(?provide a package option to turn it off, or make old [tex] behavior
+the default<?)
+<item)
+(item(?can the mathgroup allocation be improved to support [eg]
+a five-group base and an eleven-group free pool that can vary from one
+formula to the next<?)<item)
+(item(.turn sub/superscript into macros and setup mathstyle variable<.)
+<item)
+(item
+(.in cmbase.lls use (csfakemu<cs) instead of pt where applicable in
+compound symbols<.)<item)
+(item(.in display math (csleft<cs) and (csright<cs) should be
+automatic: set buffer space to 0pt (por negative value?<p) for
+mathop limits<.)
+(?but need to check what happens when two sums with limits are stacked in
+consecutive lines<?)
+(.the extra space is (pconjecture[dots]<p) mainly needed because
+of the vert spacing weaknesses of a primitive [tex] display
+(p(csbaselineskip<cs) versus (cslineskip<cs)<p)<.)
+<item)
+(item(.here is a bunch of math-symbol related code from
+(fnfontmath.ltx<fn) that needs checking over to make sure it all got
+handled properly<.)
+(literal
+\def\bigl{\mathopen\big}
+\def\bigm{\mathrel\big}
+\def\bigr{\mathclose\big}
+\def\Bigl{\mathopen\Big}
+\def\Bigm{\mathrel\Big}
+\def\Bigr{\mathclose\Big}
+\def\biggl{\mathopen\bigg}
+\def\biggm{\mathrel\bigg}
+\def\biggr{\mathclose\bigg}
+\def\Biggl{\mathopen\Bigg}
+\def\Biggm{\mathrel\Bigg}
+\def\Biggr{\mathclose\Bigg}
+\def\choose{\atopwithdelims()}
+\def\brack{\atopwithdelims[]}
+\def\brace{\atopwithdelims\{\}}
+\def\root#1\of{%
+  \setbox\rootbox\hbox{$\m@th\scriptscriptstyle{#1}$}%
+  \mathpalette\r@@t}
+\def\r@@t#1#2{%
+  \setbox\z@\hbox{$\m@th#1\sqrtsign{#2}$}%
+  \dimen@\ht\z@ \advance\dimen@-\dp\z@
+  \mkern5mu\raise.6\dimen@\copy\rootbox
+  \mkern-10mu\box\z@}
+\def\vphantom{\v@true\h@false\ph@nt}
+\def\hphantom{\v@false\h@true\ph@nt}
+\def\phantom{\v@true\h@true\ph@nt}
+\def\ph@nt{%
+  \ifmmode
+    \expandafter\mathpalette\expandafter\mathph@nt
+  \else
+    \expandafter\makeph@nt
+  \fi}
+\def\makeph@nt#1{%
+  \setbox\z@\hbox{\color@begingroup#1\color@endgroup}\finph@nt}
+\def\mathph@nt#1#2{%
+  \setbox\z@\hbox{$\m@th#1{#2}$}\finph@nt}
+\def\finph@nt{%
+  \setbox\tw@\null
+  \ifv@ \ht\tw@\ht\z@ \dp\tw@\dp\z@\fi
+  \ifh@ \wd\tw@\wd\z@\fi \box\tw@}
+\def\mathstrut{\vphantom(}
+\def\buildrel#1\over#2{\mathrel{\mathop{\kern\z@#2}\limits^{#1}}}
+\def\@vereq#1#2{\lower.5\p@\vbox{\lineskiplimit\maxdimen\lineskip-.5\p@
+    \ialign{$\m@th#1\hfil##\hfil$\crcr#2\crcr=\crcr}}}
+\def\c@ncel#1#2{\m@th\ooalign{$\hfil#1\mkern1mu/\hfil$\crcr$#1#2$}}
+\def\rlh@#1{\vcenter{\m@th\hbox{\ooalign{\raise2pt
+          \hbox{$#1\rightharpoonup$}\crcr
+        $#1\leftharpoondown$}}}}
+<literal)
+<item)
+<enumerate)
+<para)<section)
+(section(titlespeed tests<title)
+(para(.here are three times for a thirty-page mathematics article
+published in the Journal of the American Mathematical Society, first
+with documentclass tran-l and usepackage amssymb<.)
+(literal
+11.053u 0.206s 0:15.45 72.8% 0+26k 6+40io 0pf+0w
+11.054u 0.216s 0:15.57 72.3% 0+26k 4+38io 0pf+0w
+11.070u 0.210s 0:15.56 72.4% 0+26k 4+37io 0pf+0w
+<literal)
+(.and second with documentclass tran-l and usepackage (pcmbase,
+msabm<p) flexisym<.)
+(literal
+12.787u 0.222s 0:16.89 76.9% 0+26k 4+37io 0pf+0w
+12.717u 0.226s 0:17.05 75.8% 0+26k 22+37io 0pf+0w
+12.799u 0.233s 0:17.48 74.4% 0+26k 4+37io 0pf+0w
+<literal)
+<para)
+<section)
+<document)

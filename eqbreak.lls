@@ -1,0 +1,220 @@
+% Percent char is not a comment char any more after this point !!
+\input{lls.deh}
+(document
+  filename=eqbreak.lls
+  version=0.9 1998-12-23
+
+
+(calldefname=width_L(textfont=//itwidth_L<text)<calldef)
+(calldefname=line_width(textfont=//itline_width<text)<calldef)
+(calldefname=em(textfont=//item<text)<calldef)
+(calldefname=max_width_R(textfont=//itmax_width_R<text)<calldef)
+(calldefname=avail(textfont=//itavail<text)<calldef)
+(calldefname=availR(textfont=//itavailR<text)<calldef)
+
+(calldefname=LHS(textfont=//itLHS<text)<calldef)
+(calldefname=RHS(textfont=//itRHS<text)<calldef)
+
+(latex
+\makeatletter
+
+\callin{quad}{\quad}
+\callin{qquad}{\qquad}
+\callin{vdots}{\vdots}
+\callin{ldots}{\ldots}
+\callin{cdots}{\cdots}
+
+\gdef\tsub#1{\if !#1!\else$_{#1}$\fi}
+
+\def\stdnewline{\cr &}%
+\def\indentednewline{\cr &\quad}
+
+\element{eql}{%
+  \breakSentence
+  \def\eqlbox{\fbox}%
+  $$\vcenter\bgroup
+      \advance\baselineskip.4em \advance\lineskip.4em
+      \advance\lineskiplimit.4em
+      \def\\{\@ifnextchar ={\stdnewline}{\indentednewline}}%
+      \halign\bgroup
+        &$\displaystyle\hfil##$&$\displaystyle{}##\hfil$\cr
+}{%
+  \crcr\egroup\egroup$$%
+  \resumeSentence
+}
+
+\new{sideName}{}
+\new{sideIndex}{}
+
+\minorelement{sname}{\readTo{\def\sideName}}{}
+\minorelement{sindex}{\readTo{\def\sideIndex}}{}
+
+\define@key{sSBox}{width}{\def\eqlbox{\framebox[#1\displaywidth]}}
+
+\element{sSBox}{}{%
+  \def\eqlbox{\mbox}\get@options
+  \eqlbox{\itshape \sideName\tsub{\sideIndex}}%
+}
+
+\gdef\colStartA{\global\let\colStart\colStartB}
+\global\let\colStart\colStartA
+\gdef\colStartB{&}
+
+\minorelement{row}{\global\let\colStart\colStartA}{\cr}
+\minorelement{col}{\colStart}{}
+<latex)
+
+(section(titlebreaking equations<title)
+
+(macros
+(defeq@break<def)
+(para
+(.this function returns a parshape and related info about the best way
+to break a displayed formula<.)
+(.it works on a slightly simplified copy of the formula's contents<.)
+(.the information that it returns can then be used to run the true
+contents through [tex]'s paragraph-builder<.)
+(.the arguments are as follows:
+(description
+(item(titlebody box<title)
+(fraghbox containing (ba slightly simplified copy of<b) the
+equation body<frag)<item)
+(item(titlenumber box<title)
+(fraghbox containing the equation number<frag)<item)
+(item(titleline width<title)
+(fragtarget width for line breaking<frag)
+<item)
+(item(titleLHS width<title)
+(fragwidth of the left-hand side<frag)
+<item)
+(item(titleRHS widths<title)
+(fragwidths of all the right-hand sides, including relation
+symbols<frag)
+<item)
+<description)
+<.)
+<para)
+<macros)
+(para
+(.here is the algorithm for a single equation<.)
+(literal
+---Layout specified by an equation option? Use the given layout.
+---No right-hand side? (no relation symbols) Use multline layout.
+---Wide left-hand side?
+   ---Short right-hand side? Use multline layout.
+   ---Wide right-hand side? Use cutleft layout with
+      indent = line-width - maxwd_R - multline_margin
+---Narrow left-hand side? Use normal layout.
+<literal)
+(enumerate
+(item(.set up initial parshape<.)
+  (enumerate (item (.if
+  (m[width_L]>.3[line_width]<m) and (m[width_L]>6[em]<m) and
+  (m[max_width_R] < [line_width]<m) then make the first relation
+  symbol be a very good break point<.)<item)<enumerate)
+<item)
+<enumerate)
+<para)
+(subsection(titleEquation Layouts<title)
+(para
+(.let's consider first the equation layouts that do not have the extra
+complications associated with an equation number or a QED symbol<.)
+<para)
+(para(.here is Equation Layout A<.) (.this is the simplest
+layout, and is used whenever there is enough room for the [LHS] and the
+[RHS]'s to remain together on a single line<.)
+[trace220]
+(frag(eql
+(row(col[LHS]<col)(col= [RHS]{1} = [RHS]{2} =
+[cdots]<col)<row)
+<eql)
+[traceoff]
+(.in the most common case there is only one [RHS]<.)
+(eql
+(row(col[LHS]<col)(col= [RHS]<col)<row)
+<eql)<frag)
+<para)
+(para(.here is Equation Layout B<.) (.it is used when
+(itemize
+(item(fragthe [LHS] is relatively short<frag)<item)
+(item(fragthe total width of the equation exceeds the available
+room<frag)<item)
+(item(fragbut the [RHS]'s can be split into a column of fragments
+whose widths are all less than (mw(sb[availR]<sb) :=
+w(sb[avail]<sb) - w(sb[LHS]<sb)<m), i.e., the available room
+after subtracting the width of the left-hand side<frag)
+<item)<itemize)<.)
+(.in that case the first fragment can be set on the same line as the
+[LHS]{} without disrupting the alignment of the relation symbols and
+binary operator symbols at the beginning of the continuation lines<.)
+(.If any of the (m[RHS](sbi<sb)<m) is wider than (mw(sb
+[availR]<sb)<m), we break it
+into parts (ma, b, c, [ldots]<m) at binary operator symbols such as
+(m+<m) or (m-<m)<.)
+(frag(eql
+(row(col[LHS]<col)(col= [RHS][.35]{1}<col)<row)
+(row(col<col)(col=[RHS][.5]{2a}<col)<row)
+(row(col<col)(col      +[RHS][.4]{2b}<col)<row)
+(row(col<col)(col    =[RHS][.2]{3}<col)<row)
+(row(col<col)(col    [quad][vdots]<col)<row)
+<eql)<frag)
+<para)
+(para(.here is Equation Layout C<.) (.this is used when the
+left-hand side is 
+relatively wide [mdash] more than one-third of the display width
+[mdash] and the
+right-hand side is wide enough to require splitting if it is kept on the
+same line as the [LHS]<.) (.As the width of the [LHS] increases,
+the decreasing 
+room on the right-hand side eventually makes splitting there visibly
+ridiculous, if the fragments are constrained to remain within the [RHS]
+(qqcolumn<qq)<.)
+(frag(eql
+(row(col<col)
+(col(sSBoxwidth=.4[LHS]<sSBox)<col)<row)
+(row(col<col)(col[qquad] = 
+(sSBoxwidth=.7[RHS](sindex1<sindex)<sSBox)<col)<row)
+(row(col<col)(col[qquad] = 
+(sSBoxwidth=.6[RHS](sindex2<sindex)<sSBox)<col)<row)
+(row(col<col)(col[qquad] [vdots]<col)<row)
+<eql)<frag)<para)
+(para(.here is Equation Layout D<.) (.this is similar to Layout C except that no
+relation symbol is present<.) (.it can be thought of as all [RHS]<.) (.If the expression is too wide to fit in a
+single line, then we must take breaks at the available break points
+(pbinary operators, ("\linebreak[0]<"), discretionary times sign, and
+so on<p)<.) (.with no relation symbol present, the first line as well as any
+intermediary lines before the last one should
+normally use up as much as possible of the available line width,
+to minimize the number of line breaks that must be taken, and to
+conserve vertical space<.) (.unlike Layout C, there
+is no pressing reason
+to break the first line short of the full width<.) (.we can optionally
+leave a small amount of space at the sides, however, for visual balance<.)
+(frag(eql
+(row(col<col)(col(sSBoxwidth=.9[RHS]{1a}<sSBox)<col)<row)
+(row(col<col)(col[qquad] + 
+(sSBoxwidth=.8[RHS]{1b}<sSBox)<col)<row)
+(row(col<col)(col[qquad] + 
+(sSBoxwidth=.85[RHS]{1c}<sSBox)<col)<row)
+(row(col<col)(col[qquad] + 
+(sSBoxwidth=.5[RHS](sindex1d<sindex)<sSBox)<col)<row)
+<eql)<frag)<para)
+(para(.here is Equation Layout E<.) (.this is similar to Layout C; it commends itself
+when
+(itemize
+(item(fragthe [LHS] width is more than half of the display
+width<frag)<item)
+(item(fragthere is only one [RHS] (p[ie], only one relation
+symbol<p)<frag)<item)
+(item(fragthe [RHS] width is less than one half of the display
+width<frag)<item)<itemize)<.)
+(.in that case, if Layout C were used, the [RHS] would look
+unbalanced in combination with the top-heavy first line<.)
+(frag(eql
+(row(col<col)
+  (col(sSBoxwidth=.4[LHS]<sSBox)<col)<row)
+(row(col<col)
+  (col[qquad] (sSBoxwidth=.45[LHS]<sSBox) =[RHS]<col)<row)
+<eql)<frag)
+<para)
+<subsection)<section)<document)

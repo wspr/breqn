@@ -22,13 +22,45 @@
 # it will sort of convert the contents of file.lls into the syntax
 # used for dtx files, thought the output will need some hand-editing.
 #
-# HISTORY
-# 20071205 Initial script written, name schanged, and license added.
 
 use warnings;
 use strict;
+use Getopt::Long;
+
+my $show_unknown = 0;
+
+GetOptions('unkown' => \$show_unknown);
 
 my $file = $ARGV[0];
+
+if ( ! defined $file ) {
+
+warn <<END;
+
+$0, Copyright (C) 2007, Lars Madsen
+
+Usage:
+
+    $0 file.lls > file.dtx
+or
+    $0 -u file.lls
+
+The first will convert file.lls into the dtx format, though it will
+still need some hand editing for punctuation and such.
+
+The -u version does the same as the first version but the output will
+be line number and content for lines containing ^E's that have not
+been converted (ussefull for debugging).
+
+No file was given, aborting
+
+END
+#' for emacs
+exit; 
+}
+
+
+
 my $content;
 open my $FH, '<', $file or die "Cannot open '$file': $!";
 {
@@ -119,7 +151,22 @@ $content =~ s{\<document\)}{\\end{document}}gms;
 $content =~ s{}{}gms;
 
 
-print add_percent_sign($content);
+
+if ( $show_unknown ) { # will show content and line number of lines containing ^E
+  warn "The following lines contains markup not yet accounted for:\n\n";
+  my $cnt = 0;
+  for ( split/\n/,$content ) {
+    $cnt++;
+    printf "%05d: %s\n", $cnt,$_ if $_ =~ //;
+  }
+}
+else { # otherwise simply print the contents
+  print add_percent_sign($content);
+}
+
+exit;
+
+
 
 
 sub behold_the_magic_carpet {

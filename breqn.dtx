@@ -174,7 +174,7 @@ and the derived files
 \providecommand*\env[1]{\texttt{#1}}
 \providecommand*\fn[1]{\texttt{#1}}
 
-\let\opt=\pkg \let\env=\pkg \let\fn=\pkg
+
 
 \newcommand\dash{\textemdash}
 \newcommand\dbslash[1]{\texttt{\string\\}}
@@ -230,6 +230,13 @@ and the derived files
 % non-dtx format devised by Michael Downes himself.  I will eventually
 % incorporate the implementation notes but for the time being getting
 % the package on CTAN takes precedence over this.
+%
+% Lars Madsen has kindly written a Perl script for transforming the
+% original source files into near-perfect dtx state, requiring only
+% very little hand tuning. Without his help it would have been nigh
+% impossible to incorporate the original sources with Michael's
+% comments. A big, big thank you to him.
+%
 % 
 % The documentation for the package was formerly found in
 % \fn{breqndoc}. It has now been added to this implementation
@@ -849,106 +856,574 @@ and the derived files
 % Miller. Michael's changes between v0.90 and his last v0.94 will be
 % incorporated where applicable.
 %
+%
+%
+%
+%
+% \section{Introduction}
+% The \pkg{breqn} package provides environments
+% \env{dmath}, \env{dseries}, and \env{dgroup} for
+% displayed equations with \emph{automatic line breaking},
+% including automatic indention of relation symbols and binary operator
+% symbols at the beginning of broken lines.    These environments
+% automatically pull in following punctuation so that it can be written in
+% a natural way.    The \pkg{breqn} package also provides a
+% \env{darray} environment similar to the \env{array}
+% environment but using \cs{displaystyle} for all the array cells and
+% providing better interline spacing (because the vertical ruling
+% feature of \env{array} is dropped).   
+% These are all autonumbered environments like \env{equation}
+% and have starred forms that don't add a number.    For a more
+% comprehensive and detailed description of the features and intended
+% usage of the \pkg{breqn} package see \fn{breqndoc.tex}.   
+% 
+% 
+% 
+% 
+% \section{Strategy}
+% Features of particular note are the ability to have
+% linebreaks even within a \cs{left} \ndash  \cs{right} pair of
+% delimiters, and the automatic alignment on relations and binary
+% operators of a split equation.    To make \env{dmath} handle
+% all this, we begin by setting the body of the equation in a special
+% paragraph form with strategic line breaks whose purpose is not to
+% produce line breaks in the final printed output but rather to mark
+% significant points in the equation and give us entry points for
+% unpacking \cn{left} \ndash  \cn{right} boxes.   
+% After the initial typesetting, we take the resulting stack of line
+% fragments and, working backward, splice them into a new, single-line
+% paragraph; this will eventually be poured into a custom parshape, after
+% we do some measuring to calculate what that parshape should be.   
+% This streamlined horizontal list may contain embedded material
+% from user commands intended to alter line breaks, horizontal alignment,
+% and interline spacing; such material requires special handling.   
+% 
+% To make the `shortskip' possibility work even for
+% multiline equations, we must plug in a dummy \tex  display to give us
+% the value of \cs{predisplaysize}, and calculate for ourselves when
+% to apply the short skips.   
+% 
+% In order to measure the equation body and do various
+% enervating calculations on whether the equation number will fit and so
+% on, we have to set it in a box.    Among other things, this means
+% that we can't unhbox it inside \dbldollars  \dots  \dbldollars , or
+% even \verb"$" \dots  \verb"$": \tex  doesn't allow you to
+% \cs{unhbox} in math mode.    But we do want to unhbox it rather
+% than just call \cs{box}, otherwise we can't take advantage of
+% available shrink from \cs{medmuskip} to make equations shrink to
+% fit in the available width.    So even for simple one-line equations
+% we are forced to fake a whole display without going through \tex 's
+% primitive display mechanism (except for using it to get
+% \cs{predisplaysize} as mentioned above).   
+% 
+% 
+% In the case of a framed equation body, the current implementation is
+% to set the frame in a separate box, of width zero and height zero,
+% pinned to the upper left corner of the equation body, and then print the
+% equation body on top of it.   
+% For attaching an equation number it would be much simpler to wrap
+% the equation body in the frame and from then on treat the body as a
+% single box instead of multiple line boxes.   
+% But I had a notion that it might be possible some day to support
+% vertical stretching of the frame.   
+% 
+% 
+% 
+% 
+% \section{Prelim}
+%
+% This package doesn't work with \latex  2.09, nor with other
+% versions of \latex  earlier than 1994/12/01.   
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
+%    \end{macrocode}
+% 
+% Declare package name and date.   
+%    \begin{macrocode}
 \ProvidesPackage{breqn}[2007/12/02 v0.95]
-
+%    \end{macrocode}
+%
+%
+% \section{Package options}
+% 
+% Most options are set with the \cs{options} command (which
+% calls \cs{setkeys}) because the standard package option
+% mechanism doesn't provide support for key-value syntax.   
+% Cf \fn{breqndoc.tex}.   
+% 
+% It seems easier to turn off debugging than turn it on so the
+% implementation of the \opt{debug} option is sort of backward.   
+%    \begin{macrocode}
 \DeclareOption{debug}{}
+%    \end{macrocode}
+% Process options.   
+%    \begin{macrocode}
 \ProcessOptions\relax
+%    \end{macrocode}
+% 
+% 
+% 
+% 
+% \section{Required packages}
+% The \pkg{flexisym} package makes it possible to attach
+% extra actions to math symbols, in particular mathbin, mathrel, mathopen,
+% and mathclose symbols.   
+% Normally it would suffice to call \cs{RequirePackage} without
+% any extra testing, but the nature of the package is such that it is
+% likely to be called earlier with different (no) options.   
+% Then is it really helpful to be always warning the user about
+% \quoted{Incompatible Package Options!}?   
+% I don't think so.   
+%    \begin{macrocode}
 \@ifpackageloaded{flexisym}{}{%
   \RequirePackage[cmbase]{flexisym}[1997/01/01]
 }
+%    \end{macrocode}
+% The \pkg{keyval} package for handling equation options.   
+%    \begin{macrocode}
 \RequirePackage{keyval}\relax
+%    \end{macrocode}
+% 
+% 
+% And add an \cs{options} cmd for processing package
+% options that require an argument.    Maybe this will get added to
+% the \pkg{keyval} package eventually.   
+%    \begin{macrocode}
 \@ifundefined{options}{%
+%    \end{macrocode}
+% 
+% 
+% \begin{macro}{\options}
+% Get the package options and run setkeys on them.   
+%    \begin{macrocode}
 \newcommand{\options}[2]{%
   \expandafter\options@a\csname opt@#1.sty\endcsname{#2}%
   \setkeys{#1}{#2}%
 }
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\options@a}
+% \begin{macro}{\options@b}
+% \begin{macro}{\options@c}
+% \begin{macro}{\options@d}
+% Redefine \cs{opt@pkgname.sty} as we go along to take out
+% the options that are handled and leave the ones that are not.   
+%    \begin{macrocode}
 \def\options@a#1#2{%
   \edef\@tempa{\options@b#2,\@empty\@nil}%
   \ifx#1\relax \let#1\@empty\fi
   \xdef#1{#1\ifx#1\@empty\@xp\@gobble\@tempa\@empty\else\@tempa \fi}%
 }
+%    \end{macrocode}
+% Add the next option, and recurse if there remain more
+% options.   
+%    \begin{macrocode}
 \def\options@b#1,#2#3\@nil{%
   \options@c#1 \@nil
   \ifx#2\@empty \else\options@b#2#3\@nil\fi
 }
+%    \end{macrocode}
+% Discard everything after the first space.   
+%    \begin{macrocode}
 \def\options@c#1 #2\@nil{\options@d#1=\@nil}
+%    \end{macrocode}
+% Discard everything after the first = sign; add a comma only if the
+% remainder is not empty.   
+%    \begin{macrocode}
 \def\options@d#1=#2\@nil{\ifx\@empty #1\@empty\else,\fi#1}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% 
+% The tail of the \cs{@ifundefined} test.   
+%    \begin{macrocode}
 }{}% end @ifundefined test
+%    \end{macrocode}
+% 
+% 
+% 
+% 
+% \section{Some useful tools}
+% 
+% \begin{macro}{\@nx}
+% \begin{macro}{\@xp}
+% The comparative brevity of \cs{@nx} and \cs{@xp} is
+% valuable not so much for typing convenience as for reducing visual
+% clutter in code sections that require a lot of expansion control.   
+%    \begin{macrocode}
 \let\@nx\noexpand
 \let\@xp\expandafter
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\@emptytoks}
+% Constant empty token register, analogous to \cs{@empty}.   
+%    \begin{macrocode}
 \@ifundefined{@emptytoks}{\newtoks\@emptytoks}{}
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\f@ur}
+% Constants 0\ndash 3 are provided in plain \tex , but not 4.   
+%    \begin{macrocode}
 \chardef\f@ur=4
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\inf@bad}
+% \cs{inf@bad} is for testing box badness.   
+%    \begin{macrocode}
 \newcount\inf@bad \inf@bad=1000000
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\maxint}
+% 
+% We want to use \cs{maxint} rather than coerced
+% \cs{maxdimen} for \cs{linepenalty} in one place.   
+%    \begin{macrocode}
 \newcount\maxint \maxint=2147483647
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\int@a}
+% \begin{macro}{\int@b}
+% \begin{macro}{\int@b}
+% 
+% Provide some shorter aliases for various scratch registers.   
+%    \begin{macrocode}
 \let\int@a=\@tempcnta
 \let\int@b=\@tempcntb
 \let\int@c=\count@
+%    \end{macrocode}
+% 
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\dim@a}
+% \begin{macro}{\dim@b}
+% \begin{macro}{\dim@c}
+% \begin{macro}{\dim@d}
+% \begin{macro}{\dim@e}
+% \begin{macro}{\dim@A}
+% 
+% Same for dimen registers.   
+%    \begin{macrocode}
 \let\dim@a\@tempdima
 \let\dim@b\@tempdimb
 \let\dim@c\@tempdimc
 \let\dim@d\dimen@
 \let\dim@e\dimen@ii
 \let\dim@A\dimen@i
+%    \end{macrocode}
+% 
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\skip@a}
+% \begin{macro}{\skip@b}
+% \begin{macro}{\skip@c}
+% 
+% Same for skip registers.   
+%    \begin{macrocode}
 \let\skip@a\@tempskipa
 \let\skip@b\@tempskipb
 \let\skip@c\skip@
+%    \end{macrocode}
+% 
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\toks@a}
+% \begin{macro}{\toks@b}
+% \begin{macro}{\toks@c}
+% \begin{macro}{\toks@d}
+% \begin{macro}{\toks@e}
+% \begin{macro}{\toks@f}
+% 
+% Same for token registers.   
+%    \begin{macrocode}
 \let\toks@a\@temptokena
 \let\toks@b\toks@
 \toksdef\toks@c=2
 \toksdef\toks@d=4
 \toksdef\toks@e=6
 \toksdef\toks@f=8
+%    \end{macrocode}
+% 
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\abs@num}
+% We need an absolute value function for comparing
+% penalties.   
+%    \begin{macrocode}
 \def\abs@num#1{\ifnum#1<\z@-\fi#1}
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\@ifnext}
+% \begin{macro}{\@ifnexta}
+% The \cs{@ifnext} function is a variation of
+% \cs{@ifnextchar} that doesn't skip over intervening whitespace.   
+% We use it for the optional arg of \dbslash  inside
+% \env{dmath} \etc  because we don't want
+% unwary users to be tripped up by an unexpected attempt on \latex 's part
+% to interpret a bit of math as an optional arg:
+% \begin{literalcode}
+% \begin{equation}
+% ...\\
+% [z,w]...
+% \end{equation}
+% \end{literalcode}
+% .   
+%    \begin{macrocode}
 \def\@ifnext#1#2#3{%
   \let\@tempd= #1\def\@tempa{#2}\def\@tempb{#3}%
   \futurelet\@tempc\@ifnexta
 }
+%    \end{macrocode}
+% Switch to \cs{@tempa} iff the next token matches.   
+%    \begin{macrocode}
 \def\@ifnexta{\ifx\@tempc\@tempd \let\@tempb\@tempa \fi \@tempb}
+%    \end{macrocode}
+% 
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\@ifstar}
+% Similarly let's remove space-skipping from \cs{@ifstar}
+% because in some rare case of \dbslash  inside an equation, followed by
+% a space and a \verb"*" where the \verb"*" is intended as the math
+% binary operator, it would be a disservice to gobble the star as an
+% option of the \dbslash  command.    In all other contexts the chance
+% of having a space \emph{before} the star is extremely small: either
+% the command is a control word which will get no space token after it in
+% any case because of \tex 's tokenization rules; or it is a control
+% symbol such as \dbslash  \verb"*" which is exceedingly unlikely to be
+% written as \dbslash  \verb"*" by any one who really wants the
+% \verb"*" to act as a modifier for the \dbslash  command.   
+%    \begin{macrocode}
 \def\@ifstar#1#2{%
   \let\@tempd*\def\@tempa*{#1}\def\@tempb{#2}%
   \futurelet\@tempc\@ifnexta
 }
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\@optarg}
+% Utility function for reading an optional arg
+% \emph{without} skipping over any intervening spaces.   
+%    \begin{macrocode}
 \def\@optarg#1#2{\@ifnext[{#1}{#1[#2]}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Some conditionals.
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\@True}
+% \begin{macro}{\@False}
+% \begin{macro}{\@Not}
+% \begin{macro}{\@And}
+% After \verb"\let\foo\@True" the test
+% \begin{literalcode}
+% \if\foo
+% \end{literalcode}
+% evaluates to true.    Would rather avoid \cs{newif} because it
+% uses three csnames per Boolean variable; this uses only one.   
+%    \begin{macrocode}
 \def\@True{00}
 \def\@False{01}
 \def\@Not#1{0\ifcase#11 \or\@xp 1\else \@xp 0\fi}
 \def\@And#1#2{0\ifcase#1#2 \@xp 0\else \@xp 1\fi}
 \def\@Or#1#2{0\ifnum#1#2<101 \@xp 0\else \@xp 1\fi}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% 
+%    \begin{macrocode}
 \def\theb@@le#1{\if#1 True\else False\fi}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+% \begin{macro}{\freeze@glue}
+% 
+% Remove the stretch and shrink from a glue register.   
+%    \begin{macrocode}
 \def\freeze@glue#1{#11#1\relax}
+%    \end{macrocode}
+% 
+% \end{macro}
+% \begin{macro}{\z@rule}
+% \begin{macro}{\keep@glue}
+% Note well
+% the intentional absence of \cs{relax} at the end of the replacement
+% text of \cs{z@rule}; use it with care.   
+%    \begin{macrocode}
 \def\z@rule{\vrule\@width\z@}% no \relax ! use with care
+%    \end{macrocode}
+% Different ways to keep a bit of glue from disappearing at the
+% beginning of a line after line breaking:
+% \begin{itemize}
+% \item Zero-thickness rule
+% 
+%  
+% \item Null character
+% 
+%  
+% \item \cs{vadjust}\verb"{}" (\texbook , Exercise ??)
+% 
+%  
+% \end{itemize}
+%  .    The null character idea would be nice except it
+% creates a mathord which then screws up math spacing for \eg  a following
+% unary minus sign.    (the vrule \emph{is} transparent to
+% the math spacing).    The vadjust is the cheapest in terms of box
+% memory\mdash it vanishes after the pass through \tex 's
+% paragrapher.   
+% It is what I would have used, except that the equation contents get
+% run through two paragraphing passes, once for breaking up LR boxes and
+% once for the real typesetting.   
+% If \cs{keep@glue} were done with an empty vadjust, it would
+% disappear after the first pass and\mdash in particular\mdash the
+% pre-bin-op adjustment for relation symbols would disappear at a line break.   
+%    \begin{macrocode}
 \def\keep@glue{\z@rule\relax}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\replicate}
+% 
+% This is a fully expandable way of making N copies of a token
+% list.   
+% Based on a post of David Kastrup to comp.text.tex circa January
+% 1999.   
+% The extra application of \cs{number} is needed for maximal
+% robustness in case the repeat count N is given in some weird \tex  form
+% such as \verb""E9" or \verb"\count9".   
+%    \begin{macrocode}
 % usage: \message{H\replicate{5}{i h}ow de doo dee!}
 \begingroup \catcode`\&=11
 \gdef\replicate#1{%
   \csname &\expandafter\replicate@a\romannumeral\number\number#1 000q\endcsname
 }
 \endgroup
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\replicate@a}
+% 
+%    \begin{macrocode}
 \long\def\replicate@a#1#2\endcsname#3{#1\endcsname{#3}#2}
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\&m}
+% 
+%    \begin{macrocode}
 \begingroup \catcode`\&=11
 \long\gdef\&m#1#2{#1\csname &#2\endcsname{#1}}
 \endgroup
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\&q}
+% 
+%    \begin{macrocode}
 \@xp\let\csname\string &q\endcsname\@gobble
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% \begin{macro}{\mathchars@reset}
+% 
+% Need to patch up this function from flexisym a little, to better
+% handle certain constructed symbols like \cs{neq}.   
+%    \begin{macrocode}
 \g@addto@macro\mathchars@reset{%
   \let\@symRel\@secondoftwo \let\@symBin\@secondoftwo
   \let\@symDeL\@secondoftwo \let\@symDeR\@secondoftwo
   \let\@symDeB\@secondoftwo
 }
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\eq@cons}
+% 
+% \latex 's \cs{@cons} appends to the end of a list, but we need
+% a function that adds material at the beginning.   
+%    \begin{macrocode}
 \def\eq@cons#1#2{%
   \begingroup \let\@elt\relax \xdef#1{\@elt{#2}#1}\endgroup
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+% 
+% \end{macro}
+% \begin{macro}{\@saveprimitive}
+% If some preceding package redefined one of the
+% primitives that we must change, we had better do some checking to make
+% sure that we are able to save the primitive meaning for internal use.   
+% This is handled by the \cs{@saveprimitive} function.    We
+% follow the example of \cs{@@input} where the primitive meaning is
+% stored in an internal control sequence with a \verb"@@" prefix.   
+% Primitive control sequences can be distinguished by the fact that
+% \cs{string} and \cs{meaning} return the same information.   
+% Well, not quite all: \cs{nullfont} and \cs{topmark}
+% and the other \cs{...mark} primitives being the exceptions.   
+%    \begin{macrocode}
 \providecommand{\@saveprimitive}[2]{%
   \begingroup
   \edef\@tempa{\string#1}\edef\@tempb{\meaning#1}%
   \ifx\@tempa\@tempb \global\let#2#1%
   \else
+%    \end{macrocode}%
+% If [arg1] is no longer primitive, then we are in trouble unless
+% [arg2] was already given the desired primitive meaning somewhere
+% else.   
+%    \begin{macrocode}
     \edef\@tempb{\meaning#2}%
     \ifx\@tempa\@tempb
     \else \@saveprimitive@a#1#2%
@@ -956,6 +1431,11 @@ and the derived files
   \fi
   \endgroup
 }
+%    \end{macrocode}
+% Aux function, check for the special cases.   
+% Most of the time this branch will be skipped so we can
+% stuff a lot of work into it without worrying about speed costs.   
+%    \begin{macrocode}
 \def\@saveprimitive@a#1#2{%
   \begingroup
   \def\@tempb##1#1##2{\edef\@tempb{##2}\@car{}}%
@@ -977,31 +1457,134 @@ and the derived files
   \fi
   \endgroup
 }
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\@@math}
+% \begin{macro}{\@@endmath}
+% \begin{macro}{\@@display}
+% \begin{macro}{\@@enddisplay}
+% Move the math-start and math-end functions into control
+% sequences.    If I were redesigning \tex  I guess I'd put these
+% functions into primitive control words instead of linking them to a
+% catcode.    That way \tex  would not have to do the special
+% lookahead at a \verb"$" to see if there's another one coming up.   
+% Of course that's related to the question of how to provide user
+% shorthand for common constructions: \tex , or an editing interface of
+% some sort.   
+%    \begin{macrocode}
 \begingroup \catcode`\$=3 % just to make sure
   \global\let\@@math=$ \gdef\@@display{$$}% $$$
 \endgroup
 \let\@@endmath=\@@math
 \let\@@enddisplay=\@@display
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\@@insert}
+% \begin{macro}{\@@mark}
+% \begin{macro}{\@@vadjust}
+% Save the primitives \cs{vadjust}, \cs{insert},
+% \cs{mark} because we will want to change them locally during
+% equation measuring to keep them from getting in the way of our vertical
+% decomposition procedures.    We follow the example of
+% \cs{@@input}, \cs{@@end}, \cs{@@par} where the primitive
+% meaning is stored in an internal control sequence with a \verb"@@"
+% prefix.   
+%    \begin{macrocode}
 \@saveprimitive\vadjust\@@vadjust
 \@saveprimitive\insert\@@insert
 \@saveprimitive\mark\@@mark
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% 
+% 
+% \section{Debugging}
+% Debugging help.   
+% 
+% 
+% \begin{macro}{\debug}
+% 
+%    \begin{macrocode}
 \let\debug=\begingroup
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\gubed}
+% 
+%    \begin{macrocode}
 \let\gubed=\endgroup
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\debugmsg}
+% Print a debugging message.   
+%    \begin{macrocode}
 \def\debugmsg{\message{||= \iffalse}\fi
   \@xp\@gobble\string
 }
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\debugwr}
+% 
+% Sometimes the newline behavior of \cs{message} is
+% unsatisfactory; this provides an alternative.   
+%    \begin{macrocode}
 \def\debugwr#1{\immediate\write\sixt@@n{||= #1}}
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\debug@box}
+% 
+% Record the contents of a box in the log file, without stopping.   
+%    \begin{macrocode}
 \def\debug@box#1{%
   \batchmode{\showboxbreadth\maxdimen\showboxdepth99\showbox#1}%
   \errorstopmode
 }
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\eqinfo}
+% 
+% Show lots of info about the material before launching into the
+% trials.   
+%    \begin{macrocode}
 \def\eqinfo{%
   \debug@box\EQ@copy
   \wlog{!! EQ@copy: \the\wd\EQ@copy\space x
     \the\ht\EQ@copy+\the\dp\EQ@copy
   }%
 }
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\debug@para}
+% 
+% Check params that affect line breaking.   
+%    \begin{macrocode}
 \def\debug@para{%
   \debugwr{\hsize\the\hsize, \parfillskip\the\parfillskip}%
   \debugmsg{\leftskip\the\leftskip, \rightskip\the\rightskip}%
@@ -1009,15 +1592,72 @@ and the derived files
   \debugmsg{\pretolerance\the\pretolerance, \tolerance\the\tolerance,
     \parindent\the\parindent}%
 }
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% Turn off debugging unless it was asked for.   
+%    \begin{macrocode}
 \@ifpackagewith{breqn}{debug}{}{%
   \let\debug\relax \let\gubed\relax
   \let\debugmsg\@gobble \let\debug@lines\relax \let\debug@para\relax
   \let\debugwr\@gobble
   \let\debug@box\@gobble \let\debug@push\@gobbletwo
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+% 
+% 
+% 
+% 
+% \section{The \cs{listwidth} variable}
+% The dimen variable \cs{listwidth} is \cs{linewidth}
+% plus \cs{leftmargin} plus \cs{rightmargin}, which is typically
+% less than \cs{hsize} if the list depth is greater than one.   
+% In case a future package will provide this variable, define it only
+% if not yet defined.   
+%    \begin{macrocode}
 \@ifundefined{listwidth}{\newdimen\listwidth}{}
 \listwidth=\z@
+%    \end{macrocode}
+% 
+% 
+% 
+% 
+% \section{Parameters}
+% A stunning cornucopia of them, in fact.    I wanted to make a
+% table but a purely documentary table would be highly redundant with the
+% following code section and didn't strike me as wise maintenance policy,
+% so instead I formatted the source code itself into a crude table and
+% made a helper function to make more room for comments on each line.   
+% 
+% 
+% \begin{macro}{\eqfontsize}
+% \begin{macro}{\eqcolor}
+% \begin{macro}{\eqmargin}
+% \begin{macro}{\eqindent}
+% \begin{macro}{\eqbinoffset}
+% \begin{macro}{\eqnumside}
+% \begin{macro}{\eqnumplace}
+% \begin{macro}{\eqnumsep}
+% \begin{macro}{\eqnumfont}
+% \begin{macro}{\eqnumform}
+% \begin{macro}{\eqnumsize}
+% \begin{macro}{\eqnumcolor}
+% \begin{macro}{\eqlinespacing}
+% \begin{macro}{\eqlineskip}
+% \begin{macro}{\eqlineskiplimit}
+% \begin{macro}{\eqstyle}
+% \begin{macro}{\eqinterlinepenalty}
+% \begin{macro}{\intereqpenalty}
+% \begin{macro}{\intereqskip}
+% 
+% Note: avoid M, m, P, p because they look like they might be the
+% start of a keyword \quoted{minus} or \quoted{plus}.    Then
+% \tex  looks further to see if the next letter is i or l.    And if
+% the next thing is an undefined macro, the attempt to expand the macro
+% results in an error message.   
+%    \begin{macrocode}
 \def\do#1#2{\begingroup
   \def\?##1#1##2##3##4##5\@nil{\endgroup##2##3\afterassignment\do##4}%
   \?C\newcount#2#2D\newdimen#2#2S\newskip#2#2U\newmuskip#2#2%
@@ -1029,17 +1669,46 @@ d\eqfontsize{}         % Inherit from context    [NOT USED?]
 d\eqcolor{black}       % Default to black        [NOT USED?]
 D\eqnumsep=10pt        % Min space between equ number and body
 D\eqmargin=8pt         % For `multline' gap emulation
+%    \end{macrocode}
+% The \cs{eqindent} and \cs{eqnumside} variables need to
+% have their values initialized from context, actually.    But
+% that takes a bit of work, which is postponed till later.   
+%    \begin{macrocode}
 d\eqindent{C}%         % C or I, centered or indented
 d\eqnumside{R}%        % R or L, right or left
 d\eqnumplace{M}%       % M or T or B, middle top or bottom
+%    \end{macrocode}
+% Typesetting the equation number is done thus:
+% \begin{literalcode}
+% {\eqnumcolor \eqnumsize \eqnumfont{\eqnumform{\eq@number}}}
+% \end{literalcode}
+% .   
+%    \begin{macrocode}
 %d\eqnumfont{\upshape}% % Upright even when surrounding text is slanted
 d\eqnumfont{}%         % Null for easier debugging [mjd,1997/09/26]
 d\eqnumform#1{(#1\@@italiccorr)} % Add parens
 d\eqnumsize{}          % Allow numbers to have different typesize ...
+%    \end{macrocode}
+% Tricky questions on \cs{eqnumsize}.    Should the default
+% be \cs{normalsize}?    Then the user can scale down the
+% equation body with \cs{small} and not affect the equation
+% number.    Or should the default be empty?    Then in large
+% sections of smaller text, like the dangerous bend stuff in
+% \emph{\tex book}, the equation number size will keep in synch
+% with the context.   
+% Maybe need an \cs{eqbodysize} param as well to allow separating
+% the two cases.   
+%    \begin{macrocode}
 d\eqnumcolor{}         % ... or color than eq body e.g. \color{blue}
 S\eqlinespacing=14pt plus2pt % Base-to-base space between lines
 S\eqlineskip=3pt plus2pt % Min space if eqlinespacing too small
 D\eqlineskiplimit=2pt  % Threshold for switching to eqlineskip
+%    \end{macrocode}
+% The value of \cs{eqbinoffset} should include a negative shrink
+% component that cancels the shrink component of medmuskip, otherwise
+% there can be a noticeable variation in the indent of adjacent lines if
+% one is shrunken a lot and the other isn't.   
+%    \begin{macrocode}
 U\eqbinoffset=15mu minus-3mu % Offset from mathrel alignment pt for mathbins
 U\eqdelimoffset=2mu    % Additional offset for break inside delims
 D\eqindentstep=8pt     % Indent used when LHS wd is n/a or too large
@@ -1050,9 +1719,44 @@ C\intereqpenalty=1000   % Pagebreak penalty between equations [BRM: Was \@M]
 S\intereqskip=3pt plus2pt % Additional vert space between equations
 C\prerelpenalty=-\@M   % Linebreak penalty before mathrel symbols
 C\prebinoppenalty=888  % Linebreak penalty before mathbins
+%    \end{macrocode}
+% When breaking equations we never right-justify, so a stretch
+% component of the muskip is never helpful and sometimes it is definitely
+% undesirable.    Note that thick\slash medmuskips frozen inside a
+% fraction or radical may turn out noticeably larger than neighboring
+% unfrozen ones.    Nonetheless I think this way is the best
+% compromise short of a new \tex  that can make those built-up objects
+% shrink horizontally in proportion; the alternative is to pretty much
+% eliminate the shrink possibility completely in displays.   
+%    \begin{macrocode}
 U\Dmedmuskip=4mu minus 3mu % medmuskip in displays
 U\Dthickmuskip=5mu minus 2mu % thickmuskip in displays
 Q\relax                % End of assignments
+%    \end{macrocode}
+% 
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% And now some internal variables.    1997/10/22: some of
+% these are dead branches that need to be pruned.   
+%    \begin{macrocode}
 \do % def, Dimen, Skip, mUskip, toKs, Box, False, True
 d\eq@number{}          % Internal variable
 S\eqleftskip=\@centering  % Space on the left  [NOT USED?]
@@ -1081,7 +1785,32 @@ Q\relax
 \def\@eq@numbertrue{\let\eq@hasNumber\@True}%
 \def\@eq@numberfalse{\let\eq@hasNumber\@False}%
 \let\eq@hasNumber\@False
-
+%    \end{macrocode}
+% Here for the dimens, it would be advisable to do some more careful
+% management to conserve dimen registers.    First of all, most of the
+% dimen registers are needed in the measuring phase, which is a tightly
+% contained step that happens after the contents of the equation have been
+% typeset into a box and before any external functions have a chance to
+% regain control\mdash  \eg , the output routine.   
+% Therefore it is possible to make use of the the dimen registers 0--9,
+% reserved by convention for scratch use, without fear of conflict with
+% other macros.    But I don't want to use them directly with the
+% available names:
+% \begin{literalcode}
+% \dimen@ \dimen@i \dimen@ii \dimen3 \dimen4 ... \dimen9
+% \end{literalcode}
+% .    It would be much more useful to have names for these registers
+% indicative of way they are used.   
+% 
+% Another source whence dimen registers could be borrowed is the
+% \pkg{amsmath} package, which allocates six registers for
+% equation-measuring purposes.    We can reuse them under different
+% names since the \pkg{amsmath} functions and our functions will
+% never be used simultaneously.   
+% \begin{literalcode}
+% \eqnshift@ \alignsep@ \tagshift@ \tagwidth@ \totwidth@ \lineht@
+% \end{literalcode}
+%    \begin{macrocode}
 \newdimen\eq@dp
 \newdimen\eq@wdL \newdimen\eq@wdT \newdimen\eq@wdMin
 \newdimen\grp@wdL \newdimen\grp@wdR \newdimen\grp@wdT
@@ -1090,8 +1819,16 @@ Q\relax
 \newdimen\eq@wdCond
 \newdimen\eq@indentstep \newdimen\eq@linewidth
 \newdimen\grp@linewidth
+%    \end{macrocode}
+% Maybe \cs{eq@hshift} could share the same register as
+% \cs{mathindent} [mjd,1997/10/22].   
+%    \begin{macrocode}
 \newdimen\eq@hshift
 \let\eq@isIntertext\@False
+%    \end{macrocode}
+% These are scratch variables, they get reset in every equation; so we
+% don't need to provide initialization values here.   
+%    \begin{macrocode}
 \def\do#1#2{\if Q#1\relax \else\@xp\do\fi}\do
 D\eq@wdT        % Total width for framing
 D\eq@wdMin      % Width of narrowest line in equation
@@ -1104,16 +1841,54 @@ D\eq@indentstep % Indent amount when LHS is not present
 D\eq@linewidth  % Width actually used for display
 D\grp@linewidth % Max eq@linewidth over a group
 Q\relax
+%    \end{macrocode}
+% Init \cs{eq@indentstep} to a nonzero value so that we can
+% detect and refrain from clobbering a user setting of zero.   
+% And \cs{eq@sidespace} to \cs{maxdimen} because
+% that is the right init before computing a min.   
+%    \begin{macrocode}
 \eq@indentstep=\maxdimen
 \let\given@sidespace\@empty
+%    \end{macrocode}
+% 
+% \begin{macro}{\eq@overrun}
+% 
+% Not a dimen register; don't need to advance it.   
+%    \begin{macrocode}
 \def\eq@overrun{0pt}
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% To initialize \cs{eqnumside} and \cs{eqindent} properly,
+% we may need to grub around a bit in \cs{@filelist}.    However,
+% if the \pkg{amsmath} package was used, we can use its option
+% data.    More trouble: if a documentclass sends an option of
+% \opt{leqno} to \pkg{amsmath} by default, and it gets
+% overridden by the user with a \opt{reqno} documentclass option,
+% then \pkg{amsmath} believes itself to have received
+% \emph{both} options.   
+%    \begin{macrocode}
 \@ifpackagewith{amsmath}{leqno}{%
   \@ifpackagewith{amsmath}{reqno}{}{\def\eqnumside{L}}%
 }{%
+%    \end{macrocode}
+% If the \pkg{amsmath} package was not used, the next
+% method for testing the \opt{leqno} option is to see if
+% \fn{leqno.clo} is present in \cs{@filelist}.   
+%    \begin{macrocode}
   \def\@tempa#1,leqno.clo,#2#3\@nil{%
     \ifx @#2\relax\else \def\eqnumside{L}\fi
   }%
   \@xp\@tempa\@filelist,leqno.clo,@\@nil
+%    \end{macrocode}
+% Even that test may fail in the case of \cls{amsart} if it does
+% not load \pkg{amsmath}.    Then we have to look whether
+% \cs{iftagsleft@} is defined, and if so whether it is true.   
+% This is tricky if you want to be careful about conditional nesting
+% and don't want to put anything in the hash table unnecessarily.   
+%    \begin{macrocode}
   \if L\eqnumside
   \else
     \@ifundefined{iftagsleft@}{}{%
@@ -1124,6 +1899,11 @@ Q\relax
     }
   \fi
 }
+%    \end{macrocode}
+% A similar sequence of tests handles the \quoted{fleqn or not fleqn}
+% question for the \cls{article} and \cls{amsart}
+% documentclasses.   
+%    \begin{macrocode}
 \@ifpackagewith{amsmath}{fleqn}{%
   \def\eqindent{I}%
 }{%
@@ -1141,8 +1921,9 @@ Q\relax
     }%
   \fi
 }
-
+%    \begin{macrocode}
 % BRM: This conditional implies we must use ALL indented or ALL centered?
+%    \end{macrocode}
 %\if I\eqindent
   \@ifundefined{mathindent}{%
     \newdimen\mathindent
@@ -1152,25 +1933,134 @@ Q\relax
     }%
   }
 %\fi
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+% 
+% 
+% 
+% 
+% \section{Measuring equation components}
+% Measure the left-hand side of an equation.    This
+% function is called by mathrel symbols.    For the first mathrel we
+% want to discourage a line break more than for following mathrels; so
+% \cs{mark@lhs} gobbles the following \cs{rel@break} and
+% substitutes a higher penalty.   
+% \begin{aside}
+% Maybe the LHS should be kept in a separate box.   
+% \end{aside}
+% 
+% 
+% 
+% \begin{macro}{\EQ@hasLHS}
+% 
+% Boolean: does this equation have a \dquoted{left-hand side}?   
+%    \begin{macrocode}
 \let\EQ@hasLHS=\@False
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\EQ@QED}
+% 
+% If nonempty: the qed material that should be incorporated into this
+% equation after the final punctuation.   
+%    \begin{macrocode}
 \let\EQ@QED=\@empty
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\mark@lhs}
+% 
+%    \begin{macrocode}
 \def\mark@lhs#1{%
   \ifnum\lr@level<\@ne
     \let\mark@lhs\relax
     \global\let\EQ@hasLHS=\@True
     \global\let\EQ@prebin@space\EQ@prebin@space@a
     \mark@lhs@a
+%    \end{macrocode}
+% But the penalty for the first mathrel should still be lower than a
+% binoppenalty.    If not, when the LHS contains a binop, the split
+% will occur inside the LHS rather than at the mathrel.   
+% On the other hand if we end up with a multline sort of equation
+% layout where the RHS is very short, the break before the relation symbol
+% should be made \emph{less} desirable than the breakpoints inside
+% the LHS.   
+% Since a lower penalty takes precedence over a higher one, we start
+% by putting in the highest relpenalty; during subsequent measuring if we
+% find that that RHS is not excessively short then we put in an extra
+% \dquoted{normal} relpenalty when rejoining the LHS and RHS.   
+%    \begin{macrocode}
     \penalty9999 % instead of normal \rel@break
+  % else no penalty = forbid break
   \fi
 }
-% BRM: I originally thought the \mskip\thickmuskip was messing up summation limits in LHS.
-% But I may have fixed that problem by fixing other things...
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\mark@lhs@a}
+% 
+% Temporarily add an extra thickmuskip to the LHS; it will be removed
+% later.    This is necessary to compensate for the disappearance of
+% the thickmuskip glue preceding a mathrel if a line break is taken at
+% that point.    Otherwise we would have to make our definition of
+% mathrel symbols more complicated, like the one for mathbins.    The
+% penalty of $2$ put in with vadjust is a flag for
+% \cs{eq@repack} to suggest that the box containing this line should
+% be measured to find the value of \cs{eq@wdL}.    The
+% second vadjust ensures that the normal prerelpenalty and thickmuskip
+% will not get lost at the line break during this preliminary pass.   
+%
+% BRM: I originally thought the \verb"\mskip\thickmuskip" was messing
+% up summation limits in LHS.  But I may have fixed that problem by
+% fixing other things\ldots
+%    \begin{macrocode}
 \def\mark@lhs@a{%
   \mskip\thickmuskip \@@vadjust{\penalty\tw@}\penalty-\@Mi\@@vadjust{}%
 }
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+% 
+% \begin{macro}{\hiderel}
+% If you want the LHS to extend past the first mathrel symbol to a
+% following one, mark the first one with \cs{hiderel}:
+% \begin{literalcode}
+% a \hiderel{=} b = c...
+% \end{literalcode}
+% .   
+% \begin{aside}
+% I'm not sure now why I didn't use \cs{begingroup}
+% \cs{endgroup} here \begin{dn}
+% mjd,1999/01/21
+% \end{dn}
+% .   
+% \end{aside}
+% 
+%    \begin{macrocode}
 \newcommand\hiderel[1]{\mathrel{\advance\lr@level\@ne#1}}
+%    \end{macrocode}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\m@@Bin}
+% \begin{macro}{\m@@Rel}
+% \begin{macro}{\bin@break}
+% \begin{macro}{\rel@break}
+% \begin{macro}{\bin@mark}
+% \begin{macro}{\rel@mark}
+% \begin{macro}{\d@@Bin}
+% \begin{macro}{\d@@Rel}
+% 
+% \cf  \pkg{flexisym} handling of mathbins and mathrels.    These
+% are alternate definitions of \cs{m@Bin} and \cs{m@Rel},
+% activated by \cs{display@setup}.   
+%    \begin{macrocode}
 \let\m@@Bin\m@Bin
 \let\m@@Rel\m@Rel
 \let\EQ@prebin@space\relax
@@ -1184,14 +2074,69 @@ Q\relax
 }
 \def\d@@Bin{\bin@break \m@@Bin}
 \def\d@@Rel{\mark@lhs \rel@break \m@@Rel}
+%    \end{macrocode}
+% The difficulty of dealing properly with the subscripts and
+% superscripts sometimes appended to mathbins and mathrels is one of the
+% reasons that we do not attempt to handle the mathrels as a separate
+% \quoted{column} a la \env{eqnarray}.   
+% 
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\m@@symRel}
+% \begin{macro}{\d@@symRel}
+% \begin{macro}{\m@@symBin}
+% \begin{macro}{\d@@symBin}
+% \begin{macro}{\m@@symDel}
+% \begin{macro}{\d@@symDel}
+% \begin{macro}{\m@@symDeR}
+% \begin{macro}{\d@@symDeR}
+% \begin{macro}{\m@@symDeB}
+% \begin{macro}{\d@@symDeB}
+% \begin{macro}{\m@@symDeA}
+% \begin{macro}{\d@@symDeA}
+% 
+% More of the same.   
+%    \begin{macrocode}
 \let\m@@symRel\@symRel \def\d@@symRel{\mark@lhs \rel@break \m@@symRel}
 \let\m@@symBin\@symBin \def\d@@symBin{\bin@break \m@@symBin}
 \let\m@@symDel\@symDel
 \let\m@@symDeR\@symDeR
 \let\m@@symDeB\@symDeB
 \let\m@@symDeA\@symDeA
+%    \end{macrocode}
+% 
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% 
+% 
+% \begin{macro}{\display@setup}
+% \begin{macro}{\everydisplay}
+% Setup.    Note that \latex  reserves the primitive
+% \cs{everydisplay} under the name \cs{frozen@everydisplay}.   
 % BRM: Disable this! It also affects non-breqn math!!!!
+%    \begin{macrocode}
 %\global\everydisplay\expandafter{\the\everydisplay \display@setup}
+%    \end{macrocode}
+% Change some math symbol function calls.   
+%    \begin{macrocode}
 \def\display@setup{%
   \medmuskip\Dmedmuskip \thickmuskip\Dthickmuskip
   \let\m@Bin\d@@Bin \let\m@Rel\d@@Rel
@@ -1202,6 +2147,13 @@ Q\relax
   \let\@symDeB\d@@symDeB \let\@symDeA\d@@symDeA
   \let\left\eq@left \let\right\eq@right \global\lr@level\z@
   \global\eq@wdCond\z@          %BRM: new
+%    \end{macrocode}
+% If we have an embedded array environment (for example), we
+% don't want to have each math cell within the array resetting
+% \cs{lr@level} globally to 0\mdash not good!   
+% And in general I think it is safe to say that whenever we have a
+% subordinate level of boxing we want to revert to a normal math setup.   
+%    \begin{macrocode}
   \everyhbox{\everyhbox\@emptytoks
     \let\display@setup\relax \textmath@setup \let\textmath@setup\relax
   }%
@@ -1209,7 +2161,13 @@ Q\relax
     \let\display@setup\relax \textmath@setup \let\textmath@setup\relax
   }%
 }
-%BRM: DS Experiment: Variant of \display@setup for use within dseries environmnents
+%    \end{macrocode}
+% The \cs{textmath@setup} function is needed for embedded inline
+% math inside text inside a display.   
+%
+% BRM: DS Experiment: Variant of \cs{display@setup} for use within
+% dseries environmnents
+%    \begin{macrocode}
 \def\dseries@display@setup{%
   \medmuskip\Dmedmuskip \thickmuskip\Dthickmuskip
   \let\m@Bin\d@@Bin 
@@ -1229,6 +2187,9 @@ Q\relax
   }%
  \displaystyle
 }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \def\textmath@setup{%
   \let\m@Bin\m@@Bin \let\m@Rel\m@@Rel
   \let\@symRel\m@@symRel \let\@symBin\m@@symBin
@@ -1238,16 +2199,51 @@ Q\relax
   \let\@symDeB\m@@symDeB \let\@symDeA\m@@symDeA
   \let\left\@@left \let\right\@@right
 }
+%    \end{macrocode}
+% 
+% \end{macro}
+% \end{macro}
+% 
+% \begin{macro}{\if@display}
+% \begin{macro}{\everydisplay}
+% The test \cs{ifinner} is unreliable for distinguishing
+% whether we are in a displayed formula or an inline formula: any display
+% more complex than a simple one-line equation typically involves the use
+% of \verb"$" \cs{displaystyle} \dots  \verb"$" instead of
+% \dbldollars  \dots  \dbldollars .    So we provide a more reliable
+% test.    But it might have been provided already by the
+% \pkg{amsmath} package.   
+%    \begin{macrocode}
 \@ifundefined{@displaytrue}{%
   \@xp\newif\csname if@display\endcsname
   \everydisplay\@xp{\the\everydisplay \@displaytrue}%
 }{}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Options
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+% 
+% \begin{aside}
+% Is there any reason to maintain separate
+% \cs{everydisplay} and \cn{eqstyle}?   
+% 
+% \end{aside}
+% 
+% 
+% \end{macro}
+% \end{macro}
+% 
+% 
+% 
+% 
+% \section{The \env{dmath} and \env{dmath*} environments}
+%
+% Options for the \env{dmath} and \env{dmath*}
+% environments.   
+%    \begin{macrocode}
 % \begin{dmath}[label={xyz}]
 \define@key{breqn}{label}{\def\next@label{\label{#1}}}
 \global\let\next@label\@empty
+%    \end{macrocode}
+% Allow a variant number.   
+%    \begin{macrocode}
 % \begin{dmath}[number={\nref{foo}\textprime}]
 \define@key{breqn}{number}{\def\eq@number{#1}%
   \let\@currentlabel\eq@number

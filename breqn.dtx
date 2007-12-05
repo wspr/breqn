@@ -131,8 +131,10 @@ and the derived files
   [2007/12/03 v0.95 breqn (MH)]
 \documentclass{ltxdoc}
 
-\usepackage{verbatim,xspace}
+\usepackage{verbatim,xspace,listings}
+\lstloadlanguages{[AlLaTeX]TeX}
 
+\lstnewenvironment{literalcode}{}{}
 \makeatletter
 
 {\catcode`\%=12
@@ -170,20 +172,40 @@ and the derived files
 
 
 \providecommand*\pkg[1]{\textsf{#1}}
+\providecommand*\cls[1]{\textsf{#1}}
 \providecommand*\opt[1]{\texttt{#1}}
 \providecommand*\env[1]{\texttt{#1}}
 \providecommand*\fn[1]{\texttt{#1}}
 
+\providecommand*\cn[1]{\cs{#1}}
 
+\providecommand*\tex{\TeX\xspace}
+\providecommand*\latex{\LaTeX\xspace}
+\providecommand*\dbldollars{\texttt{\detokenize{$$}}}%$$
+
+\newenvironment{aside}{\begin{quote}\bfseries}{\end{quote}}
+\newenvironment{dn}{\begin{quote}\bfseries}{\end{quote}}
 
 \newcommand\dash{\textemdash}
 \newcommand\dbslash[1]{\texttt{\string\\}}
 \newcommand\thepkg{the \pkg{breqn} package\xspace}
 
+\providecommand*\texbook{\textsl{The \protect\TeX{}book}\xspace}
+
 \providecommand*\dotsc{\ldots}
 \providecommand*\eqref[1]{(\ref{#1})}
 
 \providecommand*\qq[1]{\textquotedblleft#1\textquotedblright}
+\providecommand*\quoted[1]{\textquoteleft#1\textquoteright}
+\providecommand*\dquoted[1]{\textquotedblleft#1\textquotedblright}
+
+\providecommand*\ie{i.e.,\xspace}
+\providecommand*\eg{e.g.,\xspace}
+\providecommand*\etc{etc.\xspace}
+\providecommand*\cf{cf.\xspace}
+
+\providecommand*\ndash{\unskip\textendash\ignorespaces}
+\providecommand*\mdash{\unskip\textemdash\ignorespaces}
 
 
 \usepackage[cmbase]{flexisym}
@@ -1357,7 +1379,7 @@ and the derived files
 % \end{macro}
 % 
 % 
-% \begin{macro}{\&m}
+% \begin{macro}{\8m}% fix
 % 
 %    \begin{macrocode}
 \begingroup \catcode`\&=11
@@ -1368,7 +1390,7 @@ and the derived files
 % \end{macro}
 % 
 % 
-% \begin{macro}{\&q}
+% \begin{macro}{\8q}% fix
 % 
 %    \begin{macrocode}
 \@xp\let\csname\string &q\endcsname\@gobble
@@ -1921,9 +1943,9 @@ Q\relax
     }%
   \fi
 }
-%    \begin{macrocode}
-% BRM: This conditional implies we must use ALL indented or ALL centered?
 %    \end{macrocode}
+% BRM: This conditional implies we must use ALL indented or ALL centered?
+%    \begin{macrocode}
 %\if I\eqindent
   \@ifundefined{mathindent}{%
     \newdimen\mathindent

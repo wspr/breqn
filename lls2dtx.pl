@@ -142,7 +142,8 @@ $content =~ s{\(c(.*?)\<c\)}{\\verb"$1"}gms; # looks like \verb
 $content =~ s{\(ttq(.*?)\<ttq\)}{\\verb"$1"}gms; # looks like \verb
 
 
-$content =~ s{(\(define.*?\<define\))}{behold_the_magic_carpet($1)}gmse;
+$content =~ s{(\((define).*?\<define\))}{behold_the_magic_carpet($1,$2)}gmse;
+$content =~ s{(\((macros).*?\<macros\))}{behold_the_magic_carpet($1,$2)}gmse; # apparently a variant of define
 
 
 $content =~ s{\<document\)}{\\end{document}}gms;
@@ -171,19 +172,20 @@ exit;
 
 sub behold_the_magic_carpet {
   my $t = shift;
+  my $type = shift;
   # we need to know the number of ^E(macro^F...^E<macro) there are
   my $macro_cnt = 0;
-  my @N = ('macro','cmd','const','toks','set');
+  my @N = ('macro','cmd','const','toks','set','def','aux');
   for my $n ( @N ) {
     while  ( $t =~ m{\(\Q$n\E.*?\<\Q$n\E\)}gms ) { $macro_cnt++ }
   }
   # now we know how many \end{macro} to add
   # drop the define part
-  $t =~ s{\(define}{}ms;
+  $t =~ s{\(\Q$type\E}{}ms;
   for my $n ( @N ) {
     $t =~ s{\(\Q$n\E(.*?)\<\Q$n\E\)}{\\begin{macro}{\\$1}}gms;
   }
-  $t =~ s{\<define\)}{"\\end{macro}\n" x $macro_cnt}e;
+  $t =~ s{\<\Q$type\E\)}{"\\end{macro}\n" x $macro_cnt}e;
 #  print '-' x 50,"\n\n", $t;
 #  print $macro_cnt,"\n";
   return $t;

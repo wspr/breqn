@@ -53,6 +53,8 @@
 % Installation:
 %    TDS:tex/latex/mh/flexisym.sty
 %    TDS:tex/latex/mh/cmbase.sym
+%    TDS:tex/latex/mh/mathpazo.sym
+%    TDS:tex/latex/mh/mathptmx.sym
 %    TDS:tex/latex/mh/msabm.sym
 %    TDS:doc/latex/mh/flexisym.pdf
 %    TDS:source/latex/mh/flexisym.dtx
@@ -70,7 +72,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: flexisym 2007/12/03 v0.93 Flexisym (MH)}
+\Msg{* Package: flexisym 2007/12/10 v0.94 Flexisym (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -98,7 +100,7 @@ This Current Maintainer of this work is Morten Hoegholm.
 This work consists of the main source file flexisym.dtx
 and the derived files
    flexisym.sty, flexisym.pdf, flexisym.ins, flexisym.drv,
-   cmbase.sym, msabm.sym.
+   cmbase.sym, mathpazo.sym, mathptmx.sym, msabm.sym.
 
 \endpreamble
 
@@ -108,6 +110,8 @@ and the derived files
   \usedir{tex/latex/mh}%
   \file{flexisym.sty}{\from{flexisym.dtx}{package}}%
   \file{cmbase.sym}{\from{flexisym.dtx}{cmbase}}%
+  \file{mathpazo.sym}{\from{flexisym.dtx}{mathpazo}}%
+  \file{mathptmx.sym}{\from{flexisym.dtx}{mathptmx}}%
   \file{msabm.sym}{\from{flexisym.dtx}{msabm}}%
 }
 
@@ -117,7 +121,7 @@ and the derived files
 \Msg{* To finish the installation you have to move the following}
 \Msg{* files into a directory searched by TeX:}
 \Msg{*}
-\Msg{*     flexisym.sty, cmbase.sym, msabm.sym}
+\Msg{*     flexisym.sty, cmbase.sym, mathpazo.sym, mathptmx.sym, msabm.sym}
 \Msg{*}
 \Msg{* To produce the documentation run the file `flexisym.drv'}
 \Msg{* through LaTeX.}
@@ -134,8 +138,20 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{flexisym.drv}%
-  [2007/12/02 v0.93 flexisym (MH)]
+  [2007/12/10 v0.94 flexisym (MH)]
 \documentclass{ltxdoc}
+\providecommand*\pkg[1]{\textsf{#1}}
+\providecommand*\cls[1]{\textsf{#1}}
+\providecommand*\opt[1]{\texttt{#1}}
+\providecommand*\env[1]{\texttt{#1}}
+\providecommand*\fn[1]{\texttt{#1}}
+\makeatletter
+\providecommand{\AmS}{{\protect\AmSfont
+  A\kern-.1667em\lower.5ex\hbox{M}\kern-.125emS}}
+\providecommand{\AmSfont}{%
+  \usefont{OMS}{cmsy}{\if\expandafter\@car\f@series\@nil bb\else m\fi}{n}}
+\makeatother
+\newenvironment{aside}{\begin{quote}\bfseries}{\end{quote}}
 \begin{document}
   \DocInput{flexisym.dtx}
 \end{document}
@@ -143,7 +159,7 @@ and the derived files
 % \fi
 %
 % \title{The \textsf{flexisym} package}
-% \date{2007/12/02 v0.93}
+% \date{2007/12/10 v0.94}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -159,7 +175,7 @@ and the derived files
 %
 %    \begin{macrocode}
 %<*package>
-\ProvidesPackage{flexisym}[2007/12/03 v0.93]
+\ProvidesPackage{flexisym}[2007/12/10 v0.94]
 \let\@xp\expandafter \let\@nx\noexpand
 \edef\do{%
   \@nx\AtEndOfPackage{%
@@ -379,9 +395,58 @@ and the derived files
     \else #4#5#6
     \fi
 }
-
-
+%    \end{macrocode}
+%
+%
+% Before declaring any math characters active, we have to take care of
+% a small problem with \pkg{amsmath} v2.x, if it is loaded before
+% \pkg{flexisym}. \cs{std@minus} and \cs{std@equal} are defined as
+% \begin{verbatim}
+% \mathchardef\std@minus\mathcode`\-\relax
+% \mathchardef\std@equal\mathcode`\=\relax
+% \end{verbatim}
+% in \fn{amsmath.sty} and again \cs{AtBeginDocument}. The
+% latter is because
+% \begin{quote}
+%   In case some alternative math fonts are loaded
+%   later. [\fn{amsmath.dtx}]
+% \end{quote}
+% The problem arises because \pkg{flexisym} sets the mathcode of all
+% symbols to $32768$ which is illegal for a \cs{mathchardef}. 
+%
+% We have to remove the assignments from the \cs{AtBeginDocument} hook
+% as they will cause an error there.
+%    \begin{macrocode}
+\@ifpackageloaded{amsmath}{%
+  \begingroup
+%    \end{macrocode}
+% Split the contents of \cs{@begindocumenthook} by reading what we
+% search for as a delimited argument and ensure these two assignments
+% do not take place. It is questionable if anything reasonable can be
+% done to them. In the case of a package such as \pkg{mathpazo} which defines
+% \begin{verbatim}
+%\DeclareMathSymbol{=}{\mathrel}{upright}{"3D}
+% \end{verbatim}
+% the \cs{Relbar} will look wrong if we don't use the correct
+% symbol. The way to solve this is define additional \fn{.sym} files
+% which contain the definition of \cs{relbar} and \cs{Relbar}
+% needed. We need those additional files anyway for things like
+% \cs{joinord}.
+%    \begin{macrocode}
+  \long\def\next#1\mathchardef\std@minus\mathcode`\-\relax
+                  \mathchardef\std@equal\mathcode`\=\relax#2\flexi@stop{%
+    \toks@{#1#2}%
+    \xdef\@begindocumenthook{\the\toks@}%
+  }%
+  \expandafter\next\@begindocumenthook\flexi@stop
+  \endgroup
+}{}
+%    \end{macrocode}
+% And we then continue with the options.
+%    \begin{macrocode}
 \DeclareOption{cmbase}{\usesymbols{cmbase}}
+\DeclareOption{mathpazo}{\usesymbols{mathpazo}}
+\DeclareOption{mathptmx}{\usesymbols{mathptmx}}
 \ProcessOptions\relax
 \renewcommand{\lnot}{\neg}
 \renewcommand{\land}{\wedge}
@@ -393,38 +458,37 @@ and the derived files
 \renewcommand{\gets}{\leftarrow}
 \renewcommand{\to}{\rightarrow}
 \renewcommand{\|}{\Vert}
-%<package>\endinput
-%    \end{macrocode}
-% The code below does not work if \@begindocumenthook contains any |#|
-% and these days there is a good chance this is the case. So for now
-% it is disabled again.
-%    \begin{macrocode}
-\ifx\std@minus\@@undefined
-\else
-  % Patch for amsmath 2.x if loaded before flexisym
-  \begingroup
-  \long\def\0#1\mathchardef\std@minus#2\std@equal#3\relax{%
-    \toks@{#1}%
-    \afterassignment\1\@temptokena\bgroup
-  }%
-  \def\1{%
-    \edef\2{\endgroup
-      \def\noexpand\@begindocumenthook{\the\toks@\the\@temptokena}}%
-    \2%
-  }
-  \iffalse{\fi
-  \expandafter\0\@begindocumenthook
-    \@gobblefour\mathchardef\std@minus\std@equal\relax
-    \relax\relax\relax\relax}
-  % Leave what for std@minus, std@equal?
-\fi
-%</package>
+%</package>\endinput
 %    \end{macrocode}
 %
-% \section{cmbase}
+% \section{cmbase, mathpazo, mathptmx}
+%
+%
+% For each math font package we define a corresponding symbol file
+% with extension \fn{sym}. The Computer Modern base is called
+% \opt{cmbase} and \opt{mathpazo} and \opt{mathptmx} corresponds to
+% the packages. The definitions are almost identical as they mostly
+% concern the positions in the math font encodings. Look for
+% differences in \cs{joinord}, \cs{relbar} and \cs{Relbar}. If you
+% inspect the source code, you'll see that the support for
+% \pkg{mathptmx} didn't require any work but I thought it better to
+% create a \fn{sym} file to maintain a uniform interface.
+%
+% \begin{aside}
+% Open question on \verb"!" and \verb"?": maybe they
+% should have type `Pun' instead of `DeR'.    Need to
+% search for uses in math in AMS archives.    Or, maybe add a special
+% `Clo' type for them: non-extensible closing delimiter.   
+% \end{aside}
+% 
+% 
+% 
+% Default mathgroup setup.   
 %    \begin{macrocode}
-%<*cmbase>
-\ProvidesSymbols{cmbase}[2001/09/07 v0.91]
+%<*cmbase|mathpazo|mathptmx>
+%<cmbase>\ProvidesSymbols{cmbase}[2001/09/07 v0.91]
+%<mathpazo>\ProvidesSymbols{mathpazo}[2007/12/09 v0.1]
+%<mathptmx>\ProvidesSymbols{mathptmx}[2007/12/09 v0.1]
 \@xp\xdef\csname mg@OT1\endcsname{\hexnumber@\symoperators}
 \@xp\xdef\csname mg@OML\endcsname{\hexnumber@\symletters}
 \@xp\xdef\csname mg@OMS\endcsname{\hexnumber@\symsymbols}
@@ -439,6 +503,13 @@ and the derived files
 \global\let\mg@rel\mg@bin
 \global\let\mg@ord\mg@bin
 \global\let\mg@cop\mg@del
+%    \end{macrocode}
+% 
+% 
+% Symbols from the 128-character \fn{cmr} encoding.   
+% Paren and square bracket delimiters from this encoding are covered
+% by the definitions in the \fn{cmex} section, however.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{!}     {Pun}{OT1}{21}
 \DeclareFlexSymbol{+}     {Bin}{OT1}{2B}
 \DeclareFlexSymbol{:}     {Rel}{OT1}{3A}
@@ -446,6 +517,14 @@ and the derived files
 \DeclareFlexSymbol{;}     {Pun}{OT1}{3B}
 \DeclareFlexSymbol{=}     {Rel}{OT1}{3D}
 \DeclareFlexSymbol{?}     {Pun}{OT1}{3F}
+%    \end{macrocode}
+% \AmS\TeX, and therefore the \pkg{amsmath} package, make the
+% uppercase Greek letters class 0 (nonvariable) instead of 7
+% (variable), to eliminate the glaring inconsistency with lowercase
+% Greek.    (In plain \TeX , \verb"{\bf\Delta}" works, while
+% \verb"{\bf\delta}" doesn't.   ) Let us try to make them both
+% variable (fonts permitting) instead of nonvariable.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\Gamma}  {Var}{Greek}{00}
 \DeclareFlexSymbol{\Delta}  {Var}{Greek}{01}
 \DeclareFlexSymbol{\Theta}  {Var}{Greek}{02}
@@ -457,6 +536,9 @@ and the derived files
 \DeclareFlexSymbol{\Phi}    {Var}{Greek}{08}
 \DeclareFlexSymbol{\Psi}    {Var}{Greek}{09}
 \DeclareFlexSymbol{\Omega}  {Var}{Greek}{0A}
+%    \end{macrocode}
+% Decimal digits.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{0}{Var}{digit}{30}
 \DeclareFlexSymbol{1}{Var}{digit}{31}
 \DeclareFlexSymbol{2}{Var}{digit}{32}
@@ -467,11 +549,17 @@ and the derived files
 \DeclareFlexSymbol{7}{Var}{digit}{37}
 \DeclareFlexSymbol{8}{Var}{digit}{38}
 \DeclareFlexSymbol{9}{Var}{digit}{39}
+%    \end{macrocode}
+% Symbols from the 128-character \fn{cmmi} encoding.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{,}{Pun}{OML}{3B}
 \DeclareFlexSymbol{.}{Ord}{OML}{3A}
 \DeclareFlexSymbol{/}{Ord}{OML}{3D}
 \DeclareFlexSymbol{<}{Rel}{OML}{3C}
 \DeclareFlexSymbol{>}{Rel}{OML}{3E}
+%    \end{macrocode}
+% To do: make the Var property of lc Greek work properly.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\alpha}{Var}{greek}{0B}
 \DeclareFlexSymbol{\beta}{Var}{greek}{0C}
 \DeclareFlexSymbol{\gamma}{Var}{greek}{0D}
@@ -501,6 +589,12 @@ and the derived files
 \DeclareFlexSymbol{\varrho}{Var}{greek}{25}
 \DeclareFlexSymbol{\varsigma}{Var}{greek}{26}
 \DeclareFlexSymbol{\varphi}{Var}{greek}{27}
+%    \end{macrocode}
+% Note that in plain \TeX\  \cs{imath} and \cs{jmath} are
+% not variable-font.    But if a \verb"j" changes font to, let's
+% say, sans serif or calligraphic, a dotless \verb"j" in the same
+% context should change font in the same way.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\imath}{Var}{OML}{7B}
 \DeclareFlexSymbol{\jmath}{Var}{OML}{7C}
 \DeclareFlexSymbol{\ell}{Ord}{OML}{60}
@@ -570,10 +664,19 @@ and the derived files
 \DeclareFlexSymbol{X}{Var}{Latin}{58}
 \DeclareFlexSymbol{Y}{Var}{Latin}{59}
 \DeclareFlexSymbol{Z}{Var}{Latin}{5A}
+%    \end{macrocode}
+% The \cs{ldotPun} glyph is used in constructing the
+% \cs{ldots} symbol.    It is just a period with a different math
+% symbol class.    \cs{lhookRel} and \cs{rhookRel} are used
+% in a similar way for building hooked arrow symbols.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\ldotPun}{Pun}{OML}{3A}
 \def\ldotp{\ldotPun}
 \DeclareFlexSymbol{\lhookRel}{Rel}{OML}{2C}
 \DeclareFlexSymbol{\rhookRel}{Rel}{OML}{2D}
+%    \end{macrocode}
+% Symbols from the 128-character \fn{cmsy} encoding.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{*}{Bin}{bin}{03} % \ast
 \DeclareFlexSymbol{-}{Bin}{bin}{00}
 \DeclareFlexSymbol{|}{Ord}{OMS}{6A}
@@ -595,6 +698,9 @@ and the derived files
 \DeclareFlexSymbol{\heartsuit}{Ord}{ord}{7E}
 \DeclareFlexSymbol{\spadesuit}{Ord}{ord}{7F}
 \DeclareFlexSymbol{\smallint}{COs}{OMS}{73}
+%    \end{macrocode}
+% Binary operators.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\bigtriangleup}{Bin}{bin}{34}
 \DeclareFlexSymbol{\bigtriangledown}{Bin}{bin}{35}
 \DeclareFlexSymbol{\wedge}{Bin}{bin}{5E}
@@ -624,6 +730,9 @@ and the derived files
 \DeclareFlexSymbol{\cdot}{Bin}{bin}{01}
 \DeclareFlexSymbol{\ast}{Bin}{bin}{03}
 \DeclareFlexSymbol{\times}{Bin}{bin}{02}
+%    \end{macrocode}
+% Relation symbols.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\propto}{Rel}{rel}{2F}
 \DeclareFlexSymbol{\sqsubseteq}{Rel}{rel}{76}
 \DeclareFlexSymbol{\sqsupseteq}{Rel}{rel}{77}
@@ -661,10 +770,24 @@ and the derived files
 \DeclareFlexSymbol{\perp}{Rel}{rel}{3F}
 \DeclareFlexSymbol{\equiv}{Rel}{rel}{11}
 \DeclareFlexSymbol{\asymp}{Rel}{rel}{10}
+%    \end{macrocode}
+% The \cs{notRel} glyph is a special zero-width glyph intended only
+% for use in constructing negated symbols.    \cs{mapstoRel} and
+% \cs{cdotPun} have similar but more restricted applications.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\notRel}{Rel}{rel}{36}
 \DeclareFlexSymbol{\mapstoOrd}{Ord}{OMS}{37}
 \DeclareFlexSymbol{\cdotOrd}{Ord}{OMS}{01}
 \def\cdotp{\mathpunct{\cdotOrd}}
+%    \end{macrocode}
+% Symbols from the 128-character \fn{cmex} encoding.   
+% \verb"COs" stands for `cumulative operator
+% (sum-like)'.   
+% \verb"COi" stands for `cumulative operator
+% (integral-like)'.    These typically differ only in the
+% default placement of limits.    \verb"cop" stands for
+% `cumulative operator math group'.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\coprod}{COs}{cop}{60}
 \DeclareFlexSymbol{\bigvee}{COs}{cop}{57}
 \DeclareFlexSymbol{\bigwedge}{COs}{cop}{56}
@@ -679,6 +802,22 @@ and the derived files
 \DeclareFlexSymbol{\bigodot}{COs}{cop}{4A}
 \DeclareFlexSymbol{\oint}{COi}{cop}{48}
 \DeclareFlexSymbol{\bigsqcup}{COs}{cop}{46}
+%    \end{macrocode}
+% Delimiter symbols.   
+% \verb"DeL" stands for `delimiter (left)'.   
+% \verb"DeR" stands for `delimiter (right)'.   
+% \verb"DeB" stands for `delimiter (bidirectional)'.   
+% The principal encoding point for an extensible delimiter is the
+% first link in the list of linked sizes as specified in the font metric
+% information.   
+% For a math encoding such as OT1/OML/OMS/OMX where not all sizes of a
+% given delimiter reside in a given font, the extra encoding point for the
+% smallest delimiter must be supplied by defining
+% \begin{verbatim}
+% \sd@GXX
+% \end{verbatim}
+% where G is the mathgroup and XX is the hexadecimal glyph position.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\rangle}{DeR}{del}{0B}
 \DeclareFlexSymbol{\langle}{DeL}{del}{0A}
 \DeclareFlexSymbol{\rbrace}{DeR}{del}{09}
@@ -697,8 +836,20 @@ and the derived files
 \DeclareFlexSymbol{\rvert}{DeR}{del}{0C}
 \DeclareFlexSymbol{\Vert}{DeB}{del}{0D}
 \DeclareFlexSymbol{\vert}{DeB}{del}{0C}
+%    \end{macrocode}
+% Maybe make the vert bars mathord instead of delimiter, to discourage
+% poor usage.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{|}{DeB}{del}{0C}
 \DeclareFlexSymbol{/}{DeB}{del}{0E}
+%    \end{macrocode}
+% 
+% 
+% These wacky delimiters need to be supported I guess for
+% compabitility reasons.   
+% The DeA delimiter type is a special case used only for these
+% arrows.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\lmoustache}{DeL}{del}{40}
 \DeclareFlexSymbol{\rmoustache}{DeR}{del}{41}
 \DeclareFlexSymbol{\lgroup}{DeL}{del}{3A}
@@ -713,10 +864,34 @@ and the derived files
 \DeclareFlexSymbol{\Downarrow}{DeA}{del}{7F}
 \DeclareFlexSymbol{\Updownarrow}{DeA}{del}{77}
 \DeclareFlexSymbol{\backslash}{DeB}{del}{0F}
+%    \end{macrocode}
+% 
+% 
+% 
+% 
+% \section{Some compound symbols}
+% The following symbols are not robust in standard \LaTeX\ 
+% because they use \verb"#" or \cs{mathpalette} (which is not
+% robust and contains a \verb"#" in its expansion): \cs{angle},
+% \cs{cong}, \cs{notin}, \cs{rightleftharpoons}.   
+% 
+% In this definition of \cs{hbar}, the symbol is cobbled together
+% from a math italic h and the cmr overbar accent glyph.   
+%    \begin{macrocode}
 \DeclareFlexSymbol{\hbarOrd}{Ord}{OT1}{16}
 \DeclareFlexCompoundSymbol{\hbar}{Ord}{\hbarOrd\mkern-9mu h}
+%    \end{macrocode}
+% For \cs{surd}, the interior symbol gets math class 1
+% (cumulative operator) to make the glyph vertically centered on the
+% math axis, but the desired horizontal spacing is the spacing for a
+% mathord.    (Couldn't it just be class mathopen, though?   )
+%    \begin{macrocode}
 \DeclareFlexSymbol{\surdOrd}{Ord}{OMS}{70}
 \DeclareFlexCompoundSymbol{\surd}{Ord}{\mathop{\surdOrd}}
+%    \end{macrocode}
+% As shown in this definition of \cs{angle}, rule dimens are not
+% allowed to use math-units, unfortunately.   
+%    \begin{macrocode}
 \DeclareFlexCompoundSymbol{\angle}{Ord}{%
   \vbox{\ialign{%
       $\m@th\scriptstyle##$\crcr
@@ -725,10 +900,31 @@ and the derived files
       \mkern2.5mu\leaders\hrule \@height.34pt\hfill\mkern2.5mu\crcr
   }}%
 }
+%    \end{macrocode}
+% The \cs{not} function, which is defined in the \pkg{flexisym}
+% package, requires a suitably defined \cs{notRel} symbol.   
+%    \begin{macrocode}
 \DeclareFlexCompoundSymbol{\neq}{Rel}{\not{=}}
+%    \end{macrocode}
+% .   
+%    \begin{macrocode}
 \DeclareFlexCompoundSymbol{\mapsto}{Rel}{\mapstoOrd\rightarrow}
+%    \end{macrocode}
+% The \cs{@vereq} function ends by centering the whole
+% construction on the math axis, unlike \cs{buildrel} where the base
+% symbol remains at its normal altitude.    Furthermore,
+% \cs{@vereq} leaves the math style of the top symbol as given
+% instead of downsizing to scriptstyle.   
+%    \begin{macrocode}
 \DeclareFlexCompoundSymbol{\cong}{Rel}{\mathpalette\@vereq\sim}
-\newcommand{\joinord}{\mkern-3mu }
+%    \end{macrocode}
+% The \cs{m@th} in the \fn{fontmath.ltx} definition of
+% \cs{notin} is superfluous unless \cs{c@ncel} doesn't include
+% it (which was perhaps true in an older version of
+% \fn{plain.tex}?).   
+%    \begin{macrocode}
+%<cmbase|mathptmx>\newcommand*\joinord{\mkern-3mu }
+%<mathpazo>\newcommand*\joinord{\mkern-3.45mu }
 \DeclareFlexCompoundSymbol{\notin}{Rel}{\mathpalette\c@ncel\in}
 \DeclareFlexCompoundSymbol{\rightleftharpoons}{Rel}{\mathpalette\rlh@{}}
 \DeclareFlexCompoundSymbol{\doteq}{Rel}{\buildrel\textstyle.\over=}
@@ -743,9 +939,29 @@ and the derived files
 \DeclareFlexCompoundSymbol{\longmapsto}{Rel}{\mapstochar\longrightarrow}
 \DeclareFlexCompoundSymbol{\longleftrightarrow}{Rel}{\leftarrow\joinord\rightarrow}
 \DeclareFlexCompoundSymbol{\Longleftrightarrow}{Rel}{\Leftarrow\joinord\Rightarrow}
-\renewcommand{\iff}{%
+%    \end{macrocode}
+% Here is what you get from the old definition of \cs{iff}.   
+% \begin{verbatim}
+% \glue 2.77771 plus 2.77771
+% \glue(\thickmuskip) 2.77771 plus 2.77771
+% \OMS/cmsy/m/n/10 (
+% \hbox(0.0+0.0)x-1.66663
+% .\kern -1.66663
+% \OMS/cmsy/m/n/10 )
+% \penalty 500
+% \glue 2.77771 plus 2.77771
+% \glue(\thickmuskip) 2.77771 plus 2.77771
+% \end{verbatim}
+% Looks like it could be simplified slightly.    But it's not so
+% easy as it looks to do it without screwing up the line breaking
+% possibilities.   
+%    \begin{macrocode}
+\renewcommand*\iff{%
   \mskip\thickmuskip\Longleftrightarrow\mskip\thickmuskip
 }
+%    \end{macrocode}
+% Some dotly symbols.   
+%    \begin{macrocode}
 \DeclareFlexCompoundSymbol{\cdots}{Inn}{\cdotp\cdotp\cdotp}%
 \DeclareFlexCompoundSymbol{\vdots}{Ord}{%
   \vbox{\baselineskip4\p@ \lineskiplimit\z@
@@ -755,20 +971,48 @@ and the derived files
   \vbox{\kern7\p@\hbox{.}}\mkern2mu%
   \raise4\p@\hbox{.}\mkern2mu\raise\p@\hbox{.}\mkern1mu%
 }
+%    \end{macrocode}
+% .   
+%    \begin{macrocode}
 \def\relbar{\begingroup \def\smash@{tb}% in case amsmath is loaded
     \mathpalette\mathsm@sh{\mathchar"200 }\endgroup}
-\def\Relbar{\mathchar"3D }
-%</cmbase>
 %    \end{macrocode}
+% For \cs{Relbar} we take an equal sign of class $0$ (Ord) from the
+% operator family. For \fn{cmr} and \pkg{mathptmx} we know this is
+% family $0$.
+%    \begin{macrocode}
+%<cmbase|mathptmx>\def\Relbar{\mathchar"3D }
+%    \end{macrocode}
+% For the \pkg{mathpazo} setup we need to use the equal sign from
+% \fn{cmr} and so must insert class $0$ and use the symbol from the
+% upright symbols.
+%    \begin{macrocode}
+%<mathpazo>\edef\Relbar{\mathchar\string"\hexnumber@\symupright3D }
+%    \end{macrocode}
+% Done.
+%    \begin{macrocode}
+%</cmbase|mathpazo|mathptmx>
+%    \end{macrocode}
+% Various synonyms such as \cs{le} for \cs{leq} and
+% \cs{to} for \cs{rightarrow} are defined in
+% \pkg{flexisym} with \cs{def} instead of \cs{let}, for
+% slower execution speed but smaller chance of synchronization
+% problems.   
 %
 %
 %
 %    \begin{macrocode}
 %<*msabm>
 \ProvidesSymbols{msabm}[2001/09/08 v0.91]
+%    \end{macrocode}
+%    \begin{macrocode}
 \RequirePackage{amsfonts}\relax
+%    \end{macrocode}
+%    \begin{macrocode}
 \@xp\xdef\csname mg@MSA\endcsname{\hexnumber@\symAMSa}%
 \@xp\xdef\csname mg@MSB\endcsname{\hexnumber@\symAMSb}%
+%    \end{macrocode}
+%    \begin{macrocode}
 \DeclareFlexSymbol{\boxdot}       {Bin}{MSA}{00}
 \DeclareFlexSymbol{\boxplus}      {Bin}{MSA}{01}
 \DeclareFlexSymbol{\boxtimes}     {Bin}{MSA}{02}
@@ -779,7 +1023,9 @@ and the derived files
 \DeclareFlexSymbol{\blacklozenge} {Ord}{MSA}{07}
 \DeclareFlexSymbol{\circlearrowright}   {Rel}{MSA}{08}
 \DeclareFlexSymbol{\circlearrowleft}    {Rel}{MSA}{09}
-%% In amsfonts.sty:
+%    \end{macrocode}
+% In amsfonts.sty:
+%    \begin{macrocode}
 %%\DeclareFlexSymbol{\rightleftharpoons}{Rel}{MSA}{0A}
 \DeclareFlexSymbol{\leftrightharpoons}  {Rel}{MSA}{0B}
 \DeclareFlexSymbol{\boxminus}     {Bin}{MSA}{0C}
@@ -835,7 +1081,9 @@ and the derived files
 \DeclareFlexSymbol{\geqq}         {Rel}{MSA}{3D}
 \DeclareFlexSymbol{\geqslant}     {Rel}{MSA}{3E}
 \DeclareFlexSymbol{\gtrless}      {Rel}{MSA}{3F}
-%% in amsfonts.sty
+%    \end{macrocode}
+% in amsfonts.sty
+%    \begin{macrocode}
 %% \DeclareFlexSymbol{\sqsubset}    {Rel}{MSA}{40}
 %% \DeclareFlexSymbol{\sqsupset}    {Rel}{MSA}{41}
 \DeclareFlexSymbol{\vartriangleright}{Rel}{MSA}{42}
@@ -860,7 +1108,9 @@ and the derived files
 \DeclareFlexSymbol{\veebar}       {Bin}{MSA}{59}
 \DeclareFlexSymbol{\barwedge}     {Bin}{MSA}{5A}
 \DeclareFlexSymbol{\doublebarwedge} {Bin}{MSA}{5B}
-%% In amsfonts.sty
+%    \end{macrocode}
+% In amsfonts.sty
+%    \begin{macrocode}
 %%\DeclareFlexSymbol{\angle}        {Ord}{MSA}{5C}
 \DeclareFlexSymbol{\measuredangle}  {Ord}{MSA}{5D}
 \DeclareFlexSymbol{\sphericalangle} {Ord}{MSA}{5E}
@@ -895,7 +1145,9 @@ and the derived files
 \DeclareFlexSymbol{\circledcirc}  {Bin}{MSA}{7D}
 \DeclareFlexSymbol{\circledast}   {Bin}{MSA}{7E}
 \DeclareFlexSymbol{\circleddash}  {Bin}{MSA}{7F}
-%%   Begin AMSb declarations
+%    \end{macrocode}
+%   Begin AMSb declarations
+%    \begin{macrocode}
 \DeclareFlexSymbol{\lvertneqq}    {Rel}{MSB}{00}
 \DeclareFlexSymbol{\gvertneqq}    {Rel}{MSB}{01}
 \DeclareFlexSymbol{\nleq}         {Rel}{MSB}{02}
@@ -963,7 +1215,9 @@ and the derived files
 \DeclareFlexSymbol{\nexists}        {Ord}{MSB}{40}
 \DeclareFlexSymbol{\Finv}           {Ord}{MSB}{60}
 \DeclareFlexSymbol{\Game}           {Ord}{MSB}{61}
-%% In amsfonts.sty:
+%    \end{macrocode}
+% In amsfonts.sty:
+%    \begin{macrocode}
 %%\DeclareFlexSymbol{\mho}          {Ord}{MSB}{66}
 \DeclareFlexSymbol{\eth}            {Ord}{MSB}{67}
 \DeclareFlexSymbol{\eqsim}          {Rel}{MSB}{68}
@@ -988,7 +1242,9 @@ and the derived files
 \DeclareFlexSymbol{\varkappa}       {Ord}{MSB}{7B}
 \DeclareFlexSymbol{\Bbbk}           {Ord}{MSB}{7C}
 \DeclareFlexSymbol{\hslash}         {Ord}{MSB}{7D}
-%% In amsfonts.sty:
+%    \end{macrocode}
+% In amsfonts.sty:
+%    \begin{macrocode}
 %%\DeclareFlexSymbol{\hbar}         {Ord}{MSB}{7E}
 \DeclareFlexSymbol{\backepsilon}    {Rel}{MSB}{7F}
 %</msabm>

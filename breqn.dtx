@@ -67,7 +67,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: breqn 2007/12/03 v0.95 Breqn (MH)}
+\Msg{* Package: breqn 2007/12/10 v0.96 Breqn (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -128,10 +128,10 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}%
-  [2007/12/03 v0.95 breqn (MH)]
+  [2007/12/10 v0.96 breqn (MH)]
 \documentclass{ltxdoc}
 
-\usepackage{verbatim,xspace,listings}
+\usepackage{verbatim,xspace,varioref,listings}
 \lstloadlanguages{[AlLaTeX]TeX}
 
 \lstnewenvironment{literalcode}{\lstset{gobble=2}}{}
@@ -211,7 +211,6 @@ and the derived files
 
 \makeatother
 
-\usepackage[cmbase]{flexisym}
 \usepackage{breqn}
 
 \begin{document}
@@ -221,7 +220,7 @@ and the derived files
 % \fi
 %
 % \title{The \pkg{breqn} package}
-% \date{2007/12/03 v0.95}
+% \date{2007/12/10 v0.96}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -249,21 +248,40 @@ and the derived files
 % more \emph{masterpieces of the publishing art} as I think he would
 % have wanted.
 %
-% \section{The state of things}
-%
-% The original sources of \pkg{breqn} and related files exist in a
-% non-dtx format devised by Michael Downes himself.
-% Lars Madsen has kindly written a Perl script for transforming the
-% original source files into near-perfect dtx state, requiring only
-% very little hand tuning. Without his help it would have been nigh
-% impossible to incorporate the original sources with Michael's
-% comments. A big, big thank you to him.
-%
 % 
+%
+% \section{Package loading}
+%
+%
+% The recommended way of loading the \pkg{breqn} package is to load it
+% \emph{after} other packages dealing with math, \ie, after
+% \pkg{amsmath}, \pkg{amssymb}, or packages such as \pkg{mathpazo} or
+% \pkg{mathptmx}. 
+% 
+% The \pkg{flexisym} package (described in section \vref{flexisym}) is
+% required by \pkg{breqn} and ensures the math symbols are set up
+% correctly. By default \pkg{breqn} loads it with support for Computer
+% Modern but if you use a different math package requiring slightly
+% different definitions, it must be loaded before \pkg{breqn}. Below
+% is an example of how you enable \pkg{breqn} to work with the widely
+% used \pkg{mathpazo} package.
+% \begin{verbatim}
+%\usepackage{mathpazo}
+%\usepackage[mathpazo]{flexisym}
+%\usepackage{breqn}
+% \end{verbatim}
+% Currently, the packages \pkg{mathpazo} and \pkg{mathptmx} are
+% supported. Despair not: Chances are that the package will work using
+% the default settings. If you find that a particular math font
+% package doesn't work then please see implementation in
+% \fn{flexisym.dtx} for how to create a support file---it is easier
+% than one might think. Contributions welcome.
+%
 % The documentation for the package was formerly found in
 % \fn{breqndoc}. It has now been added to this implementation
 % file. Below follows the contents of the original \pkg{breqn}
-% documentation.
+% documentation. Not all details hold anymore but I have prioritized
+% fixing the package.
 %
 % \section{To do}
 %
@@ -374,6 +392,8 @@ and the derived files
 % to break other packages when used in combination with them, or to fail
 % itself, when there are any areas of internal overlap; successful use may
 % in some cases depend on package loading order.
+%
+%
 %
 % \subsection{Indention of delimited fragments} When line breaks within
 % delimiters are involved, the automatic indention of continuation lines
@@ -732,6 +752,8 @@ and the derived files
 % loaded after the \pkg{flexisym} package and the symbols are defined
 % through the standard interface.
 %
+%
+%
 % \section{Caution! Warning!}
 % Things to keep in mind when writing documents with \thepkg:
 % \begin{itemize}
@@ -879,6 +901,13 @@ and the derived files
 % incorporated where applicable.
 %
 %
+% The original sources of \pkg{breqn} and related files exist in a
+% non-dtx format devised by Michael Downes himself.
+% Lars Madsen has kindly written a Perl script for transforming the
+% original source files into near-perfect dtx state, requiring only
+% very little hand tuning. Without his help it would have been nigh
+% impossible to incorporate the original sources with Michael's
+% comments. A big, big thank you to him.
 %
 %
 %
@@ -2982,7 +3011,9 @@ Q\relax
       \if\EQ@shortskips
         \parskip\abovedisplayshortskip
         \aftergroup\belowdisplayskip\aftergroup\belowdisplayshortskip
-        % BRM: Not exactly TeX's approach, but seems right...
+%    \end{macrocode}
+% BRM: Not exactly \TeX's approach, but seems right\ldots
+%    \begin{macrocode}
         \ifdim\predisplaysize>\z@\nointerlineskip\fi
       \else
         \parskip\abovedisplayskip

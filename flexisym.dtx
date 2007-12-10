@@ -483,6 +483,9 @@ and the derived files
 \renewcommand{\gets}{\leftarrow}
 \renewcommand{\to}{\rightarrow}
 \renewcommand{\|}{\Vert}
+\@ifpackagewith{flexisym}{mathstyleoff}{}{%
+  \RequirePackage[activechars]{mathstyle}\relax
+}
 %</package>\endinput
 %    \end{macrocode}
 %

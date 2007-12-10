@@ -1000,7 +1000,7 @@ and the derived files
 % 
 % Declare package name and date.   
 %    \begin{macrocode}
-\ProvidesPackage{breqn}[2007/12/02 v0.95]
+\ProvidesPackage{breqn}[2007/12/10 v0.96]
 %    \end{macrocode}
 %
 %
@@ -1014,7 +1014,15 @@ and the derived files
 % It seems easier to turn off debugging than turn it on so the
 % implementation of the \opt{debug} option is sort of backward.   
 %    \begin{macrocode}
+\edef\breqnpopcats{%
+  \catcode\number`\"=\number\catcode`\"
+  \relax}
+\AtEndOfPackage{\breqnpopcats}%
+\catcode`\^=7 \catcode`\_=8 \catcode`\"=12 \relax
 \DeclareOption{debug}{\errorcontextlines=2000\relax}
+\DeclareOption{mathstyleoff}{%
+  \PassOptionsToPackage{mathstyleoff}{flexisym}%
+}
 %    \end{macrocode}
 % Process options.   
 %    \begin{macrocode}
@@ -1036,7 +1044,12 @@ and the derived files
 % I don't think so.   
 %    \begin{macrocode}
 \@ifpackageloaded{flexisym}{}{%
-  \RequirePackage[cmbase]{flexisym}[1997/01/01]
+  \RequirePackage[cmbase]{flexisym}[2007/12/10]
+    \edef\breqnpopcats{\breqnpopcats
+    \catcode\number`\^=\number\catcode`\^
+    \catcode\number`\_=\number\catcode`\_
+  }%
+  \catcode`\^=7 \catcode`\_=8 \catcode`\"=12 \relax
 }
 %    \end{macrocode}
 % The \pkg{keyval} package for handling equation options and

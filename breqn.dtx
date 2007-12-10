@@ -1039,9 +1039,10 @@ and the derived files
   \RequirePackage[cmbase]{flexisym}[1997/01/01]
 }
 %    \end{macrocode}
-% The \pkg{keyval} package for handling equation options.   
+% The \pkg{keyval} package for handling equation options and
+% \pkg{calc} to ease writing computations.
 %    \begin{macrocode}
-\RequirePackage{keyval}\relax
+\RequirePackage{keyval,calc}\relax
 %    \end{macrocode}
 % 
 % 
@@ -1481,7 +1482,7 @@ and the derived files
 % Most of the time this branch will be skipped so we can
 % stuff a lot of work into it without worrying about speed costs.   
 %    \begin{macrocode}
-\def\@saveprimitive@a#1#2{%
+\providecommand\@saveprimitive@a[2]{%
   \begingroup
   \def\@tempb##1#1##2{\edef\@tempb{##2}\@car{}}%
   \@tempb\nullfont{select font nullfont}%
@@ -1519,7 +1520,7 @@ and the derived files
 % shorthand for common constructions: \tex , or an editing interface of
 % some sort.   
 %    \begin{macrocode}
-\begingroup \catcode`\$=3 % just to make sure
+\begingroup \catcode`\$=\thr@@ % just to make sure
   \global\let\@@math=$ \gdef\@@display{$$}% $$$
 \endgroup
 \let\@@endmath=\@@math
@@ -1653,12 +1654,8 @@ and the derived files
 % 
 % 
 % \section{Parameters}
-% A stunning cornucopia of them, in fact.    I wanted to make a
-% table but a purely documentary table would be highly redundant with the
-% following code section and didn't strike me as wise maintenance policy,
-% so instead I formatted the source code itself into a crude table and
-% made a helper function to make more room for comments on each line.   
 % 
+% Here follows a list of parameters needed.
 % 
 % \begin{macro}{\eqfontsize}
 % \begin{macro}{\eqcolor}
@@ -1686,25 +1683,18 @@ and the derived files
 % the next thing is an undefined macro, the attempt to expand the macro
 % results in an error message.   
 %    \begin{macrocode}
-\def\do#1#2{\begingroup
-  \def\?##1#1##2##3##4##5\@nil{\endgroup##2##3\afterassignment\do##4}%
-  \?C\newcount#2#2D\newdimen#2#2S\newskip#2#2U\newmuskip#2#2%
-    K\newtoks#2#2F\newif#2{\z@\z@}T\newif#2{\let#2\iftrue}%
-    B\newbox#2{\z@\z@}d{\newcommand#2{}}{}{\def#2}%
-    Q\relax\@gobbletwo\relax \@nil}%
-\do % def, Count, Dimen, Skip, mUskip, toKs, Box, False, True
-d\eqfontsize{}         % Inherit from context    [NOT USED?]
-d\eqcolor{black}       % Default to black        [NOT USED?]
-D\eqnumsep=10pt        % Min space between equ number and body
-D\eqmargin=8pt         % For `multline' gap emulation
+\def\eqfontsize{}         % Inherit from context    [NOT USED?]
+\def\eqcolor{black}       % Default to black        [NOT USED?]
+\newdimen\eqnumsep \eqnumsep=10pt        % Min space between equ number and body
+\newdimen\eqmargin \eqmargin=8pt         % For `multline' gap emulation
 %    \end{macrocode}
 % The \cs{eqindent} and \cs{eqnumside} variables need to
 % have their values initialized from context, actually.    But
 % that takes a bit of work, which is postponed till later.   
 %    \begin{macrocode}
-d\eqindent{C}%         % C or I, centered or indented
-d\eqnumside{R}%        % R or L, right or left
-d\eqnumplace{M}%       % M or T or B, middle top or bottom
+\def\eqindent{C}%         % C or I, centered or indented
+\def\eqnumside{R}%        % R or L, right or left
+\def\eqnumplace{M}%       % M or T or B, middle top or bottom
 %    \end{macrocode}
 % Typesetting the equation number is done thus:
 % \begin{literalcode}
@@ -1713,40 +1703,40 @@ d\eqnumplace{M}%       % M or T or B, middle top or bottom
 % .   
 %    \begin{macrocode}
 %d\eqnumfont{\upshape}% % Upright even when surrounding text is slanted
-d\eqnumfont{}%         % Null for easier debugging [mjd,1997/09/26]
-d\eqnumform#1{(#1\@@italiccorr)} % Add parens
-d\eqnumsize{}          % Allow numbers to have different typesize ...
+\def\eqnumfont{}%         % Null for easier debugging [mjd,1997/09/26]
+\def\eqnumform#1{(#1\@@italiccorr)} % Add parens
+\def\eqnumsize{}          % Allow numbers to have different typesize ...
 %    \end{macrocode}
 % Tricky questions on \cs{eqnumsize}.    Should the default
 % be \cs{normalsize}?    Then the user can scale down the
 % equation body with \cs{small} and not affect the equation
 % number.    Or should the default be empty?    Then in large
 % sections of smaller text, like the dangerous bend stuff in
-% \emph{\tex book}, the equation number size will keep in synch
+% \emph{\TeX book}, the equation number size will keep in synch
 % with the context.   
 % Maybe need an \cs{eqbodysize} param as well to allow separating
 % the two cases.   
 %    \begin{macrocode}
-d\eqnumcolor{}         % ... or color than eq body e.g. \color{blue}
-S\eqlinespacing=14pt plus2pt % Base-to-base space between lines
-S\eqlineskip=3pt plus2pt % Min space if eqlinespacing too small
-D\eqlineskiplimit=2pt  % Threshold for switching to eqlineskip
+\def\eqnumcolor{}         % ... or color than eq body e.g. \color{blue}
+\newlength\eqlinespacing \eqlinespacing=14pt plus2pt % Base-to-base space between lines
+\newlength\eqlineskip \eqlineskip=3pt plus2pt % Min space if eqlinespacing too small
+\newdimen\eqlineskiplimit \eqlineskiplimit=2pt  % Threshold for switching to eqlineskip
 %    \end{macrocode}
 % The value of \cs{eqbinoffset} should include a negative shrink
 % component that cancels the shrink component of medmuskip, otherwise
 % there can be a noticeable variation in the indent of adjacent lines if
 % one is shrunken a lot and the other isn't.   
 %    \begin{macrocode}
-U\eqbinoffset=15mu minus-3mu % Offset from mathrel alignment pt for mathbins
-U\eqdelimoffset=2mu    % Additional offset for break inside delims
-D\eqindentstep=8pt     % Indent used when LHS wd is n/a or too large
-K\eqstyle={}           % Customization hook
-C\eqbreakdepth=2       % Allow breaks within delimiters to this depth
-C\eqinterlinepenalty=10000 % No page breaks between equation lines
-C\intereqpenalty=1000   % Pagebreak penalty between equations [BRM: Was \@M]
-S\intereqskip=3pt plus2pt % Additional vert space between equations
-C\prerelpenalty=-\@M   % Linebreak penalty before mathrel symbols
-C\prebinoppenalty=888  % Linebreak penalty before mathbins
+\newmuskip \eqbinoffset \eqbinoffset=15mu minus-3mu % Offset from mathrel alignment pt for mathbins
+\newmuskip\eqdelimoffset \eqdelimoffset=2mu    % Additional offset for break inside delims
+\newdimen\eqindentstep \eqindentstep=8pt     % Indent used when LHS wd is n/a or too large
+\newtoks\eqstyle           % Customization hook
+\newcount\eqbreakdepth \eqbreakdepth=2       % Allow breaks within delimiters to this depth
+\newcount \eqinterlinepenalty \eqinterlinepenalty=10000 % No page breaks between equation lines
+\newcount \intereqpenalty \intereqpenalty=1000   % Pagebreak penalty between equations [BRM: Was \@M]
+\newlength \intereqskip \intereqskip=3pt plus2pt % Additional vert space between equations
+\newcount\prerelpenalty \prerelpenalty=-\@M   % Linebreak penalty before mathrel symbols
+\newcount\prebinoppenalty \prebinoppenalty=888  % Linebreak penalty before mathbins
 %    \end{macrocode}
 % When breaking equations we never right-justify, so a stretch
 % component of the muskip is never helpful and sometimes it is definitely
@@ -1757,9 +1747,8 @@ C\prebinoppenalty=888  % Linebreak penalty before mathbins
 % shrink horizontally in proportion; the alternative is to pretty much
 % eliminate the shrink possibility completely in displays.   
 %    \begin{macrocode}
-U\Dmedmuskip=4mu minus 3mu % medmuskip in displays
-U\Dthickmuskip=5mu minus 2mu % thickmuskip in displays
-Q\relax                % End of assignments
+\newmuskip \Dmedmuskip \Dmedmuskip=4mu minus 3mu % medmuskip in displays
+\newmuskip \Dthickmuskip \Dthickmuskip=5mu minus 2mu % thickmuskip in displays
 %    \end{macrocode}
 % 
 % \end{macro}
@@ -1784,32 +1773,27 @@ Q\relax                % End of assignments
 % 
 % And now some internal variables.    1997/10/22: some of
 % these are dead branches that need to be pruned.   
+%
+% MH: Started cleaning up a bit. No more funny loops.
 %    \begin{macrocode}
-\do % def, Dimen, Skip, mUskip, toKs, Box, False, True
-d\eq@number{}          % Internal variable
-S\eqleftskip=\@centering  % Space on the left  [NOT USED?]
-S\eqrightskip=\@centering % Space on the right [NOT USED?]
-S\eq@vspan=\z@skip     % Glue used to vcenter the eq number
-U\eq@binoffset=\eqbinoffset % Roughly, \eqbinoffset + \eqdelimoffset
-B\EQ@box               % Storage for equation body
-B\EQ@copy              % For eq body sans vadjust/insert/mark material
-B\EQ@numbox            % For equation number
-D\eq@wdNum=0pt         % width of number + separation [NEW]
-B\GRP@numbox            % For group number [NEW]
-D\grp@wdNum=0pt         % width of number + separation [NEW]
+\def\eq@number{}          % Internal variable
+\newlength\eqleftskip \eqleftskip=\@centering  % Space on the left  [NOT USED?]
+\newlength\eqrightskip \eqrightskip=\@centering % Space on the right [NOT USED?]
+\newlength\eq@vspan \eq@vspan=\z@skip     % Glue used to vcenter the eq number
+\newmuskip\eq@binoffset \eq@binoffset=\eqbinoffset % Roughly, \eqbinoffset + \eqdelimoffset
+\newsavebox\EQ@box               % Storage for equation body
+\newsavebox\EQ@copy              % For eq body sans vadjust/insert/mark material
+\newsavebox\EQ@numbox            % For equation number
+\newdimen\eq@wdNum         % width of number + separation [NEW]
+\newsavebox\GRP@numbox            % For group number [NEW]
+\newdimen\grp@wdNum         % width of number + separation [NEW]
 %%B\EQ@vimbox            % Vadjust, insert, or mark material
 %%B\EQ@vimcopy           % Spare copy of same
 %%B\eq@impinging         % Temporary box for measuring number placement
-%%T\if@eq@number         % Number present or not? [BRM: USE \@True|\@False style instead]
-C\eq@lines=\z@         % Internal counter, actual number of lines
-C\eq@curline=\z@       % Loop counter
-C\eq@badness=\z@       % Used in testing for overfull lines
-C\EQ@vims=\z@          % For bookkeeping
-Q\relax
-%% BRM: Use \@True|\@False logic instead of \newif
-%% \@eq@numbertrue => \let\eq@hasNumber\@True
-%% \@eq@numberfalse => \let\eq@hasNumber\@False
-%% \if@eq@number => \if\eq@hasNumber
+\newcount \eq@lines          % Internal counter, actual number of lines
+\newcount \eq@curline       % Loop counter
+\newcount \eq@badness      % Used in testing for overfull lines
+\newcount \EQ@vims          % For bookkeeping
 \def\@eq@numbertrue{\let\eq@hasNumber\@True}%
 \def\@eq@numberfalse{\let\eq@hasNumber\@False}%
 \let\eq@hasNumber\@False
@@ -1839,14 +1823,22 @@ Q\relax
 % \eqnshift@ \alignsep@ \tagshift@ \tagwidth@ \totwidth@ \lineht@
 % \end{literalcode}
 %    \begin{macrocode}
-\newdimen\eq@dp
-\newdimen\eq@wdL \newdimen\eq@wdT \newdimen\eq@wdMin
-\newdimen\grp@wdL \newdimen\grp@wdR \newdimen\grp@wdT
-\newdimen\eq@wdRmax \newdimen\eq@firstht
+\newdimen\eq@dp         % Depth of last line
+\newdimen\eq@wdL        % Width of the left-hand-side
+\newdimen\eq@wdT        % Total width for framing
+\newdimen\eq@wdMin      % Width of narrowest line in equation
+\newdimen\grp@wdL       % Max width of LHS's in a group
+\newdimen\grp@wdR       % Max RHS of all equations in a group 
+\newdimen\grp@wdT
+\newdimen\eq@wdRmax 
+\newdimen\eq@firstht    % Height of first line
+%    \end{macrocode}
 % BRM: measure the condition too.
+%    \begin{macrocode}
 \newdimen\eq@wdCond
-\newdimen\eq@indentstep \newdimen\eq@linewidth
-\newdimen\grp@linewidth
+\newdimen\eq@indentstep % Indent amount when LHS is not present
+\newdimen\eq@linewidth  % Width actually used for display
+\newdimen\grp@linewidth % Max eq@linewidth over a group
 %    \end{macrocode}
 % Maybe \cs{eq@hshift} could share the same register as
 % \cs{mathindent} [mjd,1997/10/22].   
@@ -1854,34 +1846,19 @@ Q\relax
 \newdimen\eq@hshift
 \let\eq@isIntertext\@False
 %    \end{macrocode}
-% These are scratch variables, they get reset in every equation; so we
-% don't need to provide initialization values here.   
-%    \begin{macrocode}
-\def\do#1#2{\if Q#1\relax \else\@xp\do\fi}\do
-D\eq@wdT        % Total width for framing
-D\eq@wdMin      % Width of narrowest line in equation
-D\eq@wdL        % Width of the left-hand-side
-D\grp@wdL       % Max width of LHS's in a group
-D\grp@wdR       % Max RHS of all equations in a group
-D\eq@firstht    % Height of first line
-D\eq@dp         % Depth of last line
-D\eq@indentstep % Indent amount when LHS is not present
-D\eq@linewidth  % Width actually used for display
-D\grp@linewidth % Max eq@linewidth over a group
-Q\relax
-%    \end{macrocode}
 % Init \cs{eq@indentstep} to a nonzero value so that we can
 % detect and refrain from clobbering a user setting of zero.   
 % And \cs{eq@sidespace} to \cs{maxdimen} because
 % that is the right init before computing a min.   
 %    \begin{macrocode}
 \eq@indentstep=\maxdimen
-\let\given@sidespace\@empty
+\newdimen\eq@given@sidespace
 %    \end{macrocode}
 % 
 % \begin{macro}{\eq@overrun}
-% 
-% Not a dimen register; don't need to advance it.   
+%   MH: Appears to be unused.
+%
+%   Not a dimen register; don't need to advance it. 
 %    \begin{macrocode}
 \def\eq@overrun{0pt}
 %    \end{macrocode}
@@ -2334,15 +2311,15 @@ Q\relax
 % To change the interline spacing in a particular equation.   
 %    \begin{macrocode}
 \define@key{breqn}{spread}{%
-  \advance\eqlinespacing#1%
-  \advance\eqlineskip#1\eqlineskiplimit\eqlineskip
+  \addtolength\eqlinespacing{#1}%
+  \addtolength\eqlineskip{#1}%
+  \eqlineskiplimit\eqlineskip
 }
 %    \end{macrocode}
 % To change the amount of space on the side for \dquoted{multline} layout.   
 %    \begin{macrocode}
 \define@key{breqn}{sidespace}{%
-  \dimen@#1\relax % error checking
-  \def\given@sidespace{#1}%
+  \setlength\eq@given@sidespace{#1}%
 }
 %    \end{macrocode}
 % \begin{literalcode}
@@ -2995,7 +2972,7 @@ Q\relax
     \fi
     \if F\eq@frame
     \else
-      \advance\parskip\eq@framesep \advance\parskip\eq@framewd\relax
+      \addtolength\parskip{\eq@framesep+\eq@framewd}%
     \fi
 \debugmsg{Topspace: \theb@@le\EQ@shortskips, \parskip=\the\parskip, \predisplaysize=\the\predisplaysize}%
     #1%
@@ -3003,8 +2980,8 @@ Q\relax
 }
 \def\eq@check@shortskip{%
   \global\let\EQ@shortskips\@False
-  \dim@a\abovedisplayskip\advance\dim@a\ht\EQ@numbox
-  \advance\leftskip-2em % standard TeX value
+  \setlength\dim@a{\abovedisplayskip+\ht\EQ@numbox}%
+  \addtolength\leftskip{-2em}% standard TeX value
   \ifdim\leftskip<\predisplaysize
   \else\if R\eqnumside  \global\let\EQ@shortskips\@True
   \else\if\eq@shiftnumber
@@ -3013,7 +2990,7 @@ Q\relax
       \global\let\EQ@shortskips\@True
     \fi
   \else
-    \dim@b\eq@vspan\divide\dim@b 2\relax
+    \setlength\dim@b{\eq@vspan/2}%
     \ifdim\dim@a<\dim@b
       \global\let\EQ@shortskips\@True
     \fi
@@ -3035,8 +3012,7 @@ Q\relax
 %    \begin{macrocode}
   \if F\eq@frame
   \else
-    \advance\belowdisplayskip\eq@framesep
-    \advance\belowdisplayskip\eq@framewd\relax
+    \addtolength\belowdisplayskip{\eq@framesep+\eq@framewd}%
   \fi
   \vskip\belowdisplayskip
   \@endpetrue % kill parindent if current paragraph continues
@@ -3321,9 +3297,9 @@ Q\relax
   \global\setbox\EQ@copy\hbox{\unhbox\tw@\unskip\unpenalty \unhbox\EQ@copy}%
 %\batchmode\showbox\EQ@copy \showthe\eq@wdL\errorstopmode
   \ifdim\eq@wdR>\z@% BRM:  eq@wdL patch
-    \dim@a\wd\EQ@box\advance\dim@a-\eq@wdR
+    \setlength\dim@a{\wd\EQ@box-\eq@wdR
     % Apparently missing a \thickmuskip = 5mu = 5/18em=0.27777777777.. ?
-    \advance\dim@a0.2777777777777em\relax% FUDGE??!?!?!
+       + 0.2777777777777em}% FUDGE??!?!?!
     \ifdim\dim@a>\eq@wdL
       \debugmsg{Correcting LHS from \the\eq@wdL\space to \the\dim@a = \the\wd\EQ@box - \the\eq@wdR}%
       \eq@wdL\dim@a
@@ -3394,8 +3370,8 @@ Q\relax
     \unpenalty
     \setbox\tw@\lastbox
     \setbox\z@\copy\tw@ \setbox\z@\hbox{\unhbox\z@\unskip\unpenalty}%
-    \advance\eq@wdL\wd\z@
-    \eq@wdR\wd\EQ@box% BRM:  eq@wdL patch
+    \addtolength\eq@wdL{\wd\z@}
+    \setlength\eq@wdR{\wd\EQ@box}% BRM:  eq@wdL patch
     \xdef\EQ@setwdL{\eq@wdL\the\eq@wdL\relax}%
 %    \end{macrocode}
 % At this point, box 2 typically ends with
@@ -3866,8 +3842,7 @@ Q\relax
   \edef\eq@linewidths{\iffalse}\fi
 }
 \def\eq@frame@adjust#1{%
-  \dim@a\eq@framewd \advance\dim@a\eq@framesep
-  \advance#1-2\dim@a
+  \addtolength#1{-2\eq@framewd-2\eq@framesep}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4115,11 +4090,11 @@ Q\relax
 % 
 %    \begin{macrocode}
 \def\eq@recalc@b#1^^J#2,#3x#4+#5@#6\@endelt{%
-  \dim@a#2\advance\dim@a#3\relax
+  \setlength\dim@a{#2+#3}%
   \ifdim\dim@a>\eq@wdT \eq@wdT\dim@a \fi
   \ifdim\dim@a<\eq@wdMin \eq@wdMin\dim@a \fi
   \eq@dp#5\relax
-  \advance\eq@vspan#1\advance\eq@vspan#4\advance\eq@vspan#5\relax
+  \addtolength\eq@vspan{#1+#4+#5}%
 %    \end{macrocode}
 % Record the max badness of all the lines in \cs{eq@badness}.   
 %    \begin{macrocode}
@@ -4161,18 +4136,18 @@ Q\relax
   \let\eq@trial@b\eq@trial@c
   \edef\@parshape{\parshape 1 0pt \the\eq@linewidth\relax}%
 %  \eq@trial@b{i}{\eq@try@layout@multi}%
-  \dim@a\wd\EQ@copy\advance\dim@a-2em\relax% Fudge; can't shrink more than this?
+  \setlength\dim@a{\wd\EQ@copy-2em}% Fudge; can't shrink more than this?
   % if we're in a numbered group, try hard to fit within the numbers
   \dim@b\eq@linewidth
   \if\eq@shiftnumber\else\if\eq@group
-    \if\eq@hasNumber\advance\dim@b-\wd\EQ@numbox\advance\dim@b-\eqnumsep
-    \else\if\grp@hasNumber\advance\dim@b-\wd\GRP@numbox\advance\dim@b-\eqnumsep
+    \if\eq@hasNumber\addtolength\dim@b{-\wd\EQ@numbox-\eqnumsep}%
+    \else\if\grp@hasNumber\addtolength\dim@b{-\wd\GRP@numbox-\eqnumsep}%
   \fi\fi\fi\fi
   \ifdim\dim@a<\dim@b% Do we even have a chance of fitting to one line?
     \debugmsg{Choose Shape: (\the\wd\EQ@copy) may fit in \the\dim@b}%
 %BRM%
     % assuming it might fit, don't push too hard
-    \dim@b\columnwidth\advance\dim@b-\dim@a\advance\dim@b\eq@wdCond
+    \setlength\dim@b{\columnwidth-\dim@a+\eq@wdCond}%
     \rightskip\z@\@plus\dim@b\@minus\hfuzz
 %
     \eq@trial@b{i}{\eq@try@layout@multi}%
@@ -4194,7 +4169,7 @@ Q\relax
 % Find the total width of the RHS.   
 % If it is relatively short, a step layout is the thing to try.   
 %    \begin{macrocode}
-       \dim@a\wd\EQ@copy \advance\dim@a-\eq@wdL
+       \setlength\dim@a{\wd\EQ@copy-\eq@wdL}%
        \ifdim\dim@a<.25\eq@linewidth \eq@try@layout@S
        \else \eq@try@layout@l
        \fi
@@ -4231,7 +4206,7 @@ Q\relax
 % If fails, try Almost-Columnar layout
 %    \begin{macrocode}
 \def\eq@try@layout@D{%
-  \dim@a\eq@linewidth \advance\dim@a-\eq@indentstep
+  \setlength\dim@a{\eq@linewidth -\eq@indentstep}%
   \edef\@parshape{\parshape 2
     0pt \the\eq@wdL\space \the\eq@indentstep\space \the\dim@a\relax
   }%
@@ -4255,7 +4230,7 @@ Q\relax
 % tends to break really badly when it fails....
 %    \begin{macrocode}
 \def\eq@try@layout@L{%
-  \dim@b\eq@linewidth \advance\dim@b-\eq@wdL
+  \setlength\dim@b{\eq@linewidth-\eq@wdL}%
   \edef\@parshape{\parshape 2 0pt \the\eq@linewidth\space
     \the\eq@wdL\space \the\dim@b\relax
   }%
@@ -4285,7 +4260,7 @@ Q\relax
 % If fails, try Almost-Columnar layout
 %    \begin{macrocode}
 \def\eq@try@layout@S{%
-  \dim@b\eq@linewidth \advance\dim@b-2\eqmargin% \advance\dim@b-1em%
+  \setlength\dim@b{\eq@linewidth-2\eqmargin}% \advance\dim@b-1em%
 %    \end{macrocode}
 % About how many lines will we need if dim@b is the line width?   
 %    \begin{macrocode}
@@ -4295,7 +4270,7 @@ Q\relax
 % We don't need to decrement \cs{int@a} because \tex 
 % division is integer division with truncation.   
 %    \begin{macrocode}
-  \advance\dim@b-\int@a\eq@indentstep\relax
+  \addtolength\dim@b{-\int@a\eq@indentstep}%
 %    \end{macrocode}
 % Adjust for equation number.   
 % But try not to leave too little room for the equation body.   
@@ -4303,7 +4278,7 @@ Q\relax
   \if\eq@hasNumber
     \ifdim\dim@b>15em%
 %      \advance\dim@b-\eqnumsep \advance\dim@b-\wd\EQ@numbox
-      \advance\dim@b-\eq@wdNum
+      \addtolength\dim@b{-\eq@wdNum}%
     \fi
   \fi
 %    \end{macrocode}
@@ -4328,15 +4303,15 @@ Q\relax
 % If fails, try Almost-Columnar layout
 %    \begin{macrocode}
 \def\eq@try@layout@l{%
-  \dim@a\eq@linewidth \advance\dim@a-\eq@indentstep
+  \setlength\dim@a{\eq@linewidth -\eq@indentstep}%
   \int@a\eq@wdL \divide\int@a\dim@a
   \advance\int@a\tw@
   \edef\@parshape{\parshape \number\int@a\space
     0pt \the\eq@linewidth
   }%
   \advance\int@a-\tw@
-  \dim@b=2\eq@indentstep
-  \dim@c\eq@linewidth \advance\dim@c-\dim@b
+  \setlength\dim@b{2\eq@indentstep}%
+  \setlength\dim@c{\eq@linewidth -\dim@b}%
   \edef\@parshape{\@parshape
     \replicate{\int@a}{\space\the\eq@indentstep\space\the\dim@a}%
     \space\the\dim@b\space\the\dim@c\relax
@@ -4395,9 +4370,9 @@ Q\relax
     \if L\eqnumside
       \ifdim\@totalleftmargin>\dim@b\dim@b\@totalleftmargin\fi
     \else
-      \advance\dim@b\@totalleftmargin
+      \addtolength\dim@b{\@totalleftmargin}%
     \fi
-    \dim@a\eq@linewidth\advance\dim@a-\dim@b%\advance\dim@a1em\relax% Allowance for shrink?
+    \setlength\dim@a{\eq@linewidth-\dim@b}%\advance\dim@a1em\relax% Allowance for shrink?
 %    \end{macrocode}    
 % Set up test against 1-line case only if not in a group
 %    \begin{macrocode}
@@ -4424,8 +4399,8 @@ Q\relax
 %      % right/left) \& adjust parshape
 %    \begin{macrocode}
 %      \leftskip\wd\EQ@numbox\advance\leftskip\eqnumsep
-      \leftskip\eq@wdNum
-      \rightskip\z@\@plus\dim@a
+      \setlength\leftskip{\eq@wdNum}%
+      \setlength\rightskip{\z@\@plus\dim@a}%
       \adjust@parshape\@parshape
       \debugmsg{Place number: Try with \leftskip=\the\leftskip, \rightskip=\the\rightskip,
                 ^^J||===== parshape\space\@xp\@gobble\@parshape}%
@@ -4485,7 +4460,7 @@ Q\relax
 % 
 %    \begin{macrocode}
 \def\adjust@parshape@a#1 #2\relax{%
-  \dim@a\leftskip\advance\dim@a\rightskip
+  \setlength\dim@a{\leftskip+\rightskip}%
   \edef\temp@a{#1}%
   \adjust@parshape@b#2 @ @ \relax
 }
@@ -4495,9 +4470,9 @@ Q\relax
   \else
     \dim@b#1\relax
     \dim@c#2\relax
-    \advance\dim@c\dim@a\advance\dim@c\dim@b
-    \ifdim\dim@c>\eq@linewidth\dim@c\eq@linewidth\fi
-     \advance\dim@c-\dim@b
+    \addtolength\dim@c{\dim@a+\dim@b}%
+    \ifdim\dim@c>\eq@linewidth\setlength\dim@c{\eq@linewidth}\fi
+     \addtolength\dim@c{-\dim@b}%
     \edef\temp@a{\temp@a\space\the\dim@b\space\the\dim@c}%
   \fi
   \adjust@parshape@b
@@ -4584,10 +4559,10 @@ Q\relax
 %    \end{macrocode}
 % Is actual width less than natural width?   
 %    \begin{macrocode}
-  \ifdim\dim@b<\wd\tw@ \dim@a\dim@b  % shrunken line
-  \else                \dim@a\wd\tw@ % OK to use natural width
+  \ifdim\dim@b<\wd\tw@ \setlength\dim@a{\dim@b}% shrunken line
+  \else                \setlength\dim@a{\wd\tw@}% OK to use natural width
   \fi
-  \advance\dim@a-\leftskip% BRM: Deduct the skip if we're retrying w/number
+  \addtolength\dim@a{-\leftskip}% BRM: Deduct the skip if we're retrying w/number
 %    \end{macrocode}
 % If there's no aboveskip, assume we've reached the top of the
 % equation.   
@@ -4599,7 +4574,7 @@ Q\relax
     % Sum repeated vskips if present
     \def\@tempa{%
       \ifdim \lastskip=\z@
-      \else \advance\skip@a\lastskip \unskip\unpenalty \@xp\@tempa
+      \else \addtolength\skip@a{\lastskip}\unskip\unpenalty \@xp\@tempa
       \fi
     }%
   \fi
@@ -4720,7 +4695,7 @@ Q\relax
 % \begin{macro}{\eq@delt}
 % Args are space-above, indent, width, height, depth, badness.   
 %    \begin{macrocode}
-\def\eq@delt#1^^J#2,#3x#4+#5@#6\@endelt{\advance\dim@b#3\relax}%
+\def\eq@delt#1^^J#2,#3x#4+#5@#6\@endelt{\addtolength\dim@b{#3}}%
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -4864,9 +4839,7 @@ Q\relax
   \eq@typeset@equation
 }
 \def\eq@typeset@LM{%
-  \dim@a\eq@vspan
-  \advance\dim@a\ht\EQ@numbox\advance\dim@a-\dp\EQ@numbox
-  \divide\dim@a\tw@
+  \addtolength\dim@a{(\eq@vspan+\ht\EQ@numbox-\dp\EQ@numbox)/2}%
   \eq@typeset@leftnumber
   \eq@typeset@frame
   \eq@typeset@equation
@@ -4888,7 +4861,7 @@ Q\relax
   \copy\EQ@numbox \penalty\@M
   \dim@a\eqlineskip
   \if F\eq@frame\else
-   \advance\dim@a\eq@framesep\advance\dim@a\eq@framewd
+     \setlength\dim@a{\eq@framesep+\eq@framewd}%
   \fi
   \kern\dim@a
   \eq@typeset@frame
@@ -4898,9 +4871,7 @@ Q\relax
 % Typeset equation and right middle number
 %    \begin{macrocode}
 \def\eq@typeset@RM{%
-  \dim@a\eq@vspan
-  \advance\dim@a\ht\EQ@numbox\advance\dim@a-\dp\EQ@numbox
-  \divide\dim@a\tw@
+  \setlength\dim@a{(\eq@vspan+\ht\EQ@numbox-\dp\EQ@numbox)/2}
   \eq@typeset@rightnumber
   \eq@typeset@frame
   \eq@typeset@equation
@@ -4910,7 +4881,7 @@ Q\relax
 %    \begin{macrocode}
 \def\eq@typeset@RB{%
   % NOTE: is \eq@dp useful here
-  \dim@a\eq@vspan\advance\dim@a-\ht\EQ@numbox\advance\dim@a-\dp\EQ@numbox
+  \setlength\dim@a{\eq@vspan-\ht\EQ@numbox-\dp\EQ@numbox}%
   \eq@typeset@rightnumber
   \eq@typeset@frame
   \eq@typeset@equation
@@ -4925,7 +4896,7 @@ Q\relax
   \penalty\@M
   \dim@a\eqlineskip
   \if F\eq@frame\else
-    \advance\dim@a\eq@framesep\advance\dim@a\eq@framewd
+    \addtolength\dim@a{\eq@framesep+\eq@framewd}%
   \fi
   \parskip\dim@a
   \hbox to\hsize{\hfil\copy\EQ@numbox}\@@par%
@@ -4971,7 +4942,7 @@ Q\relax
   \dim@e\z@
   \if F\eq@frame
     \ifnum\eq@lines=\@ne\ifdim\eq@wdCond>\z@
-      \dim@e\eq@wdCond\advance\dim@e\conditionsep
+      \setlength\dim@e{\eq@wdCond+\conditionsep}%
   \fi\fi\fi
   % \dim@b = minimum needed on left max(totalleftmargin, left number space)
   \dim@b\z@
@@ -4981,7 +4952,7 @@ Q\relax
   \ifdim\dim@b<\@totalleftmargin
     \dim@b\z@
   \else
-    \advance\dim@b-\@totalleftmargin
+    \addtolength\dim@b{-\@totalleftmargin}%
   \fi
   % \dim@d = minimum needed on right max(condition, right number space)
   \dim@d\dim@e
@@ -4990,23 +4961,21 @@ Q\relax
   \fi\fi
   % \dim@a = left margin; initially half available space
   % \dim@c = right margin;  ditto
-  \dim@a\eq@linewidth\advance\dim@a-\eq@wdT\advance\dim@a\dim@e
-  \advance\dim@a\@totalleftmargin
-  \divide\dim@a2\relax
-  \dim@c\dim@a
+  \setlength\dim@a{(\eq@linewidth-\eq@wdT+\dim@e+\@totalleftmargin)/2}%
+  \dim@c=\dim@a
   % If too far to the left
   \ifdim\dim@a<\dim@b
-     \advance\dim@c\dim@a\advance\dim@c-\dim@b
-     \ifdim\dim@c<\z@\dim@c\z@\fi
-     \dim@a\dim@b
+     \addtolength\dim@c{\dim@a-\dim@b}%
+     \ifdim\dim@c<\z@\dim@c=\z@\fi
+     \dim@a=\dim@b
   % Or if too far to the right
   \else\ifdim\dim@c<\dim@d
-     \advance\dim@a\dim@c\advance\dim@a-\dim@d
-     \ifdim\dim@a<\z@\dim@a\z@\fi
-     \dim@c\dim@d
+     \addtolength\dim@a{\dim@c-\dim@d}%
+     \ifdim\dim@a<\z@\dim@a=\z@\fi
+     \dim@c=\dim@d
   \fi\fi
   % Now, \dim@d,\dim@e is the left & right glue to center each line for centerlines
-  \dim@e\eq@wdT\advance\dim@e-\eq@wdMin\dim@d\z@
+  \setlength\dim@e{\eq@wdT-\eq@wdMin}\dim@d=\z@
 % NOTE: Need some work here centering when there's a condition
 %  \advance\dim@e-\eq@wdT\multiply\dim@e-1\relax
 %  \if\eq@wdMin<\dim@e\dim@e\eq@wdMin\fi
@@ -5015,9 +4984,9 @@ Q\relax
   \if\eq@centerlines
     \divide\dim@e2\relax\dim@d\dim@e
   \fi
-  \leftskip\dim@a\@plus\dim@d
-  \advance\dim@e\dim@c
-  \rightskip\z@\@plus\dim@e%\@minus5\p@
+  \setlength\leftskip{\dim@a\@plus\dim@d}%
+  \addtolength\dim@e{\dim@c}%
+  \setlength\rightskip{\z@\@plus\dim@e}%\@minus5\p@
   % Special case: if framing, reduce the stretchiness of the formula (eg. condition)
   % Or if we have a right number, FORCE space for it
   \dim@b\z@
@@ -5030,12 +4999,12 @@ Q\relax
   \fi\fi\fi
   % If either of those cases requires hard rightskip, move that part from glue.
   \ifdim\dim@b>\z@
-    \advance\dim@e-\dim@c
+    \addtolength\dim@e{-\dim@c}%
     \rightskip\dim@b\@plus\dim@e%\@minus5\p@
   \fi
   % And peculiar further special case: in indented environs, width isn't where it would seem
   \ifdim\eq@wdCond>\z@
-     \advance\rightskip-\@totalleftmargin
+     \addtolength\rightskip{-\@totalleftmargin}%
   \fi
   \parfillskip\z@skip
 }
@@ -5051,25 +5020,26 @@ Q\relax
   \leftskip\mathindent
   % But move left, if shifted number presumably because of clashed w/ number?
   \if\eq@shiftnumber
-    \dim@a\eq@linewidth\advance\dim@a-\eq@wdT\advance\dim@a-\mathindent
+    \setlength\dim@a{\eq@linewidth-\eq@wdT-\mathindent}%
     \ifdim\dim@a<\z@
-      \leftskip\z@ % Or something minimal?
+      \leftskip=\z@ % Or something minimal?
   \fi\fi
   % Push gently from right.
-  \dim@a\z@
-  \dim@b\eq@linewidth\advance\dim@b-\leftskip\advance\dim@b-\eq@wdMin
+  \dim@a=\z@
+  \setlength\dim@b{\eq@linewidth-\leftskip-\eq@wdMin}%
   % Special case: if framing be much more rigid(?)
   \if F\eq@frame\else
-    \dim@a\eq@linewidth\advance\dim@a-\leftskip\advance\dim@a-\eq@wdT
-    \advance\dim@b-\dim@a
+    \setlength\dim@a{\eq@linewidth-\leftskip-\eq@wdT}
+    \addtolength\dim@b{-\dim@a}%
   \fi
   % Or force the space for right number, if needed
   \if\eq@hasNumber\if\eq@shiftnumber\else\if R\eqnumside
-    \dim@c\eq@wdNum
+    \dim@c=\eq@wdNum
     \if\dim@c>\dim@a
-      \advance\dim@b-\dim@c\dim@a\dim@c
+      \addtolength\dim@b{-\dim@c}%
+      \dim@a=\dim@c
   \fi\fi\fi\fi
-  \rightskip\dim@a\@plus\dim@b \@minus\hfuzz %\hfuzz\z@
+  \setlength\rightskip{\dim@a\@plus\dim@b \@minus\hfuzz }%\hfuzz\z@
   \parfillskip\z@skip
 }
 %    \end{macrocode}
@@ -5077,13 +5047,13 @@ Q\relax
 % \cs{dim@a} should contain the downward displacement of number's baseline
 %    \begin{macrocode}
 \def\eq@typeset@leftnumber{%
-  \skip@c\dim@a\advance\skip@c-\ht\EQ@numbox
+  \setlength\skip@c{\dim@a-\ht\EQ@numbox}%
   \vglue\skip@c% NON discardable
   \copy\EQ@numbox \penalty\@M
   \kern-\dim@a
 }
 \def\eq@typeset@rightnumber{%
-  \skip@c\dim@a\advance\skip@c-\ht\EQ@numbox
+  \setlength\skip@c{\dim@a-\ht\EQ@numbox}%
   \vglue\skip@c% NON discardable
   \hbox to \hsize{\hfil\copy\EQ@numbox}\penalty\@M
   \kern-\dim@a
@@ -5116,7 +5086,8 @@ Q\relax
 % \end{macro}
 %    \begin{macrocode}
 \def\eq@addframe{%
-  \hbox to\z@{\dim@a\eq@framesep\relax \advance\dim@a\eq@framewd\relax
+  \hbox to\z@{%
+    \setlength\dim@a{\eq@framesep+\eq@framewd}%
     \kern-\dim@a
     \vbox to\z@{\kern-\dim@a
       \hbox{\eqframe{\eq@wdT}{\eq@vspan}}%
@@ -5533,8 +5504,8 @@ Q\relax
 \def\lrss@reattach{%
   \begingroup
   % "The TeXbook" Appendix G step 18:
-  \prelim@sup@base\ht\z@ \advance\prelim@sup@base-\sup@drop
-  \prelim@sub@depth\dp\z@ \advance\prelim@sub@depth\sub@drop
+  \setlength\prelim@sup@base{\ht\z@-\sup@drop}%
+  \setlength\prelim@sub@depth{\dp\z@ +\sub@drop}%
   \unhbox\z@
   \ifcase\subsup@flag      % case 0: this can't happen
   \or \lr@subscript   % case 1: subscript only
@@ -5548,8 +5519,8 @@ Q\relax
 \def\lr@subscript{%
   \sub@depth\sub@base@one
   \ifdim\prelim@sub@depth>\sub@depth \sub@depth\prelim@sub@depth\fi
-  \dim@a\ht\tw@ \advance\dim@a -.8\sym@xheight
-  \ifdim\dim@a>\sub@depth \sub@depth\dim@a \fi
+  \setlength\dim@a{\ht\tw@  -.8\sym@xheight}%
+  \ifdim\dim@a>\sub@depth \sub@depth=\dim@a \fi
   \twang@adjust\sub@depth
   \lower\sub@depth\box\tw@
 }
@@ -5559,7 +5530,7 @@ Q\relax
 \def\lr@superscript{%
   \sup@base\sup@base@one
   \ifdim\prelim@sup@base>\sup@base \sup@base\prelim@sup@base\fi
-  \dim@a\dp\tw@ \advance\dim@a -.25\sym@xheight
+  \setlength\dim@a{\dp\tw@ -.25\sym@xheight}%
   \ifdim\dim@a>\sup@base \sup@base\dim@a \fi
   \twang@adjust\sup@base
   \raise\sup@base\box\tw@
@@ -5586,7 +5557,7 @@ Q\relax
 \def\twang@adjust#1{%
   \begingroup
     \@ifundefined{twang@\right@delim@code}{}{%
-      \dim@d=#1\advance\dim@d-\mathaxis
+      \setlength\dim@d{#1-\mathaxis}%
       % put an upper limit on the adjustment
       \ifdim\dim@d>1em \dim@d 1em \fi
       \kern\csname twang@\right@delim@code\endcsname\dim@d
@@ -5984,7 +5955,7 @@ Q\relax
   \if\eq@isIntertext\else
     \ifdim\eq@wdL>\grp@wdL \global\grp@wdL\eq@wdL \fi
     \ifdim\eq@wdT>\grp@wdT \global\grp@wdT\eq@wdT \fi
-    \dim@a\eq@wdT \advance\dim@a-\eq@wdL
+    \setlength\dim@a{\eq@wdT-\eq@wdL}%
     \ifdim\dim@a>\grp@wdR \global\grp@wdR\dim@a \fi
     \ifdim\eq@linewidth>\grp@linewidth \global\grp@linewidth\eq@linewidth\fi
     \if\eq@hasNumber
@@ -6016,7 +5987,7 @@ Q\relax
 % == Now that we know the collective measurements, make final decision
 % about alignment \& shifting.  Check if alignment is still possible
 %    \begin{macrocode}
-  \dim@a\grp@wdL\advance\dim@a\grp@wdR\advance\dim@a-4em\relax% Allowance for shrink?
+  \setlength\dim@a{\grp@wdL+\grp@wdR-4em}% Allowance for shrink?
   \if\grp@aligned\ifdim\dim@a>\grp@linewidth
      \global\let\grp@aligned\@False     
   \fi\fi
@@ -6024,7 +5995,7 @@ Q\relax
 % If we're adding an unshifted group number that equations didn't know
 % about, re-check shifting
 %    \begin{macrocode}
-  \advance\dim@a\grp@wdNum % Effective length
+  \addtolength\dim@a{\grp@wdNum }% Effective length
   \if\grp@shiftnumber\else\if\grp@hasNumber\if\grp@eqs@numbered\else\ifdim\dim@a>\grp@linewidth
      \global\let\grp@shiftnumber\@True
   \fi\fi\fi\fi
@@ -6060,10 +6031,9 @@ Q\relax
       \copy\GRP@numbox \penalty\@M
       \kern\eqlineskip
     \else
-      \dim@a\ht\GRP@wholebox\advance\dim@a\dp\GRP@wholebox
-      \advance\dim@a\ht\GRP@numbox\advance\dim@a-\dp\GRP@numbox
-      \divide\dim@a\tw@
-      \skip@c\dim@a\advance\skip@c-\ht\GRP@numbox
+      \setlength\dim@a{%
+        (\ht\GRP@wholebox+\dp\GRP@wholebox+\ht\GRP@numbox-\dp\GRP@numbox)/2}%
+      \setlength\skip@c{\dim@a-\ht\GRP@numbox}%
       \vglue\skip@c% NON discardable
       \copy\GRP@numbox \penalty\@M
 \debugmsg{GROUP NUMBER: preskip:\the\skip@c,  postkern:\the\dim@a, height:\the\ht\GRP@wholebox,
@@ -6129,11 +6099,11 @@ Q\relax
 %    \end{macrocode}
 % compute nominal left for centering the group
 %    \begin{macrocode}
-  \dim@a\grp@linewidth\advance\dim@a-\grp@wdT\divide\dim@a2\relax
+  \setlength\dim@a{(\grp@linewidth-\grp@wdT)/2}%
 %    \end{macrocode}
 % Make sure L+R not too wide; should already have unset alignment
 %    \begin{macrocode}
-  \ifdim\dim@a<\z@\dim@a\z@\fi
+  \ifdim\dim@a<\z@\dim@a=\z@\fi
   \dim@b\if L\eqnumside\grp@wdNum\else\z@\fi
 %    \end{macrocode}
 % make sure room for number on left, if needed.
@@ -6142,7 +6112,7 @@ Q\relax
     \ifdim\dim@b>\dim@a\dim@a\dim@b\fi
   \fi
   \if\grp@aligned
-    \advance\dim@a\grp@wdL\advance\dim@a-\eq@wdL
+    \addtolength\dim@a{\grp@wdL-\eq@wdL}%
   \fi
   \mathindent\dim@a
   \ifdim\dim@b>\dim@a

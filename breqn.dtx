@@ -183,7 +183,9 @@ and the derived files
 \providecommand*\env[1]{\texttt{#1}}
 \providecommand*\fn[1]{\texttt{#1}}
 
+
 \providecommand*\cn[1]{\cs{#1}}
+\providecommand*\csarg[1]{\texttt{\char`\{#1\char`\}}}
 
 \providecommand*\tex{\TeX\xspace}
 \providecommand*\latex{\LaTeX\xspace}
@@ -5816,7 +5818,7 @@ Q\relax
 % BRM: Fairly broad changes; it mostly didn't work before (for me).
 %
 % \begin{description}
-% \item[\cs{begin{dgroup}} produces a `numbered' group]
+% \item[\cs{begin}\csarg{dgroup} produces a `numbered' group]
 %   The number is the next equation number.
 %   There are 2 cases:
 % \begin{itemize}
@@ -5827,7 +5829,7 @@ Q\relax
 %       then the group, as a whole, gets a number displayed,
 %       using the same number placement as for equations.
 % \end{itemize}
-% \item[\cs{begin{dgroup*}} produces an unnumbered group.]
+% \item[\cs{begin}\csarg{dgroup*} produces an unnumbered group.]
 %    Contained equations are numbered, or not, as normal.
 %    But note that in the mixed case, it's too late to
 %    force the unnumbered eqns to \cs{retry@with@number}

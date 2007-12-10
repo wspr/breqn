@@ -72,7 +72,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: flexisym 2007/12/10 v0.94 Flexisym (MH)}
+\Msg{* Package: flexisym 2007/12/10 v0.95 Flexisym (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -138,7 +138,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{flexisym.drv}%
-  [2007/12/10 v0.94 flexisym (MH)]
+  [2007/12/10 v0.95 flexisym (MH)]
 \documentclass{ltxdoc}
 \providecommand*\pkg[1]{\textsf{#1}}
 \providecommand*\cls[1]{\textsf{#1}}
@@ -159,7 +159,7 @@ and the derived files
 % \fi
 %
 % \title{The \textsf{flexisym} package}
-% \date{2007/12/10 v0.94}
+% \date{2007/12/10 v0.95}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -175,7 +175,7 @@ and the derived files
 %
 %    \begin{macrocode}
 %<*package>
-\ProvidesPackage{flexisym}[2007/12/10 v0.94]
+\ProvidesPackage{flexisym}[2007/12/10 v0.95]
 \let\@xp\expandafter \let\@nx\noexpand
 \edef\do{%
   \@nx\AtEndOfPackage{%
@@ -442,6 +442,31 @@ and the derived files
   \endgroup
 }{}
 %    \end{macrocode}
+%
+% There is problem when using \cs{DeclareMathOperator} as the
+% operators defined call a command \cs{newmcodes@} which relies on the
+% mathcode of \texttt{-} being less than 32768. We delay the
+% definition \cs{AtBeginDocument} in case \pkg{amssymb} hasn't been
+% loaded yet.
+%    \begin{macrocode}
+\AtBeginDocument{%
+\def\newmcodes@{%
+  \mathcode `\'39\mathcode `\*42\mathcode `\."613A
+  \ifnum\mathcode`\-=45
+  \else
+%    \end{macrocode}
+% The extra check. Don't do anything if \texttt{-} is math active.
+%    \begin{macrocode}
+    \ifnum\mathcode`\-=32768
+    \else 
+      \mathchardef \std@minus \mathcode `\-\relax
+    \fi
+  \fi
+  \mathcode `\-45 \mathcode `\/47\mathcode `\:"603A\relax 
+}
+}
+%    \end{macrocode}
+%
 % And we then continue with the options.
 %    \begin{macrocode}
 \DeclareOption{cmbase}{\usesymbols{cmbase}}

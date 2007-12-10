@@ -131,10 +131,16 @@ and the derived files
   [2007/12/10 v0.96 breqn (MH)]
 \documentclass{ltxdoc}
 
-\usepackage{verbatim,xspace,varioref,listings}
+\usepackage{color,verbatim,xspace,varioref,listings}
+
+\definecolor{hilite}{rgb}{0.2,0.4,0.7}
+\def\theCodelineNo{\textcolor{hilite}{\sffamily\tiny\arabic{CodelineNo}}}
+
 \lstloadlanguages{[AlLaTeX]TeX}
 
-\lstnewenvironment{literalcode}{\lstset{gobble=2}}{}
+\lstnewenvironment{literalcode}
+  {\lstset{gobble=2,columns=fullflexible,basicstyle=\color{hilite}\ttfamily}}
+  {}
 \makeatletter
 
 {\catcode`\%=12
@@ -1350,16 +1356,10 @@ and the derived files
 % beginning of a line after line breaking:
 % \begin{itemize}
 % \item Zero-thickness rule
-% 
-%  
 % \item Null character
-% 
-%  
 % \item \cs{vadjust}\verb"{}" (\texbook , Exercise ??)
-% 
-%  
 % \end{itemize}
-%  .    The null character idea would be nice except it
+% The null character idea would be nice except it
 % creates a mathord which then screws up math spacing for \eg  a following
 % unary minus sign.    (the vrule \emph{is} transparent to
 % the math spacing).    The vadjust is the cheapest in terms of box
@@ -1395,36 +1395,29 @@ and the derived files
 }
 \endgroup
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\replicate@a}
-% 
 %    \begin{macrocode}
 \long\def\replicate@a#1#2\endcsname#3{#1\endcsname{#3}#2}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\8m}% fix
-% 
 %    \begin{macrocode}
 \begingroup \catcode`\&=11
 \long\gdef\&m#1#2{#1\csname &#2\endcsname{#1}}
 \endgroup
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\8q}% fix
-% 
 %    \begin{macrocode}
 \@xp\let\csname\string &q\endcsname\@gobble
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % \begin{macro}{\mathchars@reset}
@@ -1438,7 +1431,6 @@ and the derived files
   \let\@symDeB\@secondoftwo
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -1451,8 +1443,8 @@ and the derived files
   \begingroup \let\@elt\relax \xdef#1{\@elt{#2}#1}\endgroup
 }
 %    \end{macrocode}
-% 
 % \end{macro}
+%
 % \begin{macro}{\@saveprimitive}
 % If some preceding package redefined one of the
 % primitives that we must change, we had better do some checking to make
@@ -1562,24 +1554,17 @@ and the derived files
 % \section{Debugging}
 % Debugging help.   
 % 
-% 
 % \begin{macro}{\debug}
-% 
 %    \begin{macrocode}
 \let\debug=\begingroup
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
-% 
 % \begin{macro}{\gubed}
-% 
 %    \begin{macrocode}
 \let\gubed=\endgroup
 %    \end{macrocode}
-% 
 % \end{macro}
-% 
 % 
 % \begin{macro}{\debugmsg}
 % Print a debugging message.   
@@ -1588,23 +1573,18 @@ and the derived files
   \@xp\@gobble\string
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
-% 
 % \begin{macro}{\debugwr}
-% 
 % Sometimes the newline behavior of \cs{message} is
 % unsatisfactory; this provides an alternative.   
 %    \begin{macrocode}
 \def\debugwr#1{\immediate\write\sixt@@n{||= #1}}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\debug@box}
-% 
 % Record the contents of a box in the log file, without stopping.   
 %    \begin{macrocode}
 \def\debug@box#1{%
@@ -1612,12 +1592,10 @@ and the derived files
   \errorstopmode
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\eqinfo}
-% 
 % Show lots of info about the material before launching into the
 % trials.   
 %    \begin{macrocode}
@@ -1628,12 +1606,10 @@ and the derived files
   }%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\debug@para}
-% 
 % Check params that affect line breaking.   
 %    \begin{macrocode}
 \def\debug@para{%
@@ -1644,7 +1620,6 @@ and the derived files
     \parindent\the\parindent}%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -2007,7 +1982,6 @@ Q\relax
 %    \begin{macrocode}
 \let\EQ@hasLHS=\@False
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -2018,7 +1992,6 @@ Q\relax
 %    \begin{macrocode}
 \let\EQ@QED=\@empty
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -2049,7 +2022,6 @@ Q\relax
   \fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4681,29 +4653,23 @@ Q\relax
 % 
 % 
 % \begin{macro}{\true@false@true}
-% 
 %    \begin{macrocode}
 \def\true@false@true{\fi\fi\iftrue\iffalse\iftrue}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\false@false@false}
-% 
 %    \begin{macrocode}
 \def\false@false@false{\fi\fi\iffalse\iffalse\iffalse}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\false@true@false}
-% 
 %    \begin{macrocode}
 \def\false@true@false{\fi\fi\iffalse\iftrue\iffalse}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4721,7 +4687,6 @@ Q\relax
 %    \begin{macrocode}
 \def\eq@density@factor{.475}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4747,17 +4712,14 @@ Q\relax
   \fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\eq@delt}
-% 
 % Args are space-above, indent, width, height, depth, badness.   
 %    \begin{macrocode}
 \def\eq@delt#1^^J#2,#3x#4+#5@#6\@endelt{\advance\dim@b#3\relax}%
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4994,7 +4956,7 @@ Q\relax
 % Unfortunately, by the time it does all it needs to do,
 % it has evolved I'm (re)using so many temp variables, it's becoming
 % unmanageble!
-
+%
 %    \begin{macrocode}
 \def\eq@C@setsides{%
   % \dim@c = space for number, if any, and not shifted.
@@ -5109,9 +5071,7 @@ Q\relax
   \parfillskip\z@skip
 }
 %    \end{macrocode}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Typesetting pieces: frame, equation and number (if any)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \paragraph{Typesetting pieces: frame, equation and number (if any)}
 % \cs{dim@a} should contain the downward displacement of number's baseline
 %    \begin{macrocode}
 \def\eq@typeset@leftnumber{%
@@ -5828,7 +5788,6 @@ Q\relax
 %   ...
 % LHS[3] RHS[3,1] RHS[3,2] ... RHS[3,n[3]]
 % \end{literalcode}
-% .   
 % The number of RHS's might not be the same for all of the
 % equations.   
 % First, accumulate all of the equation contents in a queue, checking
@@ -5856,35 +5815,42 @@ Q\relax
 %
 % BRM: Fairly broad changes; it mostly didn't work before (for me).
 %
-% |\begin{dgroup}| produces a `numbered' group
+% \begin{description}
+% \item[\cs{begin{dgroup}} produces a `numbered' group]
 %   The number is the next equation number.
 %   There are 2 cases:
-%    * If ANY contained equations are numbered (|\begin{dmath}|), 
-%      then they will be subnumbered: eg 1.1a
-%      and the group number is not otherwise displayed.
-%    * If ALL contained equations are unnumbered (|\begin{dmath*}|)
-%      then the group, as a whole, gets a number displayed,
-%      using the same number placement as for equations.
-% |\begin{dgroup*}| produces an unnumbered group.
+% \begin{itemize}
+% \item If ANY contained equations are numbered (|\begin{dmath}|), 
+%       then they will be subnumbered: eg 1.1a
+%       and the group number is not otherwise displayed.
+% \item If ALL contained equations are unnumbered (|\begin{dmath*}|)
+%       then the group, as a whole, gets a number displayed,
+%       using the same number placement as for equations.
+% \end{itemize}
+% \item[\cs{begin{dgroup*}} produces an unnumbered group.]
 %    Contained equations are numbered, or not, as normal.
 %    But note that in the mixed case, it's too late to
 %    force the unnumbered eqns to \cs{retry@with@number}
 %    We'll just do a simple check of dimensions, after the fact,
 %    and force a shiftnumber if we're stuck.
+%
 % NOTE: Does this work for dseries, as well? (alignment?)
+%
 % NOTE: Does \cs{label} attach to the expected thing?
 %
-% For number placement: We use shiftnumber placement on ALL equations
+% \item[For number placement] We use shiftnumber placement on ALL equations
 %    if ANY equations need it, or if an unnumbered equation is too 
 %    wide to be aligned, given that the group or other eqns are numbered.
 %    [does this latter case interract with the chosen alignment?]
 %
-% For Alignment:
+% \item[For Alignment]
 %   As currently coded, it tries to align on relations, by default.
 %   If LHS's are not all present, or too long, it switches to left-justify.
 %   Maybe there are other cases that should switch?
 %   Should there be a case for centered?
+%
 % NOTE: Should there be some options to choose alignment?
+% \end{description}
 %
 % \begin{macro}{\eq@group}
 % \begin{macro}{\GRP@top}
@@ -6690,10 +6656,8 @@ Q\relax
 % lhs \widerel{19pt}{=} ...
 %     \xrightarrow{foo} ...
 % \end{literalcode}
-% .   
 % 
 %  
 % \item try to use vadjust for keepglue
 %  
 % \end{enumerate}
-% .   

@@ -67,7 +67,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: breqn 2007/12/17 v0.96a Breqn (MH)}
+\Msg{* Package: breqn 2007/12/17 v0.96b Breqn (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -128,7 +128,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}%
-  [2007/12/17 v0.96a breqn (MH)]
+  [2007/12/17 v0.96b breqn (MH)]
 \documentclass{ltxdoc}
 
 \usepackage{color,verbatim,xspace,varioref,listings,amsmath}
@@ -228,7 +228,7 @@ and the derived files
 % \fi
 %
 % \title{The \pkg{breqn} package}
-% \date{2007/12/17 v0.96a}
+% \date{2007/12/17 v0.96b}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -1000,7 +1000,7 @@ and the derived files
 % 
 % Declare package name and date.   
 %    \begin{macrocode}
-\ProvidesPackage{breqn}[2007/12/17 v0.96a]
+\ProvidesPackage{breqn}[2007/12/17 v0.96b]
 %    \end{macrocode}
 %
 %
@@ -4949,7 +4949,7 @@ and the derived files
   \eq@typeset@equation
 }
 \def\eq@typeset@LM{%
-  \addtolength\dim@a{(\eq@vspan+\ht\EQ@numbox-\dp\EQ@numbox)/2}%
+  \setlength\dim@a{(\eq@vspan+\ht\EQ@numbox-\dp\EQ@numbox)/2}%
   \eq@typeset@leftnumber
   \eq@typeset@frame
   \eq@typeset@equation

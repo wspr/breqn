@@ -67,7 +67,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: breqn 2007/12/10 v0.96 Breqn (MH)}
+\Msg{* Package: breqn 2007/12/17 v0.96a Breqn (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -128,10 +128,10 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}%
-  [2007/12/10 v0.96 breqn (MH)]
+  [2007/12/17 v0.96a breqn (MH)]
 \documentclass{ltxdoc}
 
-\usepackage{color,verbatim,xspace,varioref,listings}
+\usepackage{color,verbatim,xspace,varioref,listings,amsmath}
 
 \definecolor{hilite}{rgb}{0.2,0.4,0.7}
 \def\theCodelineNo{\textcolor{hilite}{\sffamily\tiny\arabic{CodelineNo}}}
@@ -228,7 +228,7 @@ and the derived files
 % \fi
 %
 % \title{The \pkg{breqn} package}
-% \date{2007/12/10 v0.96}
+% \date{2007/12/17 v0.96a}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -1000,7 +1000,7 @@ and the derived files
 % 
 % Declare package name and date.   
 %    \begin{macrocode}
-\ProvidesPackage{breqn}[2007/12/10 v0.96]
+\ProvidesPackage{breqn}[2007/12/17 v0.96a]
 %    \end{macrocode}
 %
 %
@@ -2809,7 +2809,8 @@ and the derived files
 % 
 % 
 % \begin{macro}{\check@punct}
-% 
+%   \changes{v0.96a}{2007/12/17}{Insert \cs{finish@end} if no special
+%     case is found.}
 % For this one we need to recognize and grab for inclusion any of the
 % following tokens: \verb",;.!?", both catcode 12 (standard \latex 
 % value) and catcode 13 (as might hold when the Babel package is
@@ -2847,6 +2848,7 @@ and the derived files
   \else\ifx\@let@token ;\@nx\check@qed
   \else\ifx\@let@token ?\@nx\check@qed
   \else\ifx\@let@token !\@nx\check@qed
+  \else\@nx\finish@end
   \fi\fi\fi\fi\fi
 }
 \xdef\check@punct@b{%
@@ -2968,8 +2970,17 @@ and the derived files
 \def\eq@topspace#1{%
   \begingroup
     \global\let\EQ@shortskips\@False
-    \if\@And{\eq@group}{\@Not\GRP@top}%
-      \parskip\intereqskip \penalty\intereqpenalty
+%    \end{macrocode}
+% If we are in \env{dgroup} or \env{dgroup*} and not before the top
+% one, we just insert \cs{intereqskip}. Otherwise we must check for
+% shortskip.
+%    \begin{macrocode}
+    \if\eq@group
+      \if\GRP@top
+        \eq@check@shortskip
+      \else
+        \parskip\intereqskip \penalty\intereqpenalty
+      \fi
     \else
       \eq@check@shortskip
       \if\EQ@shortskips
@@ -2991,25 +3002,47 @@ and the derived files
     #1%
   \endgroup
 }
+%    \end{macrocode}
+% \begin{macro}{\eq@check@shortskip}
+%   \changes{v0.96a}{2007/12/17}{Insert \cs{finish@end} if no special
+%     case is found.}
+%    \begin{macrocode}
 \def\eq@check@shortskip{%
   \global\let\EQ@shortskips\@False
   \setlength\dim@a{\abovedisplayskip+\ht\EQ@numbox}%
   \addtolength\leftskip{-2em}% standard TeX value
   \ifdim\leftskip<\predisplaysize
-  \else\if R\eqnumside  \global\let\EQ@shortskips\@True
-  \else\if\eq@shiftnumber
-  \else\if T\eqnumplace
-    \ifdim\dim@a<\eq@firstht
-      \global\let\EQ@shortskips\@True
-    \fi
   \else
-    \setlength\dim@b{\eq@vspan/2}%
-    \ifdim\dim@a<\dim@b
-      \global\let\EQ@shortskips\@True
+%    \end{macrocode}
+% If the display was preceeded by a blank line, \cs{predisplaysize} is
+% $-\cs{maxdimen}$ and so we should insert a fairly large skip to
+% separate paragraphs, i.e., no short skip. Perhaps this should be a
+% third parameter \cs{abovedisplayparskip}.
+%    \begin{macrocode}
+    \ifdim -\maxdimen=\predisplaysize
+    \else
+      \if R\eqnumside
+        \global\let\EQ@shortskips\@True
+      \else
+        \if\eq@shiftnumber
+        \else
+          \if T\eqnumplace
+            \ifdim\dim@a<\eq@firstht
+              \global\let\EQ@shortskips\@True
+            \fi
+          \else
+            \setlength\dim@b{\eq@vspan/2}%
+            \ifdim\dim@a<\dim@b
+              \global\let\EQ@shortskips\@True
+            \fi
+          \fi
+        \fi
+      \fi
     \fi
-  \fi\fi\fi\fi
+  \fi
 }
 %    \end{macrocode}
+% \end{macro}
 % 
 % At the end of an equation, need to put in a pagebreak penalty
 % and some vertical space.    Also set some flags to remove parindent
@@ -4107,7 +4140,7 @@ and the derived files
   \ifdim\dim@a>\eq@wdT \eq@wdT\dim@a \fi
   \ifdim\dim@a<\eq@wdMin \eq@wdMin\dim@a \fi
   \eq@dp#5\relax
-  \addtolength\eq@vspan{#1+#4+#5}%
+  \addtolength\eq@vspan{#1+#4+\eq@dp}%
 %    \end{macrocode}
 % Record the max badness of all the lines in \cs{eq@badness}.   
 %    \begin{macrocode}
@@ -4766,7 +4799,7 @@ and the derived files
 % of a page; instead it will be moved whole to the top of the next
 % page.    If you really really need a page break that splits the
 % first or last line from the rest of the equation, you can always fall
-% back to\cs{pagebreak}, I suppose9.   
+% back to\cs{pagebreak}, I suppose.   
 % 
 %    \begin{macrocode}
   \clubpenalty\@M \widowpenalty\@M \interlinepenalty\eqinterlinepenalty
@@ -4805,6 +4838,68 @@ and the derived files
 % I, IRM, IRB, ILM, ILT.    In other words, CLM stands for Centered equation
 % body with Left-hand Middle-placed equation number, and IRB stands for
 % Indented equation with Right-hand Bottom-placed equation number.   
+%
+% Here are some general thoughts on how to place an equation
+% tag. Currently it does not work as desired: the L option positions
+% the tag app. 10 lines below the math expression, the RM doesn't
+% position the tag on the baseline for single-line math
+% expressions. Therefore I am going to first write what I think is
+% supposed to happen and then implement it. 
+%
+% Below is a small list where especially the two three specifications
+% should be quite obvious, I just don't want to forget anything and it
+% is important to the implementation.
+% \begin{description}
+% \item[Definition 1] If a display consists of exactly one line, the
+%   tag should always be placed on the same baseline as the math
+%   expression.
+% \end{description}
+% The remaining comments refer to multi-line displays.
+% \begin{description}
+% \item[Definition 2] If a tag is to be positioned at the top (T), it
+%   should be placed such that the baseline of the tag aligns with the
+%   baseline of the top line of the display.
+%
+% \item[Definition 3] If a tag is to be positioned at the bottom (B),
+%   it should be placed such that the baseline of the tag aligns with
+%   the baseline of the bottom line of the display.
+%
+% \item[Definition 4] If a tag is to be positioned vertically centered
+%   (M), it should be placed such that the baseline of the tag is
+%   positioned exactly halfway between the baseline of the top line of
+%   the display and the baseline of the bottom line of the display.
+% \end{description}
+% 
+% Definitions 1--3 are almost axiomatic in their
+% simplicity. Definition~4 is different because I saw at least two
+% possibilities for which area to span:
+% \begin{itemize}
+% \item Calculate distance from top of top line to the bottom of the
+%   bottom line, position the vertical center of the tag exactly
+%   halfway between those two extremes.
+% 
+% \item Calculate the distance from the baseline of the top line to
+%   the baseline of the bottom line, position the baseline of the tag
+%   exactly halfway between these two extremes.
+% \end{itemize}
+% Additional combinations of these methods are possible but make
+% little sense in my opinion. I have two reasons for choosing the
+% latter of these possibilities: Firstly, two expressions looking
+% completely identical with the exception of a superscript in the
+% first line or a subscript in the last line will have the tag
+% positioned identically. Secondly, then M means halfway between T and
+% B positions which makes good sense and then also automatically
+% fulfills Definition~1.
+%
+% From an implementation perspective, these definitions should also
+% make it possible to fix a deficiency in the current implementation,
+% namely that the tag does not influence the height of a display, even
+% if the display is a single line. This means that two single-line
+% expressions in a \env{dgroup} can be closer together than
+% \cs{intereqskip} if the math expressions are (vertically) smaller
+% than the tag.
+%
+%
 % 
 % 
 % \section{Centered Right-Number Equations}
@@ -4846,6 +4941,8 @@ and the derived files
 % typeset the frame, number and equation with the
 % given number side and placement
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 
 %    \begin{macrocode}
 \def\eq@typeset@Unnumbered{%
   \eq@typeset@frame
@@ -4884,7 +4981,7 @@ and the derived files
 % Typeset equation and right middle number
 %    \begin{macrocode}
 \def\eq@typeset@RM{%
-  \setlength\dim@a{(\eq@vspan+\ht\EQ@numbox-\dp\EQ@numbox)/2}
+  \setlength\dim@a{(\eq@vspan+\ht\EQ@numbox-\dp\EQ@numbox)/2}%
   \eq@typeset@rightnumber
   \eq@typeset@frame
   \eq@typeset@equation
@@ -5963,8 +6060,8 @@ and the derived files
     \hbox{\box\EQ@box\box\EQ@copy\penalty\@ne\copy\EQ@numbox}%
     \unvbox\GRP@box
   }%
- \global\let\GRP@top\@False
- \EQ@trial
+%%%  \global\let\GRP@top\@False
+  \EQ@trial
   \if\eq@isIntertext\else
     \ifdim\eq@wdL>\grp@wdL \global\grp@wdL\eq@wdL \fi
     \ifdim\eq@wdT>\grp@wdT \global\grp@wdT\eq@wdT \fi
@@ -6001,22 +6098,30 @@ and the derived files
 % about alignment \& shifting.  Check if alignment is still possible
 %    \begin{macrocode}
   \setlength\dim@a{\grp@wdL+\grp@wdR-4em}% Allowance for shrink?
-  \if\grp@aligned\ifdim\dim@a>\grp@linewidth
-     \global\let\grp@aligned\@False     
-  \fi\fi
+  \if\grp@aligned
+    \ifdim\dim@a>\grp@linewidth
+      \global\let\grp@aligned\@False     
+    \fi
+  \fi
 %    \end{macrocode}
 % If we're adding an unshifted group number that equations didn't know
 % about, re-check shifting
 %    \begin{macrocode}
   \addtolength\dim@a{\grp@wdNum }% Effective length
-  \if\grp@shiftnumber\else\if\grp@hasNumber\if\grp@eqs@numbered\else\ifdim\dim@a>\grp@linewidth
-     \global\let\grp@shiftnumber\@True
-  \fi\fi\fi\fi
+  \if\grp@shiftnumber
+  \else
+    \if\@And{\grp@hasNumber}{\@Not\grp@eqs@numbered}
+      \ifdim\dim@a>\grp@linewidth
+        \global\let\grp@shiftnumber\@True
+      \fi
+    \fi
+  \fi
 %    \end{macrocode}
 % If we can still align, total width is sum of maximum LHS \& RHS
 %    \begin{macrocode}
   \if\grp@aligned
-     \global\grp@wdT\grp@wdL\global\advance\grp@wdT\grp@wdR
+     \global\grp@wdT\grp@wdL
+     \global\advance\grp@wdT\grp@wdR
   \fi
   \debugmsg{======= DGROUP Formatting
           ^^J||===== \grp@wdL=\the\grp@wdL, \grp@wdR=\the\grp@wdR
@@ -6036,7 +6141,12 @@ and the derived files
 % NOTE: For now, just code up LM number
 % NOTE: Come back and handle other cases.
 % NOTE: Vertical spacing is off, perhaps because of inter eqn. glue
+%
+% At this point we have already finished processing the first
+% \env{dmath} environment and so we know which skip to insert so we
+% set \cs{GRP@top} false before doing so.
 %    \begin{macrocode}
+    \global\let\GRP@top\@False
     \eq@topspace{\vskip\parskip}%
   \if\grp@hasNumber\if\grp@eqs@numbered\else
 %    \eq@topspace{\vskip\parskip}%

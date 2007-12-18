@@ -67,7 +67,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: breqn 2007/12/17 v0.96b Breqn (MH)}
+\Msg{* Package: breqn 2007/12/18 v0.96c Breqn (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -128,7 +128,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}%
-  [2007/12/17 v0.96b breqn (MH)]
+  [2007/12/18 v0.96c breqn (MH)]
 \documentclass{ltxdoc}
 
 \usepackage{color,verbatim,xspace,varioref,listings,amsmath}
@@ -228,7 +228,7 @@ and the derived files
 % \fi
 %
 % \title{The \pkg{breqn} package}
-% \date{2007/12/17 v0.96b}
+% \date{2007/12/18 v0.96c}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -1000,7 +1000,7 @@ and the derived files
 % 
 % Declare package name and date.   
 %    \begin{macrocode}
-\ProvidesPackage{breqn}[2007/12/17 v0.96b]
+\ProvidesPackage{breqn}[2007/12/18 v0.96c]
 %    \end{macrocode}
 %
 %
@@ -2681,6 +2681,7 @@ and the derived files
 % BRM: This portion is extensively refactored to get common operations
 % together (so corrections get consistently applied).
 %    \begin{macrocode}
+\newcount\eq@final@linecount
 \def\eq@finish{%
   \begingroup
     \debugmsg{Formatting equation}%
@@ -2693,12 +2694,30 @@ and the derived files
     \adjust@parshape\eq@parshape% Final adjustment of parshape for left|right skips
     \eq@topspace{\vskip\parskip}% Set top spacing
     \debug@showformat
-    % Now, invoke the appropriate typesetter according to number placement
+%    \end{macrocode}
+% We now know the final line count of the display. If it is a
+% single-line display, we want to know as that greatly simplifies the
+% equation tag placement (until such a time where this algorithm has
+% been straightened out).
+%    \begin{macrocode}
+    \afterassignment\remove@to@nnil
+    \eq@final@linecount=\expandafter\@gobble\eq@parshape\@nnil
+%    \begin{macrocode}
+% Now, invoke the appropriate typesetter according to number placement
+%    \end{macrocode}
     \if\eq@hasNumber
       \if\eq@shiftnumber
         \csname eq@typeset@\eqnumside Shifted\endcsname
       \else
-        \csname eq@typeset@\eqnumside\eqnumplace\endcsname
+%    \end{macrocode}
+% If there is only one line and the tag doesn't have to be shifted, we
+% call a special procedure to put the tag correctly.
+%    \begin{macrocode}
+        \ifnum\eq@final@linecount=\@ne
+          \csname eq@typeset@\eqnumside @single\endcsname
+        \else
+          \csname eq@typeset@\eqnumside\eqnumplace\endcsname
+        \fi
       \fi
     \else
       \eq@typeset@Unnumbered
@@ -2706,11 +2725,42 @@ and the derived files
   \endgroup
   \eq@botspace
 }
-%    \end{macrocode}
-% 
+%    \end{macrocode} 
 % \end{macro}
 % 
 % 
+% These are temporary until the tag position algorithm gets
+% rewritten. At least the tag is positioned correctly for single-line
+% displays. The horizontal frame position is not correct but the
+% problem lies elsewhere.
+%    \begin{macrocode}
+\def\eq@typeset@L@single{%
+  \nobreak
+  \eq@params\eq@parshape
+  \nointerlineskip\noindent 
+  \add@grp@label
+  \rlap{\kern-\leftskip\box\EQ@numbox}%
+  \if F\eq@frame
+  \else
+    \rlap{\raise\eq@firstht\hbox to\z@{\eq@addframe\hss}}%
+  \fi
+  \eq@dump@box\unhbox\EQ@box \@@par
+}
+\def\eq@typeset@R@single{%
+  \nobreak
+  \eq@params\eq@parshape
+  \nointerlineskip\noindent 
+  \add@grp@label
+  \if F\eq@frame
+  \else
+    \rlap{\raise\eq@firstht\hbox to\z@{\eq@addframe\hss}}%
+  \fi
+  \rlap{\kern-\leftskip\kern\linewidth\kern-\wd\EQ@numbox\copy\EQ@numbox}%
+  \eq@dump@box\unhbox\EQ@box 
+  \@@par
+}
+%    \end{macrocode}
+%
 % 
 % 
 % \section{Special processing for end-of-equation}
@@ -3888,7 +3938,9 @@ and the derived files
   \edef\eq@linewidths{\iffalse}\fi
 }
 \def\eq@frame@adjust#1{%
-  \addtolength#1{-2\eq@framewd-2\eq@framesep}%
+  %\addtolength#1{-2\eq@framewd-2\eq@framesep}%
+  \dim@a\eq@framewd \advance\dim@a\eq@framesep
+  \advance#1-2\dim@a
 }
 %    \end{macrocode}
 % \end{macro}
@@ -5194,6 +5246,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
+% The frame is not typeset at the correct horizontal position. Will
+% fix later.
 %    \begin{macrocode}
 \def\eq@addframe{%
   \hbox to\z@{%

@@ -381,6 +381,7 @@ and the derived files
 %    \end{macrocode}
 % Finally, we declare the package options.
 %    \begin{macrocode}
+\DeclareOption{mathactivechars}{\catcode`\^=7\relax \catcode`\_=8\relax }
 \DeclareOption{activechars}{\catcode`\^=13\relax \catcode`\_=13\relax }
 \ProcessOptions\relax
 \ifnum\catcode`\^=13\relax

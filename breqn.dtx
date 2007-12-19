@@ -67,7 +67,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: breqn 2007/12/18 v0.96c Breqn (MH)}
+\Msg{* Package: breqn 2007/12/19 v0.97 Breqn (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -128,10 +128,10 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}%
-  [2007/12/18 v0.96c breqn (MH)]
+  [2007/12/19 v0.97 breqn (MH)]
 \documentclass{ltxdoc}
 
-\usepackage{color,verbatim,xspace,varioref,listings,amsmath}
+\usepackage{color,verbatim,xspace,varioref,listings,amsmath,trace}
 
 \definecolor{hilite}{rgb}{0.2,0.4,0.7}
 \def\theCodelineNo{\textcolor{hilite}{\sffamily\tiny\arabic{CodelineNo}}}
@@ -228,7 +228,7 @@ and the derived files
 % \fi
 %
 % \title{The \pkg{breqn} package}
-% \date{2007/12/18 v0.96c}
+% \date{2007/12/19 v0.97}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -417,7 +417,7 @@ and the derived files
 % \LaTeX\ interface for defining math symbols (\cs{DeclareMathSymbol}),
 % things should work OK most of the time. Any more complex math symbol
 % setup is quite likely to quarrel with the \pkg{flexisym} package.
-% See Section~\ref{flexisym} for further information.
+% See Section~\vref{flexisym} for further information.
 %
 % \subsection{Subscripts and superscripts}
 %
@@ -502,13 +502,16 @@ and the derived files
 % \setkeys{breqn}{breakdepth={1}}
 % \end{verbatim}
 %
-% See the discussion of environment options, Section~\ref{envopts}, for
+% See the discussion of environment options, Section~\vref{envopts}, for
 % more information.
 %
-% One package option that may be of interest to \TeX nicians is the
-% \opt{debug} option; this activates some debugging statements embedded in
-% the code of the alpha release which trace measuring activities related
-% to line breaking.
+% Debugging information is no longer available as a package
+% option. Instead, the tracing information has been added in a fashion
+% so that it can be enabled as a docstrip option:
+% \begin{verbatim}
+% \generate{\file{breqn.sty}{\from{breqn.dtx}{package,trace}}}
+% \end{verbatim}
+% 
 %
 % \section{Environments and commands}
 % \subsection{Environments}
@@ -1000,7 +1003,7 @@ and the derived files
 % 
 % Declare package name and date.   
 %    \begin{macrocode}
-\ProvidesPackage{breqn}[2007/12/18 v0.96c]
+\ProvidesPackage{breqn}[2007/12/19 v0.97]
 %    \end{macrocode}
 %
 %
@@ -1009,17 +1012,14 @@ and the derived files
 % Most options are set with the \cs{options} command (which
 % calls \cs{setkeys}) because the standard package option
 % mechanism doesn't provide support for key-value syntax.   
-% Cf \fn{breqndoc.tex}.   
 % 
-% It seems easier to turn off debugging than turn it on so the
-% implementation of the \opt{debug} option is sort of backward.   
+% First we need to get the catcodes sorted out.
 %    \begin{macrocode}
 \edef\breqnpopcats{%
   \catcode\number`\"=\number\catcode`\"
   \relax}
 \AtEndOfPackage{\breqnpopcats}%
 \catcode`\^=7 \catcode`\_=8 \catcode`\"=12 \relax
-\DeclareOption{debug}{\errorcontextlines=2000\relax}
 \DeclareOption{mathstyleoff}{%
   \PassOptionsToPackage{mathstyleoff}{flexisym}%
 }
@@ -1044,7 +1044,7 @@ and the derived files
 % I don't think so.   
 %    \begin{macrocode}
 \@ifpackageloaded{flexisym}{}{%
-  \RequirePackage[cmbase]{flexisym}[2007/12/10]
+  \RequirePackage{flexisym}[2007/12/19]
     \edef\breqnpopcats{\breqnpopcats
     \catcode\number`\^=\number\catcode`\^
     \catcode\number`\_=\number\catcode`\_
@@ -1402,7 +1402,7 @@ and the derived files
 % 1999.   
 % The extra application of \cs{number} is needed for maximal
 % robustness in case the repeat count N is given in some weird \tex  form
-% such as \verb""E9" or \verb"\count9".   
+% such as \verb|"E9| or \verb|\count9|.   
 %    \begin{macrocode}
 % usage: \message{H\replicate{5}{i h}ow de doo dee!}
 \begingroup \catcode`\&=11
@@ -1569,25 +1569,15 @@ and the derived files
 % 
 % \section{Debugging}
 % Debugging help.   
-% 
-% \begin{macro}{\debug}
 %    \begin{macrocode}
-\let\debug=\begingroup
+%<*trace>
+\errorcontextlines=2000\relax
 %    \end{macrocode}
-% \end{macro}
 % 
-% \begin{macro}{\gubed}
-%    \begin{macrocode}
-\let\gubed=\endgroup
-%    \end{macrocode}
-% \end{macro}
-% 
-% \begin{macro}{\debugmsg}
+% \begin{macro}{\breqn@debugmsg}
 % Print a debugging message.   
 %    \begin{macrocode}
-\def\debugmsg{\message{||= \iffalse}\fi
-  \@xp\@gobble\string
-}
+\long\def\breqn@debugmsg#1{\GenericInfo{||}{||=\space#1}}
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -1630,23 +1620,17 @@ and the derived files
 %    \begin{macrocode}
 \def\debug@para{%
   \debugwr{\hsize\the\hsize, \parfillskip\the\parfillskip}%
-  \debugmsg{\leftskip\the\leftskip, \rightskip\the\rightskip}%
-  \debugmsg{\linepenalty\the\linepenalty, \adjdemerits\the\adjdemerits}%
-  \debugmsg{\pretolerance\the\pretolerance, \tolerance\the\tolerance,
+  \breqn@debugmsg{\leftskip\the\leftskip, \rightskip\the\rightskip}%
+  \breqn@debugmsg{\linepenalty\the\linepenalty, \adjdemerits\the\adjdemerits}%
+  \breqn@debugmsg{\pretolerance\the\pretolerance, \tolerance\the\tolerance,
     \parindent\the\parindent}%
 }
 %    \end{macrocode}
 % \end{macro}
 % 
 % 
-% Turn off debugging unless it was asked for.   
 %    \begin{macrocode}
-\@ifpackagewith{breqn}{debug}{}{%
-  \let\debug\relax \let\gubed\relax
-  \let\debugmsg\@gobble \let\debug@lines\relax \let\debug@para\relax
-  \let\debugwr\@gobble
-  \let\debug@box\@gobble \let\debug@push\@gobbletwo
-}
+%</trace>
 %    \end{macrocode}
 % 
 % 
@@ -2449,7 +2433,7 @@ and the derived files
   \darray@mkpream#1\@percentchar
 }
 %    \end{macrocode}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % FORMAT STATUS%
 % \begin{verbatim}
 % \def\eq@frame{T}%
@@ -2474,12 +2458,12 @@ and the derived files
 % IRB
 %  \def\eqindent{I}\def\eqnumside{R}\def\eqnumplace{B}\mathindent10\p@
 % \end{verbatim}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % The main environments.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%BRM: The following incorporates several changes:
-%%  1) modifications supplied by MJD to fix the eaten \cs{paragraph} problem.
-%%  2) Added \cs{display@setup} here, rather than globally.
+%
+%BRM: The following incorporates several changes:
+%  1) modifications supplied by MJD to fix the eaten \cs{paragraph} problem.
+%  2) Added \cs{display@setup} here, rather than globally.
 % 
 % \begin{macro}{\dmath}
 % \begin{macro}{\enddmath}
@@ -2491,7 +2475,7 @@ and the derived files
 \newenvironment{dmath}{%
  \let\eq@hasNumber\@True \@optarg\@dmath{}}{}
 \def\@dmath[#1]{%
-  \debugmsg{=== DMATH ==================================================}%
+%<trace>  \breqn@debugmsg{=== DMATH ==================================================}%
   \everydisplay\expandafter{\the\everydisplay \display@setup}%
   \if@noskipsec \leavevmode \fi
   \if@inlabel \leavevmode \global\@inlabelfalse \fi
@@ -2655,7 +2639,7 @@ and the derived files
 % either an \cs{itshape} (recommended) or a \cs{textit}
 % value.   
 %    \begin{macrocode}
-      \debugmsg{Number \eq@number}%
+%<trace>      \breqn@debugmsg{Number \eq@number}%
       \set@label{equation}\eq@number
       \global\sbox\EQ@numbox{%
         \next@label \global\let\next@label\@empty
@@ -2680,20 +2664,42 @@ and the derived files
 % having worked out the best parshape.
 % BRM: This portion is extensively refactored to get common operations
 % together (so corrections get consistently applied).
+%
+% MH: I've destroyed Bruce's nice refactoring a bit to get the
+% abovedisplayskips correct for both groups of equations and single
+% \env{dmath} environments.  I will have to redo that later.
 %    \begin{macrocode}
 \newcount\eq@final@linecount
+\let\eq@GRP@first@dmath\@True
 \def\eq@finish{%
   \begingroup
-    \debugmsg{Formatting equation}%
-    \debug@showmeasurements
+%<trace>    \breqn@debugmsg{Formatting equation}%
+%<trace>    \debug@showmeasurements
     \if F\eq@frame\else
       \freeze@glue\eqlinespacing \freeze@glue\eqlineskip
     \fi
 %    \eq@topspace{\vskip\parskip}% Set top spacing
     \csname eq@\eqindent @setsides\endcsname % Compute \leftskip,\rightskip
     \adjust@parshape\eq@parshape% Final adjustment of parshape for left|right skips
-    \eq@topspace{\vskip\parskip}% Set top spacing
-    \debug@showformat
+%    \end{macrocode}
+% If we are in an a group of equations we don't want to calculate the
+% top space for the first one as that will be delayed until later when
+% the space for the group is calculated. However, we do need to store
+% the leftskip used here as that will be used later on for calculating
+% the top space.
+%    \begin{macrocode}
+    \if\eq@group
+      \if\eq@GRP@first@dmath
+        \global\let\eq@GRP@first@dmath\@False
+        \xdef\dmath@first@leftskip{\leftskip=\the\leftskip\relax}%
+%<trace> \breqn@debugmsg{Stored\space\dmath@first@leftskip}
+      \else
+        \eq@topspace{\vskip\parskip}% Set top spacing
+      \fi
+    \else
+      \eq@topspace{\vskip\parskip}% Set top spacing
+    \fi
+%<trace>    \debug@showformat
 %    \end{macrocode}
 % We now know the final line count of the display. If it is a
 % single-line display, we want to know as that greatly simplifies the
@@ -2702,9 +2708,9 @@ and the derived files
 %    \begin{macrocode}
     \afterassignment\remove@to@nnil
     \eq@final@linecount=\expandafter\@gobble\eq@parshape\@nnil
-%    \begin{macrocode}
-% Now, invoke the appropriate typesetter according to number placement
 %    \end{macrocode}
+% Now, invoke the appropriate typesetter according to number placement
+%    \begin{macrocode}
     \if\eq@hasNumber
       \if\eq@shiftnumber
         \csname eq@typeset@\eqnumside Shifted\endcsname
@@ -3025,14 +3031,16 @@ and the derived files
 % one, we just insert \cs{intereqskip}. Otherwise we must check for
 % shortskip.
 %    \begin{macrocode}
-    \if\eq@group
-      \if\GRP@top
-        \eq@check@shortskip
-      \else
+    \if\@And{\eq@group}{\@Not\eq@GRP@first@dmath}%
+%<trace>\breqn@debugmsg{Between lines}%
         \parskip\intereqskip \penalty\intereqpenalty
-      \fi
+%<trace>\breqn@debugmsg{parskip=\the\parskip}%
     \else
-      \eq@check@shortskip
+      \if\eq@group
+        \eq@check@shortskip\leftskip
+      \else
+        \eq@check@shortskip\leftskip
+      \fi
       \if\EQ@shortskips
         \parskip\abovedisplayshortskip
         \aftergroup\belowdisplayskip\aftergroup\belowdisplayshortskip
@@ -3048,7 +3056,10 @@ and the derived files
     \else
       \addtolength\parskip{\eq@framesep+\eq@framewd}%
     \fi
-\debugmsg{Topspace: \theb@@le\EQ@shortskips, \parskip=\the\parskip, \predisplaysize=\the\predisplaysize}%
+%<*trace>
+    \breqn@debugmsg{Topspace: \theb@@le\EQ@shortskips, \parskip=\the\parskip, 
+      \predisplaysize=\the\predisplaysize}%
+%</trace>
     #1%
   \endgroup
 }
@@ -3057,11 +3068,11 @@ and the derived files
 %   \changes{v0.96a}{2007/12/17}{Insert \cs{finish@end} if no special
 %     case is found.}
 %    \begin{macrocode}
-\def\eq@check@shortskip{%
+\def\eq@check@shortskip #1{%
   \global\let\EQ@shortskips\@False
   \setlength\dim@a{\abovedisplayskip+\ht\EQ@numbox}%
-  \addtolength\leftskip{-2em}% standard TeX value
-  \ifdim\leftskip<\predisplaysize
+  \addtolength#1{-2em}% standard TeX value
+  \ifdim#1<\predisplaysize
   \else
 %    \end{macrocode}
 % If the display was preceeded by a blank line, \cs{predisplaysize} is
@@ -3346,9 +3357,9 @@ and the derived files
 % added after it by \tex .    Should we remove it?    I guess
 % so.   
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Capturing the equation
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \subsection{Capturing the equation}
+%
 % BRM: There's a problem here (or with \cs{ss@scan}).  If the LHS has
 % \cs{left} \cs{right} pairs, \ss@scan gets involved.  It seems to produce
 % a separate box marked w/\cs{penalty} 3.  But it appears that \cs{eq@repack}
@@ -3397,17 +3408,25 @@ and the derived files
     % Apparently missing a \thickmuskip = 5mu = 5/18em=0.27777777777.. ?
        + 0.2777777777777em}% FUDGE??!?!?!
     \ifdim\dim@a>\eq@wdL
-      \debugmsg{Correcting LHS from \the\eq@wdL\space to \the\dim@a = \the\wd\EQ@box - \the\eq@wdR}%
+%<*trace>
+      \breqn@debugmsg{Correcting LHS from \the\eq@wdL\space to 
+                \the\dim@a = \the\wd\EQ@box - \the\eq@wdR}%
+%</trace>
       \eq@wdL\dim@a
       \xdef\EQ@setwdL{\eq@wdL\the\eq@wdL\relax}%
     \fi
   \fi
-  \debugmsg{Capture: total length=\the\wd\EQ@box
-           ^^J||===== has LHS=\theb@@le\EQ@hasLHS, \eq@wdL=\the\eq@wdL, \eq@wdR=\the\eq@wdR,
-           ^^J||===== \eq@wdCond=\the\eq@wdCond}%
+%<*trace>
+  \breqn@debugmsg{Capture: total length=\the\wd\EQ@box \MessageBreak
+           ==== has LHS=\theb@@le\EQ@hasLHS, \eq@wdL=\the\eq@wdL, \eq@wdR=\the\eq@wdR,
+           \MessageBreak
+           ==== \eq@wdCond=\the\eq@wdCond}%
+%</trace>
   \egroup % end vbox started earlier
+%<*trace>
 %\debugwr{EQ@box}\debug@box\EQ@box
 %\debugwr{EQ@copy}\debug@box\EQ@copy
+%</trace>
 }
 %    \end{macrocode}
 % Now we have two copies of the equation, one in \cs{EQ@box},
@@ -3726,7 +3745,7 @@ and the derived files
 % need to know how many lines the equation will require.   
 % And of course the number of lines needed depends on the parshape!   
 % So as our very first trial we run a simple first-approximation
-% parshape (Figure~\ref{f:parshape-1}) whose
+% parshape (Figure~\vref{f:parshape-1}) whose
 % main purpose is to get an estimate on the number of lines that will be
 % needed; it chooses a uniform indent for all lines after the first one
 % and does not take any account of the equation number.   
@@ -3821,31 +3840,35 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 %    \begin{macrocode}
+%<*trace>
 \def\debug@showmeasurements{%
-  \debugmsg{=> \number\eq@lines\space lines}%
-  \debug
-  \def\@elt##1^^J##2{^^J||===== \space\space##1/##2}%
+  \breqn@debugmsg{=> \number\eq@lines\space lines}%
+  \begingroup
+  \def\@elt##1X##2{\MessageBreak==== \space\space##1/##2}%
   \let\@endelt\@empty
-  \debugmsg{=> trial info:\eq@measurements}%
-  \debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness}%
+  \breqn@debugmsg{=> trial info:\eq@measurements}%
+  \breqn@debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness}%
   \let\@elt\relax \let\@endelt\relax
-  \gubed
+  \endgroup
 }
 \def\debug@showmeasurements{%
   \begingroup
-  \def\@elt##1^^J##2{^^J||=====   ##1/##2}%
+  \def\@elt##1X##2{\MessageBreak====   ##1/##2}%
   \let\@endelt\@empty
-  \debugmsg{===> Measurements: \number\eq@lines\space lines
+  \breqn@debugmsg{===> Measurements: \number\eq@lines\space lines
            \eq@measurements
-           ^^J||===== bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness
-           ^^J||===== \leftskip=\the\leftskip, \rightskip=\the\rightskip}%
+           \MessageBreak
+           ==== bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness
+           \MessageBreak
+           ==== \leftskip=\the\leftskip, \rightskip=\the\rightskip}%
  \endgroup
 }
+%</trace>
 %    \end{macrocode}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Layout Trials Driver
 % Basically, trying different sequences of parshapes.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % 
 % \begin{macro}{\EQ@trial}
 % Init.   
@@ -3929,11 +3952,11 @@ and the derived files
   \if T\eq@frame \eq@frame@adjust\dim@c \fi
   \ifdim\dim@c>\eq@linewidth
     \eq@linewidth\dim@c 
-    \debugmsg{Choose Shape for width(#1)=\the\eq@linewidth}%
+%<trace>    \breqn@debugmsg{Choose Shape for width(#1)=\the\eq@linewidth}%
     \let\eq@trial@b\eq@trial@d
     \csname eq@try@layout@\eq@layout\endcsname
-  \else
-    \debugmsg{Next width (#1) is shorter; skip it}%
+%<trace>  \else
+%<trace>    \breqn@debugmsg{Next width (#1) is shorter; skip it}%
   \fi
   \edef\eq@linewidths{\iffalse}\fi
 }
@@ -3958,7 +3981,7 @@ and the derived files
 % Success.   
 %    \begin{macrocode}
 \def\eq@trial@done{%
-  \debugmsg{End trial: Success!}%
+%<trace>  \breqn@debugmsg{End trial: Success!}%
   \let\eq@failout\relax
 }
 %    \end{macrocode}
@@ -3980,7 +4003,7 @@ and the derived files
 %    \begin{macrocode}
 \def\eq@nextlayout#1{% 
   \endgroup
-  \debugmsg{Nope ... that ain't gonna work.}%
+%<trace>  \breqn@debugmsg{Nope ... that ain't gonna work.}%
   \begingroup #1%
 }
 %    \end{macrocode}
@@ -3991,7 +4014,7 @@ and the derived files
 % .   
 %    \begin{macrocode}
 \def\eq@failout{%
-\debugmsg{End trial: failout}%
+%<trace>\breqn@debugmsg{End trial: failout}%
   \global\let\EQ@trial\EQ@last@trial
 }
 %    \end{macrocode}
@@ -4002,10 +4025,12 @@ and the derived files
 % Save the parameters of the current trial.   
 %    \begin{macrocode}
 \def\eq@trial@save#1{%
-%  \debug \def\@elt##1^^J##2{^^J||===== \space\space##1/##2}\let\@endelt\@empty\debugmsg{=> trial info:\eq@measurements}%
-%         \debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness^^J}%
+%<*trace>
+%  \begingroup \def\@elt##1X##2{\MessageBreak==== \space\space##1/##2}\let\@endelt\@empty\breqn@debugmsg{=> trial info:\eq@measurements}%
+%         \breqn@debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness\MessageBreak}%
 %         \let\@elt\relax \let\@endelt\relax
-%  \gubed
+%  \endgroup
+%</trace>
   \xdef#1{%
     \eq@linewidth\the\eq@linewidth
     % save info about the fit
@@ -4045,7 +4070,7 @@ and the derived files
 % Run the equation contents through the current parshape.   
 %    \begin{macrocode}
 \def\eq@trial@c#1#2{%
-  \debugmsg{Trying layout "#1" with^^J||===== parshape\space\@xp\@gobble\@parshape}%
+%<trace>  \breqn@debugmsg{Trying layout "#1" with\MessageBreak==== parshape\space\@xp\@gobble\@parshape}%
   \begingroup
   \eq@trial@init
   \def\eq@layout{#1}%
@@ -4088,9 +4113,9 @@ and the derived files
 % 
 %    \begin{macrocode}
 \def\eq@check@density{%
-  \debugmsg{Checking density for layout L}%
+%<trace>  \breqn@debugmsg{Checking density for layout L}%
   \if\@Or{\@Not\EQ@hasLHS}{\eq@shortLHS}%
-    \debugmsg{Density check: No LHS, or is short; OK}%
+%<trace>    \breqn@debugmsg{Density check: No LHS, or is short; OK}%
     \eq@trial@succeed
   \else\if\eq@dense@enough
     \eq@trial@succeed
@@ -4126,7 +4151,7 @@ and the derived files
   \eq@ml@record@indents
   \eq@measure@lines
   \eq@recalc
-  \debug@showmeasurements
+%<trace>  \debug@showmeasurements
 }
 %    \end{macrocode}
 % 
@@ -4187,7 +4212,7 @@ and the derived files
 % \begin{macro}{\eq@recalc@b}
 % 
 %    \begin{macrocode}
-\def\eq@recalc@b#1^^J#2,#3x#4+#5@#6\@endelt{%
+\def\eq@recalc@b#1X#2,#3x#4+#5@#6\@endelt{%
   \setlength\dim@a{#2+#3}%
   \ifdim\dim@a>\eq@wdT \eq@wdT\dim@a \fi
   \ifdim\dim@a<\eq@wdMin \eq@wdMin\dim@a \fi
@@ -4208,14 +4233,13 @@ and the derived files
 % Any other value means we have a user-specified override on the
 % layout.   
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Layout Definitions.
 % Based on initial equation measurements, we can choose a sequence of
 % candidate parshapes that the equation might fit into.
 % We accept the first shape that `works', else fall to next one.
 % [The sequence is hardcoded in the \cs{eq@try@layout@}<shape>
 %  Would it be useful be more flexible? (eg. try layouts LDA, in order...)]
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    \begin{macrocode}
 \def\eq@layout{?}
 %    \end{macrocode}
@@ -4242,15 +4266,18 @@ and the derived files
     \else\if\grp@hasNumber\addtolength\dim@b{-\wd\GRP@numbox-\eqnumsep}%
   \fi\fi\fi\fi
   \ifdim\dim@a<\dim@b% Do we even have a chance of fitting to one line?
-    \debugmsg{Choose Shape: (\the\wd\EQ@copy) may fit in \the\dim@b}%
-%BRM%
-    % assuming it might fit, don't push too hard
+%<trace>    \breqn@debugmsg{Choose Shape: (\the\wd\EQ@copy) may fit in \the\dim@b}%
+%    \end{macrocode}
+% BRM: assuming it might fit, don't push too hard
+%    \begin{macrocode}
     \setlength\dim@b{\columnwidth-\dim@a+\eq@wdCond}%
     \rightskip\z@\@plus\dim@b\@minus\hfuzz
-%
     \eq@trial@b{i}{\eq@try@layout@multi}%
   \else
-    \debugmsg{Choose Shape: Too long (\the\wd\EQ@copy) for one line (free width=\the\dim@b)}%
+%<*trace>    
+  \breqn@debugmsg{Choose Shape: Too long (\the\wd\EQ@copy) for one line
+            (free width=\the\dim@b)}%
+%</trace>
    \eq@try@layout@multi
   \fi
 }
@@ -4262,7 +4289,7 @@ and the derived files
 \def\eq@try@layout@multi{%
   \if\EQ@hasLHS
     \ifdim\eq@wdL>\eq@linewidth
-       \debugmsg{Choose Shape: LHS \the\eq@wdL > linewidth}%
+%<trace>       \breqn@debugmsg{Choose Shape: LHS \the\eq@wdL > linewidth}%
 %    \end{macrocode}
 % Find the total width of the RHS.   
 % If it is relatively short, a step layout is the thing to try.   
@@ -4273,14 +4300,16 @@ and the derived files
        \fi
     % BRM: Originally .7: Extreme for L since rhs has to wrap within the remaining 30+%!
     \else\ifdim\eq@wdL>.50\eq@linewidth
-      \debugmsg{Choose Shape: LHS (\the\eq@wdL) > .50 linewidth (linewidth=\the\eq@linewidth)}%
+%<*trace>
+      \breqn@debugmsg{Choose Shape: LHS (\the\eq@wdL) > .50 linewidth (linewidth=\the\eq@linewidth)}%
+%</trace>
       \eq@try@layout@D
     \else
-      \debugmsg{Choose Shape: LHS (\the\eq@wdL) not extraordinarily wide}%
+%<trace>      \breqn@debugmsg{Choose Shape: LHS (\the\eq@wdL) not extraordinarily wide}%
       \eq@try@layout@L
     \fi\fi
   \else
-    \debugmsg{Choose Shape: No LHS here}%
+%<trace>    \breqn@debugmsg{Choose Shape: No LHS here}%
 %    \end{macrocode}
 % Try one-line layout first, then step layout.   
 %    \begin{macrocode}
@@ -4451,13 +4480,13 @@ and the derived files
 %    \begin{macrocode}
 \def\eq@retry@with@number{%
  \if\eq@shiftnumber
-   \debugmsg{Place number: Shifted number requested}%
+%<trace>   \breqn@debugmsg{Place number: Shifted number requested}%
  \else
 %    \end{macrocode}
 % Condition and right numbers? We're just going to have to shift.
 %    \begin{macrocode}
     \ifdim\eq@wdCond>\z@\if R\eqnumside
-      \debugmsg{Place number: Condition w/Right number => Shift number}%
+%<trace>      \breqn@debugmsg{Place number: Condition w/Right number => Shift number}%
       \let\eq@shiftnumber\@True
     \fi\fi
 %    \end{macrocode}
@@ -4484,12 +4513,14 @@ and the derived files
 % left \& right skips will be done later, and parshape adjusted if
 % needed.
 %    \begin{macrocode}
-      \debugmsg{Place number: eqn and number fit together}%
+%<trace>      \breqn@debugmsg{Place number: eqn and number fit together}%
 %    \else\ifnum\eq@lines=\int@a %  Shift, if single line, unless inside a dgroup.
 %    \end{macrocode}
 % NOTE: this is too strong for dgroup!
 %    \begin{macrocode}
-%      \debugmsg{Place number: single line too long with number => Shift number \the\int@a}%
+%<*trace>
+%      \breqn@debugmsg{Place number: single line too long with number => Shift number \the\int@a}%
+%</trace>
 %      \let\eq@shiftnumber\@True
     \else
 %    \end{macrocode}
@@ -4500,8 +4531,10 @@ and the derived files
       \setlength\leftskip{\eq@wdNum}%
       \setlength\rightskip{\z@\@plus\dim@a}%
       \adjust@parshape\@parshape
-      \debugmsg{Place number: Try with \leftskip=\the\leftskip, \rightskip=\the\rightskip,
-                ^^J||===== parshape\space\@xp\@gobble\@parshape}%
+%<*trace>
+      \breqn@debugmsg{Place number: Try with \leftskip=\the\leftskip, \rightskip=\the\rightskip,
+                \MessageBreak==== parshape\space\@xp\@gobble\@parshape}%
+%</trace>
       \nointerlineskip
       \edef\eq@prev@lines{\the\eq@lines}%
       \edef\eq@prev@badness{\the\eq@badness}% BRM
@@ -4509,16 +4542,19 @@ and the derived files
       \int@a\eq@prev@badness\relax\advance\int@a 50\relax%?
       \int@b\eq@prev@lines  \if\eq@group\advance\int@b\@ne\fi% Allow 1 extra line in group
       \ifnum\eq@lines>\int@b % \eq@prev@lines
-        \debugmsg{Adjustment causes more breaks => Shift number}%
+%<trace>        \breqn@debugmsg{Adjustment causes more breaks => Shift number}%
         \let\eq@shiftnumber\@True
       \else\if\eq@badline
-        \debugmsg{Adjustment causes bad lines (\the\eq@badness) => Shift}%
+%<trace>        \breqn@debugmsg{Adjustment causes bad lines (\the\eq@badness) => Shift}%
         \let\eq@shiftnumber\@True
       \else\ifnum\eq@badness>\int@a % BRM: New case
-        \debugmsg{Adjustment is badder than previous (\the\eq@badness >> \eq@prev@badness) => Shift}%
+%<*trace>
+        \breqn@debugmsg{Adjustment is badder than previous
+                  (\the\eq@badness >> \eq@prev@badness) => Shift}%
+%</trace>
         \let\eq@shiftnumber\@True
       \else
-        \debugmsg{Adjustment succeeded}%
+%<trace>        \breqn@debugmsg{Adjustment succeeded}%
       \fi\fi%\fi
    \fi\fi\fi
 %    \end{macrocode}
@@ -4653,7 +4689,9 @@ and the derived files
 %    \begin{macrocode}
 \def\eq@ml@a{%
   \setbox\tw@\hbox{\unhbox\z@ \unskip}% find natural width
-  \debug\ifnum\eq@badness<\inf@bad\else\debugmsg{!?! Overfull: \the\wd\tw@ >\the\dim@b}\fi\gubed
+%<*trace>
+  \ifnum\eq@badness<\inf@bad\else\breqn@debugmsg{!?! Overfull: \the\wd\tw@ >\the\dim@b}\fi
+%</trace>
 %    \end{macrocode}
 % Is actual width less than natural width?   
 %    \begin{macrocode}
@@ -4677,7 +4715,7 @@ and the derived files
     }%
   \fi
   \edef\eq@measurements{\@elt
-    \the\skip@a\space^^J% extra space to facilitate extracting only the
+    \the\skip@a\space X% extra space to facilitate extracting only the
                         % dimen part later
     \csname eq@i%
       \ifnum\eq@curline<\parshape \number\eq@curline
@@ -4712,11 +4750,11 @@ and the derived files
 %    \begin{macrocode}
 \def\eq@dense@enough{%
   \ifnum\eq@lines<\thr@@ 
-    \debugmsg{Density check: less than 3 lines; OK}%
+%<trace>    \breqn@debugmsg{Density check: less than 3 lines; OK}%
     \@True
   \else
     \ifdim\eq@wdL >.7\eq@wdT 
-     \debugmsg{Density check: LHS too long; NOT OK}%
+%<trace>     \breqn@debugmsg{Density check: LHS too long; NOT OK}%
       \@False
     \else \@xp\@xp\@xp\eq@dense@enough@a
     \fi
@@ -4782,7 +4820,7 @@ and the derived files
   \else
     \dim@b\z@ \let\@elt\eq@delt \eq@measurements
     \dim@c\eq@density@factor\eq@wdT \multiply\dim@c\eq@lines
-    \debugmsg{Density check: black \the\dim@b/\eq@density@factor total \the\dim@c}%
+%<trace>    \breqn@debugmsg{Density check: black \the\dim@b/\eq@density@factor total \the\dim@c}%
     \ifdim\dim@b>\dim@c \true@false@true \else \false@false@false \fi
   \fi
 }
@@ -4793,7 +4831,7 @@ and the derived files
 % \begin{macro}{\eq@delt}
 % Args are space-above, indent, width, height, depth, badness.   
 %    \begin{macrocode}
-\def\eq@delt#1^^J#2,#3x#4+#5@#6\@endelt{\addtolength\dim@b{#3}}%
+\def\eq@delt#1X#2,#3x#4+#5@#6\@endelt{\addtolength\dim@b{#3}}%
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -4821,7 +4859,7 @@ and the derived files
   \dim@c\eq@lines\p@ \multiply\dim@c\f@ur
   \int@b\eq@lines \multiply\int@b 9 \advance\int@b -10%
   \divide\dim@c\int@b
-  \debugmsg{Density check: l/t \the\dim@b\space< \the\dim@c\space 4n/(9n-10)?}%
+%<trace>  \breqn@debugmsg{Density check: l/t \the\dim@b\space< \the\dim@c\space 4n/(9n-10)?}%
   \ifdim\dim@b<\dim@c \true@true@true \else \false@true@false \fi
 }
 %    \end{macrocode}
@@ -4981,18 +5019,18 @@ and the derived files
 % \end{macro}
 %
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Various typesetting bits, invoked from \cs{eq@finish}
 % BRM: This has been extensively refactored from the original breqn,
 % initially to get left\textbar right skips and parshape used consistently,
 % ultimately to get most things handled the same way, in the same order.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
 % Given that left and right skips have been set,
 % typeset the frame, number and equation with the
 % given number side and placement
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 %
 % 
 %    \begin{macrocode}
@@ -5064,25 +5102,28 @@ and the derived files
   \hbox to\hsize{\hfil\copy\EQ@numbox}\@@par%
 }
 %    \end{macrocode}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Debugging aid to show all relevant formatting info for a given eqn.
 %    \begin{macrocode}
+%<*trace>
 \def\debug@showformat{%
-  \debugmsg{Formatting Layout:\eq@layout\space Center/indent: \eqindent\space Number placement \eqnumside\eqnumplace: 
-           ^^J||===== \eq@linewidth=\the\eq@linewidth, \@totalleftmargin=\the\@totalleftmargin,
-           ^^J||===== Centered Lines=\theb@@le\eq@centerlines, Shift Number=\theb@@le\eq@shiftnumber,
-           ^^J||===== \eq@wdT=\the\eq@wdT, \eq@wdMin=\the\eq@wdMin,
-           ^^J||===== LHS=\theb@@le\EQ@hasLHS: \eq@wdL=\the\eq@wdL, 
-           ^^J||===== \eq@firstht=\the\eq@firstht, \eq@vspan=\the\eq@vspan
-           ^^J||===== \eq@wdNum=\the\eq@wdNum
-           ^^J||===== \eq@wdCond=\the\eq@wdCond, \conditionsep=\the\conditionsep,
-           ^^J||===== \leftskip=\the\leftskip, \rightskip=\the\rightskip,
-           ^^J||===== \abovedisplayskip=\the\abovedisplayskip,
-           ^^J||===== \belowdisplayskip=\the\belowdisplayskip
-           ^^J||===== parshape=\eq@parshape}%
+  \breqn@debugmsg{Formatting Layout:\eq@layout\space Center/indent: \eqindent\space
+    Number placement \eqnumside\eqnumplace: 
+    \MessageBreak==== \eq@linewidth=\the\eq@linewidth, \@totalleftmargin=\the\@totalleftmargin,
+    \MessageBreak==== Centered Lines=\theb@@le\eq@centerlines, Shift Number=\theb@@le\eq@shiftnumber,
+    \MessageBreak==== \eq@wdT=\the\eq@wdT, \eq@wdMin=\the\eq@wdMin,
+    \MessageBreak==== LHS=\theb@@le\EQ@hasLHS: \eq@wdL=\the\eq@wdL, 
+    \MessageBreak==== \eq@firstht=\the\eq@firstht, \eq@vspan=\the\eq@vspan
+    \MessageBreak==== \eq@wdNum=\the\eq@wdNum
+    \MessageBreak==== \eq@wdCond=\the\eq@wdCond, \conditionsep=\the\conditionsep,
+    \MessageBreak==== \leftskip=\the\leftskip, \rightskip=\the\rightskip,
+    \MessageBreak==== \abovedisplayskip=\the\abovedisplayskip,
+    \MessageBreak==== \belowdisplayskip=\the\belowdisplayskip
+    \MessageBreak==== parshape=\eq@parshape}%
 }
+%</trace>
 %    \end{macrocode}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Set left \& right skips for centered equations, 
 % making allowances for numbers (if any, right, left) and constraint.
 % ===
@@ -5138,13 +5179,16 @@ and the derived files
   \fi\fi
   % Now, \dim@d,\dim@e is the left & right glue to center each line for centerlines
   \setlength\dim@e{\eq@wdT-\eq@wdMin}\dim@d=\z@
+%    \end{macrocode}
 % NOTE: Need some work here centering when there's a condition
+%    \begin{macrocode}
 %  \advance\dim@e-\eq@wdT\multiply\dim@e-1\relax
 %  \if\eq@wdMin<\dim@e\dim@e\eq@wdMin\fi
 %  \multiply\dim@e-1\relax\advance\dim@e\eq@wdT
   \dim@d\z@
   \if\eq@centerlines
-    \divide\dim@e2\relax\dim@d\dim@e
+    \divide\dim@e2\relax
+    \dim@d=\dim@e
   \fi
   \setlength\leftskip{\dim@a\@plus\dim@d}%
   \addtolength\dim@e{\dim@c}%
@@ -5155,10 +5199,14 @@ and the derived files
   \if F\eq@frame\else
     \dim@b\dim@c
   \fi
-  \if\eq@hasNumber\if\eq@shiftnumber\else\if R\eqnumside
-    \dim@c\eq@wdNum
-    \ifdim\dim@c>\dim@b\dim@b\dim@c\fi
-  \fi\fi\fi
+  \if\@And{\eq@hasNumber}{\@Not{\eq@shiftnumber}}%
+    \if R\eqnumside
+      \dim@c\eq@wdNum
+      \ifdim\dim@c>\dim@b
+        \dim@b\dim@c
+      \fi
+    \fi
+  \fi
   % If either of those cases requires hard rightskip, move that part from glue.
   \ifdim\dim@b>\z@
     \addtolength\dim@e{-\dim@c}%
@@ -5166,41 +5214,55 @@ and the derived files
   \fi
   % And peculiar further special case: in indented environs, width isn't where it would seem
   \ifdim\eq@wdCond>\z@
-     \addtolength\rightskip{-\@totalleftmargin}%
+    \addtolength\rightskip{-\@totalleftmargin}%
   \fi
   \parfillskip\z@skip
 }
 %    \end{macrocode}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Set the left and right side spacing for indented equations
 % Some things handled by eq@C@setsides that probably apply here????
-%  * centerlines
-%  * \cs{@totalleftmargin}: SHOULD we move farther right? 
+% \begin{itemize}
+% \item centerlines
+% \item \cs{@totalleftmargin}: SHOULD we move farther right? 
+% \end{itemize}
+% Leftskip is normally just the requested indentation
 %    \begin{macrocode}
 \def\eq@I@setsides{%
-  % Leftskip is normally just the requested indentation
   \leftskip\mathindent
-  % But move left, if shifted number presumably because of clashed w/ number?
+%    \end{macrocode}
+% But move left, if shifted number presumably because of clashed w/ number?
+%    \begin{macrocode}
   \if\eq@shiftnumber
     \setlength\dim@a{\eq@linewidth-\eq@wdT-\mathindent}%
     \ifdim\dim@a<\z@
       \leftskip=\z@ % Or something minimal?
-  \fi\fi
-  % Push gently from right.
+    \fi
+  \fi
+%    \end{macrocode}
+% Push gently from right.
+%    \begin{macrocode}
   \dim@a=\z@
   \setlength\dim@b{\eq@linewidth-\leftskip-\eq@wdMin}%
-  % Special case: if framing be much more rigid(?)
-  \if F\eq@frame\else
+%    \end{macrocode}
+% Special case: if framing be much more rigid(?)
+%    \begin{macrocode}
+  \if F\eq@frame
+  \else
     \setlength\dim@a{\eq@linewidth-\leftskip-\eq@wdT}
     \addtolength\dim@b{-\dim@a}%
   \fi
   % Or force the space for right number, if needed
-  \if\eq@hasNumber\if\eq@shiftnumber\else\if R\eqnumside
-    \dim@c=\eq@wdNum
-    \if\dim@c>\dim@a
-      \addtolength\dim@b{-\dim@c}%
-      \dim@a=\dim@c
-  \fi\fi\fi\fi
+%    \begin{macrocode}
+  \if\@And{\eq@hasNumber}{\@Not{\eq@shiftnumber}}%
+    \if R\eqnumside
+      \dim@c=\eq@wdNum
+      \if\dim@c>\dim@a
+        \addtolength\dim@b{-\dim@c}%
+        \dim@a=\dim@c
+      \fi
+    \fi
+  \fi
   \setlength\rightskip{\dim@a\@plus\dim@b \@minus\hfuzz }%\hfuzz\z@
   \parfillskip\z@skip
 }
@@ -5998,7 +6060,6 @@ and the derived files
 \let\grp@hasNumber\@False
 \let\grp@eqs@numbered\@False
 \let\grp@aligned\@True
-\global\let\GRP@top\@True
 %    \end{macrocode}
 % 
 % \end{macro}
@@ -6022,8 +6083,8 @@ and the derived files
   \end@dgroup
 }
 \def\@dgroup[#1]{%
-  \debugmsg{=== DGROUP ==================================================}%
-  \let\eq@group\@True \global\let\GRP@top\@True
+%<trace>  \breqn@debugmsg{=== DGROUP ==================================================}%
+  \let\eq@group\@True \global\let\eq@GRP@first@dmath\@True
   \global\GRP@queue\@emptytoks \global\setbox\GRP@box\box\voidb@x
   \global\let\GRP@label\@empty
   \global\grp@wdL\z@\global\grp@wdR\z@\global\grp@wdT\z@
@@ -6087,7 +6148,7 @@ and the derived files
 %    \begin{macrocode}
   \setcounter{equation}{0}%
   \def\theequation{\theparentequation\alph{equation}}%
-  \debugmsg{Group Number \theequation}%
+%<trace>  \breqn@debugmsg{Group Number \theequation}%
 }
 %    \end{macrocode}
 % At the end of a group, need to reset the equation counter.   
@@ -6099,9 +6160,11 @@ and the derived files
 \newbox\GRP@wholebox
 %    \end{macrocode}
 % Save data for this equation in the group
-%  * push the trial data onto end of \cs{GRP@queue}
-%  * push an hbox onto the front of \cs{GRP@box}
-%    containing: \cs{EQ@box}, \cs{EQ@copy}, \cs{penalty} 1 and \cs{EQ@numbox}
+% \begin{itemize}
+% \item push the trial data onto end of \cs{GRP@queue}.
+% \item push an hbox onto the front of \cs{GRP@box} containing:
+%   \cs{EQ@box}, \cs{EQ@copy}, \cs{penalty} 1 and \cs{EQ@numbox}.
+% \end{itemize}
 % \begin{macro}{\grp@push}
 % 
 % For putting the equation on a queue.   
@@ -6114,7 +6177,6 @@ and the derived files
     \hbox{\box\EQ@box\box\EQ@copy\penalty\@ne\copy\EQ@numbox}%
     \unvbox\GRP@box
   }%
-%%%  \global\let\GRP@top\@False
   \EQ@trial
   \if\eq@isIntertext\else
     \ifdim\eq@wdL>\grp@wdL \global\grp@wdL\eq@wdL \fi
@@ -6146,7 +6208,7 @@ and the derived files
 %    \begin{macrocode}
 \def\grp@finish{%
 %  \debug@box\GRP@box
-%  \debugmsg{\GRP@queue: \the\GRP@queue}%
+%  \breqn@debugmsg{\GRP@queue: \the\GRP@queue}%
 %    \end{macrocode}
 % == Now that we know the collective measurements, make final decision
 % about alignment \& shifting.  Check if alignment is still possible
@@ -6177,11 +6239,13 @@ and the derived files
      \global\grp@wdT\grp@wdL
      \global\advance\grp@wdT\grp@wdR
   \fi
-  \debugmsg{======= DGROUP Formatting
-          ^^J||===== \grp@wdL=\the\grp@wdL, \grp@wdR=\the\grp@wdR
-          ^^J||===== Shift Number=\theb@@le\grp@shiftnumber, Eqns. numbered=\theb@@le\grp@eqs@numbered
-          ^^J||===== Aligned=\theb@@le\grp@aligned
-          ^^J||===== \grp@wdNum=\the\grp@wdNum}%
+%<*trace>
+  \breqn@debugmsg{======= DGROUP Formatting
+   \MessageBreak==== \grp@wdL=\the\grp@wdL, \grp@wdR=\the\grp@wdR
+   \MessageBreak==== Shift Number=\theb@@le\grp@shiftnumber, Eqns. numbered=\theb@@le\grp@eqs@numbered
+   \MessageBreak==== Aligned=\theb@@le\grp@aligned
+   \MessageBreak==== \grp@wdNum=\the\grp@wdNum}%
+%</trace>
 %    \end{macrocode}
 % BRM: Originally this stuff was dumped directly, without capturing it
 % in a \cs{vbox}
@@ -6196,13 +6260,16 @@ and the derived files
 % NOTE: Come back and handle other cases.
 % NOTE: Vertical spacing is off, perhaps because of inter eqn. glue
 %
-% At this point we have already finished processing the first
-% \env{dmath} environment and so we know which skip to insert so we
-% set \cs{GRP@top} false before doing so.
+% A bit of a hack to get the top spacing correct. Fix this logic
+% properly some day.  Also, we do the calculation in a group for
+% maximum safety.
 %    \begin{macrocode}
-    \global\let\GRP@top\@False
-    \eq@topspace{\vskip\parskip}%
-  \if\grp@hasNumber\if\grp@eqs@numbered\else
+  \global\let\eq@GRP@first@dmath\@True
+  \begingroup
+  \dmath@first@leftskip
+  \eq@topspace{\vskip\parskip}%
+  \endgroup
+  \if\@And{\grp@hasNumber}{\@Not{\grp@eqs@numbered}}%
 %    \eq@topspace{\vskip\parskip}%
     \if\grp@shiftnumber
       \copy\GRP@numbox \penalty\@M
@@ -6213,13 +6280,17 @@ and the derived files
       \setlength\skip@c{\dim@a-\ht\GRP@numbox}%
       \vglue\skip@c% NON discardable
       \copy\GRP@numbox \penalty\@M
-\debugmsg{GROUP NUMBER: preskip:\the\skip@c,  postkern:\the\dim@a, height:\the\ht\GRP@wholebox,
-         ^^J||===== box height:\the\ht\GRP@numbox, box depth:\the\dp\GRP@numbox}%
+%<*trace>
+\breqn@debugmsg{GROUP NUMBER: preskip:\the\skip@c,  postkern:\the\dim@a, height:\the\ht\GRP@wholebox,
+  \MessageBreak==== box height:\the\ht\GRP@numbox, box depth:\the\dp\GRP@numbox}%
+%</trace>
       \kern-\dim@a
       \kern-\abovedisplayskip % To cancel the topspace above the first eqn.
     \fi
-  \fi\fi
+  \fi
+%<*trace>
 %\debug@box\GRP@wholebox
+%</trace>
   \unvbox\GRP@wholebox
   \let\@elt\relax
 %    \end{macrocode}
@@ -6369,12 +6440,14 @@ and the derived files
 \@ifundefined{Mathstrut@}{\let\Mathstrut@\strut}{}
 \def\darray@cr{\Mathstrut@\cr}
 \def\col@box{%
-%\debugmsg{Col \number\cur@row,\number\cur@col: \the\wd\z@\space x \the\ht\z@+\the\dp\z@}%
+%<*trace>
+%\breqn@debugmsg{Col \number\cur@row,\number\cur@col: \the\wd\z@\space x \the\ht\z@+\the\dp\z@}%
+%</trace>
   \unhbox\z@
 }
 \newenvironment{darray}{\@optarg\@darray{}}{}
 \def\@darray[#1]{%
-  \debugmsg{=== DARRAY ==================================================}%
+%<trace>  \breqn@debugmsg{=== DARRAY ==================================================}%
   \if\eq@group\else\eq@prelim\fi
 %    \end{macrocode}
 % Init the halign preamble to empty, then unless the \quoted{cols} key is

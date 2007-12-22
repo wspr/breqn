@@ -67,7 +67,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: breqn 2007/12/19 v0.97 Breqn (MH)}
+\Msg{* Package: breqn 2007/12/22 v0.97a Breqn (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -128,7 +128,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}%
-  [2007/12/19 v0.97 breqn (MH)]
+  [2007/12/22 v0.97a breqn (MH)]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -230,7 +230,7 @@ and the derived files
 % \fi
 %
 % \title{The \pkg{breqn} package}
-% \date{2007/12/19 v0.97}
+% \date{2007/12/22 v0.97a}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -1005,7 +1005,7 @@ and the derived files
 % 
 % Declare package name and date.   
 %    \begin{macrocode}
-\ProvidesPackage{breqn}[2007/12/19 v0.97]
+\ProvidesPackage{breqn}[2007/12/22 v0.97a]
 %    \end{macrocode}
 %
 %
@@ -2334,6 +2334,20 @@ and the derived files
 \define@key{breqn}{style}{\eqstyle\@xp{\the\eqstyle #1}}
 %    \end{macrocode}
 % \begin{literalcode}
+% \begin{dmath}[shortskiplimit={1em}]
+% \end{literalcode}
+% If the line immediately preceeding a display has length $l$, the
+% first line of the display is indented $i$, and a shortskip limit $s$
+% is set, then the spacing above the display is equal to
+% \cs{abovedisplayshortskip} if $l+s < i $ and \cs{abovedisplayskip}
+% otherwise. The default shortskip limit is 2\,em which is what \TeX\
+% hardcodes but this parameter overrides that.
+%    \begin{macrocode}
+\define@key{breqn}{shortskiplimit}{\def\eq@shortskiplimit{#1}}
+\def\eq@shortskiplimit{2em}
+%    \end{macrocode}
+%
+% \begin{literalcode}
 % \begin{dmath}[frame]
 % \end{literalcode}
 % The \opt{frame} option merely puts a framebox around the body
@@ -3038,11 +3052,7 @@ and the derived files
         \parskip\intereqskip \penalty\intereqpenalty
 %<trace>\breqn@debugmsg{parskip=\the\parskip}%
     \else
-      \if\eq@group
-        \eq@check@shortskip\leftskip
-      \else
-        \eq@check@shortskip\leftskip
-      \fi
+      \eq@check@shortskip
       \if\EQ@shortskips
         \parskip\abovedisplayshortskip
         \aftergroup\belowdisplayskip\aftergroup\belowdisplayshortskip
@@ -3069,12 +3079,17 @@ and the derived files
 % \begin{macro}{\eq@check@shortskip}
 %   \changes{v0.96a}{2007/12/17}{Insert \cs{finish@end} if no special
 %     case is found.}
+%   \changes{v0.97a}{2007/12/22}{Use design parameter and fix
+%   shortskips properly.}
 %    \begin{macrocode}
-\def\eq@check@shortskip #1{%
+\def\eq@check@shortskip {%
   \global\let\EQ@shortskips\@False
   \setlength\dim@a{\abovedisplayskip+\ht\EQ@numbox}%
-  \addtolength#1{-2em}% standard TeX value
-  \ifdim#1<\predisplaysize
+%    \end{macrocode}
+% Here we work around the hardwired standard TeX value and use the
+% designer parameter instead.
+%    \begin{macrocode}
+  \ifdim\leftskip<\predisplaysize
   \else
 %    \end{macrocode}
 % If the display was preceeded by a blank line, \cs{predisplaysize} is

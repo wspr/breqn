@@ -648,6 +648,7 @@ and the derived files
 % \begin{verbatim}
 % \begin{dmath}[style={\small}]
 % \begin{dmath}[number={BV}]
+% \begin{dmath}[labelprefix={eq:}]
 % \begin{dmath}[label={xyz}]
 % \begin{dmath}[relindent={1em}]
 % \begin{dmath}[compact]
@@ -674,7 +675,9 @@ and the derived files
 % \end{verbatim}
 %
 % Use of the normal \cs{label} command instead of the \opt{label} option
-% works, I think, most of the time (untested).
+% works, I think, most of the time (untested). \opt{labelprefix} prepends 
+% its argument to the label (only useful as a global option, really), 
+% and must be called before \opt{label}.
 %
 % Use the \opt{relindent} option to specify something other than the
 % default amount for the indention of relation symbols. The default is
@@ -2239,11 +2242,20 @@ and the derived files
 % Options for the \env{dmath} and \env{dmath*}
 % environments.   
 % \begin{literalcode}
-% \begin{dmath}[label={xyz}]
+% \begin{dmath}[label={eq:xyz}]
+% \begin{dmath}[labelprefix={eq:},label={xyz}]
 % \end{literalcode}
+% WSPR: added the option for a label prefix, designed to be used in the preamble like so:
+% \begin{literalcode}
+% \setkeys{breqn}{labelprefix={eq:}}
+% \end{literalcode} 
 %    \begin{macrocode}
-\define@key{breqn}{label}{\def\next@label{\label{#1}}}
+\define@key{breqn}{label}{%
+  \edef\next@label{\noexpand\label{\next@label@pre#1}}%
+  \let\next@label@pre\@empty}
+\define@key{breqn}{labelprefix}{\def\next@label@pre{#1}}
 \global\let\next@label\@empty
+\global\let\next@label@pre\@empty
 %    \end{macrocode}
 % Allow a variant number.   
 % \begin{literalcode}

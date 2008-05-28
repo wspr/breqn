@@ -6544,42 +6544,35 @@ and the derived files
 % In a series of conditions, use less space between members of the
 % series than between the conditions and the main equation body.   
 %
-% BRM: Some modifications here, since I like for the condition
-% to go flush right. (thus, it also affects centering, margins, etc)
+% WSPR: tidied/fixed things up as it made sense to me but might have
+% broken something else!
 %    \begin{macrocode}
 \newskip\conditionsep \conditionsep=10pt minus5pt%
 \newcommand{\conditionpunct}{,}
-\let\cond@gobble\@firstofone
+%    \end{macrocode}
+% \begin{macro}{\condition}
+%    \begin{macrocode}
 \newcommand\condition{%
   \begingroup\@tempswatrue
-    \@ifstar{\@tempswafalse \condition@a}\condition@a
-}
+    \@ifstar{\@tempswafalse \condition@a}{\condition@a}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\condition@a}
+%    \begin{macrocode}
 \newcommand\condition@a[2][\conditionpunct]{%
   \unpenalty\unskip\unpenalty\unskip % BRM Added
   \hbox{#1}%
   \penalty -201\relax\hbox{}% Penalty to allow breaks here.
   \hskip\conditionsep
-  \if@tempswa \@xp\hbox \else \@xp\condition@b\fi
-  {#2}%
-  \endgroup
+  \setbox\z@\if@tempswa\hbox{#2}\else\hbox{$\textmath@setup #2$}\fi
 %    \end{macrocode}
-% BRM: Testing if I can measure conditions?
+% BRM's layout is achieved with this line commented out but it has the nasty side-effect of shifting the equation number to the next line:
 %    \begin{macrocode}
-  \setbox\z@\if@tempswa\hbox{#2}\else\hbox{\textmath@setup #2}\fi
-  \global\eq@wdCond\wd\z@
-  \let\cond@gobble\@gobble
-}
+%  \global\eq@wdCond\wd\z@
+  \usebox\z@
+  \endgroup}
 %    \end{macrocode}
-% For a math condition.   
-% This is called inside a group so we don't need extra grouping to
-% localize the effect of \cs{textmath@setup} which turns off the
-% line-breaking features of bin, rel, and delimiter symbols.   
-%    \begin{macrocode}
-\newcommand\condition@b[1]{%
-  \cond@gobble{\hskip\conditionsep}%
-  \textmath@setup #1%
-}
-%    \end{macrocode}
+% \end{macro}
 % 
 % The \env{dsuspend} environment.    First the old one that didn't work.
 %    \begin{macrocode}

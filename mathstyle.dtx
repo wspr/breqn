@@ -384,15 +384,29 @@ and the derived files
 %    \end{macrocode}
 % Finally, we declare the package options.
 %    \begin{macrocode}
-\DeclareOption{mathactivechars}{\catcode`\^=7\relax \catcode`\_=8\relax }
-\DeclareOption{activechars}{\catcode`\^=13\relax \catcode`\_=13\relax }
+\DeclareOption{mathactivechars}{%
+  \catcode`\^=12\relax 
+  \catcode`\_=12\relax}
+\DeclareOption{activechars}{%
+  \catcode`\^=13\relax 
+  \catcode`\_=13\relax}
+\DeclareOption{noactivechars}{%
+  \catcode`\^=7\relax 
+  \catcode`\_=8\relax}
 \ProcessOptions\relax
+%    \end{macrocode}
+% WSPR: Set up the active behaviours: (this is set even in the |noactivechars| case but they are never activated. no worries?)
+%    \begin{macrocode}
 \ifnum\catcode`\^=13\relax
   \let^=\sp \let_=\sb
 \else
-  \mathcode`\^="8000\relax \mathcode`\_="8000\relax
-  \begingroup \catcode`\^=\active \catcode`\_=\active
-  \global\let^=\sp \global\let_=\sb
+  \mathcode`\^="8000\relax 
+  \mathcode`\_="8000\relax
+  \begingroup 
+    \catcode`\^=\active 
+    \catcode`\_=\active
+    \global\let^=\sp 
+    \global\let_=\sb
   \endgroup
 \fi
 %</package>

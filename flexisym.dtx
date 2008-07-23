@@ -472,7 +472,8 @@ and the derived files
 %
 % And we then continue with the options.
 %    \begin{macrocode}
-\DeclareOption{mathstyleoff}{\PassOptionsToPackage{mathactivechars}{mathstyle}}
+\DeclareOption{mathstyleoff}{%
+  \PassOptionsToPackage{noactivechars}{mathstyle}}
 \DeclareOption{cmbase}{\usesymbols{cmbase}}
 \DeclareOption{mathpazo}{\usesymbols{mathpazo}}
 \DeclareOption{mathptmx}{\usesymbols{mathptmx}}

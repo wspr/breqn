@@ -22,6 +22,7 @@
 % The abbreviation environments:
 \newcommand\newDmath[3]{%
   \@namedef{#1}{%
+    \expandafter\let\default@neweq\neweqline
     \def\midpunct@####1{%
       \end{#3}####1%
       \expanded{%
@@ -43,10 +44,10 @@
 \newDmath{Dseries*}{dseries*}{math}
 
 % punctuation scanning:
-\def\check@midpunct{%
+\def\neweqline{%
   \@tempswafalse
-  \futurelet\@let@token\check@midpunct@a}
-\def\check@midpunct@a{%
+  \futurelet\@let@token\check@midpunct}
+\def\check@midpunct{%
   \expanded{%
     \ifx\@let@token\@sptoken\@nx\midpunct@{\default@sep}%
     \else\ifx\@let@token ,\@nx\midpunct@
@@ -73,7 +74,7 @@
 \endgroup
 
 % User-relevant setup:
-\let\/\check@midpunct
+\def\default@neweq{\/}
 \def\default@sep{,}
 
 \endinput

@@ -1,0 +1,77 @@
+\documentclass[12pt,twocolumn]{article}
+\usepackage{breqn,breqn-abbr}
+\begin{document}
+
+\fbox{
+\begin{minipage}{\linewidth}
+Bug:
+\begin{dgroup}
+\begin{dmath*}
+a=b
+\end{dmath*}
+\begin{dmath*}
+c=d
+\end{dmath*}
+\end{dgroup}
+\end{minipage}}
+\bigskip
+
+Annoyingly verbose:
+\begin{dgroup*}
+\begin{dmath*}
+a=b
+\end{dmath*}
+\begin{dmath*}
+c=d
+\end{dmath*}
+\end{dgroup*}
+
+Dmath:
+\begin{Dmath}[compact]
+  x=yz=ab\/.
+  a=bc=de
+\end{Dmath},
+
+Dmath*:
+\begin{Dmath*}[compact]
+  x=yz=ab\/.
+  a=bc=de
+\end{Dmath*},
+
+Dgroup:
+\begin{Dgroup}
+a=b\\+c\/?
+c=d
+\end{Dgroup}!
+
+Dgroup*:
+\begin{Dgroup*}
+a=b\\+c\/?
+c=d
+\end{Dgroup*}!
+
+Dseries:
+\begin{Dseries}
+a=b\/
+c=d
+\end{Dseries}?
+
+Dseries*:
+\begin{Dseries*}
+a=b\/
+c=d
+\end{Dseries*}?
+
+dseries:
+\begin{dseries}
+hello
+\end{dseries}
+
+singular Dseries: (inconsistency!!)
+\begin{Dseries}
+hello
+\end{Dseries}
+
+Should probably change Dseries to not enter math mode by default.
+
+\end{document}

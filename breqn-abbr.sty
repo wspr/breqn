@@ -1,0 +1,79 @@
+\ProvidesPackage{breqn-abbr}[2008/07/27 v0.1 Abbreviations in breqn]
+
+\RequirePackage{environ}% for \Collect@Body
+
+% Setup code:
+\long\def\save@body#1{%
+  \@ifnext[{\@grabarg}{\@graball}#1\@nil}
+
+\long\def\@graball#1\@nil{%
+  \let\@@arg\@empty
+  \gdef\@@body{#1}}
+
+\long\def\@grabarg[#1]#2\@nil{%
+  \gdef\@@arg{[#1]}%
+  \gdef\@@body{#2}}
+
+\providecommand\expandonce[1]{%
+  \unexpanded\expandafter{#1}}
+\providecommand\expanded[1]{%
+  \edef\@tempa{#1}\@tempa}
+
+% The abbreviation environments:
+\newcommand\newDmath[3]{%
+  \@namedef{#1}{%
+    \def\midpunct@####1{%
+      \end{#3}####1%
+      \expanded{%
+        \@nx\begin{#3}\expandonce\@@arg}}%
+    \Collect@Body\save@body}%
+  \@namedef{end#1}##1{\check@punct@or@qed}%
+  \@namedef{end@#1}{%
+    \expanded{%
+      \@nx\begin{#2}
+      \@nx\begin{#3}\expandonce\@@arg
+        \@nx\@@body
+      \@nx\end{#3}\expandonce\found@punct
+      \@nx\end{#2}}}}
+\newDmath{Dmath}{dgroup*}{dmath}
+\newDmath{Dgroup}{dgroup}{dmath}
+\newDmath{Dseries}{dseries}{math}
+\newDmath{Dmath*}{dgroup*}{dmath*}
+\newDmath{Dgroup*}{dgroup*}{dmath*}
+\newDmath{Dseries*}{dseries*}{math}
+
+% punctuation scanning:
+\def\check@midpunct{%
+  \@tempswafalse
+  \futurelet\@let@token\check@midpunct@a}
+\def\check@midpunct@a{%
+  \expanded{%
+    \ifx\@let@token\@sptoken\@nx\midpunct@{\default@sep}%
+    \else\ifx\@let@token ,\@nx\midpunct@
+    \else\ifx\@let@token .\@nx\midpunct@
+    \else\check@midpunct@b % check the less common possibilities
+    \fi\fi\fi}}
+\begingroup
+\toks@a{%
+  \ifx\@let@token ;\@nx\midpunct@
+  \else\ifx\@let@token ?\@nx\midpunct@
+  \else\ifx\@let@token !\@nx\midpunct@}
+\catcode`\.=\active \catcode`\,=\active \catcode`\;=\active
+\catcode`\?=\active \catcode`\!=\active
+\toks@b{%
+  \else\ifx\@let@token ,\@nx\midpunct@
+  \else\ifx\@let@token .\@nx\midpunct@
+  \else\ifx\@let@token ;\@nx\midpunct@
+  \else\ifx\@let@token ?\@nx\midpunct@
+  \else\ifx\@let@token !\@nx\midpunct@
+  \else\@nx\midpunct@{\default@sep}%
+  \fi\fi\fi\fi\fi\fi\fi}
+\xdef\check@midpunct@b{%
+  \the\toks@a\the\toks@b}
+\endgroup
+
+% User-relevant setup:
+\let\/\check@midpunct
+\def\default@sep{,}
+
+\endinput

@@ -1174,7 +1174,6 @@ and the derived files
 %    \begin{macrocode}
 \newcount\maxint \maxint=2147483647
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -1188,7 +1187,6 @@ and the derived files
 \let\int@b=\@tempcntb
 \let\int@c=\count@
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1210,7 +1208,6 @@ and the derived files
 \let\dim@e\dimen@ii
 \let\dim@A\dimen@i
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1229,7 +1226,6 @@ and the derived files
 \let\skip@b\@tempskipb
 \let\skip@c\skip@
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1251,7 +1247,6 @@ and the derived files
 \toksdef\toks@e=6
 \toksdef\toks@f=8
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1294,7 +1289,6 @@ and the derived files
 %    \begin{macrocode}
 \def\@ifnexta{\ifx\@tempc\@tempd \let\@tempb\@tempa \fi \@tempb}
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % 
@@ -1326,7 +1320,6 @@ and the derived files
 %    \begin{macrocode}
 \def\@optarg#1#2{\@ifnext[{#1}{#1[#2]}}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -1363,7 +1356,6 @@ and the derived files
 %    \begin{macrocode}
 \def\freeze@glue#1{#11#1\relax}
 %    \end{macrocode}
-% 
 % \end{macro}
 % \begin{macro}{\z@rule}
 % \begin{macro}{\keep@glue}
@@ -1752,7 +1744,6 @@ and the derived files
 \newmuskip \Dmedmuskip \Dmedmuskip=4mu minus 3mu % medmuskip in displays
 \newmuskip \Dthickmuskip \Dthickmuskip=5mu minus 2mu % thickmuskip in displays
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1864,7 +1855,6 @@ and the derived files
 %    \begin{macrocode}
 \def\eq@overrun{0pt}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -2027,7 +2017,6 @@ and the derived files
   \mskip\thickmuskip \@@vadjust{\penalty\tw@}\penalty-\@Mi\@@vadjust{}%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -2116,7 +2105,6 @@ and the derived files
 \let\m@@symDeB\@symDeB
 \let\m@@symDeA\@symDeA
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -2204,7 +2192,6 @@ and the derived files
   \let\left\@@left \let\right\@@right
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % 
@@ -2874,7 +2861,6 @@ and the derived files
 % 
 % 
 % \begin{macro}{\peek@branch}
-% 
 % This is a generalized \dquoted{look at next token and choose some action
 % based on it} function.   
 %    \begin{macrocode}
@@ -2888,7 +2874,6 @@ and the derived files
 }
 \lowercase{\def\peek@skip@space} {\futurelet\@let@token\peek@a}%
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -2966,7 +2951,6 @@ and the derived files
   \end{#2}%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -3005,14 +2989,13 @@ and the derived files
 %    \begin{macrocode}
 \def\check@punct@or@qed#1{%
   \xdef\found@punct{\@empty}% BRM: punctuation was being remembered past this eqn.
+  % WSPR: err, why isn't that just \global\let\found@punct\@empty ?
   \def\finish@end{\csname end@#1\endcsname\latex@end{#1}}%
   \check@punct
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
-% 
 % 
 % \begin{macro}{\eqpunct}
 % User-settable function for handling
@@ -3021,9 +3004,7 @@ and the derived files
 %    \begin{macrocode}
 \newcommand\eqpunct[1]{\thinspace#1}
 %    \end{macrocode}
-% 
 % \end{macro}
-% 
 % 
 % \begin{macro}{\set@label}
 % \cs{set@label} just sets \cs{@currentlabel} but it
@@ -3033,9 +3014,7 @@ and the derived files
 %    \begin{macrocode}
 \providecommand\set@label[2]{\protected@edef\@currentlabel{#2}}
 %    \end{macrocode}
-% 
 % \end{macro}
-% 
 % 
 % \begin{macro}{\eq@topspace}
 % \begin{macro}{\eq@botspace}
@@ -3159,7 +3138,6 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % 
-% 
 % \begin{macro}{\eq@resume@parshape}
 % This should calculate the total height of the equation,
 % including space above and below, and set prevgraf to the number it would
@@ -3171,14 +3149,10 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % 
-% 
-% 
-% 
 % \section{Preprocessing the equation body}
 % \begin{macro}{\eq@startup}
 % Here is the function that initially collects the equation
 % material in a box.   
-% 
 % 
 %    \begin{macrocode}
 \def\eq@startup{%
@@ -3478,7 +3452,6 @@ and the derived files
 %    \begin{macrocode}
 \global\let\EQ@afterspace\@empty
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % 
@@ -3940,7 +3913,6 @@ and the derived files
 % 
 % 
 % \begin{macro}{\eq@trial}
-% 
 % The \cs{eq@trial} function tries each candidate
 % line width in \cs{eq@linewidths} until an equation layout is found
 % that yields satisfactory line breaks.   
@@ -4036,7 +4008,6 @@ and the derived files
   \begingroup #1%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % \begin{macro}{\eq@failout}
 % 
@@ -4047,7 +4018,6 @@ and the derived files
   \global\let\EQ@trial\EQ@last@trial
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % \begin{macro}{\eq@trial@save}
 % 
@@ -4081,7 +4051,6 @@ and the derived files
   }%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % \begin{macro}{\eq@trial@b}
 % 
@@ -4090,7 +4059,6 @@ and the derived files
 %    \begin{macrocode}
 \def\eq@trial@b{\eq@trial@c}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4130,7 +4098,6 @@ and the derived files
   \endgroup
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % \begin{macro}{\eq@trial@d}
 %    \begin{macrocode}
@@ -4139,7 +4106,6 @@ and the derived files
 % \end{macro}
 % 
 % \begin{macro}{\eq@check@density}
-% 
 %    \begin{macrocode}
 \def\eq@check@density{%
 %<trace>  \breqn@debugmsg{Checking density for layout L}%
@@ -4151,17 +4117,15 @@ and the derived files
   \fi\fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 %
 % \begin{macro}{\eq@shortLHS}
-% 
 % Test to see if we need to apply the \cs{eq@dense@enough} test.   
 %    \begin{macrocode}
 \def\eq@shortLHS{\ifdim\eq@wdL>.44\eq@wdT 1\else 0\fi 0}
 %    \end{macrocode}
-% 
 % \end{macro}
+%
 %\verb|\def\eq@shortLHS{\@False}|
 %========================================
 % \begin{macro}{\eq@trial@p}
@@ -4183,18 +4147,16 @@ and the derived files
 %<trace>  \debug@showmeasurements
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\adjust@rel@penalty}
-% 
 % Normally this is a no-op.   
 %    \begin{macrocode}
 \let\adjust@rel@penalty\@empty
 %    \end{macrocode}
-% 
 % \end{macro}
+%
 % \begin{macro}{\eq@fix@lastline}
 %  Remove parfillskip from the last line box.   
 %    \begin{macrocode}
@@ -4210,10 +4172,9 @@ and the derived files
   }%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
-% \begin{macro}{\eq@recalc}
-% 
+%
+% \begin{macro}{\eq@recalc} 
 % Calculate \cs{eq@wdT} et cetera.   
 %    \begin{macrocode}
 \def\eq@recalc{%
@@ -4221,12 +4182,10 @@ and the derived files
   \let\@elt\eq@recalc@a \eq@measurements \let\@elt\relax
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\eq@recalc@a}
-% 
 %    \begin{macrocode}
 \def\eq@recalc@a#1x#2+#3\@endelt{%
   \eq@firstht#2\relax
@@ -4234,12 +4193,10 @@ and the derived files
   \@elt#1x#2+#3\@endelt
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\eq@recalc@b}
-% 
 %    \begin{macrocode}
 \def\eq@recalc@b#1X#2,#3x#4+#5@#6\@endelt{%
   \setlength\dim@a{#2+#3}%
@@ -4253,15 +4210,13 @@ and the derived files
   \ifnum#6>\eq@badness \eq@badness#6\relax\fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
-% \begin{macro}{\eq@layout}
-% 
+%
+% \begin{macro}{\eq@layout} 
 % A value of \verb"?" for \cs{eq@layout} means that we should
 % deduce which layout to use by looking at the size of the components.   
 % Any other value means we have a user-specified override on the
 % layout.   
-%
 %
 % Layout Definitions.
 % Based on initial equation measurements, we can choose a sequence of
@@ -4276,7 +4231,6 @@ and the derived files
 % 
 % 
 % \begin{macro}{\eq@try@layout@?}
-% 
 % This is a branching function used to choose a suitable layout if
 % the user didn't specify one in particular.   
 %
@@ -4349,7 +4303,6 @@ and the derived files
 % \end{macro}
 %
 % \begin{macro}{\eq@try@layout@D}
-% 
 % Change the penalty before the first mathrel symbol to encourage a
 % break there.   
 %
@@ -4396,7 +4349,6 @@ and the derived files
 % \end{macro}
 %
 % \begin{macro}{\eq@try@layout@S}
-% 
 % In the \dquoted{stepped} layout there is no LHS, or LHS
 % is greater than the line width and RHS is small.   
 % Then we want to split up the equation into lines of roughly equal
@@ -4450,7 +4402,6 @@ and the derived files
 % \end{macro}
 %
 % \begin{macro}{\eq@try@layout@l}
-% 
 % This is the \dquoted{step-ladder} layout: similar to the drop-ladder
 % layout but the LHS is too wide and needs to be broken up.   
 %
@@ -4475,11 +4426,9 @@ and the derived files
   \eq@trial@b{l}{\eq@try@layout@A}%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % \begin{macro}{\eq@try@layout@A}
-% 
 % In the \dquoted{almost-columnar} layout, which is the layout of last
 % resort, we let all lines run to the full width and leave the adjusting
 % of the indents to later.   
@@ -4493,15 +4442,14 @@ and the derived files
   \if\EQ@hasLHS \def\adjust@rel@penalty{\penalty-99 }\fi
   \eq@trial@b{A}{}%
 }
-%    \end{macrocode}
-% 
+%    \end{macrocode} 
 % \end{macro}
+%
 % \begin{macro}{\eq@shiftnumber}
 %  MH: Should be moved to a section where all keys are set to defaults.
 %    \begin{macrocode}
 \let\eq@shiftnumber\@False
 %    \end{macrocode}
-% 
 % \end{macro}
 %
 % \begin{macro}{\eq@retry@with@number@a}
@@ -4599,8 +4547,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
+%
 % \begin{macro}{\adjust@parshape}
-% 
 % Varies depending on the layout.   
 %
 % Adjust a parshape variable for a given set of left\textbar right skips.
@@ -4614,13 +4562,11 @@ and the derived files
   \edef#1{\temp@a}%
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\adjust@parshape@a}
 % \begin{macro}{\adjust@parshape@b}
-% 
 %    \begin{macrocode}
 \def\adjust@parshape@a#1 #2\relax{%
   \setlength\dim@a{\leftskip+\rightskip}%
@@ -4643,8 +4589,8 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% \begin{macro}{\eq@ml@record@indents}
-% 
+%
+% \begin{macro}{\eq@ml@record@indents} 
 % Plunk the parshape's indent values into an array for easy access
 % when constructing \cs{eq@measurements}.   
 %    \begin{macrocode}
@@ -4661,24 +4607,19 @@ and the derived files
   \@xp\@tempc\@parshape
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
-% 
 % \begin{macro}{\@endelt}
-% 
 % This is a scan marker.   
 % It should get a non-expandable definition.   
 % It could be \cs{relax}, but let's try a chardef instead.   
 %    \begin{macrocode}
 \chardef\@endelt=`\?
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
 % \begin{macro}{\eq@measurements}
-% 
 % This is similar to a parshape spec but for each line we record more
 % info: space above, indent, width x height + dp, and badness.   
 %    \begin{macrocode}
@@ -4687,7 +4628,6 @@ and the derived files
   ...
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4709,7 +4649,6 @@ and the derived files
   \eq@ml@a \eq@ml@continue
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4757,7 +4696,6 @@ and the derived files
   \ifnum\eq@curline=\z@ \let\eq@ml@continue\relax\fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4770,7 +4708,6 @@ and the derived files
   \ifdim\lastskip=\z@ \else \@xp\eq@ml@vspace \fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4790,7 +4727,6 @@ and the derived files
   \fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -4866,7 +4802,6 @@ and the derived files
 % 
 % 
 % \begin{macro}{\eq@dense@enough@b}
-% 
 % This is an approximate calculation used to keep from going over
 % \cs{maxdimen} if the number of lines in our trial break is large
 % enough to make that a threat.   
@@ -4892,15 +4827,12 @@ and the derived files
   \ifdim\dim@b<\dim@c \true@true@true \else \false@true@false \fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % \begin{macro}{\eq@parshape}
-% 
 %    \begin{macrocode}
 \let\eq@parshape\@empty
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -5018,13 +4950,9 @@ and the derived files
 % \cs{intereqskip} if the math expressions are (vertically) smaller
 % than the tag.
 %
-%
-% 
-% 
 % \section{Centered Right-Number Equations}
 % 
 % \begin{macro}{\eq@dump@box}
-% 
 % \arg1  might be \cs{unhbox} or \cs{unhcopy}; \arg2  is
 % the box name.   
 %    \begin{macrocode}
@@ -5044,23 +4972,16 @@ and the derived files
   \adjust@rel@penalty \unhbox\f@ur
 }
 %    \end{macrocode}
-% 
 % \end{macro}
-%
-%
 %
 % Various typesetting bits, invoked from \cs{eq@finish}
 % BRM: This has been extensively refactored from the original breqn,
 % initially to get left\textbar right skips and parshape used consistently,
 % ultimately to get most things handled the same way, in the same order.
 %
-%
-%
 % Given that left and right skips have been set,
 % typeset the frame, number and equation with the
 % given number side and placement
-%
-%
 % 
 %    \begin{macrocode}
 \def\eq@typeset@Unnumbered{%
@@ -5155,7 +5076,7 @@ and the derived files
 %
 % Set left \& right skips for centered equations, 
 % making allowances for numbers (if any, right, left) and constraint.
-% ===
+%
 % Amazingly, I've managed to collect all the positioning logic for
 % centered equations in one place, so it's more manageable.
 % Unfortunately, by the time it does all it needs to do,
@@ -5361,9 +5282,6 @@ and the derived files
 }
 %    \end{macrocode}
 % 
-% 
-% 
-% 
 % \section{Delimiter handling}
 % The special handling of delimiters is rather complex, but
 % everything is driven by two motives: to mark line breaks inside
@@ -5405,7 +5323,6 @@ and the derived files
 %   \mathrel{\@@left \delimiter... \vrule...\@@right.}
 % \end{literalcode}
 % 
-% 
 % First save the primitive meanings of \cs{left} and
 % \cs{right}.   
 %    \begin{macrocode}
@@ -5413,14 +5330,12 @@ and the derived files
 \@saveprimitive\right\@@right
 %    \end{macrocode}
 % 
-% 
 % The variable \cs{lr@level} is used by the first mathrel in
 % an equation to tell whether it is at top level: yes? break and measure
 % the LHS, no? keep going.   
 %    \begin{macrocode}
 \newcount\lr@level
 %    \end{macrocode}
-% 
 % 
 % It would be nice to have better error checking here if the
 % argument is not a delimiter symbol at all.   
@@ -5444,7 +5359,6 @@ and the derived files
 \def\eq@nullleft#1{\@@left#1\after@open}
 \def\eq@nullright#1{\@@right#1\after@close}
 %    \end{macrocode}
-% 
 % 
 % Here is the normal operation of \cs{biggl}, for example.   
 % \begin{literalcode}
@@ -5542,7 +5456,6 @@ and the derived files
 %    \begin{macrocode}
 \let\m@@DeA\m@DeA\let\d@@DeA\m@DeA%
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -5597,7 +5510,6 @@ and the derived files
   \ifnum\lr@level<\@ne \eq@binoffset=\eqbinoffset\relax \fi
 }
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -5880,7 +5792,6 @@ and the derived files
 \DeclareTwang{)}{-.33}
 \DeclareTwang{\rbrace}{-.25}
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 
@@ -6090,7 +6001,6 @@ and the derived files
 \let\grp@eqs@numbered\@False
 \let\grp@aligned\@True
 %    \end{macrocode}
-% 
 % \end{macro}
 % \end{macro}
 % 
@@ -6682,7 +6592,6 @@ and the derived files
 \def\@nref#1#2{\ifx\relax#1??\else \@xp\@firstoftwo#1\fi}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    \end{macrocode}
-% 
 % \end{macro}
 % 
 % 

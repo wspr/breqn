@@ -43,7 +43,7 @@ BREQN-DERIVED = \
 
 
 
-MH-DIR = mhctan
+MH-DIR = mhmath
 
 MH-DTX = \
 	empheq.dtx \
@@ -62,6 +62,8 @@ MH-DERIVED = \
 	empheq.sty \
 	mhsetup.sty \
 	mathtools.sty
+
+all: distrib
 
 tds-dirs:
 	mkdir -p $(DISTRIB-DIR)
@@ -128,9 +130,12 @@ breqn-styles:
 
 breqn-pdfs: breqn-styles
 # three runs should suffice
-	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) ; do pdflatex $$f ; done 
-	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) ; do pdflatex $$f ; done 
-	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) ; do pdflatex $$f ; done 
+	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) $(BREQN-TEX); \
+	do pdflatex $$f ; done 
+	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) $(BREQN-TEX); \
+	do pdflatex $$f ; done 
+	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) $(BREQN-TEX); \
+	do pdflatex $$f ; done 
 
 
 breqn-distrib: tds-dirs breqn-pdfs

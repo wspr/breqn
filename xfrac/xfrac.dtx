@@ -1,0 +1,1037 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2004, 2008 by Morten Hoegholm <mh.ctan@gmail.com>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.3 of this license or (at your option) any later
+% version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of
+% LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status "maintained".
+%
+% This Current Maintainer of this work is Morten Hoegholm.
+%
+% This work consists of the main source file xfrac.dtx
+% and the derived files
+%    xfrac.sty, xfrac.pdf, xfrac.ins, xfrac.drv.
+%
+% Distribution:
+%    CTAN:macros/latex/contrib/mh/xfrac.dtx
+%    CTAN:macros/latex/contrib/mh/xfrac.pdf
+%
+% Unpacking:
+%    (a) If xfrac.ins is present:
+%           tex xfrac.ins
+%    (b) Without xfrac.ins:
+%           tex xfrac.dtx
+%    (c) If you insist on using LaTeX
+%           latex \let\install=y\input{xfrac.dtx}
+%        (quote the arguments according to the demands of your shell)
+%
+% Documentation:
+%    (a) If xfrac.drv is present:
+%           latex xfrac.drv
+%    (b) Without xfrac.drv:
+%           latex xfrac.dtx; ...
+%    The class ltxdoc loads the configuration file ltxdoc.cfg
+%    if available. Here you can specify further options, e.g.
+%    use A4 as paper format:
+%       \PassOptionsToClass{a4paper}{article}
+%
+%    Programm calls to get the documentation (example):
+%       pdflatex xfrac.dtx
+%       makeindex -s gind.ist xfrac.idx
+%       pdflatex xfrac.dtx
+%       makeindex -s gind.ist xfrac.idx
+%       pdflatex xfrac.dtx
+%
+% Installation:
+%    TDS:tex/latex/mh/xfrac.sty
+%    TDS:doc/latex/mh/xfrac.pdf
+%    TDS:source/latex/mh/xfrac.dtx
+%
+%<*ignore>
+\begingroup
+  \def\x{LaTeX2e}
+\expandafter\endgroup
+\ifcase 0\ifx\install y1\fi\expandafter
+         \ifx\csname processbatchFile\endcsname\relax\else1\fi
+         \ifx\fmtname\x\else 1\fi\relax
+\else\csname fi\endcsname
+%</ignore>
+%<*install>
+\input docstrip.tex
+\Msg{************************************************************************}
+\Msg{* Installation}
+\Msg{* Package: xfrac 2008/08/03 v0.2 textstyle fractions (MH)}
+\Msg{************************************************************************}
+
+\keepsilent
+\askforoverwritefalse
+
+\preamble
+
+This is a generated file.
+
+Copyright (C) 2004, 2008 by Morten Hoegholm <mh.ctan@gmail.com>
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either
+version 1.3 of this license or (at your option) any later
+version. The latest version of this license is in
+   http://www.latex-project.org/lppl.txt
+and version 1.3 or later is part of all distributions of
+LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status "maintained".
+
+This Current Maintainer of this work is Morten Hoegholm.
+
+This work consists of the main source file xfrac.dtx
+and the derived files
+   xfrac.sty, xfrac.pdf, xfrac.ins, xfrac.drv.
+
+\endpreamble
+
+\generate{%
+  \file{xfrac.ins}{\from{xfrac.dtx}{install}}%
+  \file{xfrac.drv}{\from{xfrac.dtx}{driver}}%
+  \usedir{tex/latex/mh}%
+  \file{xfrac.sty}{\from{xfrac.dtx}{package}}%
+}
+
+\obeyspaces
+\Msg{************************************************************************}
+\Msg{*}
+\Msg{* To finish the installation you have to move the following}
+\Msg{* file into a directory searched by TeX:}
+\Msg{*}
+\Msg{*     xfrac.sty}
+\Msg{*}
+\Msg{* To produce the documentation run the file `xfrac.drv'}
+\Msg{* through LaTeX.}
+\Msg{*}
+\Msg{* Happy TeXing!}
+\Msg{*}
+\Msg{************************************************************************}
+
+\endbatchfile
+%</install>
+%<*ignore>
+\fi
+%</ignore>
+%<*driver>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{xfrac.drv}%
+  [2008/08/04 v0.2 textstyle fractions (MH)]
+\RequirePackage{fix-cm}
+\documentclass{ltxdoc}
+
+
+\usepackage{xfrac}
+\usepackage{nicefrac}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\makeatletter
+\newenvironment{TemplateInterfaceDescription}[1]
+  {\subsection{The Template Type `#1'}%
+   \begingroup
+   \@beginparpenalty\@M
+   \description
+   \def\TemplateArgument##1##2{\item[Arg: ##1]##2\par}%
+   \def\TemplateSemantics{\enddescription\endgroup
+       \subsubsection*{Semantics:}}%
+  }
+  {\par\bigskip}
+
+\newenvironment{TemplateDescription}[2]
+  {\subsection{The Template `#2' (type #1)}%
+   \subsubsection*{Attributes:}%
+   \begingroup
+   \@beginparpenalty\@M
+   \description
+   \def\TemplateKey##1##2##3##4{\item[##1 (##2)]##3%
+     \ifx\TemplateKey##4\TemplateKey\else
+%         \hskip0ptplus3em\penalty-500\hskip 0pt plus 1filll Default:~##4%
+         \hfill\penalty500\relax\qquad \hbox{}\hfill Default:~##4%
+         \nobreak\hskip-\parfillskip\hskip0pt\relax
+     \fi
+     \par}%
+   \def\TemplateSemantics{\enddescription\endgroup
+       \subsubsection*{Semantics \& Comments:}}%
+  }
+  {\par\bigskip}
+
+\renewcommand*\MakePrivateLetters{\makeatletter\catcode`\_=11\relax}
+\makeatother
+
+\providecommand*\eTeX{\ensuremath{\varepsilon}-\kern-.125em\TeX}
+\providecommand*\LaTeXplus{\LaTeXe$*$}
+\providecommand*\key[1]{\textbf{#1}}
+\providecommand*\pkg[1]{\textsf{#1}}
+\newcommand*\switch[2]{{\fontfamily{#1}\selectfont #2}}
+
+
+\begin{document}
+  \catcode`\_=12
+  \DocInput{xfrac.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+%  \GetFileInfo{xfrac.drv}
+%  \CheckSum{249}
+%
+%  \changes{v0.2}{2008/08/04}{Require expl3 and get rid of .ins file}
+%  \changes{v0.2}{2008/08/04}{Move to macros/latex/contrib/mh on CTAN}
+%
+%  \changes{v0.11}{2004/05/08}{Consistent naming}
+%
+%  \changes{v0.10a}{2004/04/06}{Added a dependency of the latest
+%  \LaTeX{} release}
+%  \changes{v0.10a}{2004/04/06}{First version on \textsc{ctan}}
+%
+%  \changes{v0.10}{2004/04/05}{First publicly available prototype
+%  implementation}
+%
+%  \title{The \pkg{xfrac} package\thanks{This file has version number
+%  \fileversion, last revised \filedate.}}
+%
+%  \author{Morten H\o gholm}
+%  \date{\filedate}
+%
+%  \maketitle
+%
+%  \begin{abstract}
+%  This package uses a template interface to produce nicely looking
+%  \emph{split level} fractions like \nicefrac{7}{9}\ldots{}
+%  ehrm\ldots{} I mean \sfrac{7}{9}.
+%  \end{abstract}
+%
+%  \tableofcontents
+%
+%  \section{User Interface}
+%
+%  The \pkg{xfrac} package defines a document command \cs{sfrac}
+%  with the following syntax:
+%  \begin{quote}
+%  \cs{sfrac}\oarg{instance}\marg{num}\oarg{sep}\marg{denom}
+%  \end{quote}
+%  Let's show a few examples:
+%  \begin{verbatim}
+%  \sfrac{1}{2},  $\sfrac{1}{2}$,
+%  $\mathbf{3\times\sfrac{1}{2}}$
+%  \quad \fontfamily{ppl}\selectfont Palatino: \sfrac{1}{2}
+%  \quad \fontfamily{ptm}\selectfont Times: \sfrac{1}{2}
+%  \end{verbatim}
+%  \begin{quote}
+%  \sfrac{1}{2},  $\sfrac{1}{2}$, $\mathbf{3\times\sfrac{1}{2}}$
+%  \quad \fontfamily{ppl}\selectfont Palatino: \sfrac{1}{2}
+%  \quad \fontfamily{ptm}\selectfont Times: \sfrac{1}{2}
+%  \end{quote}
+%  You'll notice something interesting: Not only does the \cs{sfrac}
+%  command work as it should in math mode, it also gets the job done
+%  for other fonts as well.
+%
+%
+%  \section{A Bit of History}
+%
+%  \subsection{The Past}
+%
+%  One of the first exercises in \emph{The \TeX Book} is to design a
+%  macro for split level fractions. The solution presented is fairly
+%  simple, using a \emph{virgule} (a slash) for separating the two
+%  components. It looks okay because the text font and math font of
+%  Computer Modern look almost identical.
+%
+%  The proper symbol to use instead of the virgule is a \emph{solidus}
+%  which does not exist in Computer Modern. It is however available in
+%  the European Computer Modern fonts, but I'll get back to that.
+%
+%  \subsection{The Present}
+%
+%
+%  The most common way to produce split level fractions within \LaTeX\
+%  is by means of the \pkg{nicefrac} package. Part of the reason it
+%  has found widespread use is due to the strange design of the
+%  built-in text fractions of the EC fonts, which look like this:
+%  \textonehalf. The package is very simple to use but there are a few
+%  issues:
+% \begin{itemize}
+%  \item It uses the virgule instead of the solidus.
+%  \item Font size of numerator and denominator is bigger than in the
+%    built-in symbol. Compare Palatino: \switch{ppl}{\nicefrac{1}{2}}
+%    vs. \switch{ppl}{\textonehalf }.
+%  \item It doesn't correct for fonts using text figures such as in the
+%    \pkg{eco} package. Compare \switch{cmor}{\nicefrac{1}{2}} and
+%    \switch{cmor}{\nicefrac{8}{9}}.
+%  \item In math mode, it doesn't always pick up the correct math
+%    alphabet.
+% \end{itemize}
+% In short: \pkg{nicefrac} doesn't attempt to be the answer to
+% everything and so this is not a criticism of the package. It works
+% quite well for Computer Modern which was pretty much what was widely
+% available at the time it was developed. Users these days, however,
+% have a choice of many fonts when they write their documents.
+%
+%
+%
+%
+%
+%  \subsection{The Future}
+%
+%  Fonts are wildly different; one macro that works fine for Computer
+%  Modern obviously doesn't work well at all in Palatino. For one we
+%  have to make the separator symbol configurable, and we need to
+%  take care of several details as well: font scaling of the
+%  numerator/denominator pair (ND), font selection of ND etc. If we
+%  are to have a single package for this in the future\footnote{As
+%  this is intended to be about the future, the \pkg{xfrac} package
+%  requires the \eTeX{} extensions.} we have to define a totally
+%  generic interface for the fraction commands and then adjust
+%  parameters depending on the current font. What you see in this
+%  prototype implementation of \pkg{xfrac} is just that.
+%
+%
+%  \section{Advanced User Interface}
+%
+%
+%  \subsection{Text mode}
+%
+%  The usual problem in text mode has a name: Computer Modern. The
+%  solidi of all the Computer Modern fonts leave a lot to be desired,
+%  although things are potentially looking better as the Latin Modern
+%  fonts are becoming more stable and widespread. As long as the
+%  default fonts are Computer Modern variants we must however work
+%  around this. One idea that comes to mind is to see what happens
+%  when you use a solidus from another font instead. Let's try with
+%  Times:
+%  \begin{quote}
+%  \DeclareInstance{xfrac}{cmr2}{text}{
+%    slash-symbol-font = ptm,
+%  }
+%  ``You take \sfrac[cmr2]{1}{2} cup of sugar, \ldots''
+%  \end{quote}
+%  That looks quite good actually, so it was probably very difficult
+%  to obtain that result. Nope, it was extremely easy---if you happen
+%  to know about \emph{instances}:
+%  \begin{verbatim}
+%  \DeclareInstance{xfrac}{cmr}{text}{
+%    slash-symbol-font = ptm,
+%  }
+%  \end{verbatim}
+%  So we define an instance with the name `cmr' from the template
+%  `text' which in turn is of template type `xfrac'. You'll notice
+%  the `cmr' is also the name of the font family for Computer Modern
+%  Roman and the reasoning behind is that every font family should
+%  have it's own settings, and if a document command is to work well
+%  in that scheme, letting it use the name of the current font family
+%  seems like a good idea. Thus the \cs{sfrac} command checks to see
+%  whether an instance with same name as the current font family
+%  exists and uses it if the test is true; otherwise the default
+%  setting is used. Here we defined the instance to be used for the
+%  font family `cmr' and just told it to use the Times font for
+%  typesetting the slash symbol which turns out to be a solidus by
+%  default.
+%
+%  The option \texttt{cm-recommended} which is loaded by default uses
+%  the Times solidus for Computer Modern Roman and Computer Modern
+%  Sans Serif and the Palatino solidus for Computer Modern Typewriter
+%  Type. This looks quite good. Should you however not want this you
+%  can use the option \texttt{cm-standard} which produces somewhat
+%  acceptable results using Computer Modern exclusively.
+%
+%  So what about old style figures? If you use the \pkg{eco}
+%  package you might define an instance similar to this (`cmor' is
+%  the name of the roman font activated by \pkg{eco}):
+%   \DeclareInstance{xfrac}{cmor}{text}{
+%    slash-symbol-font = ptm,
+%    numerator-font    = cmr,
+%    denominator-font  = cmr,
+%  }
+%  \begin{verbatim}
+%  \DeclareInstance{xfrac}{cmor}{text}{
+%    slash-symbol-font = ptm,
+%    numerator-font    = cmr,
+%    denominator-font  = cmr,
+%  }
+%  \end{verbatim}
+%  We also use regular Computer Modern Roman for typesetting ND, so
+%  we end up with \switch{cmor}{\sfrac{1}{2}} and
+%  \switch{cmor}{\sfrac{8}{9}} instead of
+%  \switch{cmor}{\nicefrac{1}{2}} and \switch{cmor}{\nicefrac{8}{9}}.
+%  Much better.
+%
+%  There are also situations where other tricks are useful. If you
+%  don't have the inferior and superior figures available in a font,
+%  or the font doesn't have a wider design for small font sizes, you
+%  can cheat by manually scaling the ND-pair. I got nice results for
+%  Adobe's Stempel Garamond (with small caps and old style figures)
+%  with the following setup:
+%  \begin{verbatim}
+%  \DeclareInstance{xfrac}{pegj}{text}{
+%    numerator-font   = pegx,
+%    denominator-font = pegx,
+%    scale-factor     = .9,
+%    h-scale          = 1.1,
+%  }
+%  \end{verbatim}
+%  We use the font family `pegx' (Stempel Garamond with real small
+%  caps) for typesetting the ND-pair. Additionally the key
+%  \key{scale-factor} specifies that the font size used for the
+%  ND-pair should be $0.9$ of the height of the solidus, and the key
+%  \key{h-scale} specifies that the ND-pair should be scaled an extra
+%  10\% horizontally.
+%
+%  Should you be so fortunate the have a font with inferior and
+%  superior figures like in the Monotype Janson example from Philipp
+%  Lehman's excellent \emph{The Font Installation Guide}. In that
+%  example Philipp defines the font families `mjn0' for the inferior
+%  figures and `mjn1' for the superior. Thus to get the \cs{sfrac}
+%  command to use them on the fly for the font family `mjnj' (Janson,
+%  old style figures) we would say
+%  \begin{verbatim}
+%  \DeclareInstance{xfrac}{mjnj}{text}{
+%    numerator-font      = mjn1,
+%    denominator-font    = mjn0,
+%    scaling             = false,
+%    numerator-bot-sep   = 0pt,
+%    denominator-bot-sep = 0pt,
+%  }
+%  \end{verbatim}
+%  I think this example is a very clean way to do it. An alternative
+%  approach could be to use the keys \key{numerator-format} and
+%  \key{denominator-format} to process the arguments and let them
+%  determine what to do.
+%
+%  As a side note Harald Harders was so kind to test it, and it
+%  \emph{does} actually work---I hadn't tested it myself.
+%
+%  \subsection{Math Mode}
+%
+%  In math mode the choices are a lot fewer because first of all
+%  \TeX{} comes with a built-in limitation of 16 math families.
+%  Additionally we will not need a solidus for typesetting split
+%  fractions in math, as tradition is to use a virgule instead. We
+%  define the basic `mathdefault' instance to simply use the math
+%  family in use when the instance is run. So if we're in normal math
+%  like |$\sfrac{7}{9}$| we simply get family~$-1$. If we're inside a
+%  \cs{mathbf} we're in family~$4$ (in the standard setup at least),
+%  and so the fraction is typeset with the same math family. Simple,
+%  isn't?
+%
+%  You can also declare instances for the math families, but I really
+%  don't see why you would. If you do then name them according to the
+%  scheme `mathfam\meta{N}', where \meta{N} is the family number, and
+%  only do it if you \emph{really} know how to set up math fonts.
+%  That is, if \cs{DeclareMathAlphabet} is unbeknownst to you, then
+%  just don't go there.
+%
+%
+%  Another example: If we want \cs{sfrac} to produce split fractions
+%  without doing anything at all, we can choose the collection
+%  `plainmath', which is defined as
+%  \begin{verbatim}
+%  \DeclareCollectionInstance{plainmath}{xfrac}{mathdefault}{math}{
+%    denominator-bot-sep = 0pt,
+%    numerator-bot-sep   = 0pt,
+%    numerator-top-sep   = \c_max_dim,
+%    scaling             = false,
+%    slash-right-mkern   = 0mu,
+%    slash-left-mkern    = 0mu,
+%  }
+%  \end{verbatim}
+%  This creates an alternative version of the instance `mathdefault'
+%  with settings as specified by the keys. In the default math setup
+%  \key{numerator-top-sep} is set to 0~pt, and here we set
+%  \key{numerator-bot-sep} to 0~pt as well, so in order to avoid
+%  over-specification (and an error message) we must set
+%  \key{numerator-top-sep} to \cs{c_max_dim}. We activate (obeying
+%  normal scoping rules) it with:
+%  \begin{verbatim}
+%  \UseCollection{xfrac}{plainmath}
+%  \end{verbatim}
+%  Then |$\sfrac{8}{13}$| produces\begingroup
+%    \UseCollection{xfrac}{plainmath}
+%    $\sfrac{8}{13}$ and just typing |$8/13$| gives the same result:
+%    $8/13$.
+%  \endgroup
+%
+%
+%  \section{The Template Interface}
+%
+%  \begin{TemplateInterfaceDescription}{xfrac}
+%
+%  \TemplateArgument{1}
+%      {The numerator}
+%
+%  \TemplateArgument{2}
+%       {The separator}
+%
+%   \TemplateArgument{3}
+%      {The denominator}
+%
+%  \TemplateSemantics
+%
+%  Typesets arguments 1 and 3 separated by argument 2, which in text
+%  mode by default is a \emph{solidus}. This is taken from
+%  \pkg{textcomp} where it is denoted \cs{textfractionsolidus}.
+%  This is the character used for the ready made split level
+%  fractions such as \textonehalf---except in the (European) Computer
+%  Modern fonts. In math mode a \emph{virgule} is used instead as
+%  this is more appropriate and it is always available in the math
+%  fonts. The solidus is a text symbol only.
+%
+%  \end{TemplateInterfaceDescription}
+%
+%  \begin{TemplateDescription}{xfrac}{text}
+%
+%  \TemplateKey{numerator-font}{n}
+%    {Font family specification to use for the numerator.}
+%    {\cs{f@family}}
+%
+%  \TemplateKey{numerator-format}{f1}
+%    {Action to be taken on the numerator.}
+%    {Process argument unchanged}
+%
+%  \TemplateKey{slash-symbol}{n}
+%    {The separator symbol. If not specified the default value will be
+%    used instead.}
+%    {Solidus (\cs{textfractionsolidus})}
+%
+%  \TemplateKey{slash-symbol-font}{n}
+%    {Font family specification to use for the separator symbol.}
+%    {\cs{f@family}}
+%
+%  \TemplateKey{slash-symbol-format}{f1}
+%    {Action to be taken on the separator symbol.}
+%    {Process argument unchanged}
+%
+%  \TemplateKey{denominator-font}{n}
+%    {Font family specification to use for the denominator.}
+%    {\cs{f@family}}
+%
+%  \TemplateKey{denominator-format}{f1}
+%    {Action to be taken on the denominator.}
+%    {Process argument unchanged}
+%
+%  \TemplateKey{h-scale}{n}
+%    {Factor by which the numerator and denominator should be
+%    horizontally scaled. It should only be used if the real superior
+%    and inferior fonts are not available. For instance Stempel
+%    Garamond looks excellent if scaled 10\% extra horizontally, i.e.,
+%    by a factor of 1.1.}
+%    {1}
+%
+%  \TemplateKey{v-scale}{n}
+%    {Same as \key{h-scale} only vertically. Probably not of much use
+%    but added for completetion.}
+%    {1}
+%
+%  \TemplateKey{scale-factor}{n}
+%    {Fraction of the size of \key{slash-symbol}. Used for setting the
+%    font size of numerator and denominator. Usually a value of app.\
+%    \sfrac{5}{6} produces fine results. It should only be used if the
+%    real superior and inferior fonts are not available. As an example
+%    Stempel Garamond looks better if the factor is 0.9.}
+%    {0.83333}
+%
+%  \TemplateKey{scale-relative}{s}
+%    {If set to `true' the font size of the numerator and denominator
+%    is scaled with respect to the height of the \key{slash-symbol}. If
+%    set to `false' the font is scaled with respect to the total height
+%    of the \key{slash-symbol}.}
+%    {true}
+%
+%  \TemplateKey{scaling}{s}
+%    {If set to `true' the fonts are allowed to scale. If set to
+%    `false' they are not. See the `Janson' example for an application.}
+%    {true}
+%
+%  \TemplateKey{numerator-top-sep}{L}
+%    {Dimension specifying the space between the top of the
+%    \key{slash-symbol} and the top of the numerator. If not specified,
+%    the depth of the solidus will be used, because this value will
+%    make the fraction look even.}
+%    {Unspecified}
+%
+%  \TemplateKey{numerator-bot-sep}{L}
+%    {Dimension specifying the lift of the numerator from the
+%    baseline.}
+%    {Unspecified}
+%
+%  \TemplateKey{denominator-bot-sep}{L}
+%    {Dimension specifying the lift of the denominator from the
+%    baseline.}
+%    {Unspecified}
+%
+%  \TemplateKey{slash-right-kern}{L}
+%    {Dimension specifying the kerning between the \key{slash-symbol}
+%    and the numerator. If specified in terms of font specific
+%    dimensions such as \texttt{em} it is better to use
+%    \cs{DelayEvaluation}.}
+%    {\texttt{0pt}}
+%
+%  \TemplateKey{slash-left-kern}{L}
+%    {Dimension specifying the kerning between the \key{slash-symbol}
+%    and the denominator. If specified in terms of font specific
+%    dimensions such as \texttt{em} it is better to use
+%    \cs{DelayEvaluation}.}
+%    {\texttt{0pt}}
+%
+%  \TemplateKey{math-mode}{s}
+%    {Are we in math mode or not?}
+%    {false}
+%
+%  \TemplateKey{phantom}{n}
+%    {A character that suits the common cases. As we would mostly want
+%    to use numbers in text mode we choose a `tall' number, while in
+%    math it is somewhat different.}
+%    {8}
+%
+%  \TemplateSemantics
+%
+%  This template is also the foundation for the `math' template. The
+%  keys \key{slash-right-mkern} and \key{slash-left-mkern} can only
+%  be used in math mode and are not shown here.
+%
+%  \end{TemplateDescription}
+%
+%
+%  \begin{TemplateDescription}{xfrac}{math}
+%
+%  \TemplateKey{numerator-font}{n}
+%    {Font family specification to use for the numerator.}
+%    {\cs{number}\cs{fam}}
+%
+%  \TemplateKey{slash-symbol}{n}
+%    {The separator symbol. If not specified the default value will be
+%    used instead.}
+%    {Virgule ($/$)}
+%
+%  \TemplateKey{slash-symbol-font}{n}
+%    {Font family specification to use for the separator symbol.}
+%    {\cs{number}\cs{fam}}
+%
+%  \TemplateKey{denominator-font}{n}
+%    {Font family specification to use for the denominator.}
+%    {\cs{number}\cs{fam}}
+%
+%  \TemplateKey{scale-factor}{n}
+%    {Fraction of the size of \key{slash-symbol}. In math mode we
+%    cannot rely on the fonts to be able to scale, but giving a default
+%    scale of 0.7 fits into the regular size changing scheme---the
+%    default scheme has values $(D,T,S,SS)=(1,1,0.7,0.5)$ whereas we
+%    with a default \key{scale-factor} of 0.7 get $(1,1,0.7,0.49)$.
+%    That's close enough.}
+%    {0.7}
+%
+%  \TemplateKey{scale-relative}{s}
+%    {If set to `true' the font size of the numerator and denominator
+%    is scaled with respect to the height of the \key{slash-symbol}. If
+%    set to `false' the font is scaled with respect to the total height
+%    of the \key{slash-symbol}.}
+%    {false}
+%
+%  \TemplateKey{scaling}{s}
+%    {If set to `true' the fonts are allowed to scale. If set to
+%    `false' they are not. See the `plainmath' example for an application.}
+%    {true}
+%
+%  \TemplateKey{numerator-top-sep}{L}
+%    {Dimension specifying the space between the top of the
+%    \key{slash-symbol} and the top of the numerator. If not specified,
+%    the depth of the virgule will be used, because this value will
+%    make the fraction look even.}
+%    {\texttt{0pt}}
+%
+%  \TemplateKey{denominator-bot-sep}{L}
+%    {Dimension specifying the lift of the denominator from the
+%    baseline.}
+%    {\texttt{0pt}}
+%
+%  \TemplateKey{slash-right-mkern}{n}
+%    {Same as \key{slash-right-kern} but for math mode only and should
+%    be specified in \texttt{mu} units. This is because \pkg{calc}
+%    can't use mu-expressions.}
+%    {\texttt{-2mu}}
+%
+%  \TemplateKey{slash-left-mkern}{n}
+%    {Same as \key{slash-left-kern} but for math mode only and should
+%    be specified in \texttt{mu} units. This is because \pkg{calc}
+%    can't use mu-expressions.}
+%    {\texttt{-1mu}}
+%
+%  \TemplateKey{math-mode}{s}
+%    {Are we in math mode or not?}
+%    {true}
+%
+%  \TemplateKey{phantom}{n}
+%    {A character that suits the common cases. In math we have a high
+%    risk of using a parenthesis, so we choose that. Text mode is
+%    another story.}
+%    {(}
+%
+%  \TemplateSemantics
+%
+%  This template is a restricted version of the `text' template. Only
+%  the keys that are different from the `text' template are shown
+%  here. Also bear in mind that the attributes \key{slash-left-kern}
+%  and \key{slash-right-kern} have no meaning in this template.
+%
+%  \end{TemplateDescription}
+%
+%
+%
+%  \StopEventually{}
+%
+%  \section{Implementation}
+%
+% \changes{v0.10b}{2004/04/07}{Now uses \cs{InternalSyntaxOn}}
+% \changes{v0.2}{2008/08/04}{Now uses \cs{ProvidesExplPackage}}
+%  We set up the programming interface. We need the
+%  \pkg{template} and \pkg{xparse} packages from the
+%  experimental code, more precisely from the `xbase' bundle. The
+%  other packages are well-known.
+%    \begin{macrocode}
+\RequirePackage{l3names}[2007/09/01]
+\ProvidesExplPackage{xfrac}{2008/08/04}{0.2}{Text fractions}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\RequirePackage{textcomp,graphicx,amstext}
+\RequirePackage{template}[2008/08/03] % force upgrade!! 
+\RequirePackage{xparse}[2008/08/03] % force upgrade!!
+%    \end{macrocode}
+% With v0.10b the new internal syntax using |_| and |:| was
+% introduced. Starting from v0.2 the expl3 code base is used and,
+% hence, also its programming setup.  White space is ignored as well,
+% so any |@|-signs in the code are remnants of old \LaTeX{} coding
+% conventions.
+%    \begin{macrocode}
+%    \end{macrocode}
+%
+%  An option:
+%    \begin{macrocode}
+\bool_new:N \g_cm_recommended_bool
+\DeclareOption{cm-recommended}
+              { \bool_gset_true:N \g_cm_recommended_bool }
+\DeclareOption{cm-standard}
+              { \bool_gset_false:N \g_cm_recommended_bool }
+\ExecuteOptions{cm-recommended}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+%  \begin{macro}{\l_xfrac_temp_box}
+%  \begin{macro}{\l_xfrac_slash_box}
+%  We use two box registers. We could probably get away with using
+%  scratch boxes, but this feels safer. Anyway we're all using
+%  \eTeX{} now so why not?
+%    \begin{macrocode}
+\box_new:N \l_xfrac_temp_box
+\box_new:N \l_xfrac_slash_box
+%    \end{macrocode}
+%  \end{macro}
+%  \end{macro}
+%
+%  \subsection{The Templates}
+%  Then we declare the template. %    \begin{macrocode}
+\DeclareTemplateType{xfrac}{3}
+%    \end{macrocode}
+% The template type `text'. Make two separate templates: text and
+% math!! It is okay they share keys but it just gets too complicated
+% within the template declaration.
+%    \begin{macrocode}
+\DeclareTemplate{xfrac}{text}{3}{
+  numerator-font      = n  [\f@family]  \xfrac_numeratorfont:,
+  numerator-format    = f1 [#1]         \xfrac_numeratorformat:n,
+  slash-symbol        = n  [\textfractionsolidus]
+                                        \xfrac_slashsymbol:,
+  slash-symbol-font   = n  [\f@family]  \xfrac_slashsymbolfont:,
+  slash-symbol-format = f1 [#1]         \xfrac_slashsymbolformat:n,
+  denominator-font    = n  [\f@family]  \xfrac_denominatorfont:,
+  denominator-format  = f1 [#1]         \xfrac_denominatorformat:n,
+  h-scale             = n  [1]          \xfrac_hscale:,
+  v-scale             = n  [1]          \xfrac_vscale:,
+  scale-factor        = n  [.83333]     \xfrac_scalefactor:,
+  scale-relative      = s  [true]
+    { \def:Npn \xfrac_relscale: {\box_ht:N\l_xfrac_slash_box}}
+    { \def:Npn \xfrac_relscale: {
+      \dim_eval:n { \box_ht:N\l_xfrac_temp_box + \box_dp:N\l_xfrac_temp_box }} },
+  scaling             = s  [true]
+    {\def:Npn\xfrac_fontscale: {
+       \fontsize{\xfrac_scalefactor: \xfrac_relscale:}{\c_zero_dim}\selectfont}}
+    { \let:NN \xfrac_fontscale: \use_noop: },
+%    \end{macrocode}
+%  Here comes some fake lengths. I've decided to call them with the
+%  suffix |_fdim|, so that I will remember to use them right.
+%    \begin{macrocode}
+  numerator-top-sep   = L  [\c_max_dim]  \l_xfrac_numeratortopsep_fdim,
+  numerator-bot-sep   = L  [\c_max_dim]  \l_xfrac_numeratorbotsep_fdim,
+  denominator-bot-sep = L  [\c_max_dim]  \l_xfrac_denominatorbotsep_fdim,
+  slash-right-kern    = L  [0pt]        \l_xfrac_slashrightsep_fdim,
+  slash-left-kern     = L  [0pt]        \l_xfrac_slashleftsep_fdim,
+%    \end{macrocode}
+%  As calc can't handle |\muskip|s, I've made them of type `n' and
+%  added the suffix |_fmu| to indicate `fake mu skip'.
+%    \begin{macrocode}
+  slash-right-mkern   = n  [-2mu]       \l_xfrac_slashrightmsep_fmu,
+  slash-left-mkern    = n  [-1mu]       \l_xfrac_slashleftmsep_fmu,
+  math-mode           = s  [false] { \let:NN\xfrac_math: \ensuremath }
+                                   { \let:NN \xfrac_math: \use_arg_i:n },
+  phantom             = n  [8]          \xfrac_phantom:,
+}{
+  \DoParameterAssignments
+  \mode_if_math:TF{
+    \let:NN \xfrac_textormath: \text
+    \def:Npx \xfrac_slashfontchange: {\tex_fam:D \xfrac_slashsymbolfont: }
+    \def:Npx \xfrac_numeratorfontchange: {\tex_fam:D \xfrac_numeratorfont: }
+    \def:Npx \xfrac_denominatorfontchange: {\tex_fam:D \xfrac_denominatorfont: }
+  }{
+    \let:NN \xfrac_textormath: \mbox
+    \def:Npn\xfrac_slashfontchange: {
+      \fontfamily{\xfrac_slashsymbolfont: }\selectfont}
+    \def:Npn\xfrac_numeratorfontchange: {
+      \fontfamily{\xfrac_numeratorfont: }\selectfont}
+    \def:Npn\xfrac_denominatorfontchange: {
+      \fontfamily{\xfrac_denominatorfont: }\selectfont}
+  }
+  \xfrac_textormath: {
+%    \end{macrocode}
+%  \changes{v0.11a}{2004/08/24}{Added \cs{m@th}}
+%    \begin{macrocode}
+    \m@th
+    \sbox\l_xfrac_temp_box {\xfrac_math: {\vphantom{(}}}
+    \sbox\l_xfrac_slash_box {
+      \xfrac_math: {
+        \xfrac_slashsymbolformat:n {
+          \xfrac_math: {
+            \xfrac_slashfontchange:
+              \IfValueTF{#2}{#2}{\xfrac_slashsymbol: }
+          }
+        }
+      }
+    }
+    \dim_compare:nNnTF \l_xfrac_numeratortopsep_fdim = \c_max_dim
+    {
+      \dim_compare:nNnTF \l_xfrac_numeratorbotsep_fdim = \c_max_dim
+      {
+%    \end{macrocode}
+%  Both unspecified.
+%    \begin{macrocode}
+        \def:Npn\xfrac_next: {\raisebox{\box_ht:N\l_xfrac_slash_box
+                                  -\box_dp:N\l_xfrac_slash_box-\height}}
+      }{
+%    \end{macrocode}
+%  Use only bottom specification.
+%    \begin{macrocode}
+        \def:Npn\xfrac_next: {\raisebox{\l_xfrac_numeratorbotsep_fdim }}
+      }
+    }
+    {
+%    \end{macrocode}
+%  Use only top specification.
+%    \begin{macrocode}
+      \dim_compare:nNnTF \l_xfrac_numeratorbotsep_fdim = \c_max_dim
+      {
+        \def:Npn\xfrac_next: {
+          \raisebox{
+            \box_ht:N\l_xfrac_slash_box - \l_xfrac_numeratortopsep_fdim
+            - \height
+          }
+        }
+      }
+      {
+%    \end{macrocode}
+%  Over-specification.
+%    \begin{macrocode}
+        \PackageError{xfrac}
+          {You~ have~ specified~ both~ numerator-top-sep~ and~
+          numerator-bot-sep}
+          {I~ will~ pretend~ you~ didn't~ specify~ any~ of ~them}
+        \def:Npn\xfrac_next: {\raisebox{\box_ht:N\l_xfrac_slash_box
+                                  -\box_dp:N\l_xfrac_slash_box-\height}}
+      }
+    }
+%    \end{macrocode}
+%  Typeset the numerator
+%    \begin{macrocode}
+    \xfrac_next: {
+      \xfrac_fontscale:
+      \xfrac_numeratorformat:n {
+        \scalebox{\xfrac_hscale: }[\xfrac_vscale: ]
+          { \xfrac_math:{ \xfrac_numeratorfontchange:
+                          {\vphantom{\xfrac_phantom: }#1} } }
+      }
+    }
+    \xfrac_math: { % THIS IS JUST WRONG!
+      \mode_if_math:TF {  \mskip \l_xfrac_slashrightmsep_fmu }
+                       {\hskip \l_xfrac_slashrightsep_fdim}
+      }
+%    \end{macrocode}
+%  Typeset the separator
+%    \begin{macrocode}
+    \usebox\l_xfrac_slash_box
+    \xfrac_math: {
+      \mode_if_math:TF {
+        \mskip \l_xfrac_slashleftmsep_fmu
+      }{
+        \hskip \l_xfrac_slashleftsep_fdim
+      } }
+%    \end{macrocode}
+%  Typeset the denominator
+%    \begin{macrocode}
+    \dim_compare:nNnTF \l_xfrac_denominatorbotsep_fdim=\c_max_dim 
+    {  \raisebox{-\box_dp:N \l_xfrac_slash_box} }
+    {
+     \raisebox{\l_xfrac_denominatorbotsep_fdim}
+    }
+    {
+      \xfrac_fontscale:
+      \xfrac_denominatorformat:n {
+        \scalebox{\xfrac_hscale:}[\xfrac_vscale:]
+          { \xfrac_math: { \xfrac_denominatorfontchange:
+                          {\vphantom{\xfrac_phantom: }#3} } }
+      }
+    }
+  }
+}
+%    \end{macrocode}
+%
+%  Since math and text mode are wildly different entities we define a
+%  separate template for each. You already saw the `text' template,
+%  and here is the `math' template.
+%    \begin{macrocode}
+\DeclareRestrictedTemplate{xfrac}{math}{text}{
+  numerator-font      = \number\fam,
+  slash-symbol        = /,
+  slash-symbol-font   = \number\fam,
+  denominator-font    = \number\fam,
+  scale-factor        = 0.7,
+  scale-relative      = false,
+  scaling             = true,
+  numerator-top-sep   = 0pt,
+  denominator-bot-sep = 0pt,
+  math-mode           = true,
+  phantom             = (,
+}
+%    \end{macrocode}
+%
+%  \subsection{The Default Instances}
+%
+%  For the default instances we just use the relevant templates with
+%  the default settings.
+%
+%  The default `text' instance.
+%    \begin{macrocode}
+\DeclareInstance{xfrac}{default}{text}{ }
+%    \end{macrocode}
+%  The default `math' instance.
+%    \begin{macrocode}
+\DeclareInstance{xfrac}{mathdefault}{math}{ }
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareCollectionInstance{plainmath}{xfrac}{mathdefault}{math}{
+  denominator-bot-sep=0pt,
+  numerator-bot-sep=0pt,
+  numerator-top-sep=\c_max_dim,
+  scale-factor = 1,
+  scale-relative = false,
+  scaling = true,
+  slash-right-mkern=0mu,
+  slash-left-mkern=0mu,
+}
+%    \end{macrocode}
+%  Default Computer Modern setup. Far from optimal, but better than
+%  nothing.
+%    \begin{macrocode}
+\DeclareInstance{xfrac}{cmr}{text}{
+  denominator-bot-sep=0pt,
+  numerator-top-sep=\DelayEvaluation{.2ex},
+  slash-left-kern=\DelayEvaluation{-.1em},
+  slash-right-kern=\DelayEvaluation{-.1em},
+}
+\DeclareInstance{xfrac}{cmss}{text}{
+  denominator-bot-sep=0pt,
+  numerator-top-sep=\DelayEvaluation{.2ex},
+  slash-left-kern=\DelayEvaluation{-.1em},
+  slash-right-kern=\DelayEvaluation{-.1em},
+}
+\DeclareInstance{xfrac}{cmtt}{text}{
+  denominator-bot-sep=0pt,
+  numerator-top-sep=\DelayEvaluation{.2ex},
+  slash-left-kern=\DelayEvaluation{-.1em},
+  slash-right-kern=\DelayEvaluation{-.1em},
+}
+%    \end{macrocode}
+%  We can do better for the Computer Modern fonts. For the roman
+%  family we choose Times.
+%    \begin{macrocode}
+\DeclareCollectionInstance{cm-recommended}{xfrac}{cmr}{text}{
+  slash-symbol-font   = ptm,
+}
+%    \end{macrocode}
+%  Times also blends well with `cmss'.
+%    \begin{macrocode}
+\DeclareCollectionInstance{cm-recommended}{xfrac}{cmss}{text}{
+  slash-symbol-font   = ptm,
+}
+%    \end{macrocode}
+%  For `cmtt' we choose the Palatino solidus as it is slightly
+%  thicker than Times.
+%    \begin{macrocode}
+\DeclareCollectionInstance{cm-recommended}{xfrac}{cmtt}{text}{
+  slash-symbol-font   = ppl,
+}
+%    \end{macrocode}
+%  If we used the \texttt{cm-recommended} setup we activate it.
+%    \begin{macrocode}
+\bool_if:NT \g_cm_recommended_bool
+               {\UseCollection{xfrac}{cm-recommended}}
+%    \end{macrocode}
+%
+%  \subsection{The User Command}
+%
+%  Currently there is just a single user command. \cs{sfrac} takes
+%  two mandatory arguments: numerator and denominator. It can take an
+%  optional argument between the mandatory specifying the separator
+%  like this:
+%  \begin{verbatim}
+%    \sfrac{7}[/]{12}
+%  \end{verbatim}
+%  It also has an optional argument that comes before the first
+%  mandatory argument. If used it will use that instance instead of
+%  the auto-detected one, so a user who has defined the instance
+%  `cmr2' may use
+%  \begin{verbatim}
+%    \sfrac[cmr2]{7}{12}
+%  \end{verbatim}
+%  and get the settings from `cmr2' instead of the settings of the
+%  current font family.
+%    \begin{macrocode}
+\DeclareDocumentCommand \sfrac {o mom}{
+  \mode_if_math:TF 
+{
+    \def:Npx \xfrac_next: {mathfam\number\fam}
+    \IfExistsInstanceTF{xfrac}{\xfrac_next: }
+    {\UseInstance{xfrac}{\xfrac_next: }}
+    {\UseInstance{xfrac}{mathdefault}}
+    {#2}{#3}{#4}
+}
+{
+    \IfExistsInstanceTF{xfrac}{#1}
+    {\UseInstance{xfrac}{#1}{#2}{#3}{#4}}
+    {\IfExistsInstanceTF{xfrac}{\f@family}
+      {\UseInstance{xfrac}{\f@family}}
+      {\UseInstance{xfrac}{default}}
+        {#2}{#3}{#4}
+    }
+  }
+}
+%    \end{macrocode}
+%
+% \Finale
+\endinput

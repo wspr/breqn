@@ -1,57 +1,151 @@
-# Help with making distrib
 
-PDFLATEXSHELLESCAPE=pdflatex --shell-escape
-PDFLATEX=pdflatex
-LATEX=latex --shell-escape
-TEX=tex
-##BIBTEX=bibtex8 --csfile 88591sca.csf $(JOB)
-BIBTEX=bibtex  $(JOB)
-INDEX=makeindex -s gind.ist 
-OPTIONS=
-CHAPTERS=
-TEXMF=../texmf
-TEXINPUTS=
-DISTRIBDIR=../mh
+DISTRIB-DIR = distrib
 
-UPDMAP=updmap --quiet 
-CHAPTERAUXS= 
+README = README
+
+XFRAC-DIR = xfrac
+XFRAC-DTX = \
+	xfrac.dtx 
+
+XFRAC-TEX =
+
+XFRAC-PDF = \
+	xfrac.pdf 
+
+XFRAC-DERIVED = \
+	xfrac.sty
+
+BREQN-DIR = breqn
+
+BREQN-DTX = \
+	breqn.dtx \
+	flexisym.dtx \
+	mathstyle.dtx
+
+BREQN-TEX = \
+	breqn-technotes.tex
+
+BREQN-PDF = \
+	breqn.pdf \
+	flexisym.pdf \
+	mathstyle.pdf \
+	breqn-technotes.pdf
 
 
-breqn:
-	$(TEX) breqn.dtx;
-	$(PDFLATEXSHELLESCAPE) breqn.dtx;
-	$(INDEX) breqn.idx;
-	$(PDFLATEXSHELLESCAPE) breqn.dtx;
-	$(INDEX) breqn.idx;
-	$(PDFLATEXSHELLESCAPE) breqn.dtx;
+BREQN-DERIVED = \
+	breqn.sty \
+	flexisym.sty \
+	cmbase.sym \
+	mathpazo.sym \
+	mathptmx.sym \
+	msabm.sym \
+	mathstyle.sty \
 
-flexisym:
-	$(TEX) flexisym.dtx;
-	$(PDFLATEXSHELLESCAPE) flexisym.dtx;
-	$(INDEX) flexisym.idx;
-	$(PDFLATEXSHELLESCAPE) flexisym.dtx;
-	$(INDEX) flexisym.idx;
-	$(PDFLATEXSHELLESCAPE) flexisym.dtx;
 
-mathstyle:
-	$(TEX) mathstyle.dtx;
-	$(PDFLATEXSHELLESCAPE) mathstyle.dtx;
-	$(INDEX) mathstyle.idx;
-	$(PDFLATEXSHELLESCAPE) mathstyle.dtx;
-	$(INDEX) mathstyle.idx;
-	$(PDFLATEXSHELLESCAPE) mathstyle.dtx;
 
-technotes:
-	$(PDFLATEXSHELLESCAPE) breqn-technotes.tex;
-	$(PDFLATEXSHELLESCAPE) eqlayouts.tex;
+MH-DIR = mhctan
 
-all:	flexisym mathstyle breqn technotes
+MH-DTX = \
+	empheq.dtx \
+	mhsetup.dtx \
+	mathtools.dtx
 
-copytomh: 
-	cp breqn.dtx breqn.pdf \
-	mathstyle.dtx mathstyle.pdf \
-	flexisym.dtx flexisym.pdf \
-	eqlayouts.tex eqlayouts.pdf \
-	breqn-technotes.tex breqn-technotes.pdf \
-	$(DISTRIBDIR)
+MH-TEX = 
+
+MH-PDF = \
+	empheq.pdf \
+	mhsetup.pdf \
+	mathtools.pdf
+
+
+MH-DERIVED = \
+	empheq.sty \
+	mhsetup.sty \
+	mathtools.sty
+
+tds-dirs:
+	mkdir -p $(DISTRIB-DIR)
+	mkdir -p $(DISTRIB-DIR)/mh
+	mkdir -p $(DISTRIB-DIR)/mh-tds
+	mkdir -p $(DISTRIB-DIR)/mh-tds/doc
+	mkdir -p $(DISTRIB-DIR)/mh-tds/doc/latex
+	mkdir -p $(DISTRIB-DIR)/mh-tds/doc/latex/mh
+	mkdir -p $(DISTRIB-DIR)/mh-tds/source
+	mkdir -p $(DISTRIB-DIR)/mh-tds/source/latex
+	mkdir -p $(DISTRIB-DIR)/mh-tds/source/latex/mh
+	mkdir -p $(DISTRIB-DIR)/mh-tds/tex
+	mkdir -p $(DISTRIB-DIR)/mh-tds/tex/latex
+	mkdir -p $(DISTRIB-DIR)/mh-tds/tex/latex/mh
+
+
+tds-dirs-clean: tds-dirs
+	rm -f $(DISTRIB-DIR)/mh-tds/doc/latex/mh/*
+	rm -f $(DISTRIB-DIR)/mh-tds/source/latex/mh/*
+	rm -f $(DISTRIB-DIR)/mh-tds/tex/latex/mh/*
+	rm -f $(DISTRIB-DIR)/mh/*
+	rm -f $(DISTRIB-DIR)/mh.zip
+	rm -f $(DISTRIB-DIR)/mh.tds.zip
+
+mh-styles:
+	cd $(MH-DIR) ; for f in $(MH-DTX) ; do tex $$f  ; done 
+
+mh-pdfs: mh-styles
+# three runs should suffice
+	cd $(MH-DIR) ; for f in $(MH-DTX) ; do pdflatex $$f ; done 
+	cd $(MH-DIR) ; for f in $(MH-DTX) ; do pdflatex $$f ; done 
+	cd $(MH-DIR) ; for f in $(MH-DTX) ; do pdflatex $$f ; done 
+
+
+mh-distrib: tds-dirs mh-pdfs
+	cd $(MH-DIR) ; \
+	cp $(MH-DERIVED) ../$(DISTRIB-DIR)/mh-tds/tex/latex/mh  ; \
+	cp $(MH-DTX) $(MH-TEX) ../$(DISTRIB-DIR)/mh-tds/source/latex/mh ;\
+	cp $(MH-PDF) ../$(DISTRIB-DIR)/mh-tds/doc/latex/mh ;\
+	cp $(MH-PDF) $(MH-DTX) $(MH-TEX) ../$(DISTRIB-DIR)/mh
+
+
+xfrac-styles:
+	cd $(XFRAC-DIR) ; for f in $(XFRAC-DTX) ; do tex $$f  ; done 
+
+xfrac-pdfs: xfrac-styles
+# three runs should suffice
+	cd $(XFRAC-DIR) ; for f in $(XFRAC-DTX) ; do pdflatex $$f ; done 
+	cd $(XFRAC-DIR) ; for f in $(XFRAC-DTX) ; do pdflatex $$f ; done 
+	cd $(XFRAC-DIR) ; for f in $(XFRAC-DTX) ; do pdflatex $$f ; done 
+
+
+xfrac-distrib: tds-dirs xfrac-pdfs
+	cd $(XFRAC-DIR) ; \
+	cp $(XFRAC-DERIVED) ../$(DISTRIB-DIR)/mh-tds/tex/latex/mh  ; \
+	cp $(XFRAC-DTX) $(XFRAC-TEX) ../$(DISTRIB-DIR)/mh-tds/source/latex/mh ;\
+	cp $(XFRAC-PDF) ../$(DISTRIB-DIR)/mh-tds/doc/latex/mh ;\
+	cp $(XFRAC-PDF) $(XFRAC-DTX) $(XFRAC-TEX) ../$(DISTRIB-DIR)/mh
+
+
+
+breqn-styles:
+	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) ; do tex $$f  ; done 
+
+breqn-pdfs: breqn-styles
+# three runs should suffice
+	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) ; do pdflatex $$f ; done 
+	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) ; do pdflatex $$f ; done 
+	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) ; do pdflatex $$f ; done 
+
+
+breqn-distrib: tds-dirs breqn-pdfs
+	cd $(BREQN-DIR) ; \
+	cp $(BREQN-DERIVED) ../$(DISTRIB-DIR)/mh-tds/tex/latex/mh  ; \
+	cp $(BREQN-DTX) $(BREQN-TEX) ../$(DISTRIB-DIR)/mh-tds/source/latex/mh ;\
+	cp $(BREQN-PDF) ../$(DISTRIB-DIR)/mh-tds/doc/latex/mh ;\
+	cp $(BREQN-PDF) $(BREQN-DTX) $(BREQN-TEX) ../$(DISTRIB-DIR)/mh
+
+
+
+
+distrib: tds-dirs-clean breqn-distrib xfrac-distrib mh-distrib 
+	cp  $(MH-DIR)/$(README) $(DISTRIB-DIR)/mh
+	cp  $(MH-DIR)/$(README) $(DISTRIB-DIR)/mh-tds/doc/latex/mh
+	cd $(DISTRIB-DIR)/mh-tds ; zip -r ../mh.tds.zip * 
+	cd $(DISTRIB-DIR) ; zip -r mh.zip mh mh.tds.zip 
 

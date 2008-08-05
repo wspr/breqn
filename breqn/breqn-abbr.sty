@@ -1,18 +1,20 @@
-\ProvidesPackage{breqn-abbr}[2008/07/27 v0.1 Abbreviations in breqn]
+\ProvidesPackage{breqn-abbr}
+  [2008/08/05 v0.1a Abbreviations in breqn]
 
-\RequirePackage{environ}% for \Collect@Body
+\RequirePackage{environ}[2008/06/18]
+% (for \Collect@Body)
 
 % Setup code:
-\long\def\save@body#1{%
-  \@ifnext[{\@grabarg}{\@graball}#1\@nil}
+\long\def\breqn@savebody#1{%
+  \@ifnext[{\breqn@grabarg}{\breqn@graball}#1\@nil}
 
-\long\def\@graball#1\@nil{%
-  \let\@@arg\@empty
-  \gdef\@@body{#1}}
+\long\def\breqn@graball#1\@nil{%
+  \let\breqn@@arg\@empty
+  \gdef\breqn@@body{#1}}
 
-\long\def\@grabarg[#1]#2\@nil{%
-  \gdef\@@arg{[#1]}%
-  \gdef\@@body{#2}}
+\long\def\breqn@grabarg[#1]#2\@nil{%
+  \gdef\breqn@@arg{[#1]}%
+  \gdef\breqn@@body{#2}}
 
 \providecommand\expandonce[1]{%
   \unexpanded\expandafter{#1}}
@@ -20,61 +22,69 @@
   \edef\@tempa{#1}\@tempa}
 
 % The abbreviation environments:
-\newcommand\newDmath[3]{%
+\newcommand\breqn@newDmath[3]{%
   \@namedef{#1}{%
-    \expandafter\let\default@neweq\neweqline
-    \def\midpunct@####1{%
+    \expandafter\let\breqn@default@neweq\neweqline
+    \def\breqn@midpunct####1{%
       \end{#3}####1%
       \expanded{%
-        \@nx\begin{#3}\expandonce\@@arg}}%
-    \Collect@Body\save@body}%
+        \@nx\begin{#3}\expandonce\breqn@@arg}}%
+    \Collect@Body\breqn@savebody}%
   \@namedef{end#1}##1{\check@punct@or@qed}%
   \@namedef{end@#1}{%
     \expanded{%
       \@nx\begin{#2}
-      \@nx\begin{#3}\expandonce\@@arg
-        \@nx\@@body
+      \@nx\begin{#3}\expandonce\breqn@@arg
+        \@nx\breqn@@body
       \@nx\end{#3}\expandonce\found@punct
       \@nx\end{#2}}}}
-\newDmath{Dmath}{dgroup*}{dmath}
-\newDmath{Dgroup}{dgroup}{dmath}
-\newDmath{Dseries}{dseries}{math}
-\newDmath{Dmath*}{dgroup*}{dmath*}
-\newDmath{Dgroup*}{dgroup*}{dmath*}
-\newDmath{Dseries*}{dseries*}{math}
+
+% the environments:
+\breqn@newDmath{Dmath}{dgroup*}{dmath}
+\breqn@newDmath{Dgroup}{dgroup}{dmath}
+\breqn@newDmath{Dseries}{dseries}{math}
+\breqn@newDmath{Dmath*}{dgroup*}{dmath*}
+\breqn@newDmath{Dgroup*}{dgroup*}{dmath*}% same as Dmath*
+\breqn@newDmath{Dseries*}{dseries*}{math}
 
 % punctuation scanning:
 \def\neweqline{%
   \@tempswafalse
-  \futurelet\@let@token\check@midpunct}
-\def\check@midpunct{%
+  \futurelet\@let@token\breqn@check@midpunct}
+
+% used by \neweqline (or \/) to check if there's punctuation next
+\def\breqn@check@midpunct{%
   \expanded{%
-    \ifx\@let@token\@sptoken\@nx\midpunct@{\default@sep}%
-    \else\ifx\@let@token ,\@nx\midpunct@
-    \else\ifx\@let@token .\@nx\midpunct@
-    \else\check@midpunct@b % check the less common possibilities
+    \ifx\@let@token\@sptoken\@nx\breqn@midpunct{\breqn@default@sep}%
+    \else\ifx\@let@token ,\@nx\breqn@midpunct
+    \else\ifx\@let@token .\@nx\breqn@midpunct
+    \else\breqn@check@midpunct@b % check the less common possibilities
     \fi\fi\fi}}
+
+% check for following punctuation copied from breqn proper
 \begingroup
-\toks@a{%
-  \ifx\@let@token ;\@nx\midpunct@
-  \else\ifx\@let@token ?\@nx\midpunct@
-  \else\ifx\@let@token !\@nx\midpunct@}
-\catcode`\.=\active \catcode`\,=\active \catcode`\;=\active
-\catcode`\?=\active \catcode`\!=\active
-\toks@b{%
-  \else\ifx\@let@token ,\@nx\midpunct@
-  \else\ifx\@let@token .\@nx\midpunct@
-  \else\ifx\@let@token ;\@nx\midpunct@
-  \else\ifx\@let@token ?\@nx\midpunct@
-  \else\ifx\@let@token !\@nx\midpunct@
-  \else\@nx\midpunct@{\default@sep}%
-  \fi\fi\fi\fi\fi\fi\fi}
-\xdef\check@midpunct@b{%
-  \the\toks@a\the\toks@b}
+  \toks@a{%
+    \ifx\@let@token ;\@nx\breqn@midpunct
+    \else\ifx\@let@token ?\@nx\breqn@midpunct
+    \else\ifx\@let@token !\@nx\breqn@midpunct}
+  
+  \catcode`\.=\active \catcode`\,=\active \catcode`\;=\active
+  \catcode`\?=\active \catcode`\!=\active
+
+  \toks@b{%
+    \else\ifx\@let@token ,\@nx\breqn@midpunct
+    \else\ifx\@let@token .\@nx\breqn@midpunct
+    \else\ifx\@let@token ;\@nx\breqn@midpunct
+    \else\ifx\@let@token ?\@nx\breqn@midpunct
+    \else\ifx\@let@token !\@nx\breqn@midpunct
+    \else\@nx\breqn@midpunct{\breqn@default@sep}%
+    \fi\fi\fi\fi\fi\fi\fi}
+  
+  \xdef\breqn@check@midpunct@b{\the\toks@a\the\toks@b}
 \endgroup
 
 % User-relevant setup:
-\def\default@neweq{\/}
-\def\default@sep{,}
+\def\breqn@default@neweq{\/}
+\def\breqn@default@sep{,}
 
 \endinput

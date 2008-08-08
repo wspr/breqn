@@ -72,7 +72,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: flexisym 2008/07/23 v0.97 Flexisym (MH)}
+\Msg{* Package: flexisym 2008/08/08 v0.97a Flexisym (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -138,11 +138,12 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{flexisym.drv}%
-  [2008/07/23 v0.97 flexisym (MH)]
+  [2008/08/08 v0.97a flexisym (MH)]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
 \setcounter{IndexColumns}{2}
+%\providecommand*\meta[1]{\ensuremath\langle\textit{#1}\ensuremath\rangle}
 \providecommand*\pkg[1]{\textsf{#1}}
 \providecommand*\cls[1]{\textsf{#1}}
 \providecommand*\opt[1]{\texttt{#1}}
@@ -162,7 +163,7 @@ and the derived files
 % \fi
 %
 % \title{The \textsf{flexisym} package}
-% \date{2008/07/23 v0.97}
+% \date{2008/08/08 v0.97a}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
@@ -178,10 +179,12 @@ and the derived files
 %
 %    \begin{macrocode}
 %<*package>
-\ProvidesPackage{flexisym}[2008/07/23 v0.97]
-\let\@xp\expandafter \let\@nx\noexpand
+\RequirePackage{l3names}[2007/09/01]
+\ProvidesExplPackage{flexisym}{2008/08/08}{0.97a}{Make math characters macros}
+\RequirePackage{l3clist}
+
 \edef\do{%
-  \@nx\AtEndOfPackage{%
+  \noexpand\AtEndOfPackage{%
     \catcode\number`\"=\number\catcode`\"
     \relax
   }%
@@ -191,9 +194,12 @@ and the derived files
 \let\@sym\@gobble
 \DeclareOption{robust}{%
   \def\@sym#1{%
-    \ifx\protect\@typeset@protect \else\protect#1\@xp\@gobblefour\fi
+    \ifx\protect\@typeset@protect \else\protect#1\exp_after:NN\use_none:nnnn\fi
   }%
 }
+%    \end{macrocode}
+% The math groups (mg) here relate to |\textfont|$n$.
+%    \begin{macrocode}
 \def\mg@bin{2}% binary operators
 \def\mg@rel{2}% relations
 %%\def\mg@nre{B}% negated relations
@@ -209,121 +215,353 @@ and the derived files
 \def\mg@cal{2}% script/calligraphic
 %%\def\mg@frak{5}% Fraktur letters
 \def\mg@digit{0}% decimal digits % 1 = oldstyle, 0 = capital
-\expandafter\let\csname MathChar \endcsname\mathchar
-\expandafter\let\csname Delimiter \endcsname\delimiter
-\expandafter\let\csname Radical \endcsname\radical
-\newcommand{\MathChar}{}
-\edef\MathChar{\csname MathChar \endcsname\noexpand\string}
-\newcommand{\Delimiter}{}
-\edef\Delimiter{\csname Delimiter \endcsname\noexpand\string}
-\newcommand{\Radical}{}
-\edef\Radical{\csname Radical \endcsname\noexpand\string}
+%    \end{macrocode}
+% This is how we insert mathchars. The command has three arguments:
+% class, fam and slot postion and so it is always given as
+% hexadecimal.  This way of separating things should make it easier
+% to get this to work with XeTeX et al.\ which have many more slot
+% positions
+%    \begin{macrocode}
+\def_protected:NNn \math_char:NNn 3 {
+  \tex_mathchar:D \num_eval:n{ " #1#2#3  }
+}
+%    \end{macrocode}
+% Delimiters and radicals are similar except here we have both small
+% and large variant. Radicals have no class.
+%    \begin{macrocode}
+\def_protected:NNn \math_delimiter:NNnNn 5 {
+  \tex_delimiter:D \num_eval:n{ " #1#2#3#4#5 }
+}
+\def_protected:NNn \math_radical:NnNn 4 {
+  \tex_radical:D  \num_eval:n{ " #1#2#3#4 }
+}
+\def_protected:NNn \math_accent:NNnn 4 {
+  \tex_mathaccent:D \num_eval:n{ " #1 #2 #3} {#4}
+}
+
 \let\sumlimits\displaylimits
 \let\intlimits\nolimits
 \let\namelimits\displaylimits
-\edef\m@Ord#1#2#3{\csname MathChar \endcsname"0#1#2#3 }
-\edef\m@Var#1#2#3{\csname MathChar \endcsname"7#1#2#3 }
-\edef\m@Bin#1#2#3{\csname MathChar \endcsname"2#1#2#3 }
-\edef\m@Rel#1#2#3{\csname MathChar \endcsname"3#1#2#3 }
-\edef\m@Pun#1#2#3{\csname MathChar \endcsname"6#1#2#3 }
-\edef\m@COs#1#2#3{\csname MathChar \endcsname"1#1#2#3 \sumlimits}
-\edef\m@COi#1#2#3{\csname MathChar \endcsname"1#1#2#3 \intlimits}
-\def\delim@a#1#2#3#4{\ifx\relax#1#2#3#4\else#1\fi #2#3#4}
-\def\delim@b#1#2#3#4{\ifx\relax#1#2#3#4\else#1\fi }
-\def\@tempa{%
-  \@nx\@xp\@nx\delim@a\@nx\csname sd@##1##2##3\@nx\endcsname ##1##2##3 }
-\edef\m@DeL#1#2#3{\csname Delimiter \endcsname"4\@tempa}
-\edef\m@DeR#1#2#3{\csname Delimiter \endcsname"5\@tempa}
-\edef\m@DeB#1#2#3{\csname Delimiter \endcsname"0\@tempa}
-\edef\m@DeA#1#2#3{\csname Delimiter \endcsname"3\@tempa}
-\edef\m@Rad#1#2#3{\csname Radical \endcsname"\@tempa}
-\def\do#1#2{\@xp\def\csname sd@#1\endcsname{#2}}
-\do{300}{028}
-\do{301}{029}
-\do{302}{05B}
-\do{303}{05D}
-\do{304}{262}
-\do{305}{263}
-\do{306}{264}
-\do{307}{265}
-\do{308}{266}
-\do{309}{267}
-\do{30A}{268}
-\do{30B}{269}
-\do{30C}{26A}
-\do{30D}{26B}
-\do{30E}{13D}
-\do{30F}{26E}
-\do{340}{37A}
-\do{341}{37B}
-\do{33A}{33A}
-\do{33B}{33B}
-\do{33E}{33E}
-\do{33C}{26A}
-\do{33D}{26B}
-\do{378}{222}
-\do{379}{223}
-\do{33F}{26C}
-\do{37E}{22A}
-\do{37F}{22B}
-\do{377}{26D}
-\do{30F}{26E}
-\def\m@Acc#1#2#3#4{\mathaccent"#1#2#3{#4}}
-\def\@symAcc{\@sym}
+%    \end{macrocode}
+% \TeX\ defines  eight types of atoms.
+% \begin{enumerate}\addtocounter{enumi}{-1}
+% \item Ordinary
+% \item Operators
+% \item Binary
+% \item Relation
+% \item Open
+% \item Close
+% \item Punctuation
+% \item Inner
+% \end{enumerate}
+% \TeX\ defines  eight math classes.
+% \begin{enumerate}\addtocounter{enumi}{-1}
+% \item Ordinary
+% \item Operators
+% \item Binary
+% \item Relation
+% \item Open
+% \item Close
+% \item Punctuation
+% \item Variable family
+% \end{enumerate}
+% flexisym/breqn extends this to  types of classes.
+% \begin{enumerate}\addtocounter{enumi}{-1}
+% \item Ordinary: (Ord), Bidirectional delimiters (DeB), Radicals
+%   (Rad), Accented items (Acc)
+% \item Operators: Cumulative Operators sum-like (COs), Cumulative
+%   Operators integral-like (COi)
+% \item Binary: (Bin)
+% \item Relation: (Rel), Arrow delimiters (DeA)
+% \item Open: (DeL)
+% \item Close (DeR)
+% \item Punctuation: (Pun)
+% \item Variable family: (Var)
+% \end{enumerate}
+%
+% Here's an overview of what we are about to do. Math chars of each
+% type as defined by us need a basic operation for inserting it. We
+% will call that function |\math_bsym_|\meta{type}|:Nn|. Next there
+% are compund symbols for each type which we name
+% |\math_bcsym_|\meta{type}|:Nn|. Also, there is inline mode and
+% display mode which are different. We will call them for
+% |\math_isym_|\meta{type}|:Nn| |\math_icsym_|\meta{type}|:Nn| for
+% inline mode and |\math_dsym_|\meta{type}|:Nn| and
+% |\math_dcsym_|\meta{type}|:Nn|. The code uses the terms
+% |\math_sym_|\meta{type}|:Nn| and |\math_csym_|\meta{type}|:Nn| for
+% the current meaning of things.  First up the basic definitions. |#1|
+% is the math group it is from and |#2| is the slot position.
+%    \begin{macrocode}
+\def_new:Npn \math_bsym_Ord:Nn {\math_char:NNn 0 }% \m@Ord
+\def_new:Npn \math_bsym_Var:Nn {\math_char:NNn 7 }% \m@Var
+\def_new:Npn \math_bsym_Bin:Nn {\math_char:NNn 2}% \m@Bin
+\def_new:Npn \math_bsym_Rel:Nn {\math_char:NNn 3 }% \m@Bin
+\def_new:Npn \math_bsym_Pun:Nn {\math_char:NNn 6 }%\m@Pun
+\def_new:NNn \math_bsym_COs:Nn 2{\math_char:NNn 1#1{#2} \sumlimits}% \m@COs
+\def_new:NNn \math_bsym_COi:Nn 2{\math_char:NNn 1#1{#2} \intlimits}% \m@COi
+\def_new:NNn \math_bsym_DeL:Nn 2{ \math_sd_aux:nn {\math_delimiter:NNnNn 4}{#1{#2}} #1{#2}}%\m@DeL
+\def_new:NNn \math_bsym_DeR:Nn 2{ \math_sd_aux:nn {\math_delimiter:NNnNn 5}{#1{#2}} #1{#2}}%\m@DeR
+\def_new:NNn \math_bsym_DeB:Nn 2{ \math_sd_aux:nn {\math_delimiter:NNnNn 0}{#1{#2}} #1{#2}}%\m@DeB
+\def_new:NNn \math_bsym_DeA:Nn 2{ \math_sd_aux:nn {\math_delimiter:NNnNn 3}{#1{#2}} #1{#2}}%\m@DeL
+\def_new:NNn \math_bsym_Rad:Nn 2{ \math_sd_aux:nn {\math_radical:NnNn}{#1{#2}} #1{#2}}%\m@Rad
+\def_new:NNn \math_bsym_Acc:Nn 4{\math_accent:NNnn #1#2{#3}{#4}}% name is wrong
+
+%    \end{macrocode}
+% Next is somewhat complicated internally. The way it is done is that
+% delimiters and radicals need information about the smallest version
+% of the symbol.  If this smallest delimiter (SD) is defined, then use
+% it. We have these functions to help us return the number. Extract
+% the numbers to use and stick a function in front of it.
+%    \begin{macrocode}
+\def:Npn \math_sd_aux:nn  #1#2 {
+  \exp_args:Nnf \use_arg_i_ii:nn { #1}  { \math_sd_auxi:Nn #2 }
+}
+\def:Npn \math_sd_auxi:Nn #1#2 {
+   \cs_if_free:cTF {sd@#1#2}
+  {   #1{#2}  }
+  {   \cs_use:c{sd@#1#2}  }
+}
+
+%    \end{macrocode}
+% compound symbols here
+%    \begin{macrocode}
+\def_protected:Npn \math_bcsym_Ord:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symOrd
+\def_protected:Npn \math_bcsym_Var:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symVar
+\def_protected:Npn \math_bcsym_Bin:Nn #1#2{\@symtype\mathbin{\OrdSymbol{#2}}}%\@symBin
+\def_protected:Npn \math_bcsym_Rel:Nn #1#2{\@symtype\mathrel{\OrdSymbol{#2}}}%\@symRel
+\def_protected:Npn \math_bcsym_Pun:Nn #1#2{\@symtype\mathpunct{\OrdSymbol{#2}}}%\@symPun
+\def_protected:Npn \math_bcsym_COi:Nn #1#2{\@symtype\mathop{\OrdSymbol{#2}\intlimits}}%\@symCOi
+\def_protected:Npn \math_bcsym_COs:Nn #1#2{\@symtype\mathop{\OrdSymbol{#2}\sumlimits}}%\@symCOs
+\def_protected:Npn \math_bcsym_DeL:Nn #1#2{\@symtype\mathopen{\OrdSymbol{#2}}}%\@symDeL
+\def_protected:Npn \math_bcsym_DeR:Nn #1#2{\@symtype\mathclose{\OrdSymbol{#2}}}%\@symDeR
+\def_protected:Npn \math_bcsym_DeB:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symDeB
+\def_protected:Npn \math_bcsym_DeA:Nn #1#2{\@symtype\mathrel{\OrdSymbol{#2}}}%\@symDeA
+\def_protected:Npn \math_bcsym_Acc:Nn {\@sym}%\@symAcc FIX!
+% These three?
+\def_protected:Npn \math_bcsym_Ope:Nn #1#2{\@symtype\mathopen{\OrdSymbol{#2}}}%\@symVar
+\def_protected:Npn \math_bcsym_Clo:Nn #1#2{\@symtype\mathclose{\OrdSymbol{#2}}}%\@symVar
+\def_protected:Npn \math_bcsym_Inn:Nn #1#2{\@symtype\mathinner{\OrdSymbol{#2}}}%\@symVar
+
 \let\@symtype\@firstofone
-\def\@symOrd#1#2{\@symtype\mathord{\OrdSymbol{#2}}}
-\def\@symVar{\@symOrd}
-\def\@symBin#1#2{\@symtype\mathbin{\OrdSymbol{#2}}}
-\def\@symRel#1#2{\@symtype\mathrel{\OrdSymbol{#2}}}
-\def\@symPun#1#2{\@symtype\mathpunct{\OrdSymbol{#2}}}
-\def\@symCOi#1#2{\@symtype{\mathop{\OrdSymbol{#2}}\intlimits}}
-\def\@symCOs#1#2{\@symtype{\mathop{\OrdSymbol{#2}}\sumlimits}}
-\def\@symOpe#1#2{\@symtype\mathopen{\OrdSymbol{#2}}}
-\def\@symClo#1#2{\@symtype\mathclose{\OrdSymbol{#2}}}
-\def\@symDeL#1#2{\@symtype\mathopen{\OrdSymbol{#2}}}
-\def\@symDeR#1#2{\@symtype\mathclose{\OrdSymbol{#2}}}
-\def\@symDeB#1#2{\@symtype\mathord{\OrdSymbol{#2}}}
-\def\@symInn#1#2{\@symtype\mathinner{\OrdSymbol{#2}}}
-\def\@xnce#1{\@xp\@nx\csname#1\endcsname}
 \let\sym@global\global
+%    \end{macrocode}
+%
+%
+%
+%
+% The inline variants, using the basic operations. Currently we do not
+% do anything to inline math.
+%    \begin{macrocode}
+\def_new:Npn \math_isym_Ord:Nn {\math_bsym_Ord:Nn  }% \m@Ord
+\def_new:Npn \math_isym_Var:Nn {\math_bsym_Var:Nn }% \m@Var
+\def_new:Npn \math_isym_Bin:Nn {\math_bsym_Bin:Nn}% \m@Bin
+\def_new:Npn \math_isym_Rel:Nn {\math_bsym_Rel:Nn }% \m@Bin
+\def_new:Npn \math_isym_Pun:Nn {\math_bsym_Pun:Nn }%\m@Pun
+\def_new:Npn \math_isym_COs:Nn {\math_bsym_COs:Nn}% \m@COs
+\def_new:Npn \math_isym_COi:Nn {\math_bsym_COi:Nn}% \m@COi
+\def_new:Npn \math_isym_DeL:Nn {\math_bsym_DeL:Nn}%\m@DeL
+\def_new:Npn \math_isym_DeR:Nn{ \math_bsym_DeR:Nn}%\m@DeR
+\def_new:Npn \math_isym_DeB:Nn{ \math_bsym_DeB:Nn }%\m@DeB
+\def_new:Npn \math_isym_DeA:Nn { \math_bsym_DeA:Nn }%\m@DeA
+\def_new:Npn \math_isym_Rad:Nn { \math_bsym_Rad:Nn}%\m@Rad
+\def_new:Npn \math_isym_Acc:Nn {\math_bsym_DeL:Nn}% name is wrong
+% inline compound
+\def_protected:Npn \math_icsym_Ord:Nn {\math_bcsym_Ord:Nn}
+\def_protected:Npn \math_icsym_Var:Nn {\math_bcsym_Var:Nn}
+\def_protected:Npn \math_icsym_Bin:Nn {\math_bcsym_Bin:Nn}
+\def_protected:Npn \math_icsym_Rel:Nn {\math_bcsym_Rel:Nn}
+\def_protected:Npn \math_icsym_Pun:Nn {\math_bcsym_Pun:Nn}
+\def_protected:Npn \math_icsym_COi:Nn {\math_bcsym_COi:Nn}
+\def_protected:Npn \math_icsym_COs:Nn {\math_bcsym_COs:Nn}
+\def_protected:Npn \math_icsym_DeL:Nn {\math_bcsym_DeL:Nn}
+\def_protected:Npn \math_icsym_DeR:Nn {\math_bcsym_DeR:Nn}
+\def_protected:Npn \math_icsym_DeB:Nn {\math_bcsym_DeB:Nn}
+\def_protected:Npn \math_icsym_DeA:Nn {\math_bcsym_DeA:Nn}
+\def_protected:Npn \math_icsym_Acc:Nn {\math_bcsym_Acc:Nn}
+\def_protected:Npn \math_icsym_Ope:Nn {\math_bcsym_Ope:Nn}
+\def_protected:Npn \math_icsym_Clo:Nn {\math_bcsym_Clo:Nn}
+\def_protected:Npn \math_icsym_Inn:Nn {\math_bcsym_Inn:Nn}
+%    \end{macrocode}
+%
+% The display variants, using the basic operations. Currently we do
+% not do anything to inline math.
+%    \begin{macrocode}
+\def_new:Npn \math_dsym_Ord:Nn {\math_bsym_Ord:Nn }
+\def_new:Npn \math_dsym_Var:Nn {\math_bsym_Var:Nn }
+\def_new:Npn \math_dsym_Bin:Nn {\math_bsym_Bin:Nn}
+\def_new:Npn \math_dsym_Rel:Nn {\math_bsym_Rel:Nn }
+\def_new:Npn \math_dsym_Pun:Nn {\math_bsym_Pun:Nn }
+\def_new:Npn \math_dsym_COs:Nn {\math_bsym_COs:Nn}
+\def_new:Npn \math_dsym_COi:Nn {\math_bsym_COi:Nn}
+\def_new:Npn \math_dsym_DeL:Nn {\math_bsym_DeL:Nn}
+\def_new:Npn \math_dsym_DeR:Nn{ \math_bsym_DeR:Nn}
+\def_new:Npn \math_dsym_DeB:Nn{ \math_bsym_DeB:Nn }
+\def_new:Npn \math_dsym_DeA:Nn { \math_bsym_DeA:Nn }
+\def_new:Npn \math_dsym_Rad:Nn { \math_bsym_Rad:Nn}
+\def_new:Npn \math_dsym_Acc:Nn {\math_bsym_DeL:Nn}
+% inline compound
+\def_protected:Npn \math_dcsym_Ord:Nn {\math_bcsym_Ord:Nn}
+\def_protected:Npn \math_dcsym_Var:Nn {\math_bcsym_Var:Nn}
+\def_protected:Npn \math_dcsym_Bin:Nn {\math_bcsym_Bin:Nn}
+\def_protected:Npn \math_dcsym_Rel:Nn {\math_bcsym_Rel:Nn}
+\def_protected:Npn \math_dcsym_Pun:Nn {\math_bcsym_Pun:Nn}
+\def_protected:Npn \math_dcsym_COi:Nn {\math_bcsym_COi:Nn}
+\def_protected:Npn \math_dcsym_COs:Nn {\math_bcsym_COs:Nn}
+\def_protected:Npn \math_dcsym_DeL:Nn {\math_bcsym_DeL:Nn}
+\def_protected:Npn \math_dcsym_DeR:Nn {\math_bcsym_DeR:Nn}
+\def_protected:Npn \math_dcsym_DeB:Nn {\math_bcsym_DeB:Nn}
+\def_protected:Npn \math_dcsym_DeA:Nn {\math_bcsym_DeA:Nn}
+\def_protected:Npn \math_dcsym_Acc:Nn {\math_bcsym_Acc:Nn}
+\def_protected:Npn \math_dcsym_Ope:Nn {\math_bcsym_Ope:Nn}
+\def_protected:Npn \math_dcsym_Clo:Nn {\math_bcsym_Clo:Nn}
+\def_protected:Npn \math_dcsym_Inn:Nn {\math_bcsym_Inn:Nn}
+%    \end{macrocode}
+% Almost ready now! Now just need two commands to initialize these
+% settings.
+%
+%    \begin{macrocode}
+\def:Npn \math_setup_inline_symbols:{
+  \let:NN \math_sym_Ord:Nn \math_isym_Ord:Nn 
+  \let:NN \math_sym_Var:Nn \math_isym_Var:Nn 
+  \let:NN \math_sym_Bin:Nn \math_isym_Bin:Nn
+  \let:NN \math_sym_Rel:Nn \math_isym_Rel:Nn 
+  \let:NN \math_sym_Pun:Nn \math_isym_Pun:Nn 
+  \let:NN \math_sym_COs:Nn \math_isym_COs:Nn
+  \let:NN \math_sym_COi:Nn \math_isym_COi:Nn
+  \let:NN \math_sym_DeL:Nn \math_isym_DeL:Nn
+  \let:NN \math_sym_DeR:Nn \math_isym_DeR:Nn
+  \let:NN \math_sym_DeB:Nn \math_isym_DeL:Nn 
+  \let:NN \math_sym_DeA:Nn  \math_isym_DeA:Nn 
+  \let:NN \math_sym_Rad:Nn  \math_isym_Rad:Nn
+  \let:NN \math_sym_Acc:Nn \math_isym_DeL:Nn
+  \let:NN \math_csym_Ord:Nn \math_icsym_Ord:Nn
+  \let:NN \math_csym_Var:Nn \math_icsym_Var:Nn
+  \let:NN \math_csym_Bin:Nn \math_icsym_Bin:Nn
+  \let:NN \math_csym_Rel:Nn \math_icsym_Rel:Nn
+  \let:NN \math_csym_Pun:Nn \math_icsym_Pun:Nn
+  \let:NN \math_csym_COi:Nn \math_icsym_COi:Nn
+  \let:NN \math_csym_COs:Nn \math_icsym_COs:Nn
+  \let:NN \math_csym_DeL:Nn \math_icsym_DeL:Nn
+  \let:NN \math_csym_DeR:Nn \math_icsym_DeR:Nn
+  \let:NN \math_csym_DeB:Nn \math_icsym_DeB:Nn
+  \let:NN \math_csym_DeA:Nn \math_icsym_DeA:Nn
+  \let:NN \math_csym_Acc:Nn \math_icsym_Acc:Nn
+  \let:NN \math_csym_Ope:Nn \math_icsym_Ope:Nn
+  \let:NN \math_csym_Clo:Nn \math_icsym_Clo:Nn
+  \let:NN \math_csym_Inn:Nn \math_icsym_Inn:Nn
+}
+
+\def:Npn \math_setup_display_symbols:{
+  \let:NN \math_sym_Ord:Nn \math_dsym_Ord:Nn 
+  \let:NN \math_sym_Var:Nn \math_dsym_Var:Nn 
+  \let:NN \math_sym_Bin:Nn \math_dsym_Bin:Nn
+  \let:NN \math_sym_Rel:Nn \math_dsym_Rel:Nn 
+  \let:NN \math_sym_Pun:Nn \math_dsym_Pun:Nn 
+  \let:NN \math_sym_COs:Nn \math_dsym_COs:Nn
+  \let:NN \math_sym_COi:Nn \math_dsym_COi:Nn
+  \let:NN \math_sym_DeL:Nn \math_dsym_DeL:Nn
+  \let:NN \math_sym_DeR:Nn \math_dsym_DeR:Nn
+  \let:NN \math_sym_DeB:Nn \math_dsym_DeL:Nn 
+  \let:NN \math_sym_DeA:Nn  \math_dsym_DeA:Nn 
+  \let:NN \math_sym_Rad:Nn  \math_dsym_Rad:Nn
+  \let:NN \math_sym_Acc:Nn \math_dsym_DeL:Nn
+  \let:NN \math_csym_Ord:Nn \math_dcsym_Ord:Nn
+  \let:NN \math_csym_Var:Nn \math_dcsym_Var:Nn
+  \let:NN \math_csym_Bin:Nn \math_dcsym_Bin:Nn
+  \let:NN \math_csym_Rel:Nn \math_dcsym_Rel:Nn
+  \let:NN \math_csym_Pun:Nn \math_dcsym_Pun:Nn
+  \let:NN \math_csym_COi:Nn \math_dcsym_COi:Nn
+  \let:NN \math_csym_COs:Nn \math_dcsym_COs:Nn
+  \let:NN \math_csym_DeL:Nn \math_dcsym_DeL:Nn
+  \let:NN \math_csym_DeR:Nn \math_dcsym_DeR:Nn
+  \let:NN \math_csym_DeB:Nn \math_dcsym_DeB:Nn
+  \let:NN \math_csym_DeA:Nn \math_dcsym_DeA:Nn
+  \let:NN \math_csym_Acc:Nn \math_dcsym_Acc:Nn
+  \let:NN \math_csym_Ope:Nn \math_dcsym_Ope:Nn
+  \let:NN \math_csym_Clo:Nn \math_dcsym_Clo:Nn
+  \let:NN \math_csym_Inn:Nn \math_dcsym_Inn:Nn
+}
+%    \end{macrocode}
+% Phew, that was it.
+%
+% Well, almost. We need to set them up for use properly. Should they
+% be added to |\everymath|? Probably, for math within
+% displays. However, this is a lot of extra processing which we could
+% tackle in the display setup.
+%    \begin{macrocode}
+\math_setup_inline_symbols:
+%    \end{macrocode}
+%
+% Need an active character for a second. Don't rely on |~| being
+% active!
+%    \begin{macrocode}
+\edef\tmp{\catcode\z@=\the\catcode\z@}
+\catcode\z@=\active
 \def\DeclareFlexSymbol#1#2#3#4{%
   \begingroup
-  \edef\@tempb{\@nx\@sym\@nx#1\@xnce{m@#2}\@xnce{mg@#3}#4}%
-  \ifcat\@nx#1\relax
+  \def:Npx\@tempb{\exp_not:N\@sym\exp_not:N#1\exp_not:c{math_sym_#2:Nn}\exp_not:c{mg@#3}{#4}}%
+  \ifcat\exp_not:N#1\relax
     \sym@global\let#1\@tempb
   \else
     \sym@global\mathcode`#1="8000\relax
-    \lccode`\~=`#1\relax
-    \lowercase{\sym@global\let~\@tempb}%
+    \lccode\z@=`#1\relax
+    \lowercase{\sym@global\let^^@\@tempb}% zero char
   \fi
   \endgroup
 }
+\tmp % restore catcode
+\def:Npn \DeclareFlexSymbolDelimiter #1#2#3#4#5#6{
+  \DeclareFlexSymbol{#1}{#2}{#3}{#4}
+  \gdef:cpx{sd@\cs_use:c{mg@#3}#4}{\exp_not:c{mg@#5}{#6}}
+}
+
+%    \end{macrocode}
+% |\DeclareFlexCompoundSymbol{\cdots}{Inn}{\cdotp\cdotp\cdotp}|
+% |\def\@symInn#1#2{\@symtype\mathinner{\OrdSymbol{#2}}}|
+% |\@symtype \mathinner{\OrdSymbol{\cdtop\cdotp\cdotp}}|
+%    \begin{macrocode}
 \def\DeclareFlexCompoundSymbol#1#2#3{%
-  \@xp\DeclareRobustCommand\@xp#1\@xp{\csname @sym#2\endcsname#1{#3}}%
+  \exp_args:NNo \DeclareRobustCommand#1{\csname math_csym_#2:Nn\endcsname#1{#3}}%
   \sym@global\let#1#1\relax
 }
 \DeclareRobustCommand\textchar{\text@char\textfont}
 \DeclareRobustCommand\scriptchar{\text@char\scriptfont}%
-\def\text@char@a{\?\endgroup}%
-\def\text@char@sym#1#2#3{%
+%    \end{macrocode}
+% Simplified the next bit because now the slot is read as one argument
+% so no afterassignment and what have you. Just drop the char
+% directly.
+%    \begin{macrocode}
+\def\text@char@sym#1#2#3#4{% #3=fam, #4=slot
   \begingroup
-    \let\@sym\relax % defense against infinite loops
-    \the\text@script@char#3%
-    \afterassignment\text@char@a
-    \chardef\?="%
+    \let:NN \@sym \use_noop: % defense against infinite loops
+%    \end{macrocode}
+% the next line will result in |\scriptfont|\meta{num}, where |#3|
+% provides the \meta{num}.
+%    \begin{macrocode}
+   \the\text@script@char#3%
+   \char"#4\endgroup
 }
-\def\text@char#1#2{\begingroup\check@mathfonts
-  \let\text@script@char#1\let\@sym\text@char@sym
-  \let\@symtype\@secondoftwo \let\OrdSymbol\@firstofone
-  \let\ifmmode\iftrue \everymath{$\@gobble}%$
-  \def\mkern{\muskip\z@}\let\mskip\mkern
-  \ifcat\relax\noexpand#2#2%
+\edef\tmp{\catcode\z@=\the\catcode\z@}
+\catcode\z@=\active
+\def\text@char#1#2{\begingroup
+  \check@mathfonts
+  \let:NN \text@script@char#1
+  \let:NN \@sym\text@char@sym
+  \let:NN \@symtype\use_arg_ii:nn 
+  \let:NN\OrdSymbol\use_arg_i:n
+  \let:NN\ifmmode\iftrue 
+  \everymath{$\use_none:n}%$
+  \def\mkern{\muskip\z@}
+  \let:NN\mskip\mkern
+  \ifcat\relax\noexpand#2% true if #2 is a cs.
+    #2%  
   \else
-    \lccode`\~=\expandafter`\string#2\relax
-    \lowercase{~}%
+    \lccode\z@=\expandafter`\string#2\relax
+    \lowercase{^^@}%
   \fi
   \endgroup
 }
+\tmp % restore catcode
 \providecommand\textprime{}
 \DeclareRobustCommand\textprime{\leavevmode
   \raise.8ex\hbox{\text@char\scriptfont\prime}%
@@ -334,40 +572,47 @@ and the derived files
     \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@
   }%
 }
+%    \end{macrocode}
+% Arrow fills. changed to 7mu as in amsmath
+%    \begin{macrocode}
 \@ifundefined{rightarrowfill@}{}{%
   \def\rightarrowfill@#1{\m@th\setboxz@h{$#1\relbar$}\ht\z@\z@
-    $#1\copy\z@\mkern-6mu\cleaders
+    $#1\copy\z@\mkern-7mu\cleaders
     \hbox{$#1\mkern-2mu\box\z@\mkern-2mu$}\hfill
     \mkern-6mu\OrdSymbol{\rightarrow}$}
   \def\leftarrowfill@#1{\m@th\setboxz@h{$#1\relbar$}\ht\z@\z@
     $#1\OrdSymbol{\leftarrow}\mkern-6mu\cleaders
     \hbox{$#1\mkern-2mu\copy\z@\mkern-2mu$}\hfill
-    \mkern-6mu\box\z@$}
+    \mkern-7mu\box\z@$}
   \def\leftrightarrowfill@#1{\m@th\setboxz@h{$#1\relbar$}\ht\z@\z@
     $#1\OrdSymbol{\leftarrow}\mkern-6mu\cleaders
     \hbox{$#1\mkern-2mu\box\z@\mkern-2mu$}\hfill
     \mkern-6mu\OrdSymbol{\rightarrow}$}
 }
-\def\binrel@sym#1#2#3#4#5{%
+%    \end{macrocode}
+% hey, this looks like a simple case switch...
+%    \begin{macrocode}
+\def\binrel@sym#1#2#3#4{%
   \xdef\binrel@@##1{%
-    \ifx\m@Ord#2\@nx\@symOrd
-    \else\ifx\m@Var#2\@nx\@symVar
-    \else\ifx\m@COs#2\@nx\@symCOs
-    \else\ifx\m@COi#2\@nx\@symCOi
-    \else\ifx\m@Bin#2\@nx\@symBin
-    \else\ifx\m@Rel#2\@nx\@symRel
-    \else\ifx\m@Pun#2\@nx\@symPun
-    \else\@nx\@symErr \fi\fi\fi\fi\fi\fi\fi
-  ?{\@nx\OrdSymbol{##1}}}%
+    \ifx\math_sym_Ord:Nn #2 \math_csym_Ord:Nn 
+    \else\ifx\math_sym_Var:Nn#2 \math_csym_Var:Nn 
+    \else\ifx\math_sym_COs:Nn#2 \math_csym_COs:Nn 
+    \else\ifx\math_sym_COi:Nn#2 \math_csym_COi:Nn 
+    \else\ifx\math_sym_Bin:Nn#2 \math_csym_Bin:Nn
+    \else\ifx\math_sym_Rel:Nn#2 \math_csym_Rel:Nn 
+    \else\ifx\math_sym_Pun:Nn#2 \math_csym_Pun:Nn 
+    \else\exp_not:N\@symErr \fi\fi\fi\fi\fi\fi\fi
+  ?{\exp_not:N\OrdSymbol{##1}}}%
 }
+
 \def\binrel@a{%
-  \def\@symOrd##1##2{\gdef\binrel@@####1{\@symOrd##1{\OrdSymbol{####1}}}}%
-  \def\@symVar##1##2{\gdef\binrel@@####1{\@symVar##1{\OrdSymbol{####1}}}}%
-  \def\@symCOs##1##2{\gdef\binrel@@####1{\@symCOs##1{\OrdSymbol{####1}}}}%
-  \def\@symCOi##1##2{\gdef\binrel@@####1{\@symCOi##1{\OrdSymbol{####1}}}}%
-  \def\@symBin##1##2{\gdef\binrel@@####1{\@symBin##1{\OrdSymbol{####1}}}}%
-  \def\@symRel##1##2{\gdef\binrel@@####1{\@symRel##1{\OrdSymbol{####1}}}}%
-  \def\@symPun##1##2{\gdef\binrel@@####1{\@symPun##1{\OrdSymbol{####1}}}}%
+  \def\math_sym_Ord:Nn##1##2{\gdef\binrel@@####1{\math_sym_Ord:Nn##1{\OrdSymbol{####1}}}}%
+  \def\math_sym_Var:Nn##1##2{\gdef\binrel@@####1{\math_sym_Var:Nn##1{\OrdSymbol{####1}}}}%
+  \def\math_sym_COs:Nn##1##2{\gdef\binrel@@####1{\math_sym_COs:Nn##1{\OrdSymbol{####1}}}}%
+  \def\math_sym_COi:Nn##1##2{\gdef\binrel@@####1{\math_sym_COi:Nn##1{\OrdSymbol{####1}}}}%
+  \def\math_sym_Bin:Nn##1##2{\gdef\binrel@@####1{\math_sym_Bin:Nn##1{\OrdSymbol{####1}}}}%
+  \def\math_sym_Rel:Nn##1##2{\gdef\binrel@@####1{\math_sym_Rel:Nn##1{\OrdSymbol{####1}}}}%
+  \def\math_sym_Pun:Nn##1##2{\gdef\binrel@@####1{\math_sym_Pun:Nn##1{\OrdSymbol{####1}}}}%
 }
 \def\binrel@#1{%
   \setbox\z@\hbox{$%
@@ -377,26 +622,42 @@ and the derived files
 }
 \def\@symextension{sym}
 \newcommand\usesymbols[1]{%
-  \@for\@tempb:=#1\do{%
-    \@xp\@onefilewithoptions\@xp{\@tempb}[][]\@symextension
+  \clist_map_variable:nNn{#1}\@tempb{%
+    \exp_args:No\@onefilewithoptions{\@tempb}[][]\@symextension
   }%
 }
+% Need to introduce \ProvidesExplFile somehow
 \newcommand\ProvidesSymbols[1]{\ProvidesFile{#1.sym}}
-\DeclareRobustCommand{\not}[1]{\@symRel\not{\OrdSymbol{\notRel#1}}}
+\DeclareRobustCommand{\not}[1]{\math_csym_Rel:Nn\not{\OrdSymbol{\notRel#1}}}
 \DeclareRobustCommand{\OrdSymbol}[1]{%
   \begingroup\mathchars@reset#1\endgroup
 }
 \def\mathchars@reset{\let\@sym\@sym@ord \let\@symtype\@symtype@ord
   \let\OrdSymbol\relax}
 \def\@symtype@ord#1#{}% a strange sort of \@gobble
-\def\@sym@ord#1#2{\@xp\@sym@ord@a\string#2\@nil}%
+\def\@sym@ord#1#2{\exp_after:NN\@sym@ord@a\string#2\@nil}%
+%    \end{macrocode}
+% Read delimited argument here. We want to find first character of
+% DeA, Bin, etc. and the control sequence checked agains is |\m@DeL|,
+% |\m@Pun|, etc.  The lccode trick makes the . into an @ with catcode
+% 12. This is what results when the code is called with
+% |\string|. Beware of this when we change internal names for math
+% groups! If a Delimiter is found, insert it with class 0 but use the
+% smallest version available. Otherwise just insert math char of class
+% 0. The code here is not pretty and it indicates it should be tackled
+% differently!
+%    \begin{macrocode}
 \begingroup
-\lccode`\.=`\@ \lowercase{\endgroup
-\def\@sym@ord@a#1.}#2#3\@nil#4#5#6{%
-  \csname MathChar \endcsname"0%
-    \if D#2\@xp\delim@b\csname sd@#4#5#6\endcsname#4#5#6
-    \else #4#5#6
-    \fi
+\lccode`\.=`\_ \lowercase{\endgroup
+\def\@sym@ord@a#1.#2.}#3#4\@nil#5#6{%
+  \if D#3
+     \math_ord_delim_aux:Nn #5{#6} 
+  \else
+    \math_char:NNn 0 #5{#6}
+  \fi 
+}
+\def:NNn \math_ord_delim_aux:Nn 2{
+  \math_sd_aux:nn { \math_char:NNn 0 } {#1{#2}} 
 }
 %    \end{macrocode}
 %
@@ -454,18 +715,22 @@ and the derived files
 %    \begin{macrocode}
 \AtBeginDocument{%
 \def\newmcodes@{%
-  \mathcode `\'39\mathcode `\*42\mathcode `\."613A
-  \ifnum\mathcode`\-=45
+  \mathcode `\'39\space
+  \mathcode `\*42\space
+  \mathcode `\."613A\space
+  \ifnum\mathcode`\-=45\space
   \else
 %    \end{macrocode}
 % The extra check. Don't do anything if \texttt{-} is math active.
 %    \begin{macrocode}
-    \ifnum\mathcode`\-=32768
+    \ifnum\mathcode`\-=32768\space
     \else 
       \mathchardef \std@minus \mathcode `\-\relax
     \fi
   \fi
-  \mathcode `\-45 \mathcode `\/47\mathcode `\:"603A\relax 
+  \mathcode `\-45\space 
+  \mathcode `\/47\space
+  \mathcode `\:"603A\space\relax 
 }%
 }
 %    \end{macrocode}
@@ -521,20 +786,21 @@ and the derived files
 %<cmbase>\ProvidesSymbols{cmbase}[2007/12/19 v0.92]
 %<mathpazo>\ProvidesSymbols{mathpazo}[2007/12/19 v0.2]
 %<mathptmx>\ProvidesSymbols{mathptmx}[2007/12/19 v0.2]
-\@xp\xdef\csname mg@OT1\endcsname{\hexnumber@\symoperators}
-\@xp\xdef\csname mg@OML\endcsname{\hexnumber@\symletters}
-\@xp\xdef\csname mg@OMS\endcsname{\hexnumber@\symsymbols}
-\@xp\xdef\csname mg@OMX\endcsname{\hexnumber@\symlargesymbols}
-\gdef\mg@bin{\mg@OMS}
-\gdef\mg@del{\mg@OMX}
-\xdef\mg@digit{\@xp\@nx\csname mg@OT1\endcsname}
+\ExplSyntaxOn
+\gdef:cpx{mg@OT1}{\hexnumber@\symoperators}
+\gdef:cpx{mg@OML}{\hexnumber@\symletters}
+\gdef:cpx{mg@OMS}{\hexnumber@\symsymbols}
+\gdef:cpx{mg@OMX}{\hexnumber@\symlargesymbols}
+\gdef:Npx\mg@bin{\mg@OMS}
+\gdef:Npx\mg@del{\mg@OMX}
+\gdef:Npx\mg@digit{\exp_not:c{mg@OT1}}
 \gdef\mg@latin{\mg@OML}
-\global\let\mg@Latin\mg@latin
-\global\let\mg@greek\mg@latin
-\global\let\mg@Greek\mg@digit
-\global\let\mg@rel\mg@bin
-\global\let\mg@ord\mg@bin
-\global\let\mg@cop\mg@del
+\glet:NN\mg@Latin\mg@latin
+\glet:NN\mg@greek\mg@latin
+\glet:NN\mg@Greek\mg@digit
+\glet:NN\mg@rel\mg@bin
+\glet:NN\mg@ord\mg@bin
+\glet:NN\mg@cop\mg@del
 %    \end{macrocode}
 % 
 % 
@@ -554,7 +820,7 @@ and the derived files
 % uppercase Greek letters class 0 (nonvariable) instead of 7
 % (variable), to eliminate the glaring inconsistency with lowercase
 % Greek.    (In plain \TeX , \verb"{\bf\Delta}" works, while
-% \verb"{\bf\delta}" doesn't.   ) Let us try to make them both
+% \verb"{\bf\delta}" doesn't.) Let us try to make them both
 % variable (fonts permitting) instead of nonvariable.   
 %    \begin{macrocode}
 \DeclareFlexSymbol{\Gamma}  {Var}{Greek}{00}
@@ -810,7 +1076,7 @@ and the derived files
 \DeclareFlexSymbol{\notRel}{Rel}{rel}{36}
 \DeclareFlexSymbol{\mapstoOrd}{Ord}{OMS}{37}
 \DeclareFlexSymbol{\cdotOrd}{Ord}{OMS}{01}
-\def\cdotp{\mathpunct{\cdotOrd}}
+\def:Npn\cdotp{\mathpunct{\cdotOrd}}
 %    \end{macrocode}
 % Symbols from the 128-character \fn{cmex} encoding.   
 % \verb"COs" stands for `cumulative operator
@@ -848,32 +1114,33 @@ and the derived files
 % \begin{verbatim}
 % \sd@GXX
 % \end{verbatim}
-% where G is the mathgroup and XX is the hexadecimal glyph position.   
+% where G is the mathgroup and XX is the hexadecimal glyph
+% position. |\DeclareFlexSymbolDelimiter| does that for us.
 %    \begin{macrocode}
-\DeclareFlexSymbol{\rangle}{DeR}{del}{0B}
-\DeclareFlexSymbol{\langle}{DeL}{del}{0A}
-\DeclareFlexSymbol{\rbrace}{DeR}{del}{09}
-\DeclareFlexSymbol{\lbrace}{DeL}{del}{08}
-\DeclareFlexSymbol{\rceil}{DeR}{del}{07}
-\DeclareFlexSymbol{\lceil}{DeL}{del}{06}
-\DeclareFlexSymbol{\rfloor}{DeR}{del}{05}
-\DeclareFlexSymbol{\lfloor}{DeL}{del}{04}
-\DeclareFlexSymbol{(}{DeL}{del}{00}
-\DeclareFlexSymbol{)}{DeR}{del}{01}
-\DeclareFlexSymbol{[}{DeL}{del}{02}
-\DeclareFlexSymbol{]}{DeR}{del}{03}
-\DeclareFlexSymbol{\lVert}{DeL}{del}{0D}
-\DeclareFlexSymbol{\rVert}{DeR}{del}{0D}
-\DeclareFlexSymbol{\lvert}{DeL}{del}{0C}
-\DeclareFlexSymbol{\rvert}{DeR}{del}{0C}
-\DeclareFlexSymbol{\Vert}{DeB}{del}{0D}
-\DeclareFlexSymbol{\vert}{DeB}{del}{0C}
+\DeclareFlexSymbolDelimiter{\rangle}{DeR}{del}{0B}{OMS}{69}
+\DeclareFlexSymbolDelimiter{\langle}{DeL}{del}{0A}{OMS}{68}
+\DeclareFlexSymbolDelimiter{\rbrace}{DeR}{del}{09}{OMS}{67}
+\DeclareFlexSymbolDelimiter{\lbrace}{DeL}{del}{08}{OMS}{66}
+\DeclareFlexSymbolDelimiter{\rceil}{DeR}{del}{07}{OMS}{65}
+\DeclareFlexSymbolDelimiter{\lceil}{DeL}{del}{06}{OMS}{64}
+\DeclareFlexSymbolDelimiter{\rfloor}{DeR}{del}{05}{OMS}{63}
+\DeclareFlexSymbolDelimiter{\lfloor}{DeL}{del}{04}{OMS}{62}
+\DeclareFlexSymbolDelimiter{(}{DeL}{del}{00}{OT1}{28}
+\DeclareFlexSymbolDelimiter{)}{DeR}{del}{01}{OT1}{29}
+\DeclareFlexSymbolDelimiter{[}{DeL}{del}{02}{OT1}{5B}
+\DeclareFlexSymbolDelimiter{]}{DeR}{del}{03}{OT1}{5D}
+\DeclareFlexSymbolDelimiter{\lVert}{DeL}{del}{0D}{OMS}{6B}
+\DeclareFlexSymbolDelimiter{\rVert}{DeR}{del}{0D}{OMS}{6B}
+\DeclareFlexSymbolDelimiter{\lvert}{DeL}{del}{0C}{OMS}{6A}
+\DeclareFlexSymbolDelimiter{\rvert}{DeR}{del}{0C}{OMS}{6A}
+\DeclareFlexSymbolDelimiter{\Vert}{DeB}{del}{0D}{OMS}{6B}
+\DeclareFlexSymbolDelimiter{\vert}{DeB}{del}{0C}{OMS}{6A}
 %    \end{macrocode}
 % Maybe make the vert bars mathord instead of delimiter, to discourage
 % poor usage.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{|}{DeB}{del}{0C}
-\DeclareFlexSymbol{/}{DeB}{del}{0E}
+\DeclareFlexSymbolDelimiter{|}{DeB}{del}{0C}{OMS}{6A}
+\DeclareFlexSymbolDelimiter{/}{DeB}{del}{0E}{OML}{3D}
 %    \end{macrocode}
 % 
 % 
@@ -882,20 +1149,20 @@ and the derived files
 % The DeA delimiter type is a special case used only for these
 % arrows.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{\lmoustache}{DeL}{del}{40}
-\DeclareFlexSymbol{\rmoustache}{DeR}{del}{41}
-\DeclareFlexSymbol{\lgroup}{DeL}{del}{3A}
-\DeclareFlexSymbol{\rgroup}{DeR}{del}{3B}
-\DeclareFlexSymbol{\bracevert}{DeB}{del}{3E}
-\DeclareFlexSymbol{\arrowvert}{DeB}{del}{3C}
-\DeclareFlexSymbol{\Arrowvert}{DeB}{del}{3D}
-\DeclareFlexSymbol{\uparrow}{DeA}{del}{78}
-\DeclareFlexSymbol{\downarrow}{DeA}{del}{79}
-\DeclareFlexSymbol{\updownarrow}{DeA}{del}{3F}
-\DeclareFlexSymbol{\Uparrow}{DeA}{del}{7E}
-\DeclareFlexSymbol{\Downarrow}{DeA}{del}{7F}
-\DeclareFlexSymbol{\Updownarrow}{DeA}{del}{77}
-\DeclareFlexSymbol{\backslash}{DeB}{del}{0F}
+\DeclareFlexSymbolDelimiter{\lmoustache}{DeL}{del}{40}{del}{7A}
+\DeclareFlexSymbolDelimiter{\rmoustache}{DeR}{del}{41}{del}{7B}
+\DeclareFlexSymbolDelimiter{\lgroup}{DeL}{del}{3A}{del}{3A}
+\DeclareFlexSymbolDelimiter{\rgroup}{DeR}{del}{3B}{del}{3B}
+\DeclareFlexSymbolDelimiter{\bracevert}{DeB}{del}{3E}{del}{3E}
+\DeclareFlexSymbolDelimiter{\arrowvert}{DeB}{del}{3C}{OMS}{6A}
+\DeclareFlexSymbolDelimiter{\Arrowvert}{DeB}{del}{3D}{OMS}{6B}
+\DeclareFlexSymbolDelimiter{\uparrow}{DeA}{del}{78}{OMS}{22}
+\DeclareFlexSymbolDelimiter{\downarrow}{DeA}{del}{79}{OMS}{23}
+\DeclareFlexSymbolDelimiter{\updownarrow}{DeA}{del}{3F}{OMS}{6C}
+\DeclareFlexSymbolDelimiter{\Uparrow}{DeA}{del}{7E}{OMS}{2A}
+\DeclareFlexSymbolDelimiter{\Downarrow}{DeA}{del}{7F}{OMS}{2B}
+\DeclareFlexSymbolDelimiter{\Updownarrow}{DeA}{del}{77}{OMS}{6D}
+\DeclareFlexSymbolDelimiter{\backslash}{DeB}{del}{0F}{OMS}{6E}
 %    \end{macrocode}
 % 
 % 
@@ -916,7 +1183,7 @@ and the derived files
 % For \cs{surd}, the interior symbol gets math class 1
 % (cumulative operator) to make the glyph vertically centered on the
 % math axis, but the desired horizontal spacing is the spacing for a
-% mathord.    (Couldn't it just be class mathopen, though?   )
+% mathord.    (Couldn't it just be class mathopen, though?)
 %    \begin{macrocode}
 \DeclareFlexSymbol{\surdOrd}{Ord}{OMS}{70}
 \DeclareFlexCompoundSymbol{\surd}{Ord}{\mathop{\surdOrd}}
@@ -1024,6 +1291,7 @@ and the derived files
 %    \end{macrocode}
 % Done.
 %    \begin{macrocode}
+\ExplSyntaxOff
 %</cmbase|mathpazo|mathptmx>
 %    \end{macrocode}
 % Various synonyms such as \cs{le} for \cs{leq} and
@@ -1037,13 +1305,14 @@ and the derived files
 %    \begin{macrocode}
 %<*msabm>
 \ProvidesSymbols{msabm}[2001/09/08 v0.91]
+\ExplSyntaxOn
 %    \end{macrocode}
 %    \begin{macrocode}
 \RequirePackage{amsfonts}\relax
 %    \end{macrocode}
 %    \begin{macrocode}
-\@xp\xdef\csname mg@MSA\endcsname{\hexnumber@\symAMSa}%
-\@xp\xdef\csname mg@MSB\endcsname{\hexnumber@\symAMSb}%
+\gdef:cpx{mg@MSA}{\hexnumber@\symAMSa}%
+\gdef:cpx{mg@MSB}{\hexnumber@\symAMSb}%
 %    \end{macrocode}
 %    \begin{macrocode}
 \DeclareFlexSymbol{\boxdot}       {Bin}{MSA}{00}
@@ -1280,6 +1549,7 @@ and the derived files
 %    \begin{macrocode}
 %%\DeclareFlexSymbol{\hbar}         {Ord}{MSB}{7E}
 \DeclareFlexSymbol{\backepsilon}    {Rel}{MSB}{7F}
+\ExplSyntaxOff
 %</msabm>
 %    \end{macrocode}
 %

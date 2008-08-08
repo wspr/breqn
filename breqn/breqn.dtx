@@ -1438,11 +1438,18 @@ and the derived files
 % Need to patch up this function from flexisym a little, to better
 % handle certain constructed symbols like \cs{neq}.   
 %    \begin{macrocode}
+\ExplSyntaxOn
 \g@addto@macro\mathchars@reset{%
-  \let\@symRel\@secondoftwo \let\@symBin\@secondoftwo
-  \let\@symDeL\@secondoftwo \let\@symDeR\@secondoftwo
-  \let\@symDeB\@secondoftwo
+  %\let\@symRel\@secondoftwo \let\@symBin\@secondoftwo
+  %\let\@symDeL\@secondoftwo \let\@symDeR\@secondoftwo
+  %\let\@symDeB\@secondoftwo
+  \let:NN \math_csym_Rel:Nn \use_arg_ii:nn
+  \let:NN \math_csym_Bin:Nn \use_arg_ii:nn
+  \let:NN \math_csym_DeL:Nn \use_arg_ii:nn
+  \let:NN \math_csym_DeR:Nn \use_arg_ii:nn
+  \let:NN \math_csym_DeB:Nn \use_arg_ii:nn
 }
+\ExplSyntaxOff
 %    \end{macrocode}
 % \end{macro}
 % 
@@ -2054,8 +2061,8 @@ and the derived files
 % are alternate definitions of \cs{m@Bin} and \cs{m@Rel},
 % activated by \cs{display@setup}.   
 %    \begin{macrocode}
-\let\m@@Bin\m@Bin
-\let\m@@Rel\m@Rel
+%%%%\let\m@@Bin\m@Bin
+%%%%%\let\m@@Rel\m@Rel
 \let\EQ@prebin@space\relax
 \def\EQ@prebin@space@a{\mskip-\eq@binoffset \keep@glue \mskip\eq@binoffset}
 \def\bin@break{\ifnum\lastpenalty=\z@\penalty\prebinoppenalty\fi
@@ -2065,8 +2072,12 @@ and the derived files
     \penalty\prerelpenalty
   \fi
 }
-\def\d@@Bin{\bin@break \m@@Bin}
-\def\d@@Rel{\mark@lhs \rel@break \m@@Rel}
+\ExplSyntaxOn
+%%%\def\d@@Bin{\bin@break \m@@Bin}
+%%%%\def\d@@Rel{\mark@lhs \rel@break \m@@Rel}
+\def:Npn \math_dsym_Bin:Nn {\bin@break\math_bsym_Bin:Nn}
+\def:Npn \math_dsym_Rel:Nn {\mark@lhs \rel@break \math_bsym_Rel:Nn }
+\ExplSyntaxOff
 %    \end{macrocode}
 % The difficulty of dealing properly with the subscripts and
 % superscripts sometimes appended to mathbins and mathrels is one of the
@@ -2098,12 +2109,20 @@ and the derived files
 % 
 % More of the same.   
 %    \begin{macrocode}
-\let\m@@symRel\@symRel \def\d@@symRel{\mark@lhs \rel@break \m@@symRel}
-\let\m@@symBin\@symBin \def\d@@symBin{\bin@break \m@@symBin}
-\let\m@@symDel\@symDel
-\let\m@@symDeR\@symDeR
-\let\m@@symDeB\@symDeB
-\let\m@@symDeA\@symDeA
+\ExplSyntaxOn
+%%\let\m@@symRel\@symRel 
+%%%\def\d@@symRel{\mark@lhs \rel@break \m@@symRel}
+
+\def_protected:Npn \math_dcsym_Bin:Nn {\bin@break \math_bcsym_Bin:Nn}
+\def_protected:Npn \math_dcsym_Rel:Nn { \mark@lhs \rel@break \math_bcsym_Rel:Nn}
+
+
+%%\let\m@@symBin\@symBin \def\d@@symBin{\bin@break \m@@symBin}
+%%\let\m@@symDel\@symDel
+%%\let\m@@symDeR\@symDeR
+%%\let\m@@symDeB\@symDeB
+%%\let\m@@symDeA\@symDeA
+
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -2131,12 +2150,13 @@ and the derived files
 %    \begin{macrocode}
 \def\display@setup{%
   \medmuskip\Dmedmuskip \thickmuskip\Dthickmuskip
-  \let\m@Bin\d@@Bin \let\m@Rel\d@@Rel
-  \let\@symRel\d@@symRel \let\@symBin\d@@symBin
-  \let\m@DeL\d@@DeL \let\m@DeR\d@@DeR \let\m@DeB\d@@DeB
-  \let\m@DeA\d@@DeA
-  \let\@symDeL\d@@symDeL \let\@symDeR\d@@symDeR
-  \let\@symDeB\d@@symDeB \let\@symDeA\d@@symDeA
+   \math_setup_display_symbols:
+  %%\let\m@Bin\d@@Bin \let\m@Rel\d@@Rel
+  %%\let\@symRel\d@@symRel \let\@symBin\d@@symBin
+  %%\let\m@DeL\d@@DeL \let\m@DeR\d@@DeR \let\m@DeB\d@@DeB
+  %%\let\m@DeA\d@@DeA
+  %%\let\@symDeL\d@@symDeL \let\@symDeR\d@@symDeR
+  %%\let\@symDeB\d@@symDeB \let\@symDeA\d@@symDeA
   \let\left\eq@left \let\right\eq@right \global\lr@level\z@
   \global\eq@wdCond\z@          %BRM: new
 %    \end{macrocode}
@@ -2162,14 +2182,15 @@ and the derived files
 %    \begin{macrocode}
 \def\dseries@display@setup{%
   \medmuskip\Dmedmuskip \thickmuskip\Dthickmuskip
-  \let\m@Bin\d@@Bin 
-%\let\m@Rel\d@@Rel
-%  \let\@symRel\d@@symRel
- \let\@symBin\d@@symBin
-  \let\m@DeL\d@@DeL \let\m@DeR\d@@DeR \let\m@DeB\d@@DeB
-  \let\m@DeA\d@@DeA
-  \let\@symDeL\d@@symDeL \let\@symDeR\d@@symDeR
-  \let\@symDeB\d@@symDeB \let\@symDeA\d@@symDeA
+  \math_setup_display_symbols:
+%%%%  \let\m@Bin\d@@Bin 
+%%%\let\m@Rel\d@@Rel
+%%%  \let\@symRel\d@@symRel
+%%% \let\@symBin\d@@symBin
+%%%  \let\m@DeL\d@@DeL \let\m@DeR\d@@DeR \let\m@DeB\d@@DeB
+%%%  \let\m@DeA\d@@DeA
+%%%  \let\@symDeL\d@@symDeL \let\@symDeR\d@@symDeR
+%%%  \let\@symDeB\d@@symDeB \let\@symDeA\d@@symDeA
   \let\left\eq@left \let\right\eq@right \global\lr@level\z@
   \everyhbox{\everyhbox\@emptytoks
     \let\display@setup\relax \textmath@setup \let\textmath@setup\relax
@@ -2183,14 +2204,17 @@ and the derived files
 %
 %    \begin{macrocode}
 \def\textmath@setup{%
-  \let\m@Bin\m@@Bin \let\m@Rel\m@@Rel
-  \let\@symRel\m@@symRel \let\@symBin\m@@symBin
-  \let\m@DeL\m@@DeL \let\m@DeR\m@@DeR \let\m@DeB\m@@DeB
-  \let\m@DeA\m@@DeA
-  \let\@symDeL\m@@symDeL \let\@symDeR\m@@symDeR
-  \let\@symDeB\m@@symDeB \let\@symDeA\m@@symDeA
+   \math_setup_inline_symbols:
+%%%%  \let\m@Bin\m@@Bin \let\m@Rel\m@@Rel
+%%%%  \let\@symRel\m@@symRel \let\@symBin\m@@symBin
+%%%%  \let\m@DeL\m@@DeL \let\m@DeR\m@@DeR \let\m@DeB\m@@DeB
+%%%%  \let\m@DeA\m@@DeA
+%%%%  \let\@symDeL\m@@symDeL \let\@symDeR\m@@symDeR
+%%%%  \let\@symDeB\m@@symDeB \let\@symDeA\m@@symDeA
   \let\left\@@left \let\right\@@right
 }
+
+\ExplSyntaxOff
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -5338,21 +5362,29 @@ and the derived files
 %    \end{macrocode}
 % 
 % It would be nice to have better error checking here if the
-% argument is not a delimiter symbol at all.   
+% argument is not a delimiter symbol at all.  
+%
+% Ah, a small problem when renaming commands. In the original version,
+% |\delimiter| is hijacked in order to remove the |\after@bidir| (or
+% open or close) instruction following the delimiter declaration.
 %    \begin{macrocode}
+\ExplSyntaxOn
 \def\eq@left{%
-  \@ifnext .{\eq@nullleft}{\begingroup \let\delimiter\eq@left@a}%
+  \@ifnext .{\eq@nullleft}{\begingroup \let\math_delimiter:NNnNn \eq@left@a}%
 }
 \def\eq@right{%
-  \@ifnext .{\eq@nullright}{\begingroup \let\delimiter\eq@right@a}%
+  \@ifnext .{\eq@nullright}{\begingroup \let \math_delimiter:NNnNn \eq@right@a}%
 }
 %    \end{macrocode}
 % The arguments are: \arg1  delim symbol, \arg2 .   
 %    \begin{macrocode}
-\def\eq@left@a#1 #2{\endgroup\@@left\delimiter#1 \after@open}
-\def\eq@right@a#1 #2{\endgroup
-  \@@right\delimiter#1 \after@close \ss@scan{#1}%
+%\def\eq@left@a#1 #2{\endgroup\@@left\delimiter#1\space \after@open}
+\def\eq@left@a#1#2#3#4#5#6{\endgroup
+  \@@left \math_delimiter:NNnNn #1#2{#3}#4{#5}\after@open}
+\def\eq@right@a#1#2#3#4#5#6{\endgroup
+  \@@right \math_delimiter:NNnNn #1#2{#3}#4{#5}\after@close \ss@scan{#1#2{#3}#4{#5}}%
 }
+\ExplSyntaxOff
 %    \end{macrocode}
 % The null versions.   
 %    \begin{macrocode}
@@ -5368,7 +5400,7 @@ and the derived files
 % \bigg #1->{\hbox {$\left #1\vbox to14.5\p@ {}\right .\n@space $}}
 % #1<-(
 % \end{literalcode}
-  % For paren matching: )
+% ^^AFor paren matching: )
 % Like \cs{left}, \cs{biggl} coerces its delimiter to be of
 % mathopen type even if its natural inclination is towards closing.   
 % 
@@ -5439,22 +5471,30 @@ and the derived files
 % \end{literalcode}
 % 
 % Save the existing meanings of \cs{m@De[LRB]}.   
+%
+% Define display variants of DeL, DeR, DeB
 %    \begin{macrocode}
-\let\m@@DeL\m@DeL \let\m@@DeR\m@DeR \let\m@@DeB\m@DeB
-\def\d@@DeL#1#2#3{%
-  \delimiter"4\@xp\delim@a\csname sd@#1#2#3\endcsname #1#2#3 \after@open
-}
-\def\d@@DeR#1#2#3{%
-  \delimiter"5\@xp\delim@a\csname sd@#1#2#3\endcsname #1#2#3 \after@close
-}
-\def\d@@DeB#1#2#3{%
-  \delimiter"0\@xp\delim@a\csname sd@#1#2#3\endcsname #1#2#3 \after@bidir
-}
+\ExplSyntaxOn
+\def:Npn \math_dsym_DeL:Nn #1#2{\math_bsym_DeL:Nn #1{#2}\after@open}
+\def:Npn \math_dsym_DeR:Nn #1#2{\math_bsym_DeR:Nn #1{#2}\after@close}
+\def:Npn \math_dsym_DeB:Nn #1#2{\math_bsym_DeB:Nn #1{#2}\after@bidir}
+
+%%%%%
+%%%%%\let\m@@DeL\m@DeL \let\m@@DeR\m@DeR \let\m@@DeB\m@DeB
+%%%%%\def\d@@DeL#1#2#3{%
+%%%%%  \delimiter"4\@xp\delim@a\csname sd@#1#2#3\endcsname #1#2#3 \after@open
+%%%%%}
+%%%%%\def\d@@DeR#1#2#3{%
+%%%%%  \delimiter"5\@xp\delim@a\csname sd@#1#2#3\endcsname #1#2#3 \after@close
+%%%%%}
+%%%%%\def\d@@DeB#1#2#3{%
+%%%%%  \delimiter"0\@xp\delim@a\csname sd@#1#2#3\endcsname #1#2#3 \after@bidir
+%%%%%}
 %    \end{macrocode}
 %%BRM: These weren't defined, but apparently should be.
 % Are these the right values???
 %    \begin{macrocode}
-\let\m@@DeA\m@DeA\let\d@@DeA\m@DeA%
+%%%%%%\let\m@@DeA\m@DeA\let\d@@DeA\m@DeA%
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -5483,7 +5523,7 @@ and the derived files
   \prebinoppenalty\bop@incr \multiply\prebinoppenalty\lr@level
   \advance\prebinoppenalty\zero@bop
   \ifnum\eqbreakdepth<\lr@level
-    \let\m@Bin\m@@Bin
+     \let:NN \math_sym_Bin:Nn \math_isym_Bin:Nn %%%%%%\let\m@Bin\m@@Bin
 %    \end{macrocode}
 % Inside delimiters, add some fillglue before binops so that a broken off
 % portion will get thrown flush right.    Also shift it slightly
@@ -5501,7 +5541,7 @@ and the derived files
   \prebinoppenalty\bop@incr \multiply\prebinoppenalty\lr@level
   \advance\prebinoppenalty\zero@bop
   \ifnum\eqbreakdepth<\lr@level
-  \else \let\m@Bin\d@@Bin
+  \else \let:NN \math_sym_Bin:Nn \math_dsym_Bin:Nn %%%%%%\let\m@Bin\d@@Bin
   \fi
 %    \end{macrocode}
 % When we get back to level 0, no delimiters, remove the stretch
@@ -5509,6 +5549,9 @@ and the derived files
 %    \begin{macrocode}
   \ifnum\lr@level<\@ne \eq@binoffset=\eqbinoffset\relax \fi
 }
+
+\ExplSyntaxOff
+
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -5536,7 +5579,7 @@ and the derived files
 % The end result is \cs{eq@wdL} => 0.0pt !!! (or at least very small)
 %    \begin{macrocode}
 \let\subsup@flag=\count@
-\def\ss@delim@a#1#2#3#4{\xdef\right@delim@code{\number"#2#3#4}}
+\def\ss@delim@a@new#1#2#3#4#5{\xdef\right@delim@code{\number"#4#5}}
 %    \end{macrocode}
 % The argument of \cs{ss@scan} is an expanded form of a
 % right-delimiter macro.   
@@ -5550,26 +5593,30 @@ and the derived files
 % This part of the code.   
 %    \begin{macrocode}
   \begingroup
-    \let\delim@a\ss@delim@a \@tempcnta#1\relax
+    \ss@delim@a@new #1%
   \endgroup
   \subsup@flag\@M \afterassignment\ss@scan@a \let\@let@token=}
 \def\ss@scan@a{%
   \ifx\@let@token\sb \advance\subsup@flag\@ne\else
   \ifx\@let@token\sp \advance\subsup@flag\tw@\else
     \ss@finish
-    \expandafter\@firstoftwo % gobble \ss@scan@b
+    \expandafter\expandafter\expandafter\@gobble % gobble \ss@scan@b
   \fi\fi
   \ss@scan@b\@let@token
 }
 %    \end{macrocode}
 % 
 %    \begin{macrocode}
+\ExplSyntaxOn
 \def\ss@scan@b#1#2{#1{%
 %    \end{macrocode}
 % hack! coff!
 %    \begin{macrocode}
-  \let\m@Bin\m@@Bin  \let\m@Rel\m@@Rel
+  %%%%%\let\m@Bin\m@@Bin  \let\m@Rel\m@@Rel
+  \let:NN \math_sym_Bin:Nn \math_isym_Bin:Nn
+  \let:NN \math_sym_Rel:Nn \math_isym_Rel:Nn
   #2}\afterassignment\ss@scan@a \let\@let@token=}%
+\ExplSyntaxOff
 %    \end{macrocode}
 % We need to keep following glue from disappearing
 % \mdash  \eg , a thickmuskip or medmuskip from a following mathrel or

@@ -299,11 +299,11 @@ and the derived files
 \def_new:Npn \math_bsym_Pun:Nn {\math_char:NNn 6 }%\m@Pun
 \def_new:NNn \math_bsym_COs:Nn 2{\math_char:NNn 1#1{#2} \sumlimits}% \m@COs
 \def_new:NNn \math_bsym_COi:Nn 2{\math_char:NNn 1#1{#2} \intlimits}% \m@COi
-\def_new:NNn \math_bsym_DeL:Nn 2{ \math_sd_aux:nn {\math_delimiter:NNnNn 4}{#1{#2}} #1{#2}}%\m@DeL
-\def_new:NNn \math_bsym_DeR:Nn 2{ \math_sd_aux:nn {\math_delimiter:NNnNn 5}{#1{#2}} #1{#2}}%\m@DeR
-\def_new:NNn \math_bsym_DeB:Nn 2{ \math_sd_aux:nn {\math_delimiter:NNnNn 0}{#1{#2}} #1{#2}}%\m@DeB
-\def_new:NNn \math_bsym_DeA:Nn 2{ \math_sd_aux:nn {\math_delimiter:NNnNn 3}{#1{#2}} #1{#2}}%\m@DeL
-\def_new:NNn \math_bsym_Rad:Nn 2{ \math_sd_aux:nn {\math_radical:NnNn}{#1{#2}} #1{#2}}%\m@Rad
+\def_new:NNn \math_bsym_DeL:Nn 2{ \math_sd_del_aux:Nnn 4 #1{#2} }%\m@DeL
+\def_new:NNn \math_bsym_DeR:Nn 2{ \math_sd_del_aux:Nnn 5 #1{#2}} %\m@DeR
+\def_new:NNn \math_bsym_DeB:Nn 2{ \math_sd_del_aux:Nnn 0 #1{#2}}%\m@DeB
+\def_new:NNn \math_bsym_DeA:Nn 2{ \math_sd_del_aux:Nnn 3 #1{#2}}%\m@DeA
+\def_new:NNn \math_bsym_Rad:Nn 2{ \math_sd_rad_aux:Nn #1{#2} }%\m@Rad
 \def_new:NNn \math_bsym_Acc:Nn 4{\math_accent:NNnn #1#2{#3}{#4}}% name is wrong
 
 %    \end{macrocode}
@@ -312,16 +312,42 @@ and the derived files
 % of the symbol.  If this smallest delimiter (SD) is defined, then use
 % it. We have these functions to help us return the number. Extract
 % the numbers to use and stick a function in front of it.
+%
+% Code changed because now we require the smallest delimiter to be
+% defined (it may be the same, no problem in that). So the two
+% arguments present in |\math_bsym_DeL:Nn| are the location of
+% extensible version (where the font will do the rest for us
+% automatically). For each delimiter, a pointer is defined using the
+% extensible characters family and slot as name and value equal to
+% family and position of the smallest version. For |(| in standard
+% \LaTeX\ this is |{del}{00}| and |{OT1}{28}| respectively. Hence,
+% |\math_bsym_DeL:Nn \mg@del {00}| must expand to
+% |\math_delimiter:NNnNn 4 \mg@OT1 {28}\mg@del{00}|. So first expand
+% away to get to the smallest version. Then call next function which
+% shuffles the arguments around.
 %    \begin{macrocode}
-\def:Npn \math_sd_aux:nn  #1#2 {
-  \exp_args:Nnf \use_arg_i_ii:nn { #1}  { \math_sd_auxi:Nn #2 }
+\def:Npn \math_sd_del_aux:Nnn #1#2#3{
+  \exp_args:Nf \math_sd_del_auxi:nN {\cs_use:c{sd@#2#3}} #1 #2{#3}
 }
-\def:Npn \math_sd_auxi:Nn #1#2 {
-   \cs_if_free:cTF {sd@#1#2}
-  {   #1{#2}  }
-  {   \cs_use:c{sd@#1#2}  }
+\def:Npn \math_sd_del_auxi:nN #1#2{ \math_delimiter:NNnNn #2 #1 }
+%    \end{macrocode}
+% Same for radicals.
+%    \begin{macrocode}
+\def:Npn \math_sd_rad_aux:Nn #1#2{
+  \exp_args:Nf \math_sd_rad_auxi:n {\cs_use:c{sd@#1#2}} #1 {#2}
 }
+\def:Npn \math_sd_rad_auxi:n #1{ \math_radical:NnNn #1 }
 
+
+% \def:Npn \math_sd_aux:nn  #1#2 {
+%   %\exp_args:Nnf \use_arg_i_ii:nn { #1}  { \math_sd_auxi:Nn #2 }
+%   \exp_args:Nnf \use_arg_i_ii:nn { #1}  { \cs_use:c{sd@\use_arg_i_ii:nn#2} }
+% }
+% \def:Npn \math_sd_auxi:Nn #1#2 {
+%    \cs_if_free:cTF {sd@#1#2}
+%   {   #1{#2}  }
+%   {   \cs_use:c{sd@#1#2}  }
+% }
 %    \end{macrocode}
 % compound symbols here
 %    \begin{macrocode}
@@ -510,7 +536,7 @@ and the derived files
   \endgroup
 }
 \tmp % restore catcode
-\def:Npn \DeclareFlexSymbolDelimiter #1#2#3#4#5#6{
+\def:Npn \DeclareFlexDelimiter #1#2#3#4#5#6{
   \DeclareFlexSymbol{#1}{#2}{#3}{#4}
   \gdef:cpx{sd@\cs_use:c{mg@#3}#4}{\exp_not:c{mg@#5}{#6}}
 }
@@ -651,7 +677,8 @@ and the derived files
 \lccode`\.=`\_ \lowercase{\endgroup
 \def\@sym@ord@a#1.#2.}#3#4\@nil#5#6{%
   \if D#3
-     \math_ord_delim_aux:Nn #5{#6} 
+     %\math_ord_delim_aux:Nn #5{#6} 
+     \math_sd_del_aux:Nnn 0 #5{#6}% check if this works!
   \else
     \math_char:NNn 0 #5{#6}
   \fi 
@@ -1115,32 +1142,32 @@ and the derived files
 % \sd@GXX
 % \end{verbatim}
 % where G is the mathgroup and XX is the hexadecimal glyph
-% position. |\DeclareFlexSymbolDelimiter| does that for us.
+% position. |\DeclareFlexDelimiter| does that for us.
 %    \begin{macrocode}
-\DeclareFlexSymbolDelimiter{\rangle}{DeR}{del}{0B}{OMS}{69}
-\DeclareFlexSymbolDelimiter{\langle}{DeL}{del}{0A}{OMS}{68}
-\DeclareFlexSymbolDelimiter{\rbrace}{DeR}{del}{09}{OMS}{67}
-\DeclareFlexSymbolDelimiter{\lbrace}{DeL}{del}{08}{OMS}{66}
-\DeclareFlexSymbolDelimiter{\rceil}{DeR}{del}{07}{OMS}{65}
-\DeclareFlexSymbolDelimiter{\lceil}{DeL}{del}{06}{OMS}{64}
-\DeclareFlexSymbolDelimiter{\rfloor}{DeR}{del}{05}{OMS}{63}
-\DeclareFlexSymbolDelimiter{\lfloor}{DeL}{del}{04}{OMS}{62}
-\DeclareFlexSymbolDelimiter{(}{DeL}{del}{00}{OT1}{28}
-\DeclareFlexSymbolDelimiter{)}{DeR}{del}{01}{OT1}{29}
-\DeclareFlexSymbolDelimiter{[}{DeL}{del}{02}{OT1}{5B}
-\DeclareFlexSymbolDelimiter{]}{DeR}{del}{03}{OT1}{5D}
-\DeclareFlexSymbolDelimiter{\lVert}{DeL}{del}{0D}{OMS}{6B}
-\DeclareFlexSymbolDelimiter{\rVert}{DeR}{del}{0D}{OMS}{6B}
-\DeclareFlexSymbolDelimiter{\lvert}{DeL}{del}{0C}{OMS}{6A}
-\DeclareFlexSymbolDelimiter{\rvert}{DeR}{del}{0C}{OMS}{6A}
-\DeclareFlexSymbolDelimiter{\Vert}{DeB}{del}{0D}{OMS}{6B}
-\DeclareFlexSymbolDelimiter{\vert}{DeB}{del}{0C}{OMS}{6A}
+\DeclareFlexDelimiter{\rangle}{DeR}{del}{0B}{OMS}{69}
+\DeclareFlexDelimiter{\langle}{DeL}{del}{0A}{OMS}{68}
+\DeclareFlexDelimiter{\rbrace}{DeR}{del}{09}{OMS}{67}
+\DeclareFlexDelimiter{\lbrace}{DeL}{del}{08}{OMS}{66}
+\DeclareFlexDelimiter{\rceil}{DeR}{del}{07}{OMS}{65}
+\DeclareFlexDelimiter{\lceil}{DeL}{del}{06}{OMS}{64}
+\DeclareFlexDelimiter{\rfloor}{DeR}{del}{05}{OMS}{63}
+\DeclareFlexDelimiter{\lfloor}{DeL}{del}{04}{OMS}{62}
+\DeclareFlexDelimiter{(}{DeL}{del}{00}{OT1}{28}
+\DeclareFlexDelimiter{)}{DeR}{del}{01}{OT1}{29}
+\DeclareFlexDelimiter{[}{DeL}{del}{02}{OT1}{5B}
+\DeclareFlexDelimiter{]}{DeR}{del}{03}{OT1}{5D}
+\DeclareFlexDelimiter{\lVert}{DeL}{del}{0D}{OMS}{6B}
+\DeclareFlexDelimiter{\rVert}{DeR}{del}{0D}{OMS}{6B}
+\DeclareFlexDelimiter{\lvert}{DeL}{del}{0C}{OMS}{6A}
+\DeclareFlexDelimiter{\rvert}{DeR}{del}{0C}{OMS}{6A}
+\DeclareFlexDelimiter{\Vert}{DeB}{del}{0D}{OMS}{6B}
+\DeclareFlexDelimiter{\vert}{DeB}{del}{0C}{OMS}{6A}
 %    \end{macrocode}
 % Maybe make the vert bars mathord instead of delimiter, to discourage
 % poor usage.   
 %    \begin{macrocode}
-\DeclareFlexSymbolDelimiter{|}{DeB}{del}{0C}{OMS}{6A}
-\DeclareFlexSymbolDelimiter{/}{DeB}{del}{0E}{OML}{3D}
+\DeclareFlexDelimiter{|}{DeB}{del}{0C}{OMS}{6A}
+\DeclareFlexDelimiter{/}{DeB}{del}{0E}{OML}{3D}
 %    \end{macrocode}
 % 
 % 
@@ -1149,20 +1176,20 @@ and the derived files
 % The DeA delimiter type is a special case used only for these
 % arrows.   
 %    \begin{macrocode}
-\DeclareFlexSymbolDelimiter{\lmoustache}{DeL}{del}{40}{del}{7A}
-\DeclareFlexSymbolDelimiter{\rmoustache}{DeR}{del}{41}{del}{7B}
-\DeclareFlexSymbolDelimiter{\lgroup}{DeL}{del}{3A}{del}{3A}
-\DeclareFlexSymbolDelimiter{\rgroup}{DeR}{del}{3B}{del}{3B}
-\DeclareFlexSymbolDelimiter{\bracevert}{DeB}{del}{3E}{del}{3E}
-\DeclareFlexSymbolDelimiter{\arrowvert}{DeB}{del}{3C}{OMS}{6A}
-\DeclareFlexSymbolDelimiter{\Arrowvert}{DeB}{del}{3D}{OMS}{6B}
-\DeclareFlexSymbolDelimiter{\uparrow}{DeA}{del}{78}{OMS}{22}
-\DeclareFlexSymbolDelimiter{\downarrow}{DeA}{del}{79}{OMS}{23}
-\DeclareFlexSymbolDelimiter{\updownarrow}{DeA}{del}{3F}{OMS}{6C}
-\DeclareFlexSymbolDelimiter{\Uparrow}{DeA}{del}{7E}{OMS}{2A}
-\DeclareFlexSymbolDelimiter{\Downarrow}{DeA}{del}{7F}{OMS}{2B}
-\DeclareFlexSymbolDelimiter{\Updownarrow}{DeA}{del}{77}{OMS}{6D}
-\DeclareFlexSymbolDelimiter{\backslash}{DeB}{del}{0F}{OMS}{6E}
+\DeclareFlexDelimiter{\lmoustache}{DeL}{del}{40}{del}{7A}
+\DeclareFlexDelimiter{\rmoustache}{DeR}{del}{41}{del}{7B}
+\DeclareFlexDelimiter{\lgroup}{DeL}{del}{3A}{del}{3A}
+\DeclareFlexDelimiter{\rgroup}{DeR}{del}{3B}{del}{3B}
+\DeclareFlexDelimiter{\bracevert}{DeB}{del}{3E}{del}{3E}
+\DeclareFlexDelimiter{\arrowvert}{DeB}{del}{3C}{OMS}{6A}
+\DeclareFlexDelimiter{\Arrowvert}{DeB}{del}{3D}{OMS}{6B}
+\DeclareFlexDelimiter{\uparrow}{DeA}{del}{78}{OMS}{22}
+\DeclareFlexDelimiter{\downarrow}{DeA}{del}{79}{OMS}{23}
+\DeclareFlexDelimiter{\updownarrow}{DeA}{del}{3F}{OMS}{6C}
+\DeclareFlexDelimiter{\Uparrow}{DeA}{del}{7E}{OMS}{2A}
+\DeclareFlexDelimiter{\Downarrow}{DeA}{del}{7F}{OMS}{2B}
+\DeclareFlexDelimiter{\Updownarrow}{DeA}{del}{77}{OMS}{6D}
+\DeclareFlexDelimiter{\backslash}{DeB}{del}{0F}{OMS}{6E}
 %    \end{macrocode}
 % 
 % 

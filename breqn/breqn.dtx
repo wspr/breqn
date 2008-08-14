@@ -5597,12 +5597,17 @@ and the derived files
   \endgroup
   \subsup@flag\@M \afterassignment\ss@scan@a \let\@let@token=}
 \def\ss@scan@a{%
+  \let\breqn@next\ss@scan@b
   \ifx\@let@token\sb \advance\subsup@flag\@ne\else
+  \ifx\@let@token\@@subscript \advance\subsup@flag\@ne\else
+  \ifx\@let@token\@@subscript@other \advance\subsup@flag\@ne\else
   \ifx\@let@token\sp \advance\subsup@flag\tw@\else
+  \ifx\@let@token\@@superscript \advance\subsup@flag\tw@\else
+  \ifx\@let@token\@@superscript@other \advance\subsup@flag\tw@\else
     \ss@finish
-    \expandafter\expandafter\expandafter\@gobble % gobble \ss@scan@b
-  \fi\fi
-  \ss@scan@b\@let@token
+    \let\breqn@next\relax
+  \fi\fi\fi\fi\fi\fi
+  \breqn@next\@let@token
 }
 %    \end{macrocode}
 % 

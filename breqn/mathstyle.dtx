@@ -67,7 +67,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: mathstyle 2008/07/23 v0.85 Mathstyle (MH)}
+\Msg{* Package: mathstyle 2008/08/13 v0.87 Mathstyle (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -128,7 +128,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{mathstyle.drv}%
-  [2008/07/23 v0.85 mathstyle (MH)]
+  [2008/08/13 v0.87 mathstyle (MH)]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -141,7 +141,7 @@ and the derived files
 % \fi
 %
 % \title{The \textsf{mathstyle} package}
-% \date{2008/07/23 v0.85}
+% \date{2008/08/13 v0.87}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 %
@@ -206,7 +206,7 @@ and the derived files
 %
 %    \begin{macrocode}
 %<*package>
-\ProvidesPackage{mathstyle}[2008/07/23 v0.85]
+\ProvidesPackage{mathstyle}[2008/08/13 v0.87]
 %    \end{macrocode}
 % \begin{macro}{\@saveprimitive}
 %   A straight copy from \pkg{breqn}, see implementation details
@@ -286,6 +286,10 @@ and the derived files
 \begingroup \catcode`\^=7\relax \catcode`\_=8\relax % just in case
 \lowercase{\endgroup
 \let\@@superscript=^ \let\@@subscript=_
+}%
+\begingroup \catcode`\^=12\relax \catcode`\_=12\relax % just in case
+\lowercase{\endgroup
+\let\@@superscript@other=^ \let\@@subscript@other=_
 }%
 %    \end{macrocode}
 % If we enter a sub- or superscript the \cs{mathstyle} must be
@@ -386,17 +390,24 @@ and the derived files
 %    \begin{macrocode}
 \DeclareOption{mathactivechars}{%
   \catcode`\^=12\relax 
-  \catcode`\_=12\relax}
+  \catcode`\_=12\relax
+\AtBeginDocument{\catcode`\^=12\relax \catcode`\_=12\relax}%
+}
 \DeclareOption{activechars}{%
   \catcode`\^=13\relax 
-  \catcode`\_=13\relax}
+  \catcode`\_=13\relax
+\AtBeginDocument{\catcode`\^=13\relax \catcode`\_=13\relax}%
+}
 \DeclareOption{noactivechars}{%
   \catcode`\^=7\relax 
-  \catcode`\_=8\relax}
+  \catcode`\_=8\relax
+\AtBeginDocument{\catcode`\^=7\relax \catcode`\_=8\relax}%
+}
 \ExecuteOptions{mathactivechars}
 \ProcessOptions\relax
 %    \end{macrocode}
-% WSPR: Set up the active behaviours: (this is set even in the |noactivechars| case but they are never activated. no worries?)
+% WSPR: Set up the active behaviours: (this is set even in the
+% |noactivechars| case but they are never activated. no worries?)
 %    \begin{macrocode}
 \ifnum\catcode`\^=13\relax
   \let^=\sp \let_=\sb

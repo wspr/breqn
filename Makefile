@@ -149,8 +149,8 @@ breqn-distrib: tds-dirs breqn-pdfs
 
 
 distrib: tds-dirs-clean breqn-distrib xfrac-distrib mh-distrib 
-	cp  $(MH-DIR)/$(README) $(DISTRIB-DIR)/mh
-	cp  $(MH-DIR)/$(README) $(DISTRIB-DIR)/mh-tds/doc/latex/mh
+	cp  $(README) $(DISTRIB-DIR)/mh
+	cp  $(README) $(DISTRIB-DIR)/mh-tds/doc/latex/mh
 	cd $(DISTRIB-DIR)/mh-tds ; zip -r ../mh.tds.zip * 
 	cd $(DISTRIB-DIR) ; zip -r mh.zip mh mh.tds.zip 
 

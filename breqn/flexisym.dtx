@@ -179,9 +179,8 @@ and the derived files
 %
 %    \begin{macrocode}
 %<*package>
-\RequirePackage{l3names}[2007/09/01]
-\ProvidesExplPackage{flexisym}{2008/08/08}{0.97a}{Make math characters macros}
-\RequirePackage{l3clist}
+\RequirePackage{expl3}[2009/08/05]
+\ProvidesExplPackage{flexisym}{2009/08/07}{0.97a}{Make math characters macros}
 
 \edef\do{%
   \noexpand\AtEndOfPackage{%
@@ -194,7 +193,7 @@ and the derived files
 \let\@sym\@gobble
 \DeclareOption{robust}{%
   \def\@sym#1{%
-    \ifx\protect\@typeset@protect \else\protect#1\exp_after:NN\use_none:nnnn\fi
+    \ifx\protect\@typeset@protect \else\protect#1\exp_after:wN\use_none:nnnn\fi
   }%
 }
 %    \end{macrocode}
@@ -222,21 +221,21 @@ and the derived files
 % to get this to work with XeTeX et al.\ which have many more slot
 % positions
 %    \begin{macrocode}
-\def_protected:NNn \math_char:NNn 3 {
-  \tex_mathchar:D \num_eval:n{ " #1#2#3  }
+\cs_set_protected:Nn \math_char:NNn {
+  \tex_mathchar:D \intexpr_eval:w " #1#2#3 \intexpr_eval_end:
 }
 %    \end{macrocode}
 % Delimiters and radicals are similar except here we have both small
 % and large variant. Radicals have no class.
 %    \begin{macrocode}
-\def_protected:NNn \math_delimiter:NNnNn 5 {
-  \tex_delimiter:D \num_eval:n{ " #1#2#3#4#5 }
+\cs_set_protected:Nn \math_delimiter:NNnNn {
+  \tex_delimiter:D \intexpr_eval:w " #1#2#3#4#5 \intexpr_eval_end:
 }
-\def_protected:NNn \math_radical:NnNn 4 {
-  \tex_radical:D  \num_eval:n{ " #1#2#3#4 }
+\cs_set_protected:Nn \math_radical:NnNn {
+  \tex_radical:D  \intexpr_eval:w " #1#2#3#4 \intexpr_eval_end:
 }
-\def_protected:NNn \math_accent:NNnn 4 {
-  \tex_mathaccent:D \num_eval:n{ " #1 #2 #3} {#4}
+\cs_set_protected:Nn \math_accent:NNnn {
+  \tex_mathaccent:D \intexpr_eval:w " #1 #2 #3 \intexpr_eval_end: {#4}
 }
 
 \let\sumlimits\displaylimits
@@ -292,19 +291,19 @@ and the derived files
 % the current meaning of things.  First up the basic definitions. |#1|
 % is the math group it is from and |#2| is the slot position.
 %    \begin{macrocode}
-\def_new:Npn \math_bsym_Ord:Nn {\math_char:NNn 0 }% \m@Ord
-\def_new:Npn \math_bsym_Var:Nn {\math_char:NNn 7 }% \m@Var
-\def_new:Npn \math_bsym_Bin:Nn {\math_char:NNn 2}% \m@Bin
-\def_new:Npn \math_bsym_Rel:Nn {\math_char:NNn 3 }% \m@Bin
-\def_new:Npn \math_bsym_Pun:Nn {\math_char:NNn 6 }%\m@Pun
-\def_new:NNn \math_bsym_COs:Nn 2{\math_char:NNn 1#1{#2} \sumlimits}% \m@COs
-\def_new:NNn \math_bsym_COi:Nn 2{\math_char:NNn 1#1{#2} \intlimits}% \m@COi
-\def_new:NNn \math_bsym_DeL:Nn 2{ \math_sd_del_aux:Nnn 4 #1{#2} }%\m@DeL
-\def_new:NNn \math_bsym_DeR:Nn 2{ \math_sd_del_aux:Nnn 5 #1{#2}} %\m@DeR
-\def_new:NNn \math_bsym_DeB:Nn 2{ \math_sd_del_aux:Nnn 0 #1{#2}}%\m@DeB
-\def_new:NNn \math_bsym_DeA:Nn 2{ \math_sd_del_aux:Nnn 3 #1{#2}}%\m@DeA
-\def_new:NNn \math_bsym_Rad:Nn 2{ \math_sd_rad_aux:Nn #1{#2} }%\m@Rad
-\def_new:NNn \math_bsym_Acc:Nn 4{\math_accent:NNnn #1#2{#3}{#4}}% name is wrong
+\cs_new:Npn \math_bsym_Ord:Nn {\math_char:NNn 0 }% \m@Ord
+\cs_new:Npn \math_bsym_Var:Nn {\math_char:NNn 7 }% \m@Var
+\cs_new:Npn \math_bsym_Bin:Nn {\math_char:NNn 2}% \m@Bin
+\cs_new:Npn \math_bsym_Rel:Nn {\math_char:NNn 3 }% \m@Bin
+\cs_new:Npn \math_bsym_Pun:Nn {\math_char:NNn 6 }%\m@Pun
+\cs_new:Nn \math_bsym_COs:Nn { \math_char:NNn 1#1{#2} \sumlimits}% \m@COs
+\cs_new:Nn \math_bsym_COi:Nn { \math_char:NNn 1#1{#2} \intlimits}% \m@COi
+\cs_new:Nn \math_bsym_DeL:Nn { \math_sd_del_aux:Nnn 4 #1{#2} }%\m@DeL
+\cs_new:Nn \math_bsym_DeR:Nn { \math_sd_del_aux:Nnn 5 #1{#2} } %\m@DeR
+\cs_new:Nn \math_bsym_DeB:Nn { \math_sd_del_aux:Nnn 0 #1{#2} }%\m@DeB
+\cs_new:Nn \math_bsym_DeA:Nn { \math_sd_del_aux:Nnn 3 #1{#2} }%\m@DeA
+\cs_new:Nn \math_bsym_Rad:Nn { \math_sd_rad_aux:Nn #1{#2} }%\m@Rad
+\cs_new:Npn \math_bsym_Acc:Nn #1#2#3#4 {\math_accent:NNnn #1#2{#3}{#4}}% name is wrong
 
 %    \end{macrocode}
 % Next is somewhat complicated internally. The way it is done is that
@@ -326,47 +325,47 @@ and the derived files
 % away to get to the smallest version. Then call next function which
 % shuffles the arguments around.
 %    \begin{macrocode}
-\def:Npn \math_sd_del_aux:Nnn #1#2#3{
-  \exp_args:Nf \math_sd_del_auxi:nN {\cs_use:c{sd@#2#3}} #1 #2{#3}
+\cs_set:Npn \math_sd_del_aux:Nnn #1#2#3{
+  \exp_args:Nf \math_sd_del_auxi:nN {\use:c{sd@#2#3}} #1 #2{#3}
 }
-\def:Npn \math_sd_del_auxi:nN #1#2{ \math_delimiter:NNnNn #2 #1 }
+\cs_set:Npn \math_sd_del_auxi:nN #1#2{ \math_delimiter:NNnNn #2 #1 }
 %    \end{macrocode}
 % Same for radicals.
 %    \begin{macrocode}
-\def:Npn \math_sd_rad_aux:Nn #1#2{
-  \exp_args:Nf \math_sd_rad_auxi:n {\cs_use:c{sd@#1#2}} #1 {#2}
+\cs_set:Npn \math_sd_rad_aux:Nn #1#2{
+  \exp_args:Nf \math_sd_rad_auxi:n {\use:c{sd@#1#2}} #1 {#2}
 }
-\def:Npn \math_sd_rad_auxi:n #1{ \math_radical:NnNn #1 }
+\cs_set:Npn \math_sd_rad_auxi:n #1{ \math_radical:NnNn #1 }
 
 
-% \def:Npn \math_sd_aux:nn  #1#2 {
-%   %\exp_args:Nnf \use_arg_i_ii:nn { #1}  { \math_sd_auxi:Nn #2 }
-%   \exp_args:Nnf \use_arg_i_ii:nn { #1}  { \cs_use:c{sd@\use_arg_i_ii:nn#2} }
+% \cs_set:Npn \math_sd_aux:nn  #1#2 {
+%   %\exp_args:Nnf \use:nn { #1}  { \math_sd_auxi:Nn #2 }
+%   \exp_args:Nnf \use:nn { #1}  { \use:c{sd@\use:nn#2} }
 % }
-% \def:Npn \math_sd_auxi:Nn #1#2 {
+% \cs_set:Npn \math_sd_auxi:Nn #1#2 {
 %    \cs_if_free:cTF {sd@#1#2}
 %   {   #1{#2}  }
-%   {   \cs_use:c{sd@#1#2}  }
+%   {   \use:c{sd@#1#2}  }
 % }
 %    \end{macrocode}
 % compound symbols here
 %    \begin{macrocode}
-\def_protected:Npn \math_bcsym_Ord:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symOrd
-\def_protected:Npn \math_bcsym_Var:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symVar
-\def_protected:Npn \math_bcsym_Bin:Nn #1#2{\@symtype\mathbin{\OrdSymbol{#2}}}%\@symBin
-\def_protected:Npn \math_bcsym_Rel:Nn #1#2{\@symtype\mathrel{\OrdSymbol{#2}}}%\@symRel
-\def_protected:Npn \math_bcsym_Pun:Nn #1#2{\@symtype\mathpunct{\OrdSymbol{#2}}}%\@symPun
-\def_protected:Npn \math_bcsym_COi:Nn #1#2{\@symtype\mathop{\OrdSymbol{#2}\intlimits}}%\@symCOi
-\def_protected:Npn \math_bcsym_COs:Nn #1#2{\@symtype\mathop{\OrdSymbol{#2}\sumlimits}}%\@symCOs
-\def_protected:Npn \math_bcsym_DeL:Nn #1#2{\@symtype\mathopen{\OrdSymbol{#2}}}%\@symDeL
-\def_protected:Npn \math_bcsym_DeR:Nn #1#2{\@symtype\mathclose{\OrdSymbol{#2}}}%\@symDeR
-\def_protected:Npn \math_bcsym_DeB:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symDeB
-\def_protected:Npn \math_bcsym_DeA:Nn #1#2{\@symtype\mathrel{\OrdSymbol{#2}}}%\@symDeA
-\def_protected:Npn \math_bcsym_Acc:Nn {\@sym}%\@symAcc FIX!
+\cs_set_protected:Npn \math_bcsym_Ord:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symOrd
+\cs_set_protected:Npn \math_bcsym_Var:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symVar
+\cs_set_protected:Npn \math_bcsym_Bin:Nn #1#2{\@symtype\mathbin{\OrdSymbol{#2}}}%\@symBin
+\cs_set_protected:Npn \math_bcsym_Rel:Nn #1#2{\@symtype\mathrel{\OrdSymbol{#2}}}%\@symRel
+\cs_set_protected:Npn \math_bcsym_Pun:Nn #1#2{\@symtype\mathpunct{\OrdSymbol{#2}}}%\@symPun
+\cs_set_protected:Npn \math_bcsym_COi:Nn #1#2{\@symtype\mathop{\OrdSymbol{#2}\intlimits}}%\@symCOi
+\cs_set_protected:Npn \math_bcsym_COs:Nn #1#2{\@symtype\mathop{\OrdSymbol{#2}\sumlimits}}%\@symCOs
+\cs_set_protected:Npn \math_bcsym_DeL:Nn #1#2{\@symtype\mathopen{\OrdSymbol{#2}}}%\@symDeL
+\cs_set_protected:Npn \math_bcsym_DeR:Nn #1#2{\@symtype\mathclose{\OrdSymbol{#2}}}%\@symDeR
+\cs_set_protected:Npn \math_bcsym_DeB:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symDeB
+\cs_set_protected:Npn \math_bcsym_DeA:Nn #1#2{\@symtype\mathrel{\OrdSymbol{#2}}}%\@symDeA
+\cs_set_protected:Npn \math_bcsym_Acc:Nn {\@sym}%\@symAcc FIX!
 % These three?
-\def_protected:Npn \math_bcsym_Ope:Nn #1#2{\@symtype\mathopen{\OrdSymbol{#2}}}%\@symVar
-\def_protected:Npn \math_bcsym_Clo:Nn #1#2{\@symtype\mathclose{\OrdSymbol{#2}}}%\@symVar
-\def_protected:Npn \math_bcsym_Inn:Nn #1#2{\@symtype\mathinner{\OrdSymbol{#2}}}%\@symVar
+\cs_set_protected:Npn \math_bcsym_Ope:Nn #1#2{\@symtype\mathopen{\OrdSymbol{#2}}}%\@symVar
+\cs_set_protected:Npn \math_bcsym_Clo:Nn #1#2{\@symtype\mathclose{\OrdSymbol{#2}}}%\@symVar
+\cs_set_protected:Npn \math_bcsym_Inn:Nn #1#2{\@symtype\mathinner{\OrdSymbol{#2}}}%\@symVar
 
 \let\@symtype\@firstofone
 \let\sym@global\global
@@ -378,134 +377,134 @@ and the derived files
 % The inline variants, using the basic operations. Currently we do not
 % do anything to inline math.
 %    \begin{macrocode}
-\def_new:Npn \math_isym_Ord:Nn {\math_bsym_Ord:Nn  }% \m@Ord
-\def_new:Npn \math_isym_Var:Nn {\math_bsym_Var:Nn }% \m@Var
-\def_new:Npn \math_isym_Bin:Nn {\math_bsym_Bin:Nn}% \m@Bin
-\def_new:Npn \math_isym_Rel:Nn {\math_bsym_Rel:Nn }% \m@Bin
-\def_new:Npn \math_isym_Pun:Nn {\math_bsym_Pun:Nn }%\m@Pun
-\def_new:Npn \math_isym_COs:Nn {\math_bsym_COs:Nn}% \m@COs
-\def_new:Npn \math_isym_COi:Nn {\math_bsym_COi:Nn}% \m@COi
-\def_new:Npn \math_isym_DeL:Nn {\math_bsym_DeL:Nn}%\m@DeL
-\def_new:Npn \math_isym_DeR:Nn{ \math_bsym_DeR:Nn}%\m@DeR
-\def_new:Npn \math_isym_DeB:Nn{ \math_bsym_DeB:Nn }%\m@DeB
-\def_new:Npn \math_isym_DeA:Nn { \math_bsym_DeA:Nn }%\m@DeA
-\def_new:Npn \math_isym_Rad:Nn { \math_bsym_Rad:Nn}%\m@Rad
-\def_new:Npn \math_isym_Acc:Nn {\math_bsym_DeL:Nn}% name is wrong
+\cs_new:Npn \math_isym_Ord:Nn {\math_bsym_Ord:Nn  }% \m@Ord
+\cs_new:Npn \math_isym_Var:Nn {\math_bsym_Var:Nn }% \m@Var
+\cs_new:Npn \math_isym_Bin:Nn {\math_bsym_Bin:Nn}% \m@Bin
+\cs_new:Npn \math_isym_Rel:Nn {\math_bsym_Rel:Nn }% \m@Bin
+\cs_new:Npn \math_isym_Pun:Nn {\math_bsym_Pun:Nn }%\m@Pun
+\cs_new:Npn \math_isym_COs:Nn {\math_bsym_COs:Nn}% \m@COs
+\cs_new:Npn \math_isym_COi:Nn {\math_bsym_COi:Nn}% \m@COi
+\cs_new:Npn \math_isym_DeL:Nn {\math_bsym_DeL:Nn}%\m@DeL
+\cs_new:Npn \math_isym_DeR:Nn{ \math_bsym_DeR:Nn}%\m@DeR
+\cs_new:Npn \math_isym_DeB:Nn{ \math_bsym_DeB:Nn }%\m@DeB
+\cs_new:Npn \math_isym_DeA:Nn { \math_bsym_DeA:Nn }%\m@DeA
+\cs_new:Npn \math_isym_Rad:Nn { \math_bsym_Rad:Nn}%\m@Rad
+\cs_new:Npn \math_isym_Acc:Nn {\math_bsym_DeL:Nn}% name is wrong
 % inline compound
-\def_protected:Npn \math_icsym_Ord:Nn {\math_bcsym_Ord:Nn}
-\def_protected:Npn \math_icsym_Var:Nn {\math_bcsym_Var:Nn}
-\def_protected:Npn \math_icsym_Bin:Nn {\math_bcsym_Bin:Nn}
-\def_protected:Npn \math_icsym_Rel:Nn {\math_bcsym_Rel:Nn}
-\def_protected:Npn \math_icsym_Pun:Nn {\math_bcsym_Pun:Nn}
-\def_protected:Npn \math_icsym_COi:Nn {\math_bcsym_COi:Nn}
-\def_protected:Npn \math_icsym_COs:Nn {\math_bcsym_COs:Nn}
-\def_protected:Npn \math_icsym_DeL:Nn {\math_bcsym_DeL:Nn}
-\def_protected:Npn \math_icsym_DeR:Nn {\math_bcsym_DeR:Nn}
-\def_protected:Npn \math_icsym_DeB:Nn {\math_bcsym_DeB:Nn}
-\def_protected:Npn \math_icsym_DeA:Nn {\math_bcsym_DeA:Nn}
-\def_protected:Npn \math_icsym_Acc:Nn {\math_bcsym_Acc:Nn}
-\def_protected:Npn \math_icsym_Ope:Nn {\math_bcsym_Ope:Nn}
-\def_protected:Npn \math_icsym_Clo:Nn {\math_bcsym_Clo:Nn}
-\def_protected:Npn \math_icsym_Inn:Nn {\math_bcsym_Inn:Nn}
+\cs_set_protected:Npn \math_icsym_Ord:Nn {\math_bcsym_Ord:Nn}
+\cs_set_protected:Npn \math_icsym_Var:Nn {\math_bcsym_Var:Nn}
+\cs_set_protected:Npn \math_icsym_Bin:Nn {\math_bcsym_Bin:Nn}
+\cs_set_protected:Npn \math_icsym_Rel:Nn {\math_bcsym_Rel:Nn}
+\cs_set_protected:Npn \math_icsym_Pun:Nn {\math_bcsym_Pun:Nn}
+\cs_set_protected:Npn \math_icsym_COi:Nn {\math_bcsym_COi:Nn}
+\cs_set_protected:Npn \math_icsym_COs:Nn {\math_bcsym_COs:Nn}
+\cs_set_protected:Npn \math_icsym_DeL:Nn {\math_bcsym_DeL:Nn}
+\cs_set_protected:Npn \math_icsym_DeR:Nn {\math_bcsym_DeR:Nn}
+\cs_set_protected:Npn \math_icsym_DeB:Nn {\math_bcsym_DeB:Nn}
+\cs_set_protected:Npn \math_icsym_DeA:Nn {\math_bcsym_DeA:Nn}
+\cs_set_protected:Npn \math_icsym_Acc:Nn {\math_bcsym_Acc:Nn}
+\cs_set_protected:Npn \math_icsym_Ope:Nn {\math_bcsym_Ope:Nn}
+\cs_set_protected:Npn \math_icsym_Clo:Nn {\math_bcsym_Clo:Nn}
+\cs_set_protected:Npn \math_icsym_Inn:Nn {\math_bcsym_Inn:Nn}
 %    \end{macrocode}
 %
 % The display variants, using the basic operations. Currently we do
 % not do anything to inline math.
 %    \begin{macrocode}
-\def_new:Npn \math_dsym_Ord:Nn {\math_bsym_Ord:Nn }
-\def_new:Npn \math_dsym_Var:Nn {\math_bsym_Var:Nn }
-\def_new:Npn \math_dsym_Bin:Nn {\math_bsym_Bin:Nn}
-\def_new:Npn \math_dsym_Rel:Nn {\math_bsym_Rel:Nn }
-\def_new:Npn \math_dsym_Pun:Nn {\math_bsym_Pun:Nn }
-\def_new:Npn \math_dsym_COs:Nn {\math_bsym_COs:Nn}
-\def_new:Npn \math_dsym_COi:Nn {\math_bsym_COi:Nn}
-\def_new:Npn \math_dsym_DeL:Nn {\math_bsym_DeL:Nn}
-\def_new:Npn \math_dsym_DeR:Nn{ \math_bsym_DeR:Nn}
-\def_new:Npn \math_dsym_DeB:Nn{ \math_bsym_DeB:Nn }
-\def_new:Npn \math_dsym_DeA:Nn { \math_bsym_DeA:Nn }
-\def_new:Npn \math_dsym_Rad:Nn { \math_bsym_Rad:Nn}
-\def_new:Npn \math_dsym_Acc:Nn {\math_bsym_DeL:Nn}
+\cs_new:Npn \math_dsym_Ord:Nn {\math_bsym_Ord:Nn }
+\cs_new:Npn \math_dsym_Var:Nn {\math_bsym_Var:Nn }
+\cs_new:Npn \math_dsym_Bin:Nn {\math_bsym_Bin:Nn}
+\cs_new:Npn \math_dsym_Rel:Nn {\math_bsym_Rel:Nn }
+\cs_new:Npn \math_dsym_Pun:Nn {\math_bsym_Pun:Nn }
+\cs_new:Npn \math_dsym_COs:Nn {\math_bsym_COs:Nn}
+\cs_new:Npn \math_dsym_COi:Nn {\math_bsym_COi:Nn}
+\cs_new:Npn \math_dsym_DeL:Nn {\math_bsym_DeL:Nn}
+\cs_new:Npn \math_dsym_DeR:Nn{ \math_bsym_DeR:Nn}
+\cs_new:Npn \math_dsym_DeB:Nn{ \math_bsym_DeB:Nn }
+\cs_new:Npn \math_dsym_DeA:Nn { \math_bsym_DeA:Nn }
+\cs_new:Npn \math_dsym_Rad:Nn { \math_bsym_Rad:Nn}
+\cs_new:Npn \math_dsym_Acc:Nn {\math_bsym_DeL:Nn}
 % inline compound
-\def_protected:Npn \math_dcsym_Ord:Nn {\math_bcsym_Ord:Nn}
-\def_protected:Npn \math_dcsym_Var:Nn {\math_bcsym_Var:Nn}
-\def_protected:Npn \math_dcsym_Bin:Nn {\math_bcsym_Bin:Nn}
-\def_protected:Npn \math_dcsym_Rel:Nn {\math_bcsym_Rel:Nn}
-\def_protected:Npn \math_dcsym_Pun:Nn {\math_bcsym_Pun:Nn}
-\def_protected:Npn \math_dcsym_COi:Nn {\math_bcsym_COi:Nn}
-\def_protected:Npn \math_dcsym_COs:Nn {\math_bcsym_COs:Nn}
-\def_protected:Npn \math_dcsym_DeL:Nn {\math_bcsym_DeL:Nn}
-\def_protected:Npn \math_dcsym_DeR:Nn {\math_bcsym_DeR:Nn}
-\def_protected:Npn \math_dcsym_DeB:Nn {\math_bcsym_DeB:Nn}
-\def_protected:Npn \math_dcsym_DeA:Nn {\math_bcsym_DeA:Nn}
-\def_protected:Npn \math_dcsym_Acc:Nn {\math_bcsym_Acc:Nn}
-\def_protected:Npn \math_dcsym_Ope:Nn {\math_bcsym_Ope:Nn}
-\def_protected:Npn \math_dcsym_Clo:Nn {\math_bcsym_Clo:Nn}
-\def_protected:Npn \math_dcsym_Inn:Nn {\math_bcsym_Inn:Nn}
+\cs_set_protected:Npn \math_dcsym_Ord:Nn {\math_bcsym_Ord:Nn}
+\cs_set_protected:Npn \math_dcsym_Var:Nn {\math_bcsym_Var:Nn}
+\cs_set_protected:Npn \math_dcsym_Bin:Nn {\math_bcsym_Bin:Nn}
+\cs_set_protected:Npn \math_dcsym_Rel:Nn {\math_bcsym_Rel:Nn}
+\cs_set_protected:Npn \math_dcsym_Pun:Nn {\math_bcsym_Pun:Nn}
+\cs_set_protected:Npn \math_dcsym_COi:Nn {\math_bcsym_COi:Nn}
+\cs_set_protected:Npn \math_dcsym_COs:Nn {\math_bcsym_COs:Nn}
+\cs_set_protected:Npn \math_dcsym_DeL:Nn {\math_bcsym_DeL:Nn}
+\cs_set_protected:Npn \math_dcsym_DeR:Nn {\math_bcsym_DeR:Nn}
+\cs_set_protected:Npn \math_dcsym_DeB:Nn {\math_bcsym_DeB:Nn}
+\cs_set_protected:Npn \math_dcsym_DeA:Nn {\math_bcsym_DeA:Nn}
+\cs_set_protected:Npn \math_dcsym_Acc:Nn {\math_bcsym_Acc:Nn}
+\cs_set_protected:Npn \math_dcsym_Ope:Nn {\math_bcsym_Ope:Nn}
+\cs_set_protected:Npn \math_dcsym_Clo:Nn {\math_bcsym_Clo:Nn}
+\cs_set_protected:Npn \math_dcsym_Inn:Nn {\math_bcsym_Inn:Nn}
 %    \end{macrocode}
 % Almost ready now! Now just need two commands to initialize these
 % settings.
 %
 %    \begin{macrocode}
-\def:Npn \math_setup_inline_symbols:{
-  \let:NN \math_sym_Ord:Nn \math_isym_Ord:Nn 
-  \let:NN \math_sym_Var:Nn \math_isym_Var:Nn 
-  \let:NN \math_sym_Bin:Nn \math_isym_Bin:Nn
-  \let:NN \math_sym_Rel:Nn \math_isym_Rel:Nn 
-  \let:NN \math_sym_Pun:Nn \math_isym_Pun:Nn 
-  \let:NN \math_sym_COs:Nn \math_isym_COs:Nn
-  \let:NN \math_sym_COi:Nn \math_isym_COi:Nn
-  \let:NN \math_sym_DeL:Nn \math_isym_DeL:Nn
-  \let:NN \math_sym_DeR:Nn \math_isym_DeR:Nn
-  \let:NN \math_sym_DeB:Nn \math_isym_DeL:Nn 
-  \let:NN \math_sym_DeA:Nn  \math_isym_DeA:Nn 
-  \let:NN \math_sym_Rad:Nn  \math_isym_Rad:Nn
-  \let:NN \math_sym_Acc:Nn \math_isym_DeL:Nn
-  \let:NN \math_csym_Ord:Nn \math_icsym_Ord:Nn
-  \let:NN \math_csym_Var:Nn \math_icsym_Var:Nn
-  \let:NN \math_csym_Bin:Nn \math_icsym_Bin:Nn
-  \let:NN \math_csym_Rel:Nn \math_icsym_Rel:Nn
-  \let:NN \math_csym_Pun:Nn \math_icsym_Pun:Nn
-  \let:NN \math_csym_COi:Nn \math_icsym_COi:Nn
-  \let:NN \math_csym_COs:Nn \math_icsym_COs:Nn
-  \let:NN \math_csym_DeL:Nn \math_icsym_DeL:Nn
-  \let:NN \math_csym_DeR:Nn \math_icsym_DeR:Nn
-  \let:NN \math_csym_DeB:Nn \math_icsym_DeB:Nn
-  \let:NN \math_csym_DeA:Nn \math_icsym_DeA:Nn
-  \let:NN \math_csym_Acc:Nn \math_icsym_Acc:Nn
-  \let:NN \math_csym_Ope:Nn \math_icsym_Ope:Nn
-  \let:NN \math_csym_Clo:Nn \math_icsym_Clo:Nn
-  \let:NN \math_csym_Inn:Nn \math_icsym_Inn:Nn
+\cs_set:Npn \math_setup_inline_symbols:{
+  \cs_set_eq:NN \math_sym_Ord:Nn \math_isym_Ord:Nn 
+  \cs_set_eq:NN \math_sym_Var:Nn \math_isym_Var:Nn 
+  \cs_set_eq:NN \math_sym_Bin:Nn \math_isym_Bin:Nn
+  \cs_set_eq:NN \math_sym_Rel:Nn \math_isym_Rel:Nn 
+  \cs_set_eq:NN \math_sym_Pun:Nn \math_isym_Pun:Nn 
+  \cs_set_eq:NN \math_sym_COs:Nn \math_isym_COs:Nn
+  \cs_set_eq:NN \math_sym_COi:Nn \math_isym_COi:Nn
+  \cs_set_eq:NN \math_sym_DeL:Nn \math_isym_DeL:Nn
+  \cs_set_eq:NN \math_sym_DeR:Nn \math_isym_DeR:Nn
+  \cs_set_eq:NN \math_sym_DeB:Nn \math_isym_DeL:Nn 
+  \cs_set_eq:NN \math_sym_DeA:Nn  \math_isym_DeA:Nn 
+  \cs_set_eq:NN \math_sym_Rad:Nn  \math_isym_Rad:Nn
+  \cs_set_eq:NN \math_sym_Acc:Nn \math_isym_DeL:Nn
+  \cs_set_eq:NN \math_csym_Ord:Nn \math_icsym_Ord:Nn
+  \cs_set_eq:NN \math_csym_Var:Nn \math_icsym_Var:Nn
+  \cs_set_eq:NN \math_csym_Bin:Nn \math_icsym_Bin:Nn
+  \cs_set_eq:NN \math_csym_Rel:Nn \math_icsym_Rel:Nn
+  \cs_set_eq:NN \math_csym_Pun:Nn \math_icsym_Pun:Nn
+  \cs_set_eq:NN \math_csym_COi:Nn \math_icsym_COi:Nn
+  \cs_set_eq:NN \math_csym_COs:Nn \math_icsym_COs:Nn
+  \cs_set_eq:NN \math_csym_DeL:Nn \math_icsym_DeL:Nn
+  \cs_set_eq:NN \math_csym_DeR:Nn \math_icsym_DeR:Nn
+  \cs_set_eq:NN \math_csym_DeB:Nn \math_icsym_DeB:Nn
+  \cs_set_eq:NN \math_csym_DeA:Nn \math_icsym_DeA:Nn
+  \cs_set_eq:NN \math_csym_Acc:Nn \math_icsym_Acc:Nn
+  \cs_set_eq:NN \math_csym_Ope:Nn \math_icsym_Ope:Nn
+  \cs_set_eq:NN \math_csym_Clo:Nn \math_icsym_Clo:Nn
+  \cs_set_eq:NN \math_csym_Inn:Nn \math_icsym_Inn:Nn
 }
 
-\def:Npn \math_setup_display_symbols:{
-  \let:NN \math_sym_Ord:Nn \math_dsym_Ord:Nn 
-  \let:NN \math_sym_Var:Nn \math_dsym_Var:Nn 
-  \let:NN \math_sym_Bin:Nn \math_dsym_Bin:Nn
-  \let:NN \math_sym_Rel:Nn \math_dsym_Rel:Nn 
-  \let:NN \math_sym_Pun:Nn \math_dsym_Pun:Nn 
-  \let:NN \math_sym_COs:Nn \math_dsym_COs:Nn
-  \let:NN \math_sym_COi:Nn \math_dsym_COi:Nn
-  \let:NN \math_sym_DeL:Nn \math_dsym_DeL:Nn
-  \let:NN \math_sym_DeR:Nn \math_dsym_DeR:Nn
-  \let:NN \math_sym_DeB:Nn \math_dsym_DeL:Nn 
-  \let:NN \math_sym_DeA:Nn  \math_dsym_DeA:Nn 
-  \let:NN \math_sym_Rad:Nn  \math_dsym_Rad:Nn
-  \let:NN \math_sym_Acc:Nn \math_dsym_DeL:Nn
-  \let:NN \math_csym_Ord:Nn \math_dcsym_Ord:Nn
-  \let:NN \math_csym_Var:Nn \math_dcsym_Var:Nn
-  \let:NN \math_csym_Bin:Nn \math_dcsym_Bin:Nn
-  \let:NN \math_csym_Rel:Nn \math_dcsym_Rel:Nn
-  \let:NN \math_csym_Pun:Nn \math_dcsym_Pun:Nn
-  \let:NN \math_csym_COi:Nn \math_dcsym_COi:Nn
-  \let:NN \math_csym_COs:Nn \math_dcsym_COs:Nn
-  \let:NN \math_csym_DeL:Nn \math_dcsym_DeL:Nn
-  \let:NN \math_csym_DeR:Nn \math_dcsym_DeR:Nn
-  \let:NN \math_csym_DeB:Nn \math_dcsym_DeB:Nn
-  \let:NN \math_csym_DeA:Nn \math_dcsym_DeA:Nn
-  \let:NN \math_csym_Acc:Nn \math_dcsym_Acc:Nn
-  \let:NN \math_csym_Ope:Nn \math_dcsym_Ope:Nn
-  \let:NN \math_csym_Clo:Nn \math_dcsym_Clo:Nn
-  \let:NN \math_csym_Inn:Nn \math_dcsym_Inn:Nn
+\cs_set:Npn \math_setup_display_symbols:{
+  \cs_set_eq:NN \math_sym_Ord:Nn \math_dsym_Ord:Nn 
+  \cs_set_eq:NN \math_sym_Var:Nn \math_dsym_Var:Nn 
+  \cs_set_eq:NN \math_sym_Bin:Nn \math_dsym_Bin:Nn
+  \cs_set_eq:NN \math_sym_Rel:Nn \math_dsym_Rel:Nn 
+  \cs_set_eq:NN \math_sym_Pun:Nn \math_dsym_Pun:Nn 
+  \cs_set_eq:NN \math_sym_COs:Nn \math_dsym_COs:Nn
+  \cs_set_eq:NN \math_sym_COi:Nn \math_dsym_COi:Nn
+  \cs_set_eq:NN \math_sym_DeL:Nn \math_dsym_DeL:Nn
+  \cs_set_eq:NN \math_sym_DeR:Nn \math_dsym_DeR:Nn
+  \cs_set_eq:NN \math_sym_DeB:Nn \math_dsym_DeL:Nn 
+  \cs_set_eq:NN \math_sym_DeA:Nn  \math_dsym_DeA:Nn 
+  \cs_set_eq:NN \math_sym_Rad:Nn  \math_dsym_Rad:Nn
+  \cs_set_eq:NN \math_sym_Acc:Nn \math_dsym_DeL:Nn
+  \cs_set_eq:NN \math_csym_Ord:Nn \math_dcsym_Ord:Nn
+  \cs_set_eq:NN \math_csym_Var:Nn \math_dcsym_Var:Nn
+  \cs_set_eq:NN \math_csym_Bin:Nn \math_dcsym_Bin:Nn
+  \cs_set_eq:NN \math_csym_Rel:Nn \math_dcsym_Rel:Nn
+  \cs_set_eq:NN \math_csym_Pun:Nn \math_dcsym_Pun:Nn
+  \cs_set_eq:NN \math_csym_COi:Nn \math_dcsym_COi:Nn
+  \cs_set_eq:NN \math_csym_COs:Nn \math_dcsym_COs:Nn
+  \cs_set_eq:NN \math_csym_DeL:Nn \math_dcsym_DeL:Nn
+  \cs_set_eq:NN \math_csym_DeR:Nn \math_dcsym_DeR:Nn
+  \cs_set_eq:NN \math_csym_DeB:Nn \math_dcsym_DeB:Nn
+  \cs_set_eq:NN \math_csym_DeA:Nn \math_dcsym_DeA:Nn
+  \cs_set_eq:NN \math_csym_Acc:Nn \math_dcsym_Acc:Nn
+  \cs_set_eq:NN \math_csym_Ope:Nn \math_dcsym_Ope:Nn
+  \cs_set_eq:NN \math_csym_Clo:Nn \math_dcsym_Clo:Nn
+  \cs_set_eq:NN \math_csym_Inn:Nn \math_dcsym_Inn:Nn
 }
 %    \end{macrocode}
 % Phew, that was it.
@@ -525,7 +524,7 @@ and the derived files
 \catcode\z@=\active
 \def\DeclareFlexSymbol#1#2#3#4{%
   \begingroup
-  \def:Npx\@tempb{\exp_not:N\@sym\exp_not:N#1\exp_not:c{math_sym_#2:Nn}\exp_not:c{mg@#3}{#4}}%
+  \cs_set:Npx\@tempb{\exp_not:N\@sym\exp_not:N#1\exp_not:c{math_sym_#2:Nn}\exp_not:c{mg@#3}{#4}}%
   \ifcat\exp_not:N#1\relax
     \sym@global\let#1\@tempb
   \else
@@ -536,9 +535,9 @@ and the derived files
   \endgroup
 }
 \tmp % restore catcode
-\def:Npn \DeclareFlexDelimiter #1#2#3#4#5#6{
+\cs_set:Npn \DeclareFlexDelimiter #1#2#3#4#5#6{
   \DeclareFlexSymbol{#1}{#2}{#3}{#4}
-  \gdef:cpx{sd@\cs_use:c{mg@#3}#4}{\exp_not:c{mg@#5}{#6}}
+  \cs_gset:cpx{sd@\use:c{mg@#3}#4}{\exp_not:c{mg@#5}{#6}}
 }
 
 %    \end{macrocode}
@@ -559,7 +558,7 @@ and the derived files
 %    \begin{macrocode}
 \def\text@char@sym#1#2#3#4{% #3=fam, #4=slot
   \begingroup
-    \let:NN \@sym \use_noop: % defense against infinite loops
+    \cs_set_eq:NN \@sym \prg_do_nothing: % defense against infinite loops
 %    \end{macrocode}
 % the next line will result in |\scriptfont|\meta{num}, where |#3|
 % provides the \meta{num}.
@@ -571,14 +570,14 @@ and the derived files
 \catcode\z@=\active
 \def\text@char#1#2{\begingroup
   \check@mathfonts
-  \let:NN \text@script@char#1
-  \let:NN \@sym\text@char@sym
-  \let:NN \@symtype\use_arg_ii:nn 
-  \let:NN\OrdSymbol\use_arg_i:n
-  \let:NN\ifmmode\iftrue 
+  \cs_set_eq:NN \text@script@char#1
+  \cs_set_eq:NN \@sym\text@char@sym
+  \cs_set_eq:NN \@symtype\use_ii:nn 
+  \cs_set_eq:NN\OrdSymbol\use:n
+  \cs_set_eq:NN\ifmmode\iftrue 
   \everymath{$\use_none:n}%$
   \def\mkern{\muskip\z@}
-  \let:NN\mskip\mkern
+  \cs_set_eq:NN\mskip\mkern
   \ifcat\relax\noexpand#2% true if #2 is a cs.
     #2%  
   \else
@@ -661,7 +660,7 @@ and the derived files
 \def\mathchars@reset{\let\@sym\@sym@ord \let\@symtype\@symtype@ord
   \let\OrdSymbol\relax}
 \def\@symtype@ord#1#{}% a strange sort of \@gobble
-\def\@sym@ord#1#2{\exp_after:NN\@sym@ord@a\string#2\@nil}%
+\def\@sym@ord#1#2{\exp_after:wN\@sym@ord@a\string#2\@nil}%
 %    \end{macrocode}
 % Read delimited argument here. We want to find first character of
 % DeA, Bin, etc. and the control sequence checked agains is |\m@DeL|,
@@ -683,7 +682,7 @@ and the derived files
     \math_char:NNn 0 #5{#6}
   \fi 
 }
-\def:NNn \math_ord_delim_aux:Nn 2{
+\cs_set:Nn \math_ord_delim_aux:Nn {
   \math_sd_aux:nn { \math_char:NNn 0 } {#1{#2}} 
 }
 %    \end{macrocode}
@@ -814,20 +813,20 @@ and the derived files
 %<mathpazo>\ProvidesSymbols{mathpazo}[2007/12/19 v0.2]
 %<mathptmx>\ProvidesSymbols{mathptmx}[2007/12/19 v0.2]
 \ExplSyntaxOn
-\gdef:cpx{mg@OT1}{\hexnumber@\symoperators}
-\gdef:cpx{mg@OML}{\hexnumber@\symletters}
-\gdef:cpx{mg@OMS}{\hexnumber@\symsymbols}
-\gdef:cpx{mg@OMX}{\hexnumber@\symlargesymbols}
-\gdef:Npx\mg@bin{\mg@OMS}
-\gdef:Npx\mg@del{\mg@OMX}
-\gdef:Npx\mg@digit{\exp_not:c{mg@OT1}}
-\gdef\mg@latin{\mg@OML}
-\glet:NN\mg@Latin\mg@latin
-\glet:NN\mg@greek\mg@latin
-\glet:NN\mg@Greek\mg@digit
-\glet:NN\mg@rel\mg@bin
-\glet:NN\mg@ord\mg@bin
-\glet:NN\mg@cop\mg@del
+\cs_gset:cpx{mg@OT1}{\hexnumber@\symoperators}
+\cs_gset:cpx{mg@OML}{\hexnumber@\symletters}
+\cs_gset:cpx{mg@OMS}{\hexnumber@\symsymbols}
+\cs_gset:cpx{mg@OMX}{\hexnumber@\symlargesymbols}
+\cs_gset:Npx\mg@bin{\mg@OMS}
+\cs_gset:Npx\mg@del{\mg@OMX}
+\cs_gset:Npx\mg@digit{\exp_not:c{mg@OT1}}
+\cs_gset:Npn\mg@latin{\mg@OML}
+\cs_gset_eq:NN\mg@Latin\mg@latin
+\cs_gset_eq:NN\mg@greek\mg@latin
+\cs_gset_eq:NN\mg@Greek\mg@digit
+\cs_gset_eq:NN\mg@rel\mg@bin
+\cs_gset_eq:NN\mg@ord\mg@bin
+\cs_gset_eq:NN\mg@cop\mg@del
 %    \end{macrocode}
 % 
 % 
@@ -1103,7 +1102,7 @@ and the derived files
 \DeclareFlexSymbol{\notRel}{Rel}{rel}{36}
 \DeclareFlexSymbol{\mapstoOrd}{Ord}{OMS}{37}
 \DeclareFlexSymbol{\cdotOrd}{Ord}{OMS}{01}
-\def:Npn\cdotp{\mathpunct{\cdotOrd}}
+\cs_set:Npn\cdotp{\mathpunct{\cdotOrd}}
 %    \end{macrocode}
 % Symbols from the 128-character \fn{cmex} encoding.   
 % \verb"COs" stands for `cumulative operator
@@ -1338,8 +1337,8 @@ and the derived files
 \RequirePackage{amsfonts}\relax
 %    \end{macrocode}
 %    \begin{macrocode}
-\gdef:cpx{mg@MSA}{\hexnumber@\symAMSa}%
-\gdef:cpx{mg@MSB}{\hexnumber@\symAMSb}%
+\cs_gset:cpx{mg@MSA}{\hexnumber@\symAMSa}%
+\cs_gset:cpx{mg@MSB}{\hexnumber@\symAMSb}%
 %    \end{macrocode}
 %    \begin{macrocode}
 \DeclareFlexSymbol{\boxdot}       {Bin}{MSA}{00}

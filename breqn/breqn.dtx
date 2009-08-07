@@ -1008,7 +1008,8 @@ and the derived files
 % 
 % Declare package name and date.   
 %    \begin{macrocode}
-\ProvidesPackage{breqn}[2008/07/28 v0.98]
+\RequirePackage{expl3}[2009/08/05]
+\ProvidesExplPackage{breqn}{2009/08/07}{0.98a}{Breaking equations}
 %    \end{macrocode}
 %
 %
@@ -1049,7 +1050,7 @@ and the derived files
 % I don't think so.   
 %    \begin{macrocode}
 \@ifpackageloaded{flexisym}{}{%
-  \RequirePackage{flexisym}[2007/12/19]
+  \RequirePackage{flexisym}[2009/08/07]
     \edef\breqnpopcats{\breqnpopcats
     \catcode\number`\^=\number\catcode`\^
     \catcode\number`\_=\number\catcode`\_
@@ -1443,11 +1444,11 @@ and the derived files
   %\let\@symRel\@secondoftwo \let\@symBin\@secondoftwo
   %\let\@symDeL\@secondoftwo \let\@symDeR\@secondoftwo
   %\let\@symDeB\@secondoftwo
-  \let:NN \math_csym_Rel:Nn \use_arg_ii:nn
-  \let:NN \math_csym_Bin:Nn \use_arg_ii:nn
-  \let:NN \math_csym_DeL:Nn \use_arg_ii:nn
-  \let:NN \math_csym_DeR:Nn \use_arg_ii:nn
-  \let:NN \math_csym_DeB:Nn \use_arg_ii:nn
+  \cs_set_eq:NN \math_csym_Rel:Nn \use_ii:nn
+  \cs_set_eq:NN \math_csym_Bin:Nn \use_ii:nn
+  \cs_set_eq:NN \math_csym_DeL:Nn \use_ii:nn
+  \cs_set_eq:NN \math_csym_DeR:Nn \use_ii:nn
+  \cs_set_eq:NN \math_csym_DeB:Nn \use_ii:nn
 }
 \ExplSyntaxOff
 %    \end{macrocode}
@@ -2075,8 +2076,8 @@ and the derived files
 \ExplSyntaxOn
 %%%\def\d@@Bin{\bin@break \m@@Bin}
 %%%%\def\d@@Rel{\mark@lhs \rel@break \m@@Rel}
-\def:Npn \math_dsym_Bin:Nn {\bin@break\math_bsym_Bin:Nn}
-\def:Npn \math_dsym_Rel:Nn {\mark@lhs \rel@break \math_bsym_Rel:Nn }
+\cs_set:Npn \math_dsym_Bin:Nn {\bin@break\math_bsym_Bin:Nn}
+\cs_set:Npn \math_dsym_Rel:Nn {\mark@lhs \rel@break \math_bsym_Rel:Nn }
 \ExplSyntaxOff
 %    \end{macrocode}
 % The difficulty of dealing properly with the subscripts and
@@ -2113,8 +2114,8 @@ and the derived files
 %%\let\m@@symRel\@symRel 
 %%%\def\d@@symRel{\mark@lhs \rel@break \m@@symRel}
 
-\def_protected:Npn \math_dcsym_Bin:Nn {\bin@break \math_bcsym_Bin:Nn}
-\def_protected:Npn \math_dcsym_Rel:Nn { \mark@lhs \rel@break \math_bcsym_Rel:Nn}
+\cs_set_protected:Npn \math_dcsym_Bin:Nn {\bin@break \math_bcsym_Bin:Nn}
+\cs_set_protected:Npn \math_dcsym_Rel:Nn { \mark@lhs \rel@break \math_bcsym_Rel:Nn}
 
 
 %%\let\m@@symBin\@symBin \def\d@@symBin{\bin@break \m@@symBin}
@@ -5475,9 +5476,9 @@ and the derived files
 % Define display variants of DeL, DeR, DeB
 %    \begin{macrocode}
 \ExplSyntaxOn
-\def:Npn \math_dsym_DeL:Nn #1#2{\math_bsym_DeL:Nn #1{#2}\after@open}
-\def:Npn \math_dsym_DeR:Nn #1#2{\math_bsym_DeR:Nn #1{#2}\after@close}
-\def:Npn \math_dsym_DeB:Nn #1#2{\math_bsym_DeB:Nn #1{#2}\after@bidir}
+\cs_set:Npn \math_dsym_DeL:Nn #1#2{\math_bsym_DeL:Nn #1{#2}\after@open}
+\cs_set:Npn \math_dsym_DeR:Nn #1#2{\math_bsym_DeR:Nn #1{#2}\after@close}
+\cs_set:Npn \math_dsym_DeB:Nn #1#2{\math_bsym_DeB:Nn #1{#2}\after@bidir}
 
 %%%%%
 %%%%%\let\m@@DeL\m@DeL \let\m@@DeR\m@DeR \let\m@@DeB\m@DeB
@@ -5523,7 +5524,7 @@ and the derived files
   \prebinoppenalty\bop@incr \multiply\prebinoppenalty\lr@level
   \advance\prebinoppenalty\zero@bop
   \ifnum\eqbreakdepth<\lr@level
-     \let:NN \math_sym_Bin:Nn \math_isym_Bin:Nn %%%%%%\let\m@Bin\m@@Bin
+     \cs_set_eq:NN \math_sym_Bin:Nn \math_isym_Bin:Nn %%%%%%\let\m@Bin\m@@Bin
 %    \end{macrocode}
 % Inside delimiters, add some fillglue before binops so that a broken off
 % portion will get thrown flush right.    Also shift it slightly
@@ -5541,7 +5542,7 @@ and the derived files
   \prebinoppenalty\bop@incr \multiply\prebinoppenalty\lr@level
   \advance\prebinoppenalty\zero@bop
   \ifnum\eqbreakdepth<\lr@level
-  \else \let:NN \math_sym_Bin:Nn \math_dsym_Bin:Nn %%%%%%\let\m@Bin\d@@Bin
+  \else \cs_set_eq:NN \math_sym_Bin:Nn \math_dsym_Bin:Nn %%%%%%\let\m@Bin\d@@Bin
   \fi
 %    \end{macrocode}
 % When we get back to level 0, no delimiters, remove the stretch
@@ -5618,8 +5619,8 @@ and the derived files
 % hack! coff!
 %    \begin{macrocode}
   %%%%%\let\m@Bin\m@@Bin  \let\m@Rel\m@@Rel
-  \let:NN \math_sym_Bin:Nn \math_isym_Bin:Nn
-  \let:NN \math_sym_Rel:Nn \math_isym_Rel:Nn
+  \cs_set_eq:NN \math_sym_Bin:Nn \math_isym_Bin:Nn
+  \cs_set_eq:NN \math_sym_Rel:Nn \math_isym_Rel:Nn
   #2}\afterassignment\ss@scan@a \let\@let@token=}%
 \ExplSyntaxOff
 %    \end{macrocode}

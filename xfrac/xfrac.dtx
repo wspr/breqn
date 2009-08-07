@@ -697,14 +697,14 @@ and the derived files
 %  experimental code, more precisely from the `xbase' bundle. The
 %  other packages are well-known.
 %    \begin{macrocode}
-\RequirePackage{l3names}[2007/09/01]
-\ProvidesExplPackage{xfrac}{2008/08/04}{0.2}{Text fractions}
+\RequirePackage{expl3}[2009/08/05]
+\ProvidesExplPackage{xfrac}{2009/08/07}{0.2a}{Text fractions}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
 \RequirePackage{textcomp,graphicx,amstext}
-\RequirePackage{template}[2008/08/03] % force upgrade!! 
-\RequirePackage{xparse}[2008/08/03] % force upgrade!!
+\RequirePackage{template}[2008/08/03]
+\RequirePackage{xparse}[2008/08/03]
 %    \end{macrocode}
 % With v0.10b the new internal syntax using |_| and |:| was
 % introduced. Starting from v0.2 the expl3 code base is used and,
@@ -757,13 +757,13 @@ and the derived files
   v-scale             = n  [1]          \xfrac_vscale:,
   scale-factor        = n  [.83333]     \xfrac_scalefactor:,
   scale-relative      = s  [true]
-    { \def:Npn \xfrac_relscale: {\box_ht:N\l_xfrac_slash_box}}
-    { \def:Npn \xfrac_relscale: {
+    { \cs_set:Npn \xfrac_relscale: {\box_ht:N\l_xfrac_slash_box}}
+    { \cs_set:Npn \xfrac_relscale: {
       \dim_eval:n { \box_ht:N\l_xfrac_temp_box + \box_dp:N\l_xfrac_temp_box }} },
   scaling             = s  [true]
-    {\def:Npn\xfrac_fontscale: {
+    {\cs_set:Npn\xfrac_fontscale: {
        \fontsize{\xfrac_scalefactor: \xfrac_relscale:}{\c_zero_dim}\selectfont}}
-    { \let:NN \xfrac_fontscale: \use_noop: },
+    { \cs_set_eq:NN \xfrac_fontscale: \prg_do_nothing: },
 %    \end{macrocode}
 %  Here comes some fake lengths. I've decided to call them with the
 %  suffix |_fdim|, so that I will remember to use them right.
@@ -779,23 +779,23 @@ and the derived files
 %    \begin{macrocode}
   slash-right-mkern   = n  [-2mu]       \l_xfrac_slashrightmsep_fmu,
   slash-left-mkern    = n  [-1mu]       \l_xfrac_slashleftmsep_fmu,
-  math-mode           = s  [false] { \let:NN\xfrac_math: \ensuremath }
-                                   { \let:NN \xfrac_math: \use_arg_i:n },
+  math-mode           = s  [false] { \cs_set_eq:NN \xfrac_math: \ensuremath }
+                                   { \cs_set_eq:NN \xfrac_math: \use:n },
   phantom             = n  [8]          \xfrac_phantom:,
 }{
   \DoParameterAssignments
   \mode_if_math:TF{
-    \let:NN \xfrac_textormath: \text
-    \def:Npx \xfrac_slashfontchange: {\tex_fam:D \xfrac_slashsymbolfont: }
-    \def:Npx \xfrac_numeratorfontchange: {\tex_fam:D \xfrac_numeratorfont: }
-    \def:Npx \xfrac_denominatorfontchange: {\tex_fam:D \xfrac_denominatorfont: }
+    \cs_set_eq:NN \xfrac_textormath: \text
+    \cs_set:Npx \xfrac_slashfontchange: {\tex_fam:D \xfrac_slashsymbolfont: }
+    \cs_set:Npx \xfrac_numeratorfontchange: {\tex_fam:D \xfrac_numeratorfont: }
+    \cs_set:Npx \xfrac_denominatorfontchange: {\tex_fam:D \xfrac_denominatorfont: }
   }{
-    \let:NN \xfrac_textormath: \mbox
-    \def:Npn\xfrac_slashfontchange: {
+    \cs_set_eq:NN \xfrac_textormath: \mbox
+    \cs_set:Npn\xfrac_slashfontchange: {
       \fontfamily{\xfrac_slashsymbolfont: }\selectfont}
-    \def:Npn\xfrac_numeratorfontchange: {
+    \cs_set:Npn\xfrac_numeratorfontchange: {
       \fontfamily{\xfrac_numeratorfont: }\selectfont}
-    \def:Npn\xfrac_denominatorfontchange: {
+    \cs_set:Npn\xfrac_denominatorfontchange: {
       \fontfamily{\xfrac_denominatorfont: }\selectfont}
   }
   \xfrac_textormath: {
@@ -821,13 +821,13 @@ and the derived files
 %    \end{macrocode}
 %  Both unspecified.
 %    \begin{macrocode}
-        \def:Npn\xfrac_next: {\raisebox{\box_ht:N\l_xfrac_slash_box
+        \cs_set:Npn\xfrac_next: {\raisebox{\box_ht:N\l_xfrac_slash_box
                                   -\box_dp:N\l_xfrac_slash_box-\height}}
       }{
 %    \end{macrocode}
 %  Use only bottom specification.
 %    \begin{macrocode}
-        \def:Npn\xfrac_next: {\raisebox{\l_xfrac_numeratorbotsep_fdim }}
+        \cs_set:Npn\xfrac_next: {\raisebox{\l_xfrac_numeratorbotsep_fdim }}
       }
     }
     {
@@ -836,7 +836,7 @@ and the derived files
 %    \begin{macrocode}
       \dim_compare:nNnTF \l_xfrac_numeratorbotsep_fdim = \c_max_dim
       {
-        \def:Npn\xfrac_next: {
+        \cs_set:Npn\xfrac_next: {
           \raisebox{
             \box_ht:N\l_xfrac_slash_box - \l_xfrac_numeratortopsep_fdim
             - \height
@@ -851,7 +851,7 @@ and the derived files
           {You~ have~ specified~ both~ numerator-top-sep~ and~
           numerator-bot-sep}
           {I~ will~ pretend~ you~ didn't~ specify~ any~ of ~them}
-        \def:Npn\xfrac_next: {\raisebox{\box_ht:N\l_xfrac_slash_box
+        \cs_set:Npn\xfrac_next: {\raisebox{\box_ht:N\l_xfrac_slash_box
                                   -\box_dp:N\l_xfrac_slash_box-\height}}
       }
     }
@@ -1014,7 +1014,7 @@ and the derived files
 \DeclareDocumentCommand \sfrac {o mom}{
   \mode_if_math:TF 
 {
-    \def:Npx \xfrac_next: {mathfam\number\fam}
+    \cs_set:Npx \xfrac_next: {mathfam\number\fam}
     \IfExistsInstanceTF{xfrac}{\xfrac_next: }
     {\UseInstance{xfrac}{\xfrac_next: }}
     {\UseInstance{xfrac}{mathdefault}}

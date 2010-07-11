@@ -1,6 +1,6 @@
 The mh bundle
 =============
-Morten Hoegholm (c) 2002-2008
+Morten Hoegholm (c) 2002-2010
 email: mh.ctan@gmail.com
 License: LaTeX Project Public License
 
@@ -100,4 +100,4 @@ math. The package requires expl3 and xpackages available on CTAN.
 
 
 ===========
-This README file was last revised 2008/08/04.
+This README file was last revised 2010/07/11.

@@ -72,7 +72,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: flexisym 2008/08/08 v0.97a Flexisym (MH)}
+\Msg{* Package: flexisym 2010/07/11 v0.97b Flexisym (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -138,7 +138,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{flexisym.drv}%
-  [2008/08/08 v0.97a flexisym (MH)]
+  [2010/07/11 v0.97b flexisym (MH)]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -807,11 +807,13 @@ and the derived files
 % 
 % 
 % Default mathgroup setup.   
+% \changes{v0.3}{2010/07/11}{fixed bugs regarding capital greek
+% letters in mathpazo and mathptmx}
 %    \begin{macrocode}
 %<*cmbase|mathpazo|mathptmx>
 %<cmbase>\ProvidesSymbols{cmbase}[2007/12/19 v0.92]
-%<mathpazo>\ProvidesSymbols{mathpazo}[2007/12/19 v0.2]
-%<mathptmx>\ProvidesSymbols{mathptmx}[2007/12/19 v0.2]
+%<mathpazo>\ProvidesSymbols{mathpazo}[2010/07/11 v0.3]
+%<mathptmx>\ProvidesSymbols{mathptmx}[2010/07/11 v0.3]
 \ExplSyntaxOn
 \cs_gset:cpx{mg@OT1}{\hexnumber@\symoperators}
 \cs_gset:cpx{mg@OML}{\hexnumber@\symletters}
@@ -823,7 +825,20 @@ and the derived files
 \cs_gset:Npn\mg@latin{\mg@OML}
 \cs_gset_eq:NN\mg@Latin\mg@latin
 \cs_gset_eq:NN\mg@greek\mg@latin
-\cs_gset_eq:NN\mg@Greek\mg@digit
+%<cmbase|mathptmx>\cs_gset_eq:NN\mg@Greek\mg@digit
+%    \end{macrocode}
+% Mathpazo takes the upper case greeks from the letter font if
+% slantedGreek is in effect, but from \emph{upright} if not. Mathptmx
+% also takes the slanted greek from the letter font.
+%    \begin{macrocode}
+%<mathpazo>\@ifpackagewith{mathpazo}{slantedGreek}{%
+%<mathpazo>  \cs_gset_eq:NN\mg@Greek\mg@latin
+%<mathpazo>}{%
+%<mathpazo>  \cs_gset:cpx{mg@Greek}{\hexnumber@\symupright}
+%<mathpazo>}
+%<mathptmx>\@ifpackagewith{mathptmx}{slantedGreek}{%
+%<mathptmx>   \cs_gset_eq:NN\mg@Greek\mg@latin
+%<mathptmx>}{}
 \cs_gset_eq:NN\mg@rel\mg@bin
 \cs_gset_eq:NN\mg@ord\mg@bin
 \cs_gset_eq:NN\mg@cop\mg@del

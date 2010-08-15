@@ -1,14 +1,12 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2004, 2008, 2009 by Morten Hoegholm <mh.ctan@gmail.com>
+% Copyright (C) 2004, 2008-2010 by Morten Hoegholm <mh.ctan@gmail.com>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
-% version 1.3 of this license or (at your option) any later
+% version 1.3c of this license or (at your option) any later
 % version. The latest version of this license is in
 %    http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of
-% LaTeX version 2005/12/01 or later.
 %
 % This work has the LPPL maintenance status "maintained".
 %
@@ -66,7 +64,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: xfrac 2009/08/10 v0.2a textstyle fractions (MH)}
+\Msg{* Package: xfrac 2009/08/10 v0.3 textstyle fractions (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -76,15 +74,13 @@
 
 This is a generated file.
 
-Copyright (C) 2004, 2008, 2009 by Morten Hoegholm <mh.ctan@gmail.com>
+Copyright (C) 2004, 2008-2010 by Morten Hoegholm <mh.ctan@gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
-version 1.3 of this license or (at your option) any later
+version 1.3c of this license or (at your option) any later
 version. The latest version of this license is in
    http://www.latex-project.org/lppl.txt
-and version 1.3 or later is part of all distributions of
-LaTeX version 2005/12/01 or later.
 
 This work has the LPPL maintenance status "maintained".
 
@@ -126,7 +122,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{xfrac.drv}%
-  [2009/08/10 v0.2a textstyle fractions (MH)]
+  [2010/02/02 v0.3 Text style fractions]
 \RequirePackage{fix-cm}
 \documentclass{ltxdoc}
 
@@ -174,7 +170,7 @@ and the derived files
 \providecommand*\pkg[1]{\textsf{#1}}
 \newcommand*\switch[2]{{\fontfamily{#1}\selectfont #2}}
 
-
+\usepackage{lmodern}
 \begin{document}
   \catcode`\_=12
   \DocInput{xfrac.dtx}
@@ -184,6 +180,10 @@ and the derived files
 %
 %  \GetFileInfo{xfrac.drv}
 %  \CheckSum{249}
+%  
+%  \changes{v0.3}{2010/02/02}{Update to new \pkg{xtemplate} system}
+%  \changes{v0.3}{2010/02/02}{Include custom values for
+%    \pkg{lmodern}}
 %
 %  \changes{v0.2a}{2009/08/10}{Update for new version of expl3}
 %
@@ -491,36 +491,36 @@ and the derived files
 %
 %  \begin{TemplateDescription}{xfrac}{text}
 %
-%  \TemplateKey{numerator-font}{n}
+%  \TemplateKey{numerator-font}{tokenlist}
 %    {Font family specification to use for the numerator.}
 %    {\cs{f@family}}
 %
-%  \TemplateKey{numerator-format}{f1}
+%  \TemplateKey{numerator-format}{function 1 arg}
 %    {Action to be taken on the numerator.}
 %    {Process argument unchanged}
 %
-%  \TemplateKey{slash-symbol}{n}
+%  \TemplateKey{slash-symbol}{tokenlist}
 %    {The separator symbol. If not specified the default value will be
 %    used instead.}
 %    {Solidus (\cs{textfractionsolidus})}
 %
-%  \TemplateKey{slash-symbol-font}{n}
+%  \TemplateKey{slash-symbol-font}{tokenlist}
 %    {Font family specification to use for the separator symbol.}
 %    {\cs{f@family}}
 %
-%  \TemplateKey{slash-symbol-format}{f1}
+%  \TemplateKey{slash-symbol-format}{function 1 arg}
 %    {Action to be taken on the separator symbol.}
 %    {Process argument unchanged}
 %
-%  \TemplateKey{denominator-font}{n}
+%  \TemplateKey{denominator-font}{tokenlist}
 %    {Font family specification to use for the denominator.}
 %    {\cs{f@family}}
 %
-%  \TemplateKey{denominator-format}{f1}
+%  \TemplateKey{denominator-format}{function 1 arg}
 %    {Action to be taken on the denominator.}
 %    {Process argument unchanged}
 %
-%  \TemplateKey{h-scale}{n}
+%  \TemplateKey{h-scale}{tokenlist}
 %    {Factor by which the numerator and denominator should be
 %    horizontally scaled. It should only be used if the real superior
 %    and inferior fonts are not available. For instance Stempel
@@ -528,12 +528,12 @@ and the derived files
 %    by a factor of 1.1.}
 %    {1}
 %
-%  \TemplateKey{v-scale}{n}
+%  \TemplateKey{v-scale}{tokenlist}
 %    {Same as \key{h-scale} only vertically. Probably not of much use
 %    but added for completetion.}
 %    {1}
 %
-%  \TemplateKey{scale-factor}{n}
+%  \TemplateKey{scale-factor}{tokenlist}
 %    {Fraction of the size of \key{slash-symbol}. Used for setting the
 %    font size of numerator and denominator. Usually a value of app.\
 %    \sfrac{5}{6} produces fine results. It should only be used if the
@@ -541,54 +541,50 @@ and the derived files
 %    Stempel Garamond looks better if the factor is 0.9.}
 %    {0.83333}
 %
-%  \TemplateKey{scale-relative}{s}
+%  \TemplateKey{scale-relative}{choice}
 %    {If set to `true' the font size of the numerator and denominator
 %    is scaled with respect to the height of the \key{slash-symbol}. If
 %    set to `false' the font is scaled with respect to the total height
 %    of the \key{slash-symbol}.}
 %    {true}
 %
-%  \TemplateKey{scaling}{s}
+%  \TemplateKey{scaling}{choice}
 %    {If set to `true' the fonts are allowed to scale. If set to
 %    `false' they are not. See the `Janson' example for an application.}
 %    {true}
 %
-%  \TemplateKey{numerator-top-sep}{L}
+%  \TemplateKey{numerator-top-sep}{length}
 %    {Dimension specifying the space between the top of the
 %    \key{slash-symbol} and the top of the numerator. If not specified,
 %    the depth of the solidus will be used, because this value will
 %    make the fraction look even.}
 %    {Unspecified}
 %
-%  \TemplateKey{numerator-bot-sep}{L}
+%  \TemplateKey{numerator-bot-sep}{length}
 %    {Dimension specifying the lift of the numerator from the
 %    baseline.}
 %    {Unspecified}
 %
-%  \TemplateKey{denominator-bot-sep}{L}
+%  \TemplateKey{denominator-bot-sep}{length}
 %    {Dimension specifying the lift of the denominator from the
 %    baseline.}
 %    {Unspecified}
 %
-%  \TemplateKey{slash-right-kern}{L}
+%  \TemplateKey{slash-right-kern}{length}
 %    {Dimension specifying the kerning between the \key{slash-symbol}
-%    and the numerator. If specified in terms of font specific
-%    dimensions such as \texttt{em} it is better to use
-%    \cs{DelayEvaluation}.}
+%    and the numerator.}
 %    {\texttt{0pt}}
 %
-%  \TemplateKey{slash-left-kern}{L}
+%  \TemplateKey{slash-left-kern}{length}
 %    {Dimension specifying the kerning between the \key{slash-symbol}
-%    and the denominator. If specified in terms of font specific
-%    dimensions such as \texttt{em} it is better to use
-%    \cs{DelayEvaluation}.}
+%    and the denominator.}
 %    {\texttt{0pt}}
 %
-%  \TemplateKey{math-mode}{s}
+%  \TemplateKey{math-mode}{choice}
 %    {Are we in math mode or not?}
 %    {false}
 %
-%  \TemplateKey{phantom}{n}
+%  \TemplateKey{phantom}{tokenlist}
 %    {A character that suits the common cases. As we would mostly want
 %    to use numbers in text mode we choose a `tall' number, while in
 %    math it is somewhat different.}
@@ -605,24 +601,24 @@ and the derived files
 %
 %  \begin{TemplateDescription}{xfrac}{math}
 %
-%  \TemplateKey{numerator-font}{n}
+%  \TemplateKey{numerator-font}{tokenlist}
 %    {Font family specification to use for the numerator.}
 %    {\cs{number}\cs{fam}}
 %
-%  \TemplateKey{slash-symbol}{n}
+%  \TemplateKey{slash-symbol}{tokenlist}
 %    {The separator symbol. If not specified the default value will be
 %    used instead.}
 %    {Virgule ($/$)}
 %
-%  \TemplateKey{slash-symbol-font}{n}
+%  \TemplateKey{slash-symbol-font}{tokenlist}
 %    {Font family specification to use for the separator symbol.}
 %    {\cs{number}\cs{fam}}
 %
-%  \TemplateKey{denominator-font}{n}
+%  \TemplateKey{denominator-font}{tokenlist}
 %    {Font family specification to use for the denominator.}
 %    {\cs{number}\cs{fam}}
 %
-%  \TemplateKey{scale-factor}{n}
+%  \TemplateKey{scale-factor}{tokenlist}
 %    {Fraction of the size of \key{slash-symbol}. In math mode we
 %    cannot rely on the fonts to be able to scale, but giving a default
 %    scale of 0.7 fits into the regular size changing scheme---the
@@ -631,47 +627,47 @@ and the derived files
 %    That's close enough.}
 %    {0.7}
 %
-%  \TemplateKey{scale-relative}{s}
+%  \TemplateKey{scale-relative}{choice}
 %    {If set to `true' the font size of the numerator and denominator
 %    is scaled with respect to the height of the \key{slash-symbol}. If
 %    set to `false' the font is scaled with respect to the total height
 %    of the \key{slash-symbol}.}
 %    {false}
 %
-%  \TemplateKey{scaling}{s}
+%  \TemplateKey{scaling}{choice}
 %    {If set to `true' the fonts are allowed to scale. If set to
 %    `false' they are not. See the `plainmath' example for an application.}
 %    {true}
 %
-%  \TemplateKey{numerator-top-sep}{L}
+%  \TemplateKey{numerator-top-sep}{length}
 %    {Dimension specifying the space between the top of the
 %    \key{slash-symbol} and the top of the numerator. If not specified,
 %    the depth of the virgule will be used, because this value will
 %    make the fraction look even.}
 %    {\texttt{0pt}}
 %
-%  \TemplateKey{denominator-bot-sep}{L}
+%  \TemplateKey{denominator-bot-sep}{length}
 %    {Dimension specifying the lift of the denominator from the
 %    baseline.}
 %    {\texttt{0pt}}
 %
-%  \TemplateKey{slash-right-mkern}{n}
+%  \TemplateKey{slash-right-mkern}{tokenlist}
 %    {Same as \key{slash-right-kern} but for math mode only and should
 %    be specified in \texttt{mu} units. This is because \pkg{calc}
 %    can't use mu-expressions.}
 %    {\texttt{-2mu}}
 %
-%  \TemplateKey{slash-left-mkern}{n}
+%  \TemplateKey{slash-left-mkern}{tokenlist}
 %    {Same as \key{slash-left-kern} but for math mode only and should
 %    be specified in \texttt{mu} units. This is because \pkg{calc}
 %    can't use mu-expressions.}
 %    {\texttt{-1mu}}
 %
-%  \TemplateKey{math-mode}{s}
+%  \TemplateKey{math-mode}{choice}
 %    {Are we in math mode or not?}
 %    {true}
 %
-%  \TemplateKey{phantom}{n}
+%  \TemplateKey{phantom}{tokenlist}
 %    {A character that suits the common cases. In math we have a high
 %    risk of using a parenthesis, so we choose that. Text mode is
 %    another story.}
@@ -685,354 +681,588 @@ and the derived files
 %  and \key{slash-right-kern} have no meaning in this template.
 %
 %  \end{TemplateDescription}
-%
-%
-%
+% 
 %  \StopEventually{}
 %
-%  \section{Implementation}
+%\section{Implementation}
 %
-% \changes{v0.10b}{2004/04/07}{Now uses \cs{InternalSyntaxOn}}
-% \changes{v0.2}{2008/08/04}{Now uses \cs{ProvidesExplPackage}}
-%  We set up the programming interface. We need the
-%  \pkg{template} and \pkg{xparse} packages from the
-%  experimental code, more precisely from the `xbase' bundle. The
-%  other packages are well-known.
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%       
+% The usual lead-off: provides an experimental package!
 %    \begin{macrocode}
 \RequirePackage{expl3}[2009/08/05]
-\ProvidesExplPackage{xfrac}{2009/08/10}{0.2a}{Text fractions}
+\ProvidesExplPackage{xfrac}{2010/02/02}{0.3}{Text fractions}
 %    \end{macrocode}
 %
+% Some support is needed: a bit wider than the normal \pkg{xpackage}
+% stuff, but not by much.
 %    \begin{macrocode}
-\RequirePackage{textcomp,graphicx,amstext}
-\RequirePackage{template}[2008/08/03]
-\RequirePackage{xparse}[2008/08/03]
-%    \end{macrocode}
-% With v0.10b the new internal syntax using |_| and |:| was
-% introduced. Starting from v0.2 the expl3 code base is used and,
-% hence, also its programming setup.  White space is ignored as well,
-% so any |@|-signs in the code are remnants of old \LaTeX{} coding
-% conventions.
+\RequirePackage { amstext , graphicx , l3keys2e , textcomp , xtemplate }
+%    \end{macrocode}   
 %
-%  An option:
+%\begin{macro}{\l_xfrac_cm_std_bool}
+% There is one option to support.
 %    \begin{macrocode}
-\bool_new:N \g_cm_recommended_bool
-\DeclareOption{cm-recommended}
-              { \bool_gset_true:N \g_cm_recommended_bool }
-\DeclareOption{cm-standard}
-              { \bool_gset_false:N \g_cm_recommended_bool }
-\ExecuteOptions{cm-recommended}
-\ProcessOptions\relax
+\keys_define:nn { xfrac } {
+  cm-recommended .choice:,
+  cm-recommended /
+    false        .code:n     =
+      { \bool_set_true:N \l_xfrac_cm_std_bool },
+  cm-recommended /
+    true         .code:n     =
+      { \bool_set_false:N \l_xfrac_cm_std_bool },
+  cm-recommended .default:n  = { true },    
+  cm-standard    .bool_set:N = \l_xfrac_cm_std_bool
+}
+\ProcessKeysOptions { xfrac }
 %    \end{macrocode}
+%\end{macro}
 %
-%  \begin{macro}{\l_xfrac_temp_box}
-%  \begin{macro}{\l_xfrac_slash_box}
-%  We use two box registers. We could probably get away with using
-%  scratch boxes, but this feels safer. Anyway we're all using
-%  \eTeX{} now so why not?
+%\begin{macro}{\l_xfrac_slash_box}
+%\begin{macro}{\l_xfrac_tmp_box}
+% In keeping with the \LaTeX3 philosophy, rather than use generic 
+% scratch boxes and get confused, \pkg{xfrac} reserves its own named
+% working space.
 %    \begin{macrocode}
-\box_new:N \l_xfrac_temp_box
 \box_new:N \l_xfrac_slash_box
+\box_new:N \l_xfrac_tmp_box
 %    \end{macrocode}
-%  \end{macro}
-%  \end{macro}
+%\end{macro}
+%\end{macro}
 %
-%  \subsection{The Templates}
-%  Then we declare the template. 
+%\begin{macro}{\xfrac_tmp:w}
+% Used for the raised boxes: weird as it does not take an argument
+% but the \cs{raisebox} does.
 %    \begin{macrocode}
-\DeclareTemplateType{xfrac}{3}
+\cs_new:Npn \xfrac_tmp:w { }
 %    \end{macrocode}
-% The template type `text'. Make two separate templates: text and
-% math!! It is okay they share keys but it just gets too complicated
-% within the template declaration.
+%\end{macro}
+%
+%\subsection{Initialisation of variables}
+%
+% Variables used in templates have to be set up: there is not
+% much to say about these, other than that they must exist.
+%    
+%\begin{macro}{\l_xfrac_denominator_bot_sep_dim}
+%\begin{macro}{\l_xfrac_numerator_bot_sep_dim}
+%\begin{macro}{\l_xfrac_numerator_top_sep_dim}
+%\begin{macro}{\l_xfrac_slash_left_sep_dim}
+%\begin{macro}{\l_xfrac_slash_right_sep_dim}
+% Fixed lengths.
 %    \begin{macrocode}
-\DeclareTemplate{xfrac}{text}{3}{
-  numerator-font      = n  [\f@family]  \xfrac_numeratorfont:,
-  numerator-format    = f1 [#1]         \xfrac_numeratorformat:n,
-  slash-symbol        = n  [\textfractionsolidus]
-                                        \xfrac_slashsymbol:,
-  slash-symbol-font   = n  [\f@family]  \xfrac_slashsymbolfont:,
-  slash-symbol-format = f1 [#1]         \xfrac_slashsymbolformat:n,
-  denominator-font    = n  [\f@family]  \xfrac_denominatorfont:,
-  denominator-format  = f1 [#1]         \xfrac_denominatorformat:n,
-  h-scale             = n  [1]          \xfrac_hscale:,
-  v-scale             = n  [1]          \xfrac_vscale:,
-  scale-factor        = n  [.83333]     \xfrac_scalefactor:,
-  scale-relative      = s  [true]
-    { \cs_set:Npn \xfrac_relscale: {\box_ht:N\l_xfrac_slash_box}}
-    { \cs_set:Npn \xfrac_relscale: {
-      \dim_eval:n { \box_ht:N\l_xfrac_temp_box + \box_dp:N\l_xfrac_temp_box }} },
-  scaling             = s  [true]
-    {\cs_set:Npn\xfrac_fontscale: {
-       \fontsize{\xfrac_scalefactor: \xfrac_relscale:}{\c_zero_dim}\selectfont}}
-    { \cs_set_eq:NN \xfrac_fontscale: \prg_do_nothing: },
+\dim_new:N \l_xfrac_denominator_bot_sep_dim
+\dim_new:N \l_xfrac_numerator_bot_sep_dim
+\dim_new:N \l_xfrac_numerator_top_sep_dim
+\dim_new:N \l_xfrac_slash_left_sep_dim
+\dim_new:N \l_xfrac_slash_right_sep_dim
 %    \end{macrocode}
-%  Here comes some fake lengths. I've decided to call them with the
-%  suffix |_fdim|, so that I will remember to use them right.
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%
+%\begin{macro}{\l_xfrac_denominator_font_tl}
+%\begin{macro}{\l_xfrac_hscale_tl}
+%\begin{macro}{\l_xfrac_numerator_font_tl}
+%\begin{macro}{\l_xfrac_phantom_tl }
+%\begin{macro}{\l_xfrac_scale_factor_tl}
+%\begin{macro}{\l_xfrac_slash_left_msep_tl}
+%\begin{macro}{\l_xfrac_slash_right_msep_tl}
+%\begin{macro}{\l_xfrac_slash_symbol_tl}
+%\begin{macro}{\l_xfrac_slash_symbol_font_tl}
+%\begin{macro}{\l_xfrac_vscale_tl}
+% Token lists, which include floating-point numbers and math(s)
+% skips.
 %    \begin{macrocode}
-  numerator-top-sep   = L  [\c_max_dim]  \l_xfrac_numeratortopsep_fdim,
-  numerator-bot-sep   = L  [\c_max_dim]  \l_xfrac_numeratorbotsep_fdim,
-  denominator-bot-sep = L  [\c_max_dim]  \l_xfrac_denominatorbotsep_fdim,
-  slash-right-kern    = L  [0pt]        \l_xfrac_slashrightsep_fdim,
-  slash-left-kern     = L  [0pt]        \l_xfrac_slashleftsep_fdim,
+\tl_new:N \l_xfrac_denominator_font_tl
+\tl_new:N \l_xfrac_hscale_tl
+\tl_new:N \l_xfrac_numerator_font_tl
+\tl_new:N \l_xfrac_phantom_tl 
+\tl_new:N \l_xfrac_scale_factor_tl
+\tl_new:N \l_xfrac_slash_left_msep_tl
+\tl_new:N \l_xfrac_slash_right_msep_tl
+\tl_new:N \l_xfrac_slash_symbol_tl
+\tl_new:N \l_xfrac_slash_symbol_font_tl
+\tl_new:N \l_xfrac_vscale_tl
 %    \end{macrocode}
-%  As calc can't handle |\muskip|s, I've made them of type `n' and
-%  added the suffix |_fmu| to indicate `fake mu skip'.
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%
+%\begin{macro}{\xfrac_fontscale:}
+%\begin{macro}{\xfrac_math:n}
+%\begin{macro}{\xfrac_denominator_font_change:}
+%\begin{macro}{\xfrac_denominator_format:n}
+%\begin{macro}{\xfrac_numerator_font_change:}
+%\begin{macro}{\xfrac_numerator_format:n}
+%\begin{macro}{\xfrac_relscale:}
+%\begin{macro}{\xfrac_slash_symbol_font_change:}
+%\begin{macro}{\xfrac_slash_symbol_format:n}
+%\begin{macro}{\xfrac_text_or_math:n}
+% Functions, either things which are calculated `on the fly'
+% (no argument required) or are functions taking one argument in the
+% code.
 %    \begin{macrocode}
-  slash-right-mkern   = n  [-2mu]       \l_xfrac_slashrightmsep_fmu,
-  slash-left-mkern    = n  [-1mu]       \l_xfrac_slashleftmsep_fmu,
-  math-mode           = s  [false] { \cs_set_eq:NN \xfrac_math: \ensuremath }
-                                   { \cs_set_eq:NN \xfrac_math: \use:n },
-  phantom             = n  [8]          \xfrac_phantom:,
-}{
-  \DoParameterAssignments
-  \mode_if_math:TF{
-    \cs_set_eq:NN \xfrac_textormath: \text
-    \cs_set:Npx \xfrac_slashfontchange: {\tex_fam:D \xfrac_slashsymbolfont: }
-    \cs_set:Npx \xfrac_numeratorfontchange: {\tex_fam:D \xfrac_numeratorfont: }
-    \cs_set:Npx \xfrac_denominatorfontchange: {\tex_fam:D \xfrac_denominatorfont: }
-  }{
-    \cs_set_eq:NN \xfrac_textormath: \mbox
-    \cs_set:Npn\xfrac_slashfontchange: {
-      \fontfamily{\xfrac_slashsymbolfont: }\selectfont}
-    \cs_set:Npn\xfrac_numeratorfontchange: {
-      \fontfamily{\xfrac_numeratorfont: }\selectfont}
-    \cs_set:Npn\xfrac_denominatorfontchange: {
-      \fontfamily{\xfrac_denominatorfont: }\selectfont}
-  }
-  \xfrac_textormath: {
+\cs_new_nopar:Npn \xfrac_fontscale:
+\cs_new:Npn \xfrac_math:n #1 { }
+\cs_new_nopar:Npn \xfrac_denominator_font_change: { }
+\cs_new:Npn \xfrac_denominator_format:n #1 { }
+\cs_new_nopar:Npn \xfrac_numerator_font_change: { }
+\cs_new:Npn \xfrac_numerator_format:n #1 { }
+\cs_new_nopar:Npn \xfrac_relscale: { }
+\cs_new_nopar:Npn \xfrac_slash_symbol_font_change: { }
+\cs_new:Npn \xfrac_slash_symbol_format:n #1 { }
+\cs_new:Npn \xfrac_text_or_math:n #1 { }
 %    \end{macrocode}
-%  \changes{v0.11a}{2004/08/24}{Added \cs{m@th}}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%\end{macro}
+%
+%\subsection{The template}
+%
+% There is only one object type in \pkg{xfrac}, rather unimaginatively
+% named \texttt{xfrac}.
 %    \begin{macrocode}
-    \m@th
-    \sbox\l_xfrac_temp_box {\xfrac_math: {\vphantom{(}}}
-    \sbox\l_xfrac_slash_box {
-      \xfrac_math: {
-        \xfrac_slashsymbolformat:n {
-          \xfrac_math: {
-            \xfrac_slashfontchange:
-              \IfValueTF{#2}{#2}{\xfrac_slashsymbol: }
-          }
-        }
-      }
-    }
-    \dim_compare:nNnTF \l_xfrac_numeratortopsep_fdim = \c_max_dim
-    {
-      \dim_compare:nNnTF \l_xfrac_numeratorbotsep_fdim = \c_max_dim
-      {
+\DeclareObjectType { xfrac } { 3 }
 %    \end{macrocode}
-%  Both unspecified.
+%
+% A single template interface is used for both text and math(s), which
+% does make a few things a little complex later.
 %    \begin{macrocode}
-        \cs_set:Npn\xfrac_next: {\raisebox{\box_ht:N\l_xfrac_slash_box
-                                  -\box_dp:N\l_xfrac_slash_box-\height}}
-      }{
-%    \end{macrocode}
-%  Use only bottom specification.
-%    \begin{macrocode}
-        \cs_set:Npn\xfrac_next: {\raisebox{\l_xfrac_numeratorbotsep_fdim }}
-      }
-    }
-    {
-%    \end{macrocode}
-%  Use only top specification.
-%    \begin{macrocode}
-      \dim_compare:nNnTF \l_xfrac_numeratorbotsep_fdim = \c_max_dim
-      {
-        \cs_set:Npn\xfrac_next: {
-          \raisebox{
-            \box_ht:N\l_xfrac_slash_box - \l_xfrac_numeratortopsep_fdim
-            - \height
-          }
-        }
-      }
-      {
-%    \end{macrocode}
-%  Over-specification.
-%    \begin{macrocode}
-        \PackageError{xfrac}
-          {You~ have~ specified~ both~ numerator-top-sep~ and~
-          numerator-bot-sep}
-          {I~ will~ pretend~ you~ didn't~ specify~ any~ of ~them}
-        \cs_set:Npn\xfrac_next: {\raisebox{\box_ht:N\l_xfrac_slash_box
-                                  -\box_dp:N\l_xfrac_slash_box-\height}}
-      }
-    }
-%    \end{macrocode}
-%  Typeset the numerator
-%    \begin{macrocode}
-    \xfrac_next: {
-      \xfrac_fontscale:
-      \xfrac_numeratorformat:n {
-        \scalebox{\xfrac_hscale: }[\xfrac_vscale: ]
-          { \xfrac_math:{ \xfrac_numeratorfontchange:
-                          {\vphantom{\xfrac_phantom: }#1} } }
-      }
-    }
-    \xfrac_math: { % THIS IS JUST WRONG!
-      \mode_if_math:TF {  \mskip \l_xfrac_slashrightmsep_fmu }
-                       {\hskip \l_xfrac_slashrightsep_fdim}
-      }
-%    \end{macrocode}
-%  Typeset the separator
-%    \begin{macrocode}
-    \usebox\l_xfrac_slash_box
-    \xfrac_math: {
-      \mode_if_math:TF {
-        \mskip \l_xfrac_slashleftmsep_fmu
-      }{
-        \hskip \l_xfrac_slashleftsep_fdim
-      } }
-%    \end{macrocode}
-%  Typeset the denominator
-%    \begin{macrocode}
-    \dim_compare:nNnTF \l_xfrac_denominatorbotsep_fdim=\c_max_dim 
-    {  \raisebox{-\box_dp:N \l_xfrac_slash_box} }
-    {
-     \raisebox{\l_xfrac_denominatorbotsep_fdim}
-    }
-    {
-      \xfrac_fontscale:
-      \xfrac_denominatorformat:n {
-        \scalebox{\xfrac_hscale:}[\xfrac_vscale:]
-          { \xfrac_math: { \xfrac_denominatorfontchange:
-                          {\vphantom{\xfrac_phantom: }#3} } }
-      }
-    }
-  }
+\DeclareTemplateInterface { xfrac } { text } { 3 } {
+  denominator-bot-sep : length     = \c_max_dim           ,
+  denominator-font    : tokenlist  = \f@family            ,
+  denominator-format  : function 1 = #1                   ,
+  h-scale             : tokenlist  = 1                    ,
+  math-mode           : choice { false , true }
+                                   = false                ,
+  numerator-font      : tokenlist  = \f@family            ,
+  numerator-format    : function 1 = #1                   ,
+  numerator-bot-sep   : length     = \c_max_dim           ,
+  numerator-top-sep   : length     = \c_max_dim           ,
+  phantom             : tokenlist  = 8                    ,
+  scale-factor        : tokenlist  = 0.83333              ,
+  scale-relative      : choice { false , true }
+                                   = true                 ,
+  scaling             : choice { false , true }
+                                   = true                 ,
+  slash-left-kern     : length     = 0 pt                 ,
+  slash-left-mkern    : tokenlist  = -2 mu                ,
+  slash-right-kern    : length     = 0 pt                 ,
+  slash-right-mkern   : tokenlist  = -1 mu                ,
+  slash-symbol        : tokenlist  = \textfractionsolidus ,
+  slash-symbol-font   : tokenlist  = \f@family            ,
+  slash-symbol-format : function 1 = #1                   ,
+  v-scale             : tokenlist  = 1                    ,
 }
 %    \end{macrocode}
-%
-%  Since math and text mode are wildly different entities we define a
-%  separate template for each. You already saw the `text' template,
-%  and here is the `math' template.
+%   
+% Most of the variable binding is quite simple: of course, the choices
+% are a little more complicated. That is particularly true where 
+% these have to set up `on the fly' functions.   
 %    \begin{macrocode}
-\DeclareRestrictedTemplate{xfrac}{math}{text}{
-  numerator-font      = \number\fam,
-  slash-symbol        = /,
-  slash-symbol-font   = \number\fam,
-  denominator-font    = \number\fam,
-  scale-factor        = 0.7,
-  scale-relative      = false,
-  scaling             = true,
-  numerator-top-sep   = 0pt,
-  denominator-bot-sep = 0pt,
-  math-mode           = true,
-  phantom             = (,
+\DeclareTemplateCode { xfrac } { text } { 3 } 
+  {
+    denominator-bot-sep = \l_xfrac_denominator_bot_sep_dim ,
+    denominator-font    = \l_xfrac_denominator_font_tl     ,
+    denominator-format  = \xfrac_denominator_format:n      ,
+    h-scale             = \l_xfrac_hscale_tl               ,
+    math-mode           =
+      {
+        false = \cs_set_eq:NN \xfrac_math:n \use:n,
+        true  = \cs_set_eq:NN \xfrac_math:n \ensuremath
+      },
+    numerator-font      = \l_xfrac_numerator_font_tl       ,
+    numerator-format    = \xfrac_numerator_format:n        ,
+    numerator-bot-sep   = \l_xfrac_numerator_bot_sep_dim   ,
+    numerator-top-sep   = \l_xfrac_numerator_top_sep_dim   ,
+    phantom             = \l_xfrac_phantom_tl              ,
+    scale-factor        = \l_xfrac_scale_factor_tl         ,
+    scale-relative      =
+      {
+        false = 
+          \cs_set_nopar:Npn \xfrac_relscale:
+            {
+              \dim_eval:n 
+                { 
+                    \box_ht:N \l_xfrac_tmp_box 
+                  + \box_dp:N \l_xfrac_tmp_box
+                } 
+            },
+        true  = 
+          \cs_set_nopar:Npn \xfrac_relscale: 
+            { \box_ht:N \l_xfrac_slash_box }
+      },
+    scaling             =
+      {
+        false = \cs_set_eq:NN \xfrac_fontscale: \prg_do_nothing:, 
+        true  =  
+          \cs_set_nopar:Npn \xfrac_fontscale:
+            {
+              \fontsize { \l_xfrac_scale_factor_tl \xfrac_relscale: }
+                { \c_zero_dim } 
+              \selectfont
+            }
+      },
+    slash-left-kern     = \l_xfrac_slash_left_sep_dim      ,
+    slash-left-mkern    = \l_xfrac_slash_left_msep_tl      ,
+    slash-right-kern    = \l_xfrac_slash_right_sep_dim     ,
+    slash-right-mkern   = \l_xfrac_slash_right_msep_tl     ,
+    slash-symbol        = \l_xfrac_slash_symbol_tl         ,
+    slash-symbol-font   = \l_xfrac_slash_symbol_font_tl    ,
+    slash-symbol-format = \xfrac_slash_symbol_format:n     ,
+    v-scale             = \l_xfrac_vscale_tl        
+  }
+%    \end{macrocode}
+% The implementation part starts with applying all of the settings
+% from above. The first part of the set up is then to determine
+% whether the surroundings are text or math(s), and react accordingly.
+%    \begin{macrocode}
+  {
+    \AssignTemplateKeys
+    \mode_if_math:TF
+      {
+        \cs_set_eq:NN \xfrac_text_or_math:n \text
+        \cs_set_nopar:Npx \xfrac_denominator_font_change:
+          { \tex_fam:D \l_xfrac_denominator_font_tl }
+        \cs_set_nopar:Npx \xfrac_numerator_font_change:
+          { \tex_fam:D \l_xfrac_numerator_font_tl }
+        \cs_set_nopar:Npx \xfrac_slash_symbol_font_change:
+          { \tex_fam:D \l_xfrac_slash_symbol_font_tl }
+      }
+      {
+        \cs_set_eq:NN \xfrac_text_or_math:n \mbox
+        \cs_set_nopar:Npn \xfrac_denominator_font_change:
+          { 
+            \fontfamily { \l_xfrac_denominator_font_tl }
+            \selectfont
+          }
+        \cs_set_nopar:Npn \xfrac_numerator_font_change:
+          { 
+            \fontfamily { \l_xfrac_numerator_font_tl }
+            \selectfont
+          }
+        \cs_set_nopar:Npn \xfrac_slash_symbol_font_change:
+          { 
+            \fontfamily { \l_xfrac_slash_symbol_font_tl }
+            \selectfont
+          }
+      }
+%    \end{macrocode}
+%\changes{v0.11a}{2004/08/24}{Added \cs{m@th}}
+% Everything is now either inside \cs{text} or an \cs{mbox}, depending
+% upon the surroundings. First, there are some boxes to set up.
+%    \begin{macrocode}
+    \xfrac_text_or_math:n 
+      {
+        \m@th
+        \hbox_set:Nn \l_xfrac_tmp_box 
+          { \xfrac_math:n { \vphantom { ( ) } } }
+        \hbox_set:Nn \l_xfrac_slash_box 
+          {
+            \xfrac_math:n 
+              { 
+                \xfrac_slash_symbol_format:n 
+                  {
+                    \xfrac_math:n 
+                      {
+                        \xfrac_slash_symbol_font_change:
+                        \IfNoValueTF {#2} 
+                          { \l_xfrac_slash_symbol_tl } {#2}
+                      }
+                  }
+              }
+          }
+%    \end{macrocode}
+% Check on the numerator separator dimensions. The code starts with the
+% assumption that neither has been given, as this can then be used to
+% set up a default, which is also used when both values are set 
+% erroneously.
+%    \begin{macrocode}
+        \cs_set_nopar:Npn \xfrac_tmp:w
+          {
+            \raisebox 
+              {
+                  \box_ht:N \l_xfrac_slash_box
+                - \box_dp:N \l_xfrac_slash_box
+                - \height
+              }
+          }
+        \dim_compare:nNnTF 
+          { \l_xfrac_numerator_top_sep_dim } = { \c_max_dim }
+          {
+            \dim_compare:nNnF
+              { \l_xfrac_numerator_bot_sep_dim } = { \c_max_dim } 
+              {
+                \cs_set_nopar:Npn \xfrac_tmp:w
+                  { 
+                    \raisebox 
+                      { \dim_use:N \l_xfrac_numerator_bot_sep_dim } 
+                  }
+              }
+          }
+          {
+            \dim_compare:nNnTF
+              { \l_xfrac_numerator_bot_sep_dim } = { \c_max_dim } 
+                { 
+                  \cs_set_nopar:Npn \xfrac_tmp:w
+                    { 
+                      \raisebox 
+                        { 
+                            \box_ht:N \l_xfrac_slash_box
+                          - \dim_use:N \l_xfrac_numerator_top_sep_dim 
+                          - \height
+                        }
+                    }
+                }
+                { 
+                  \msg_error:nn { xfrac } 
+                    { over-specified-numerator-sep }
+                }
+          }
+%    \end{macrocode}
+%  Typeset the numerator.
+%    \begin{macrocode}
+        \xfrac_tmp:w
+          {
+            \xfrac_fontscale:
+            \xfrac_numerator_format:n
+              {
+                \scalebox { \l_xfrac_hscale_tl } [ \l_xfrac_vscale_tl ]
+                  { 
+                    \xfrac_math:n 
+                      { 
+                        \xfrac_numerator_font_change:
+                        {
+                          \vphantom { \l_xfrac_phantom_tl }
+                          #1
+                        }
+                      } 
+                  }
+              }
+          }
+        \xfrac_math:n
+          { % THIS IS JUST WRONG! 
+            \mode_if_math:TF
+              { \tex_mskip:D \l_xfrac_slash_right_msep_tl }
+              { \tex_hskip:D \l_xfrac_slash_right_sep_dim }
+          }  
+%    \end{macrocode}
+%  Typeset the separator.
+%    \begin{macrocode}
+        \box_use:N \l_xfrac_slash_box
+        \xfrac_math:n 
+          {
+            \mode_if_math:TF
+              { \tex_mskip:D \l_xfrac_slash_left_msep_tl }
+              { \tex_hskip:D \l_xfrac_slash_left_sep_dim }
+          }
+%    \end{macrocode}
+%  Typeset the denominator.
+%    \begin{macrocode}
+        \dim_compare:nNnTF 
+          { \l_xfrac_denominator_bot_sep_dim } = { \c_max_dim }
+          {
+            \cs_set_nopar:Npn \xfrac_tmp:w
+              { \raisebox { - \box_dp:N \l_xfrac_slash_box } } 
+          }
+          {
+            \cs_set_nopar:Npn \xfrac_tmp:w
+              { 
+                \raisebox 
+                  { \dim_use:N \l_xfrac_denominator_bot_sep_dim }
+              }
+          }  
+        \xfrac_tmp:w
+          {
+            \xfrac_fontscale:
+            \xfrac_denominator_format:n
+              {
+                \scalebox { \l_xfrac_hscale_tl } [ \l_xfrac_vscale_tl ]
+                  { 
+                    \xfrac_math:n 
+                      { 
+                        \xfrac_denominator_font_change:
+                        {
+                          \vphantom { \l_xfrac_phantom_tl }
+                          #3
+                        }
+                      } 
+                  }
+              }
+          }
+      } 
+  }
+%    \end{macrocode}
+%    
+% Since math(s) and text mode are wildly different entities we define a
+% separate template for each. You already saw the `text' 
+% template, and here is the `math' template.
+%    \begin{macrocode}
+\DeclareRestrictedTemplate { xfrac } { text } { math } {
+  numerator-font      = \number \fam ,
+  slash-symbol        = /            ,
+  slash-symbol-font   = \number \fam ,
+  denominator-font    = \number \fam ,
+  scale-factor        = 0.7          ,
+  scale-relative      = false        ,
+  scaling             = true         ,
+  numerator-top-sep   = 0 pt         ,
+  denominator-bot-sep = 0 pt         ,
+  math-mode           = true         ,
+  phantom             = (
 }
 %    \end{macrocode}
+%    
+%\subsection{The standard instances}
 %
-%  \subsection{The Default Instances}
-%
-%  For the default instances we just use the relevant templates with
-%  the default settings.
-%
+% For the default instances we just use the relevant templates with
+% the default settings.
+% 
 %  The default `text' instance.
 %    \begin{macrocode}
-\DeclareInstance{xfrac}{default}{text}{ }
+\DeclareInstance { xfrac } { default } { text } { }
 %    \end{macrocode}
-%  The default `math' instance.
+%    
+%  The default `math(s)' instance.
 %    \begin{macrocode}
-\DeclareInstance{xfrac}{mathdefault}{math}{ }
+\DeclareInstance { xfrac } { mathdefault } { math } { }
 %    \end{macrocode}
 %    \begin{macrocode}
-\DeclareCollectionInstance{plainmath}{xfrac}{mathdefault}{math}{
-  denominator-bot-sep=0pt,
-  numerator-bot-sep=0pt,
-  numerator-top-sep=\c_max_dim,
-  scale-factor = 1,
-  scale-relative = false,
-  scaling = true,
-  slash-right-mkern=0mu,
-  slash-left-mkern=0mu,
+\DeclareCollectionInstance { plainmath } { xfrac } { mathdefault } 
+  { math }{
+  denominator-bot-sep = 0 pt       ,
+  numerator-bot-sep   = 0 pt       ,
+  numerator-top-sep   = \c_max_dim ,
+  scale-factor        = 1          ,
+  scale-relative      = false      ,
+  scaling             = true       ,
+  slash-right-mkern   = 0mu        ,
+  slash-left-mkern    = 0mu
 }
 %    \end{macrocode}
-%  Default Computer Modern setup. Far from optimal, but better than
-%  nothing.
+%    
+% Default Computer Modern setup. Far from optimal, but better than
+% nothing.
 %    \begin{macrocode}
-\DeclareInstance{xfrac}{cmr}{text}{
-  denominator-bot-sep=0pt,
-  numerator-top-sep=\DelayEvaluation{.2ex},
-  slash-left-kern=\DelayEvaluation{-.1em},
-  slash-right-kern=\DelayEvaluation{-.1em},
+\DeclareInstance { xfrac } { cmr } { text } {
+  denominator-bot-sep = 0 pt    ,
+  numerator-top-sep   = 0.2 ex  ,
+  slash-left-kern     = -0.1 em ,
+  slash-right-kern    = -0.1 em 
 }
-\DeclareInstance{xfrac}{cmss}{text}{
-  denominator-bot-sep=0pt,
-  numerator-top-sep=\DelayEvaluation{.2ex},
-  slash-left-kern=\DelayEvaluation{-.1em},
-  slash-right-kern=\DelayEvaluation{-.1em},
+\DeclareInstance { xfrac } { cmss } { text } {
+  denominator-bot-sep = 0 pt    ,
+  numerator-top-sep   = 0.2 ex  ,
+  slash-left-kern     = -0.1 em ,
+  slash-right-kern    = -0.1 em 
 }
-\DeclareInstance{xfrac}{cmtt}{text}{
-  denominator-bot-sep=0pt,
-  numerator-top-sep=\DelayEvaluation{.2ex},
-  slash-left-kern=\DelayEvaluation{-.1em},
-  slash-right-kern=\DelayEvaluation{-.1em},
+\DeclareInstance { xfrac } { cmtt } { text } {
+  denominator-bot-sep = 0 pt    ,
+  numerator-top-sep   = 0.2 ex  ,
+  slash-left-kern     = -0.1 em ,
+  slash-right-kern    = -0.1 em 
 }
 %    \end{macrocode}
-%  We can do better for the Computer Modern fonts. For the roman
-%  family we choose Times.
+%    
+% We can do better for the Computer Modern fonts. For cmr and cmss 
+% we choose Times, and for cmtt use Palatino.
 %    \begin{macrocode}
-\DeclareCollectionInstance{cm-recommended}{xfrac}{cmr}{text}{
-  slash-symbol-font   = ptm,
-}
-%    \end{macrocode}
-%  Times also blends well with `cmss'.
-%    \begin{macrocode}
-\DeclareCollectionInstance{cm-recommended}{xfrac}{cmss}{text}{
-  slash-symbol-font   = ptm,
-}
-%    \end{macrocode}
-%  For `cmtt' we choose the Palatino solidus as it is slightly
-%  thicker than Times.
-%    \begin{macrocode}
-\DeclareCollectionInstance{cm-recommended}{xfrac}{cmtt}{text}{
-  slash-symbol-font   = ppl,
-}
-%    \end{macrocode}
-%  If we used the \texttt{cm-recommended} setup we activate it.
-%    \begin{macrocode}
-\bool_if:NT \g_cm_recommended_bool
-               {\UseCollection{xfrac}{cm-recommended}}
-%    \end{macrocode}
-%
-%  \subsection{The User Command}
-%
-%  Currently there is just a single user command. \cs{sfrac} takes
-%  two mandatory arguments: numerator and denominator. It can take an
-%  optional argument between the mandatory specifying the separator
-%  like this:
-%  \begin{verbatim}
-%    \sfrac{7}[/]{12}
-%  \end{verbatim}
-%  It also has an optional argument that comes before the first
-%  mandatory argument. If used it will use that instance instead of
-%  the auto-detected one, so a user who has defined the instance
-%  `cmr2' may use
-%  \begin{verbatim}
-%    \sfrac[cmr2]{7}{12}
-%  \end{verbatim}
-%  and get the settings from `cmr2' instead of the settings of the
-%  current font family.
-%    \begin{macrocode}
-\DeclareDocumentCommand \sfrac {o mom}{
-  \mode_if_math:TF 
-{
-    \cs_set:Npx \xfrac_next: {mathfam\number\fam}
-    \IfExistsInstanceTF{xfrac}{\xfrac_next: }
-    {\UseInstance{xfrac}{\xfrac_next: }}
-    {\UseInstance{xfrac}{mathdefault}}
-    {#2}{#3}{#4}
-}
-{
-    \IfExistsInstanceTF{xfrac}{#1}
-    {\UseInstance{xfrac}{#1}{#2}{#3}{#4}}
-    {\IfExistsInstanceTF{xfrac}{\f@family}
-      {\UseInstance{xfrac}{\f@family}}
-      {\UseInstance{xfrac}{default}}
-        {#2}{#3}{#4}
-    }
+\bool_if:NF \l_xfrac_cm_std_bool
+  {
+    \DeclareInstance { xfrac } { cmr } { text }
+      { slash-symbol-font = ptm }
+    \DeclareInstance { xfrac } { cmss } { text }
+      { slash-symbol-font = ptm }
+    \DeclareInstance { xfrac } { cmtt } { text }
+      { slash-symbol-font = ppl }
   }
+%    \end{macrocode}
+%    
+% Things works slightly better with Latin Modern.
+%    \begin{macrocode}
+\DeclareInstance { xfrac } { lmr } { text } {
+  denominator-bot-sep = 0 pt     ,
+  numerator-top-sep   = 0.1 ex   ,
+  slash-left-kern     = -0.15 em ,
+  slash-right-kern    = -0.15 em 
+}
+\DeclareInstance { xfrac } { lmss } { text } {
+  denominator-bot-sep = 0 pt     ,
+  numerator-top-sep   = 0 pt     ,
+  slash-left-kern     = -0.15 em ,
+  slash-right-kern    = -0.15 em 
+}
+\DeclareInstance { xfrac } { lmtt } { text } {
+  denominator-bot-sep = 0 pt     ,
+  numerator-top-sep   = 0 pt     ,
+  slash-left-kern     = -0.15 em ,
+  slash-right-kern    = -0.15 em 
 }
 %    \end{macrocode}
 %
-% \Finale
-\endinput
+%\subsection{Messages}
+%
+% Just the one.    
+%    \begin{macrocode}
+\msg_new:nnnn { xfrac } { over-specified-numerator-sep }
+  {You have specified both numerator-top-sep and numerator-bot-sep}
+  {I will pretend that you didn't specify either of them}
+%    \end{macrocode}    
+%    
+%\subsection{The user command}
+%
+% Currently there is just a single user command. \cs{sfrac} takes
+% two mandatory arguments: numerator and denominator. It can take an
+% optional argument between the mandatory specifying the separator
+% like this:
+%\begin{verbatim}
+%  \sfrac{7}[/]{12}
+%\end{verbatim}
+% It also has an optional argument that comes before the first
+% mandatory argument. If used it will use that instance instead of
+% the auto-detected one, so a user who has defined the instance
+% `cmr2' may use
+%\begin{verbatim}
+%  \sfrac[cmr2]{7}{12}
+%\end{verbatim}
+% and get the settings from `cmr2' instead of the settings of 
+% the current font family.
+%    \begin{macrocode}
+\NewDocumentCommand \sfrac { o m o m } {
+  \mode_if_math:TF 
+    {
+      \IfInstanceExistTF { xfrac } { mathfam \number \fam }
+        { \UseInstance { xfrac } { mathfam \number \fam } }
+        { \UseInstance { xfrac } { mathdefault } }
+      {#2} {#3} {#4}  
+    }
+    {
+      \IfInstanceExistTF { xfrac } {#1}
+        { \UseInstance { xfrac } {#1} }
+        { 
+          \IfInstanceExistTF { xfrac } { \f@family }
+            { \UseInstance { xfrac } { \f@family } }
+            { \UseInstance { xfrac } { default } }
+        }
+      {#2} {#3} {#4}   
+    }
+}
+%    \end{macrocode}

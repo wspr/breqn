@@ -644,13 +644,14 @@ and the derived files
 % \env{darray}, and \env{dseries} environments; some of the options do not
 % make sense for all of the environments, but if an option is used where
 % not applicable it is silently ignored rather than treated as an error.
+% \changes{v0.98b}{2010/08/27}{replaced relindent with indentstep}
 %
 % \begin{verbatim}
 % \begin{dmath}[style={\small}]
 % \begin{dmath}[number={BV}]
 % \begin{dmath}[labelprefix={eq:}]
 % \begin{dmath}[label={xyz}]
-% \begin{dmath}[relindent={1em}]
+% \begin{dmath}[indentstep={2em}]
 % \begin{dmath}[compact]
 % \begin{dmath}[spread={1pt}]
 % \begin{dmath}[frame]
@@ -679,9 +680,10 @@ and the derived files
 % its argument to the label (only useful as a global option, really), 
 % and must be called before \opt{label}.
 %
-% Use the \opt{relindent} option to specify something other than the
+% \changes{v0.98b}{2010/08/27}{replaced relindent with indentstep}
+% Use the \opt{indentstep} option to specify something other than the
 % default amount for the indention of relation symbols. The default is
-% 2em.
+% 8pt.
 %
 % Use the \opt{compact} option in compound equations to inhibit line
 % breaks at relation symbols. By default a line break will be taken before

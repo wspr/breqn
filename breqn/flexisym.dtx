@@ -72,7 +72,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: flexisym 2010/07/11 v0.97b Flexisym (MH)}
+\Msg{* Package: flexisym 2010/09/17 v0.97b Flexisym (MH)}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -83,7 +83,7 @@
 This is a generated file.
 
 Copyright (C) 1997-2003 by Michael J. Downes
-Copyright (C) 2007-2008 by Morten Hoegholm <mh.ctan@gmail.com>
+Copyright (C) 2007-2010 by Morten Hoegholm <mh.ctan@gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -138,7 +138,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{flexisym.drv}%
-  [2010/07/11 v0.97b flexisym (MH)]
+  [2010/09/17 v0.97b flexisym (MH)]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -180,7 +180,7 @@ and the derived files
 %    \begin{macrocode}
 %<*package>
 \RequirePackage{expl3}[2009/08/05]
-\ProvidesExplPackage{flexisym}{2009/08/07}{0.97a}{Make math characters macros}
+\ProvidesExplPackage{flexisym}{2010/09/17}{0.97b}{Make math characters macros}
 
 \edef\do{%
   \noexpand\AtEndOfPackage{%
@@ -524,7 +524,10 @@ and the derived files
 \catcode\z@=\active
 \def\DeclareFlexSymbol#1#2#3#4{%
   \begingroup
-  \cs_set:Npx\@tempb{\exp_not:N\@sym\exp_not:N#1\exp_not:c{math_sym_#2:Nn}\exp_not:c{mg@#3}{#4}}%
+  \cs_set_protected:Npx\@tempb{
+    \exp_not:N\@sym\exp_not:N#1\exp_not:c{math_sym_#2:Nn}
+        \exp_not:c{mg@#3}{#4}
+  }
   \ifcat\exp_not:N#1\relax
     \sym@global\let#1\@tempb
   \else

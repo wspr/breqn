@@ -98,6 +98,17 @@ xfrac
 A package for producing split level fractions in both text and
 math. The package requires expl3 and xpackages available on CTAN.
 
+BUG REPORTS
+===========
+
+The bundle is maintained by:
+
+  Morten Hoegholm <mh.ctan@gmail.com>
+  Lars Madsen <daleif@imf.au.dk>
+  Will Robertson <wspr@gmail.com>
+  Joseph Wright <joseph.wright@morningstar2.co.uk>
+
+Please report bugs to the entire team.
 
 ===========
-This README file was last revised 2010/07/11.
+This README file was last revised 2010/09/18.

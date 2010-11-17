@@ -206,7 +206,7 @@ and the derived files
 %
 %    \begin{macrocode}
 %<*package>
-\ProvidesPackage{mathstyle}[2008/11/25 v0.88]
+\ProvidesPackage{mathstyle}[2010/11/17 v0.89]
 %    \end{macrocode}
 % \begin{macro}{\@saveprimitive}
 %   A straight copy from \pkg{breqn}, see implementation details
@@ -387,20 +387,22 @@ and the derived files
   \fi}
 %    \end{macrocode}
 % Finally, we declare the package options.
+% \changes{v0.89}{2010/11/17}{Options should only change catcodes at
+% begin document, not straight away}
 %    \begin{macrocode}
 \DeclareOption{mathactivechars}{%
-  \catcode`\^=12\relax 
-  \catcode`\_=12\relax
+ %  \catcode`\^=12\relax 
+ %  \catcode`\_=12\relax
 \AtBeginDocument{\catcode`\^=12\relax \catcode`\_=12\relax}%
 }
 \DeclareOption{activechars}{%
-  \catcode`\^=13\relax 
-  \catcode`\_=13\relax
+ %  \catcode`\^=13\relax 
+ %  \catcode`\_=13\relax
 \AtBeginDocument{\catcode`\^=13\relax \catcode`\_=13\relax}%
 }
 \DeclareOption{noactivechars}{%
-  \catcode`\^=7\relax 
-  \catcode`\_=8\relax
+ %  \catcode`\^=7\relax 
+ %  \catcode`\_=8\relax
 \AtBeginDocument{\catcode`\^=7\relax \catcode`\_=8\relax}%
 }
 \ExecuteOptions{mathactivechars}

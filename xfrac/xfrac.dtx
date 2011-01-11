@@ -900,11 +900,10 @@ and the derived files
         false = 
           \cs_set_nopar:Npn \xfrac_relscale:
             {
-              \dim_eval:n 
-                { 
+              \etex_dimexpr:D 
                     \box_ht:N \l_xfrac_tmp_box 
                   + \box_dp:N \l_xfrac_tmp_box
-                } 
+               \scan_stop: 
             },
         true  = 
           \cs_set_nopar:Npn \xfrac_relscale: 

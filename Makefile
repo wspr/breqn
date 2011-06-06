@@ -3,18 +3,6 @@ DISTRIB-DIR = distrib
 
 README = README
 
-XFRAC-DIR = xfrac
-XFRAC-DTX = \
-	xfrac.dtx 
-
-XFRAC-TEX =
-
-XFRAC-PDF = \
-	xfrac.pdf 
-
-XFRAC-DERIVED = \
-	xfrac.sty
-
 BREQN-DIR = breqn
 
 BREQN-DTX = \
@@ -106,24 +94,6 @@ mh-distrib: tds-dirs mh-pdfs
 	cp $(MH-PDF) $(MH-DTX) $(MH-TEX) ../$(DISTRIB-DIR)/mh
 
 
-xfrac-styles:
-	cd $(XFRAC-DIR) ; for f in $(XFRAC-DTX) ; do tex $$f  ; done 
-
-xfrac-pdfs: xfrac-styles
-# three runs should suffice
-	cd $(XFRAC-DIR) ; for f in $(XFRAC-DTX) ; do pdflatex $$f ; done 
-	cd $(XFRAC-DIR) ; for f in $(XFRAC-DTX) ; do pdflatex $$f ; done 
-	cd $(XFRAC-DIR) ; for f in $(XFRAC-DTX) ; do pdflatex $$f ; done 
-
-
-xfrac-distrib: tds-dirs xfrac-pdfs
-	cd $(XFRAC-DIR) ; \
-	cp $(XFRAC-DERIVED) ../$(DISTRIB-DIR)/mh-tds/tex/latex/mh  ; \
-	cp $(XFRAC-DTX) $(XFRAC-TEX) ../$(DISTRIB-DIR)/mh-tds/source/latex/mh ;\
-	cp $(XFRAC-PDF) ../$(DISTRIB-DIR)/mh-tds/doc/latex/mh ;\
-	cp $(XFRAC-PDF) $(XFRAC-DTX) $(XFRAC-TEX) ../$(DISTRIB-DIR)/mh
-
-
 
 breqn-styles:
 	cd $(BREQN-DIR) ; for f in $(BREQN-DTX) ; do tex $$f  ; done 
@@ -148,7 +118,7 @@ breqn-distrib: tds-dirs breqn-pdfs
 
 
 
-distrib: tds-dirs-clean breqn-distrib xfrac-distrib mh-distrib 
+distrib: tds-dirs-clean breqn-distrib mh-distrib 
 	cp  $(README) $(DISTRIB-DIR)/mh
 	cp  $(README) $(DISTRIB-DIR)/mh-tds/doc/latex/mh
 	cd $(DISTRIB-DIR)/mh-tds ; zip -r ../mh.tds.zip * 

@@ -1,6 +1,6 @@
 The mh bundle
 =============
-Morten Hoegholm (c) 2002-2010
+Morten Hoegholm (c) 2002-2011
 email: mh.ctan@gmail.com
 License: LaTeX Project Public License
 
@@ -12,7 +12,6 @@ The files in the mh bundle are:
     mathtools.dtx
     empheq.dtx
     breqn-technotes.tex
-    xfrac.dtx
 and derived files. The derived files of each .dtx-file are listed
 at the top of the respective .dtx-file.
 
@@ -96,7 +95,8 @@ xfrac
 =====
 
 A package for producing split level fractions in both text and
-math. The package requires expl3 and xpackages available on CTAN.
+math. This package started as a part of the MH bundle, but is not
+integrated into the l3packages bundle.
 
 BUG REPORTS
 ===========
@@ -111,4 +111,4 @@ The bundle is maintained by:
 Please report bugs to the entire team.
 
 ===========
-This README file was last revised 2010/09/18.
+This README file was last revised 2011/06/09.

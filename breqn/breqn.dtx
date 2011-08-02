@@ -1514,6 +1514,7 @@ and the derived files
     \splitfirstmark{\string\splitfirstmark:}%
     \splitbotmark{\string\splitbotmark:}%
     #1{\string#1}%
+    \@nil % for the \@car
   \edef\@tempa{\expandafter\strip@prefix\meaning\@tempb}%
   \edef\@tempb{\meaning#1}%
   \ifx\@tempa\@tempb \global\let#2#1%

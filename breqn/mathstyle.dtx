@@ -205,7 +205,34 @@ and the derived files
 %   #1 {}\rlap{$\m@th \currentmathstyle {#2}$}}
 % \end{verbatim}
 %
+% \subsection{Package options}
 %
+% This package has one set of options affecting the \verb|_| and \verb|^| characters:
+%
+% \begin{itemize}
+% \item\verb|\usepackage[mathactivechars]{mathstyle}|
+%
+% This is the default behaviour. Here, \verb|_| and \verb|^| are made into harmless
+% characters in text mode and behave as expected (for entering sub/superscript) when
+% inside math mode.
+% Certain code that assumes the catcodes of these characters may get confused about
+% this; see below for a possible fix.
+%
+% \item\verb|\usepackage[activechars]{mathstyle}|
+%
+% With this option, \verb|_| and \verb|^| are made into active characters for
+% entering sub/superscript mode in all cases---therefore, in text mode they will
+% produce a regular error (`Missing \$ inserted') indicating they are being used
+% out of place.
+%
+% \item\verb|\usepackage[noactivechars]{mathstyle}|
+%
+% This is the option most like to solve any compatibility problems. Here,
+% \verb|_| and \verb|^| retain their regular catcodes at all times and behave
+% in their default fashion. \textbf{However}, certain other features of this
+% package (such as \cs{currentmathstyle} inside a subscript) will then fail
+% to work, so only use this option as a last resort.
+% \end{itemize}
 %
 % \StopEventually{}
 % \part*{Implementation}

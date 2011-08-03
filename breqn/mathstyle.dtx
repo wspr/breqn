@@ -333,6 +333,8 @@ and the derived files
 \def\sb#1{\mathsub{\protect\subsupstyle#1}}%
 \def\sp#1{\mathsup{\protect\subsupstyle#1}}%
 %    \end{macrocode}
+%
+% \begin{macro}{\mathchoice}
 % \cs{mathchoice} is now just a switch. Note that this redefinition
 % does not allow the arbitrary \meta{filler} of the \TeX\
 % primitive. Very rarely used anyway.
@@ -356,17 +358,26 @@ and the derived files
 \providecommand\@thirdoffour[4]{#3}
 \providecommand\@fourthoffour[4]{#4}
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\genfrac}
 % The fractions. Note that this uses the same names as in
 % \pkg{amsmath}. Much the same except here they call \cs{fracstyle}.
 %    \begin{macrocode}
 \DeclareRobustCommand\genfrac[6]{%
-  {\fracstyle #1%
+  {#1\fracstyle
     {\begingroup #5\endgroup
       \csname @@\ifx\maxdimen#4\maxdimen over\else above\fi
         \if @#2@\else withdelims\fi\endcsname #2#3#4\relax
      #6}%
   }%
 }
+%    \end{macrocode}
+% \changes{v0.90}{2011/08/03}{\cs{fracstyle} must be called \emph{after}
+%   changing to the required style}
+% \end{macro}
+%
+%    \begin{macrocode}
 \renewcommand{\frac}{\genfrac{}{}{}{}}
 \providecommand{\dfrac}{}
 \providecommand{\tfrac}{}

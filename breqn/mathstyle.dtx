@@ -252,10 +252,27 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% Do initial \cs{chardef} of \cs{mathstyle}.
+%
+% \begin{macro}{\everydisplay}
+% We need to keep track of whether we're in inline or display maths, and the only
+% way to do that is to add a switch inside \verb|\everydisplay|.
+% We act sensibly and preserve any of the previous contents of that token register
+% before adding our own code here.
 %    \begin{macrocode}
-\chardef\mathstyle=\z@
+\everydisplay=\expandafter{\the\everydisplay\chardef\mathstyle\z@}
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mathstyle}
+% A counter for the math style: 0--display, 1--text, 2--script, 3--scriptscript.
+% The logic is that display maths will explicitly
+% set \verb|\mathstyle| to zero (see above), so by default it is set to the
+% `text' maths style.
+%    \begin{macrocode}
+\chardef\mathstyle\@ne
+%    \end{macrocode}
+% \end{macro}
+%
 % Save the four style changing primitives, \cs{mathchoice} and the
 % fraction commands.
 %    \begin{macrocode}

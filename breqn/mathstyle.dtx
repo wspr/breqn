@@ -67,8 +67,7 @@
 %<*install>
 \input docstrip.tex
 \Msg{************************************************************************}
-\Msg{* Installation}
-\Msg{* Package: mathstyle 2008/11/25 v0.88 Mathstyle (MH)}
+\Msg{* Installation for package: mathstyle}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -79,7 +78,7 @@
 This is a generated file.
 
 Copyright (C) 1997-2003 by Michael J. Downes
-Copyright (C) 2007-2008 by Morten Hoegholm <mh.ctan@gmail.com>
+Copyright (C) 2007-2011 by Morten Hoegholm <mh.ctan@gmail.com> et al.
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -127,10 +126,16 @@ and the derived files
 %<*ignore>
 \fi
 %</ignore>
+%
 %<*driver>
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{mathstyle.drv}%
-  [2008/11/25 v0.88 mathstyle (MH)]
+\ProvidesFile{mathstyle.drv}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{mathstyle}
+%<*package|driver>
+  [2011/08/03 v0.90 Tracking mathstyle implicitly]
+%</package|driver>
+%<*driver>
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -142,8 +147,9 @@ and the derived files
 %</driver>
 % \fi
 %
+% \GetFileInfo{mathstyle.drv}
 % \title{The \textsf{mathstyle} package}
-% \date{2008/08/13 v0.87}
+% \date{\filedate\quad\fileversion}
 % \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
 %
 %
@@ -204,12 +210,10 @@ and the derived files
 % \StopEventually{}
 % \part*{Implementation}
 %
-%
-%
 %    \begin{macrocode}
 %<*package>
-\ProvidesPackage{mathstyle}[2010/11/17 v0.89]
 %    \end{macrocode}
+%
 % \begin{macro}{\@saveprimitive}
 %   A straight copy from \pkg{breqn}, see implementation details
 %   there.  Of course, with a recent pdf\TeX\ (v1.40+), one can just

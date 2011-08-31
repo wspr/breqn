@@ -4760,24 +4760,19 @@ and the derived files
 % \end{macro}
 % 
 % 
+% \begin{macro}{\true@true@true}
 % \begin{macro}{\true@false@true}
-%    \begin{macrocode}
-\def\true@false@true{\fi\fi\iftrue\iffalse\iftrue}
-%    \end{macrocode}
-% \end{macro}
-% 
-% 
+% \begin{macro}{\false@true@false}
 % \begin{macro}{\false@false@false}
 %    \begin{macrocode}
+\def\true@true@true   {\fi\fi\iftrue \iftrue \iftrue }
+\def\true@false@true  {\fi\fi\iftrue \iffalse\iftrue }
+\def\false@true@false {\fi\fi\iffalse\iftrue \iffalse}
 \def\false@false@false{\fi\fi\iffalse\iffalse\iffalse}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
-% \begin{macro}{\false@true@false}
-%    \begin{macrocode}
-\def\false@true@false{\fi\fi\iffalse\iftrue\iffalse}
-%    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % 
 % 

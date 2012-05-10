@@ -1,7 +1,7 @@
 % \iffalse meta-comment
 %
 % Copyright (C) 1997-2003 by Michael J. Downes
-% Copyright (C) 2007-2008 by Morten Hoegholm <mh.ctan@gmail.com>
+% Copyright (C) 2007-2008 by Morten Hoegholm
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -13,7 +13,7 @@
 %
 % This work has the LPPL maintenance status "maintained".
 %
-% This Current Maintainer of this work is Morten Hoegholm,
+% This Current Maintainer of this work is
 % Lars Madsen, Will Robertson and Joseph Wright.
 %
 % This work consists of the main source file breqn.dtx
@@ -68,7 +68,7 @@
 \input docstrip.tex
 \Msg{************************************************************************}
 \Msg{* Installation}
-\Msg{* Package: breqn 2008/07/28 v0.98 Breqn (MH)}
+\Msg{* Package: breqn 2012/05/10 v0.98b Breqn}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -79,7 +79,7 @@
 This is a generated file.
 
 Copyright (C) 1997-2003 by Michael J. Downes
-Copyright (C) 2007-2008 by Morten Hoegholm <mh.ctan@gmail.com>
+Copyright (C) 2007-2008 by Morten Hoegholm
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -91,7 +91,7 @@ LaTeX version 2005/12/01 or later.
 
 This work has the LPPL maintenance status "maintained".
 
-This Current Maintainer of this work is Morten Hoegholm,
+This Current Maintainers of this work is 
 Lars Madsen, Will Robertson and Joseph Wright.
 
 This work consists of the main source file breqn.dtx
@@ -130,7 +130,7 @@ and the derived files
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}%
-  [2008/07/28 v0.98 breqn (MH)]
+  [2012/05/10 v0.98b breqn]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -232,8 +232,10 @@ and the derived files
 % \fi
 %
 % \title{The \pkg{breqn} package}
-% \date{2008/07/28 v0.98}
-% \author{Morten H\o gholm \\\texttt{mh.ctan@gmail.com}}
+% \date{2012/05/10 v0.98b}
+% \author{The breqn maintainers\thanks{The maintainers would like to thank
+%  Morten H\o gholm for bringing \texttt{breqn} forward}
+% \\\texttt{mh.ctan@gmail.com}}
 %
 % \maketitle
 % \begin{abstract}
@@ -251,16 +253,17 @@ and the derived files
 % the \TeX\ world---Michael passed away in early 2003 at the age of
 % only~44.
 %
-% The American Mathematical Society has kindly allowed me to assume
-% maintainership of this part of his work and I wish to express my
-% gratitude to them and to Barbara Beeton in particular for providing
-% me with the files I needed.
+% The American Mathematical Society kindly allowed Morten H\o gholm to
+% assume maintainership of this part of his work and he wish to
+% express my gratitude to them and to Barbara Beeton in particular for
+% providing me with the files he needed.
 %
-% I hope to continue Michael's work, thereby allowing users to create
+% MH hope to continue Michael's work, thereby allowing users to create
 % more \emph{masterpieces of the publishing art} as I think he would
 % have wanted.
 %
-% 
+% Following the July 2008 breqn release, breqn was left in the hands
+% of a maintenance team, while MH moved on with other projects.
 %
 % \section{Package loading}
 %
@@ -1013,7 +1016,7 @@ and the derived files
 % Declare package name and date.   
 %    \begin{macrocode}
 \RequirePackage{expl3}[2009/08/05]
-\ProvidesExplPackage{breqn}{2009/08/07}{0.98a}{Breaking equations}
+\ProvidesExplPackage{breqn}{2012/05/10}{0.98b}{Breaking equations}
 %    \end{macrocode}
 %   Regrettably, \pkg{breqn} is internally a mess, so we have to take
 %   some odd steps.

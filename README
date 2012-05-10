@@ -1,6 +1,6 @@
 The mh bundle
 =============
-Morten Hoegholm (c) 2002-2011
+Morten cHoegholm (c) 2002-2011
 email: mh.ctan@gmail.com
 License: LaTeX Project Public License
 
@@ -103,7 +103,6 @@ BUG REPORTS
 
 The bundle is maintained by:
 
-  Morten Hoegholm <mh.ctan@gmail.com>
   Lars Madsen <daleif@imf.au.dk>
   Will Robertson <wspr81@gmail.com>
   Joseph Wright <joseph.wright@morningstar2.co.uk>
@@ -111,4 +110,4 @@ The bundle is maintained by:
 Please report bugs to the entire team.
 
 ===========
-This README file was last revised 2011/06/09.
+This README file was last revised 2012/05/10.

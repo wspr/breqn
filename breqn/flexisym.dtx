@@ -182,7 +182,7 @@ and the derived files
 %    \begin{macrocode}
 %<*package>
 \RequirePackage{expl3}[2009/08/05]
-\ProvidesExplPackage{flexisym}{2010/09/17}{0.97b}{Make math characters macros}
+\ProvidesExplPackage{flexisym}{2013/03/16}{0.97c}{Make math characters macros}
 
 \edef\do{%
   \noexpand\AtEndOfPackage{%
@@ -224,20 +224,20 @@ and the derived files
 % positions
 %    \begin{macrocode}
 \cs_set_protected:Nn \math_char:NNn {
-  \tex_mathchar:D \__int_eval:w " #1#2#3 \int_eval_end:
+  \tex_mathchar:D \__int_eval:w " #1#2#3 \__int_eval_end:
 }
 %    \end{macrocode}
 % Delimiters and radicals are similar except here we have both small
 % and large variant. Radicals have no class.
 %    \begin{macrocode}
 \cs_set_protected:Nn \math_delimiter:NNnNn {
-  \tex_delimiter:D \__int_eval:w " #1#2#3#4#5 \int_eval_end:
+  \tex_delimiter:D \__int_eval:w " #1#2#3#4#5 \__int_eval_end:
 }
 \cs_set_protected:Nn \math_radical:NnNn {
-  \tex_radical:D  \__int_eval:w " #1#2#3#4 \int_eval_end:
+  \tex_radical:D  \__int_eval:w " #1#2#3#4 \__int_eval_end:
 }
 \cs_set_protected:Nn \math_accent:NNnn {
-  \tex_mathaccent:D \__int_eval:w " #1 #2 #3 \int_eval_end: {#4}
+  \tex_mathaccent:D \__int_eval:w " #1 #2 #3 \__int_eval_end: {#4}
 }
 
 \let\sumlimits\displaylimits

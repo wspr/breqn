@@ -224,20 +224,20 @@ and the derived files
 % positions
 %    \begin{macrocode}
 \cs_set_protected:Nn \math_char:NNn {
-  \tex_mathchar:D \int_eval:w " #1#2#3 \int_eval_end:
+  \tex_mathchar:D \__int_eval:w " #1#2#3 \int_eval_end:
 }
 %    \end{macrocode}
 % Delimiters and radicals are similar except here we have both small
 % and large variant. Radicals have no class.
 %    \begin{macrocode}
 \cs_set_protected:Nn \math_delimiter:NNnNn {
-  \tex_delimiter:D \int_eval:w " #1#2#3#4#5 \int_eval_end:
+  \tex_delimiter:D \__int_eval:w " #1#2#3#4#5 \int_eval_end:
 }
 \cs_set_protected:Nn \math_radical:NnNn {
-  \tex_radical:D  \int_eval:w " #1#2#3#4 \int_eval_end:
+  \tex_radical:D  \__int_eval:w " #1#2#3#4 \int_eval_end:
 }
 \cs_set_protected:Nn \math_accent:NNnn {
-  \tex_mathaccent:D \int_eval:w " #1 #2 #3 \int_eval_end: {#4}
+  \tex_mathaccent:D \__int_eval:w " #1 #2 #3 \int_eval_end: {#4}
 }
 
 \let\sumlimits\displaylimits

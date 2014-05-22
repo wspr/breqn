@@ -1,0 +1,65 @@
+\documentclass[leqno]{article}
+%\documentclass{article}
+\usepackage{breqn}
+
+\fboxsep0pt
+
+\newcommand{\cmd}[1]{%
+   \par\noindent%
+   \fbox{%
+     \parbox{\textwidth}{%
+       \begin{dmath}%
+         #1%
+       \end{dmath}}}}
+
+\begin{document}
+
+% text from email
+
+Dear Morten H\o gholm,
+
+I am using breqn package to typeset equation. It works well. However, I
+find there are something wrong when using leqno option in my document.
+The following is the description and codes to reproduce the problem.
+
+I just define a new command (\verb|\cmd|) that puts a frame box around a dmath
+environment provided by breqn package. I test \verb|\cmd| using the code
+attached in the post.
+
+If I don't set leqno option, everything will be OK. However, If I set
+leqno option, the width of the second box is not equal to \verb|\textwidth|.
+But, the first and the last equation have a normal frame box.
+
+I can't figure out what's the matter. Any suggestions? Thank you very much.
+
+Regards,
+Jinsong
+
+
+\cmd{3\pi}
+
+\cmd{\left(y+x\right)\,\left(y^4-x\,y^3+x^2\,y^2-x^3\,y+x^4\right)\,
+  \left(y^6-x\,y^5+x^2\,y^4-x^3\,y^3+x^4\,y^2-x^5\,y+x^6\right)\,
+  \left(y^{24}+x\,y^{23}-x^5\,y^{19}-x^6\,y^{18}-x^7\,y^{17}-x^8\,y^{
+  16}+x^{10}\,y^{14}+x^{11}\,y^{13}+x^{12}\,y^{12}+x^{13}\,y^{11}+x^{
+  14}\,y^{10}-x^{16}\,y^8-x^{17}\,y^7-x^{18}\,y^6-x^{19}\,y^5+x^{23}\,
+  y+x^{24}\right)}
+
+\noindent\fbox{%
+   \parbox{\textwidth}{%
+\cmd{\left(y+x\right)\,\left(y^4-x\,y^3+x^2\,y^2-x^3\,y+x^4\right)\,
+  \left(y^6-x\,y^5+x^2\,y^4-x^3\,y^3+x^4\,y^2-x^5\,y+x^6\right)\,
+  \left(y^{24}+x\,y^{23}-x^5\,y^{19}-x^6\,y^{18}-x^7\,y^{17}-x^8\,y^{
+  16}+x^{10}\,y^{14}+x^{11}\,y^{13}+x^{12}\,y^{12}+x^{13}\,y^{11}+x^{
+  14}\,y^{10}-x^{16}\,y^8-x^{17}\,y^7-x^{18}\,y^6-x^{19}\,y^5+x^{23}\,
+  y+x^{24}\right)}%
+}}
+
+\noindent\rule\textwidth{1mm}
+
+
+\end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

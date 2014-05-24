@@ -298,33 +298,6 @@ and the derived files
 % documentation. Not all details hold anymore but I have prioritized
 % fixing the package.
 %
-% \section{To do}
-%
-% \begin{itemize}
-% \item Handling of QED
-% \item Space between \verb'\end{dmath}' and following punctuation will
-% prevent the punctuation from being drawn into the equation.
-% \item Overriding the equation layout
-% \item Overriding the placement of the equation number
-% \item \qq{alignid} option for more widely separated equations where
-%   shared alignment is desired (requires two passes)
-% \item Or maybe provide an \qq{alignwidths} option where you give
-%   lhs/rhs width in terms of ems? And get feedback later on discrepancies
-%   with the actual measured contents?
-% \item \cs{intertext} not needed within dgroup! But currently there are
-%   limitations on floating objects within dgroup.
-% \item \verb'align={1}' or 2, 3, 4 expressing various levels of demand
-%   for group-wide alignment. Level 4 means force alignment even if some
-%   lines then have to run over the right margin! Level 1, the default,
-%   means first break LHS-RHS equations as if it occurred by itself, then
-%   move them left or right within the current line width to align them if
-%   possible. Levels 2 and 3 mean try harder to align but give up if
-%   overfull lines result.
-% \item Need an \cs{hshift} command to help with alignment of
-%   lines broken at a discretionary times sign. Also useful for adjusting
-%   inside-delimiter breaks.
-% \end{itemize}
-%
 % \section{Introduction}
 %
 % The \pkg{breqn} package for \LaTeX\ provides solutions to a number of
@@ -1040,6 +1013,33 @@ and the derived files
 %  \item \cs{belowdisplayskip}
 %\end{enumerate}
 %
+%
+% \section{To do}
+%
+% \begin{itemize}
+% \item Handling of QED
+% \item Space between \verb'\end{dmath}' and following punctuation will
+% prevent the punctuation from being drawn into the equation.
+% \item Overriding the equation layout
+% \item Overriding the placement of the equation number
+% \item \qq{alignid} option for more widely separated equations where
+%   shared alignment is desired (requires two passes)
+% \item Or maybe provide an \qq{alignwidths} option where you give
+%   lhs/rhs width in terms of ems? And get feedback later on discrepancies
+%   with the actual measured contents?
+% \item \cs{intertext} not needed within dgroup! But currently there are
+%   limitations on floating objects within dgroup.
+% \item \verb'align={1}' or 2, 3, 4 expressing various levels of demand
+%   for group-wide alignment. Level 4 means force alignment even if some
+%   lines then have to run over the right margin! Level 1, the default,
+%   means first break LHS-RHS equations as if it occurred by itself, then
+%   move them left or right within the current line width to align them if
+%   possible. Levels 2 and 3 mean try harder to align but give up if
+%   overfull lines result.
+% \item Need an \cs{hshift} command to help with alignment of
+%   lines broken at a discretionary times sign. Also useful for adjusting
+%   inside-delimiter breaks.
+% \end{itemize}
 %
 % \StopEventually{}
 % \clearpage

@@ -137,6 +137,8 @@ and the derived files
 \setcounter{IndexColumns}{2}
 \usepackage{color,verbatim,xspace,varioref,listings,amsmath,trace}
 
+\def\partname{Part}
+
 \definecolor{hilite}{rgb}{0.2,0.4,0.7}
 \def\theCodelineNo{\textcolor{hilite}{\sffamily\tiny\arabic{CodelineNo}}}
 
@@ -243,7 +245,11 @@ and the derived files
 %   displayed math expressions. 
 % \end{abstract}
 %
-% \part*{User's guide}
+% \newpage
+% \tableofcontents
+% \newpage
+%
+% \part{User's guide}
 %
 % \section{A bit of history}
 %

@@ -295,16 +295,16 @@ and the derived files
 %    \begin{macrocode}
 \cs_new:Npn \math_bsym_Ord:Nn {\math_char:NNn 0 }% \m@Ord
 \cs_new:Npn \math_bsym_Var:Nn {\math_char:NNn 7 }% \m@Var
-\cs_new:Npn \math_bsym_Bin:Nn {\math_char:NNn 2}% \m@Bin
+\cs_new:Npn \math_bsym_Bin:Nn {\math_char:NNn 2 }% \m@Bin
 \cs_new:Npn \math_bsym_Rel:Nn {\math_char:NNn 3 }% \m@Bin
-\cs_new:Npn \math_bsym_Pun:Nn {\math_char:NNn 6 }%\m@Pun
-\cs_new:Nn \math_bsym_COs:Nn { \math_char:NNn 1#1{#2} \sumlimits}% \m@COs
-\cs_new:Nn \math_bsym_COi:Nn { \math_char:NNn 1#1{#2} \intlimits}% \m@COi
-\cs_new:Nn \math_bsym_DeL:Nn { \math_sd_del_aux:Nnn 4 #1{#2} }%\m@DeL
-\cs_new:Nn \math_bsym_DeR:Nn { \math_sd_del_aux:Nnn 5 #1{#2} } %\m@DeR
-\cs_new:Nn \math_bsym_DeB:Nn { \math_sd_del_aux:Nnn 0 #1{#2} }%\m@DeB
-\cs_new:Nn \math_bsym_DeA:Nn { \math_sd_del_aux:Nnn 3 #1{#2} }%\m@DeA
-\cs_new:Nn \math_bsym_Rad:Nn { \math_sd_rad_aux:Nn #1{#2} }%\m@Rad
+\cs_new:Npn \math_bsym_Pun:Nn {\math_char:NNn 6 }% \m@Pun
+\cs_new:Nn  \math_bsym_COs:Nn { \math_char:NNn 1 #1 {#2} \sumlimits }% \m@COs
+\cs_new:Nn  \math_bsym_COi:Nn { \math_char:NNn 1 #1 {#2} \intlimits }% \m@COi
+\cs_new:Nn  \math_bsym_DeL:Nn { \math_sd_del_aux:Nnn 4 #1{#2} }% \m@DeL
+\cs_new:Nn  \math_bsym_DeR:Nn { \math_sd_del_aux:Nnn 5 #1{#2} }% \m@DeR
+\cs_new:Nn  \math_bsym_DeB:Nn { \math_sd_del_aux:Nnn 0 #1{#2} }% \m@DeB
+\cs_new:Nn  \math_bsym_DeA:Nn { \math_sd_del_aux:Nnn 3 #1{#2} }% \m@DeA
+\cs_new:Nn  \math_bsym_Rad:Nn { \math_sd_rad_aux:Nn #1{#2} }% \m@Rad
 \cs_new:Npn \math_bsym_Acc:Nn #1#2#3#4 {\math_accent:NNnn #1#2{#3}{#4}}% name is wrong
 
 %    \end{macrocode}
@@ -352,17 +352,17 @@ and the derived files
 %    \end{macrocode}
 % compound symbols here
 %    \begin{macrocode}
-\cs_set_protected:Npn \math_bcsym_Ord:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symOrd
-\cs_set_protected:Npn \math_bcsym_Var:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symVar
-\cs_set_protected:Npn \math_bcsym_Bin:Nn #1#2{\@symtype\mathbin{\OrdSymbol{#2}}}%\@symBin
-\cs_set_protected:Npn \math_bcsym_Rel:Nn #1#2{\@symtype\mathrel{\OrdSymbol{#2}}}%\@symRel
-\cs_set_protected:Npn \math_bcsym_Pun:Nn #1#2{\@symtype\mathpunct{\OrdSymbol{#2}}}%\@symPun
-\cs_set_protected:Npn \math_bcsym_COi:Nn #1#2{\@symtype\mathop{\OrdSymbol{#2}\intlimits}}%\@symCOi
-\cs_set_protected:Npn \math_bcsym_COs:Nn #1#2{\@symtype\mathop{\OrdSymbol{#2}\sumlimits}}%\@symCOs
-\cs_set_protected:Npn \math_bcsym_DeL:Nn #1#2{\@symtype\mathopen{\OrdSymbol{#2}}}%\@symDeL
-\cs_set_protected:Npn \math_bcsym_DeR:Nn #1#2{\@symtype\mathclose{\OrdSymbol{#2}}}%\@symDeR
-\cs_set_protected:Npn \math_bcsym_DeB:Nn #1#2{\@symtype\mathord{\OrdSymbol{#2}}}%\@symDeB
-\cs_set_protected:Npn \math_bcsym_DeA:Nn #1#2{\@symtype\mathrel{\OrdSymbol{#2}}}%\@symDeA
+\cs_set_protected:Npn \math_bcsym_Ord:Nn #1#2 { \@symtype \mathord   { \OrdSymbol {#2} } }%\@symOrd
+\cs_set_protected:Npn \math_bcsym_Var:Nn #1#2 { \@symtype \mathord   { \OrdSymbol {#2} } }%\@symVar
+\cs_set_protected:Npn \math_bcsym_Bin:Nn #1#2 { \@symtype \mathbin   { \OrdSymbol {#2} } }%\@symBin
+\cs_set_protected:Npn \math_bcsym_Rel:Nn #1#2 { \@symtype \mathrel   { \OrdSymbol {#2} } }%\@symRel
+\cs_set_protected:Npn \math_bcsym_Pun:Nn #1#2 { \@symtype \mathpunct { \OrdSymbol {#2} } }%\@symPun
+\cs_set_protected:Npn \math_bcsym_COi:Nn #1#2 { \@symtype \mathop    { \OrdSymbol {#2} \intlimits } }%\@symCOi
+\cs_set_protected:Npn \math_bcsym_COs:Nn #1#2 { \@symtype \mathop    { \OrdSymbol {#2} \sumlimits } }%\@symCOs
+\cs_set_protected:Npn \math_bcsym_DeL:Nn #1#2 { \@symtype \mathopen  { \OrdSymbol {#2} } }%\@symDeL
+\cs_set_protected:Npn \math_bcsym_DeR:Nn #1#2 { \@symtype \mathclose { \OrdSymbol {#2} } }%\@symDeR
+\cs_set_protected:Npn \math_bcsym_DeB:Nn #1#2 { \@symtype \mathord   { \OrdSymbol {#2} } }%\@symDeB
+\cs_set_protected:Npn \math_bcsym_DeA:Nn #1#2 { \@symtype \mathrel   { \OrdSymbol {#2} } }%\@symDeA
 \cs_set_protected:Npn \math_bcsym_Acc:Nn {\@sym}%\@symAcc FIX!
 % These three?
 \cs_set_protected:Npn \math_bcsym_Ope:Nn #1#2{\@symtype\mathopen{\OrdSymbol{#2}}}%\@symVar
@@ -379,88 +379,89 @@ and the derived files
 % The inline variants, using the basic operations. Currently we do not
 % do anything to inline math.
 %    \begin{macrocode}
-\cs_new:Npn \math_isym_Ord:Nn {\math_bsym_Ord:Nn  }% \m@Ord
-\cs_new:Npn \math_isym_Var:Nn {\math_bsym_Var:Nn }% \m@Var
-\cs_new:Npn \math_isym_Bin:Nn {\math_bsym_Bin:Nn}% \m@Bin
-\cs_new:Npn \math_isym_Rel:Nn {\math_bsym_Rel:Nn }% \m@Bin
-\cs_new:Npn \math_isym_Pun:Nn {\math_bsym_Pun:Nn }%\m@Pun
-\cs_new:Npn \math_isym_COs:Nn {\math_bsym_COs:Nn}% \m@COs
-\cs_new:Npn \math_isym_COi:Nn {\math_bsym_COi:Nn}% \m@COi
-\cs_new:Npn \math_isym_DeL:Nn {\math_bsym_DeL:Nn}%\m@DeL
-\cs_new:Npn \math_isym_DeR:Nn{ \math_bsym_DeR:Nn}%\m@DeR
-\cs_new:Npn \math_isym_DeB:Nn{ \math_bsym_DeB:Nn }%\m@DeB
-\cs_new:Npn \math_isym_DeA:Nn { \math_bsym_DeA:Nn }%\m@DeA
-\cs_new:Npn \math_isym_Rad:Nn { \math_bsym_Rad:Nn}%\m@Rad
-\cs_new:Npn \math_isym_Acc:Nn {\math_bsym_DeL:Nn}% name is wrong
+\cs_new:Npn \math_isym_Ord:Nn { \math_bsym_Ord:Nn }% \m@Ord
+\cs_new:Npn \math_isym_Var:Nn { \math_bsym_Var:Nn }% \m@Var
+\cs_new:Npn \math_isym_Bin:Nn { \math_bsym_Bin:Nn }% \m@Bin
+\cs_new:Npn \math_isym_Rel:Nn { \math_bsym_Rel:Nn }% \m@Bin
+\cs_new:Npn \math_isym_Pun:Nn { \math_bsym_Pun:Nn }% \m@Pun
+\cs_new:Npn \math_isym_COs:Nn { \math_bsym_COs:Nn }% \m@COs
+\cs_new:Npn \math_isym_COi:Nn { \math_bsym_COi:Nn }% \m@COi
+\cs_new:Npn \math_isym_DeL:Nn { \math_bsym_DeL:Nn }% \m@DeL
+\cs_new:Npn \math_isym_DeR:Nn { \math_bsym_DeR:Nn }% \m@DeR
+\cs_new:Npn \math_isym_DeB:Nn { \math_bsym_DeB:Nn }% \m@DeB
+\cs_new:Npn \math_isym_DeA:Nn { \math_bsym_DeA:Nn }% \m@DeA
+\cs_new:Npn \math_isym_Rad:Nn { \math_bsym_Rad:Nn }% \m@Rad
+\cs_new:Npn \math_isym_Acc:Nn { \math_bsym_DeL:Nn }% name is wrong
 % inline compound
-\cs_set_protected:Npn \math_icsym_Ord:Nn {\math_bcsym_Ord:Nn}
-\cs_set_protected:Npn \math_icsym_Var:Nn {\math_bcsym_Var:Nn}
-\cs_set_protected:Npn \math_icsym_Bin:Nn {\math_bcsym_Bin:Nn}
-\cs_set_protected:Npn \math_icsym_Rel:Nn {\math_bcsym_Rel:Nn}
-\cs_set_protected:Npn \math_icsym_Pun:Nn {\math_bcsym_Pun:Nn}
-\cs_set_protected:Npn \math_icsym_COi:Nn {\math_bcsym_COi:Nn}
-\cs_set_protected:Npn \math_icsym_COs:Nn {\math_bcsym_COs:Nn}
-\cs_set_protected:Npn \math_icsym_DeL:Nn {\math_bcsym_DeL:Nn}
-\cs_set_protected:Npn \math_icsym_DeR:Nn {\math_bcsym_DeR:Nn}
-\cs_set_protected:Npn \math_icsym_DeB:Nn {\math_bcsym_DeB:Nn}
-\cs_set_protected:Npn \math_icsym_DeA:Nn {\math_bcsym_DeA:Nn}
-\cs_set_protected:Npn \math_icsym_Acc:Nn {\math_bcsym_Acc:Nn}
-\cs_set_protected:Npn \math_icsym_Ope:Nn {\math_bcsym_Ope:Nn}
-\cs_set_protected:Npn \math_icsym_Clo:Nn {\math_bcsym_Clo:Nn}
-\cs_set_protected:Npn \math_icsym_Inn:Nn {\math_bcsym_Inn:Nn}
+\cs_set_protected:Npn \math_icsym_Ord:Nn { \math_bcsym_Ord:Nn }
+\cs_set_protected:Npn \math_icsym_Var:Nn { \math_bcsym_Var:Nn }
+\cs_set_protected:Npn \math_icsym_Bin:Nn { \math_bcsym_Bin:Nn }
+\cs_set_protected:Npn \math_icsym_Rel:Nn { \math_bcsym_Rel:Nn }
+\cs_set_protected:Npn \math_icsym_Pun:Nn { \math_bcsym_Pun:Nn }
+\cs_set_protected:Npn \math_icsym_COi:Nn { \math_bcsym_COi:Nn }
+\cs_set_protected:Npn \math_icsym_COs:Nn { \math_bcsym_COs:Nn }
+\cs_set_protected:Npn \math_icsym_DeL:Nn { \math_bcsym_DeL:Nn }
+\cs_set_protected:Npn \math_icsym_DeR:Nn { \math_bcsym_DeR:Nn }
+\cs_set_protected:Npn \math_icsym_DeB:Nn { \math_bcsym_DeB:Nn }
+\cs_set_protected:Npn \math_icsym_DeA:Nn { \math_bcsym_DeA:Nn }
+\cs_set_protected:Npn \math_icsym_Acc:Nn { \math_bcsym_Acc:Nn }
+\cs_set_protected:Npn \math_icsym_Ope:Nn { \math_bcsym_Ope:Nn }
+\cs_set_protected:Npn \math_icsym_Clo:Nn { \math_bcsym_Clo:Nn }
+\cs_set_protected:Npn \math_icsym_Inn:Nn { \math_bcsym_Inn:Nn }
 %    \end{macrocode}
 %
 % The display variants, using the basic operations. Currently we do
 % not do anything to inline math.
 %    \begin{macrocode}
-\cs_new:Npn \math_dsym_Ord:Nn {\math_bsym_Ord:Nn }
-\cs_new:Npn \math_dsym_Var:Nn {\math_bsym_Var:Nn }
-\cs_new:Npn \math_dsym_Bin:Nn {\math_bsym_Bin:Nn}
-\cs_new:Npn \math_dsym_Rel:Nn {\math_bsym_Rel:Nn }
-\cs_new:Npn \math_dsym_Pun:Nn {\math_bsym_Pun:Nn }
-\cs_new:Npn \math_dsym_COs:Nn {\math_bsym_COs:Nn}
-\cs_new:Npn \math_dsym_COi:Nn {\math_bsym_COi:Nn}
-\cs_new:Npn \math_dsym_DeL:Nn {\math_bsym_DeL:Nn}
-\cs_new:Npn \math_dsym_DeR:Nn{ \math_bsym_DeR:Nn}
-\cs_new:Npn \math_dsym_DeB:Nn{ \math_bsym_DeB:Nn }
+\cs_new:Npn \math_dsym_Ord:Nn { \math_bsym_Ord:Nn }
+\cs_new:Npn \math_dsym_Var:Nn { \math_bsym_Var:Nn }
+\cs_new:Npn \math_dsym_Bin:Nn { \math_bsym_Bin:Nn }
+\cs_new:Npn \math_dsym_Rel:Nn { \math_bsym_Rel:Nn }
+\cs_new:Npn \math_dsym_Pun:Nn { \math_bsym_Pun:Nn }
+\cs_new:Npn \math_dsym_COs:Nn { \math_bsym_COs:Nn }
+\cs_new:Npn \math_dsym_COi:Nn { \math_bsym_COi:Nn }
+\cs_new:Npn \math_dsym_DeL:Nn { \math_bsym_DeL:Nn }
+\cs_new:Npn \math_dsym_DeR:Nn { \math_bsym_DeR:Nn }
+\cs_new:Npn \math_dsym_DeB:Nn { \math_bsym_DeB:Nn }
 \cs_new:Npn \math_dsym_DeA:Nn { \math_bsym_DeA:Nn }
-\cs_new:Npn \math_dsym_Rad:Nn { \math_bsym_Rad:Nn}
-\cs_new:Npn \math_dsym_Acc:Nn {\math_bsym_DeL:Nn}
+\cs_new:Npn \math_dsym_Rad:Nn { \math_bsym_Rad:Nn }
+\cs_new:Npn \math_dsym_Acc:Nn { \math_bsym_DeL:Nn }
 % inline compound
-\cs_set_protected:Npn \math_dcsym_Ord:Nn {\math_bcsym_Ord:Nn}
-\cs_set_protected:Npn \math_dcsym_Var:Nn {\math_bcsym_Var:Nn}
-\cs_set_protected:Npn \math_dcsym_Bin:Nn {\math_bcsym_Bin:Nn}
-\cs_set_protected:Npn \math_dcsym_Rel:Nn {\math_bcsym_Rel:Nn}
-\cs_set_protected:Npn \math_dcsym_Pun:Nn {\math_bcsym_Pun:Nn}
-\cs_set_protected:Npn \math_dcsym_COi:Nn {\math_bcsym_COi:Nn}
-\cs_set_protected:Npn \math_dcsym_COs:Nn {\math_bcsym_COs:Nn}
-\cs_set_protected:Npn \math_dcsym_DeL:Nn {\math_bcsym_DeL:Nn}
-\cs_set_protected:Npn \math_dcsym_DeR:Nn {\math_bcsym_DeR:Nn}
-\cs_set_protected:Npn \math_dcsym_DeB:Nn {\math_bcsym_DeB:Nn}
-\cs_set_protected:Npn \math_dcsym_DeA:Nn {\math_bcsym_DeA:Nn}
-\cs_set_protected:Npn \math_dcsym_Acc:Nn {\math_bcsym_Acc:Nn}
-\cs_set_protected:Npn \math_dcsym_Ope:Nn {\math_bcsym_Ope:Nn}
-\cs_set_protected:Npn \math_dcsym_Clo:Nn {\math_bcsym_Clo:Nn}
-\cs_set_protected:Npn \math_dcsym_Inn:Nn {\math_bcsym_Inn:Nn}
+\cs_set_protected:Npn \math_dcsym_Ord:Nn { \math_bcsym_Ord:Nn }
+\cs_set_protected:Npn \math_dcsym_Var:Nn { \math_bcsym_Var:Nn }
+\cs_set_protected:Npn \math_dcsym_Bin:Nn { \math_bcsym_Bin:Nn }
+\cs_set_protected:Npn \math_dcsym_Rel:Nn { \math_bcsym_Rel:Nn }
+\cs_set_protected:Npn \math_dcsym_Pun:Nn { \math_bcsym_Pun:Nn }
+\cs_set_protected:Npn \math_dcsym_COi:Nn { \math_bcsym_COi:Nn }
+\cs_set_protected:Npn \math_dcsym_COs:Nn { \math_bcsym_COs:Nn }
+\cs_set_protected:Npn \math_dcsym_DeL:Nn { \math_bcsym_DeL:Nn }
+\cs_set_protected:Npn \math_dcsym_DeR:Nn { \math_bcsym_DeR:Nn }
+\cs_set_protected:Npn \math_dcsym_DeB:Nn { \math_bcsym_DeB:Nn }
+\cs_set_protected:Npn \math_dcsym_DeA:Nn { \math_bcsym_DeA:Nn }
+\cs_set_protected:Npn \math_dcsym_Acc:Nn { \math_bcsym_Acc:Nn }
+\cs_set_protected:Npn \math_dcsym_Ope:Nn { \math_bcsym_Ope:Nn }
+\cs_set_protected:Npn \math_dcsym_Clo:Nn { \math_bcsym_Clo:Nn }
+\cs_set_protected:Npn \math_dcsym_Inn:Nn { \math_bcsym_Inn:Nn }
 %    \end{macrocode}
 % Almost ready now! Now just need two commands to initialize these
 % settings.
 %
 %    \begin{macrocode}
-\cs_set:Npn \math_setup_inline_symbols:{
-  \cs_set_eq:NN \math_sym_Ord:Nn \math_isym_Ord:Nn 
-  \cs_set_eq:NN \math_sym_Var:Nn \math_isym_Var:Nn 
-  \cs_set_eq:NN \math_sym_Bin:Nn \math_isym_Bin:Nn
-  \cs_set_eq:NN \math_sym_Rel:Nn \math_isym_Rel:Nn 
-  \cs_set_eq:NN \math_sym_Pun:Nn \math_isym_Pun:Nn 
-  \cs_set_eq:NN \math_sym_COs:Nn \math_isym_COs:Nn
-  \cs_set_eq:NN \math_sym_COi:Nn \math_isym_COi:Nn
-  \cs_set_eq:NN \math_sym_DeL:Nn \math_isym_DeL:Nn
-  \cs_set_eq:NN \math_sym_DeR:Nn \math_isym_DeR:Nn
-  \cs_set_eq:NN \math_sym_DeB:Nn \math_isym_DeL:Nn 
-  \cs_set_eq:NN \math_sym_DeA:Nn  \math_isym_DeA:Nn 
+\cs_set:Npn \math_setup_inline_symbols:
+ {
+  \cs_set_eq:NN \math_sym_Ord:Nn  \math_isym_Ord:Nn
+  \cs_set_eq:NN \math_sym_Var:Nn  \math_isym_Var:Nn
+  \cs_set_eq:NN \math_sym_Bin:Nn  \math_isym_Bin:Nn
+  \cs_set_eq:NN \math_sym_Rel:Nn  \math_isym_Rel:Nn
+  \cs_set_eq:NN \math_sym_Pun:Nn  \math_isym_Pun:Nn
+  \cs_set_eq:NN \math_sym_COs:Nn  \math_isym_COs:Nn
+  \cs_set_eq:NN \math_sym_COi:Nn  \math_isym_COi:Nn
+  \cs_set_eq:NN \math_sym_DeL:Nn  \math_isym_DeL:Nn
+  \cs_set_eq:NN \math_sym_DeR:Nn  \math_isym_DeR:Nn
+  \cs_set_eq:NN \math_sym_DeB:Nn  \math_isym_DeL:Nn
+  \cs_set_eq:NN \math_sym_DeA:Nn  \math_isym_DeA:Nn
   \cs_set_eq:NN \math_sym_Rad:Nn  \math_isym_Rad:Nn
-  \cs_set_eq:NN \math_sym_Acc:Nn \math_isym_DeL:Nn
+  \cs_set_eq:NN \math_sym_Acc:Nn  \math_isym_DeL:Nn
   \cs_set_eq:NN \math_csym_Ord:Nn \math_icsym_Ord:Nn
   \cs_set_eq:NN \math_csym_Var:Nn \math_icsym_Var:Nn
   \cs_set_eq:NN \math_csym_Bin:Nn \math_icsym_Bin:Nn
@@ -476,22 +477,23 @@ and the derived files
   \cs_set_eq:NN \math_csym_Ope:Nn \math_icsym_Ope:Nn
   \cs_set_eq:NN \math_csym_Clo:Nn \math_icsym_Clo:Nn
   \cs_set_eq:NN \math_csym_Inn:Nn \math_icsym_Inn:Nn
-}
+ }
 
-\cs_set:Npn \math_setup_display_symbols:{
-  \cs_set_eq:NN \math_sym_Ord:Nn \math_dsym_Ord:Nn 
-  \cs_set_eq:NN \math_sym_Var:Nn \math_dsym_Var:Nn 
-  \cs_set_eq:NN \math_sym_Bin:Nn \math_dsym_Bin:Nn
-  \cs_set_eq:NN \math_sym_Rel:Nn \math_dsym_Rel:Nn 
-  \cs_set_eq:NN \math_sym_Pun:Nn \math_dsym_Pun:Nn 
-  \cs_set_eq:NN \math_sym_COs:Nn \math_dsym_COs:Nn
-  \cs_set_eq:NN \math_sym_COi:Nn \math_dsym_COi:Nn
-  \cs_set_eq:NN \math_sym_DeL:Nn \math_dsym_DeL:Nn
-  \cs_set_eq:NN \math_sym_DeR:Nn \math_dsym_DeR:Nn
-  \cs_set_eq:NN \math_sym_DeB:Nn \math_dsym_DeL:Nn 
-  \cs_set_eq:NN \math_sym_DeA:Nn  \math_dsym_DeA:Nn 
+\cs_set:Npn \math_setup_display_symbols:
+ {
+  \cs_set_eq:NN \math_sym_Ord:Nn  \math_dsym_Ord:Nn
+  \cs_set_eq:NN \math_sym_Var:Nn  \math_dsym_Var:Nn
+  \cs_set_eq:NN \math_sym_Bin:Nn  \math_dsym_Bin:Nn
+  \cs_set_eq:NN \math_sym_Rel:Nn  \math_dsym_Rel:Nn
+  \cs_set_eq:NN \math_sym_Pun:Nn  \math_dsym_Pun:Nn
+  \cs_set_eq:NN \math_sym_COs:Nn  \math_dsym_COs:Nn
+  \cs_set_eq:NN \math_sym_COi:Nn  \math_dsym_COi:Nn
+  \cs_set_eq:NN \math_sym_DeL:Nn  \math_dsym_DeL:Nn
+  \cs_set_eq:NN \math_sym_DeR:Nn  \math_dsym_DeR:Nn
+  \cs_set_eq:NN \math_sym_DeB:Nn  \math_dsym_DeL:Nn
+  \cs_set_eq:NN \math_sym_DeA:Nn  \math_dsym_DeA:Nn
   \cs_set_eq:NN \math_sym_Rad:Nn  \math_dsym_Rad:Nn
-  \cs_set_eq:NN \math_sym_Acc:Nn \math_dsym_DeL:Nn
+  \cs_set_eq:NN \math_sym_Acc:Nn  \math_dsym_DeL:Nn
   \cs_set_eq:NN \math_csym_Ord:Nn \math_dcsym_Ord:Nn
   \cs_set_eq:NN \math_csym_Var:Nn \math_dcsym_Var:Nn
   \cs_set_eq:NN \math_csym_Bin:Nn \math_dcsym_Bin:Nn
@@ -507,7 +509,7 @@ and the derived files
   \cs_set_eq:NN \math_csym_Ope:Nn \math_dcsym_Ope:Nn
   \cs_set_eq:NN \math_csym_Clo:Nn \math_dcsym_Clo:Nn
   \cs_set_eq:NN \math_csym_Inn:Nn \math_dcsym_Inn:Nn
-}
+ }
 %    \end{macrocode}
 % Phew, that was it.
 %
@@ -575,11 +577,11 @@ and the derived files
 \catcode\z@=\active
 \def\text@char#1#2{\begingroup
   \check@mathfonts
-  \cs_set_eq:NN \text@script@char#1
-  \cs_set_eq:NN \@sym\text@char@sym
-  \cs_set_eq:NN \@symtype\use_ii:nn 
-  \cs_set_eq:NN\OrdSymbol\use:n
-  \cs_set_eq:NN\ifmmode\iftrue 
+  \cs_set_eq:NN \text@script@char #1
+  \cs_set_eq:NN \@sym \text@char@sym
+  \cs_set_eq:NN \@symtype \use_ii:nn 
+  \cs_set_eq:NN \OrdSymbol \use:n
+  \cs_set_eq:NN \ifmmode \iftrue 
   \everymath{$\use_none:n}%$
   \def\mkern{\muskip\z@}
   \cs_set_eq:NN\mskip\mkern
@@ -820,16 +822,16 @@ and the derived files
 %<mathpazo>\ProvidesSymbols{mathpazo}[2010/07/11 v0.3]
 %<mathptmx>\ProvidesSymbols{mathptmx}[2010/07/11 v0.3]
 \ExplSyntaxOn
-\cs_gset:cpx{mg@OT1}{\hexnumber@\symoperators}
-\cs_gset:cpx{mg@OML}{\hexnumber@\symletters}
-\cs_gset:cpx{mg@OMS}{\hexnumber@\symsymbols}
-\cs_gset:cpx{mg@OMX}{\hexnumber@\symlargesymbols}
-\cs_gset:Npx\mg@bin{\mg@OMS}
-\cs_gset:Npx\mg@del{\mg@OMX}
-\cs_gset:Npx\mg@digit{\exp_not:c{mg@OT1}}
-\cs_gset:Npn\mg@latin{\mg@OML}
-\cs_gset_eq:NN\mg@Latin\mg@latin
-\cs_gset_eq:NN\mg@greek\mg@latin
+\cs_gset:cpx {mg@OT1}  {\hexnumber@\symoperators}
+\cs_gset:cpx {mg@OML}  {\hexnumber@\symletters}
+\cs_gset:cpx {mg@OMS}  {\hexnumber@\symsymbols}
+\cs_gset:cpx {mg@OMX}  {\hexnumber@\symlargesymbols}
+\cs_gset:Npx \mg@bin   {\mg@OMS}
+\cs_gset:Npx \mg@del   {\mg@OMX}
+\cs_gset:Npx \mg@digit {\exp_not:c{mg@OT1}}
+\cs_gset:Npn \mg@latin {\mg@OML}
+\cs_gset_eq:NN \mg@Latin \mg@latin
+\cs_gset_eq:NN \mg@greek \mg@latin
 %<cmbase|mathptmx>\cs_gset_eq:NN\mg@Greek\mg@digit
 %    \end{macrocode}
 % Mathpazo takes the upper case greeks from the letter font if
@@ -844,9 +846,9 @@ and the derived files
 %<mathptmx>\@ifpackagewith{mathptmx}{slantedGreek}{%
 %<mathptmx>   \cs_gset_eq:NN\mg@Greek\mg@latin
 %<mathptmx>}{}
-\cs_gset_eq:NN\mg@rel\mg@bin
-\cs_gset_eq:NN\mg@ord\mg@bin
-\cs_gset_eq:NN\mg@cop\mg@del
+\cs_gset_eq:NN \mg@rel \mg@bin
+\cs_gset_eq:NN \mg@ord \mg@bin
+\cs_gset_eq:NN \mg@cop \mg@del
 %    \end{macrocode}
 % 
 % 
@@ -904,58 +906,61 @@ and the derived files
 %    \end{macrocode}
 % To do: make the Var property of lc Greek work properly.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{\alpha}{Var}{greek}{0B}
-\DeclareFlexSymbol{\beta}{Var}{greek}{0C}
-\DeclareFlexSymbol{\gamma}{Var}{greek}{0D}
-\DeclareFlexSymbol{\delta}{Var}{greek}{0E}
-\DeclareFlexSymbol{\epsilon}{Var}{greek}{0F}
-\DeclareFlexSymbol{\zeta}{Var}{greek}{10}
-\DeclareFlexSymbol{\eta}{Var}{greek}{11}
-\DeclareFlexSymbol{\theta}{Var}{greek}{12}
-\DeclareFlexSymbol{\iota}{Var}{greek}{13}
-\DeclareFlexSymbol{\kappa}{Var}{greek}{14}
-\DeclareFlexSymbol{\lambda}{Var}{greek}{15}
-\DeclareFlexSymbol{\mu}{Var}{greek}{16}
-\DeclareFlexSymbol{\nu}{Var}{greek}{17}
-\DeclareFlexSymbol{\xi}{Var}{greek}{18}
-\DeclareFlexSymbol{\pi}{Var}{greek}{19}
-\DeclareFlexSymbol{\rho}{Var}{greek}{1A}
-\DeclareFlexSymbol{\sigma}{Var}{greek}{1B}
-\DeclareFlexSymbol{\tau}{Var}{greek}{1C}
-\DeclareFlexSymbol{\upsilon}{Var}{greek}{1D}
-\DeclareFlexSymbol{\phi}{Var}{greek}{1E}
-\DeclareFlexSymbol{\chi}{Var}{greek}{1F}
-\DeclareFlexSymbol{\psi}{Var}{greek}{20}
-\DeclareFlexSymbol{\omega}{Var}{greek}{21}
+\DeclareFlexSymbol{\alpha}     {Var}{greek}{0B}
+\DeclareFlexSymbol{\beta}      {Var}{greek}{0C}
+\DeclareFlexSymbol{\gamma}     {Var}{greek}{0D}
+\DeclareFlexSymbol{\delta}     {Var}{greek}{0E}
+\DeclareFlexSymbol{\epsilon}   {Var}{greek}{0F}
+\DeclareFlexSymbol{\zeta}      {Var}{greek}{10}
+\DeclareFlexSymbol{\eta}       {Var}{greek}{11}
+\DeclareFlexSymbol{\theta}     {Var}{greek}{12}
+\DeclareFlexSymbol{\iota}      {Var}{greek}{13}
+\DeclareFlexSymbol{\kappa}     {Var}{greek}{14}
+\DeclareFlexSymbol{\lambda}    {Var}{greek}{15}
+\DeclareFlexSymbol{\mu}        {Var}{greek}{16}
+\DeclareFlexSymbol{\nu}        {Var}{greek}{17}
+\DeclareFlexSymbol{\xi}        {Var}{greek}{18}
+\DeclareFlexSymbol{\pi}        {Var}{greek}{19}
+\DeclareFlexSymbol{\rho}       {Var}{greek}{1A}
+\DeclareFlexSymbol{\sigma}     {Var}{greek}{1B}
+\DeclareFlexSymbol{\tau}       {Var}{greek}{1C}
+\DeclareFlexSymbol{\upsilon}   {Var}{greek}{1D}
+\DeclareFlexSymbol{\phi}       {Var}{greek}{1E}
+\DeclareFlexSymbol{\chi}       {Var}{greek}{1F}
+\DeclareFlexSymbol{\psi}       {Var}{greek}{20}
+\DeclareFlexSymbol{\omega}     {Var}{greek}{21}
 \DeclareFlexSymbol{\varepsilon}{Var}{greek}{22}
-\DeclareFlexSymbol{\vartheta}{Var}{greek}{23}
-\DeclareFlexSymbol{\varpi}{Var}{greek}{24}
-\DeclareFlexSymbol{\varrho}{Var}{greek}{25}
-\DeclareFlexSymbol{\varsigma}{Var}{greek}{26}
-\DeclareFlexSymbol{\varphi}{Var}{greek}{27}
+\DeclareFlexSymbol{\vartheta}  {Var}{greek}{23}
+\DeclareFlexSymbol{\varpi}     {Var}{greek}{24}
+\DeclareFlexSymbol{\varrho}    {Var}{greek}{25}
+\DeclareFlexSymbol{\varsigma}  {Var}{greek}{26}
+\DeclareFlexSymbol{\varphi}    {Var}{greek}{27}
 %    \end{macrocode}
 % Note that in plain \TeX\  \cs{imath} and \cs{jmath} are
 % not variable-font.    But if a \verb"j" changes font to, let's
 % say, sans serif or calligraphic, a dotless \verb"j" in the same
 % context should change font in the same way.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{\imath}{Var}{OML}{7B}
-\DeclareFlexSymbol{\jmath}{Var}{OML}{7C}
-\DeclareFlexSymbol{\ell}{Ord}{OML}{60}
-\DeclareFlexSymbol{\wp}{Ord}{OML}{7D}
-\DeclareFlexSymbol{\partial}{Ord}{OML}{40}
-\DeclareFlexSymbol{\flat}{Ord}{OML}{5B}
-\DeclareFlexSymbol{\natural}{Ord}{OML}{5C}
-\DeclareFlexSymbol{\sharp}{Ord}{OML}{5D}
-\DeclareFlexSymbol{\triangleleft}{Bin}{OML}{2F}
-\DeclareFlexSymbol{\triangleright}{Bin}{OML}{2E}
-\DeclareFlexSymbol{\star}{Bin}{OML}{3F}
-\DeclareFlexSymbol{\smile}{Rel}{OML}{5E}
-\DeclareFlexSymbol{\frown}{Rel}{OML}{5F}
-\DeclareFlexSymbol{\leftharpoonup}{Rel}{OML}{28}
-\DeclareFlexSymbol{\leftharpoondown}{Rel}{OML}{29}
-\DeclareFlexSymbol{\rightharpoonup}{Rel}{OML}{2A}
+\DeclareFlexSymbol{\imath}           {Var}{OML}{7B}
+\DeclareFlexSymbol{\jmath}           {Var}{OML}{7C}
+\DeclareFlexSymbol{\ell}             {Ord}{OML}{60}
+\DeclareFlexSymbol{\wp}              {Ord}{OML}{7D}
+\DeclareFlexSymbol{\partial}         {Ord}{OML}{40}
+\DeclareFlexSymbol{\flat}            {Ord}{OML}{5B}
+\DeclareFlexSymbol{\natural}         {Ord}{OML}{5C}
+\DeclareFlexSymbol{\sharp}           {Ord}{OML}{5D}
+\DeclareFlexSymbol{\triangleleft}    {Bin}{OML}{2F}
+\DeclareFlexSymbol{\triangleright}   {Bin}{OML}{2E}
+\DeclareFlexSymbol{\star}            {Bin}{OML}{3F}
+\DeclareFlexSymbol{\smile}           {Rel}{OML}{5E}
+\DeclareFlexSymbol{\frown}           {Rel}{OML}{5F}
+\DeclareFlexSymbol{\leftharpoonup}   {Rel}{OML}{28}
+\DeclareFlexSymbol{\leftharpoondown} {Rel}{OML}{29}
+\DeclareFlexSymbol{\rightharpoonup}  {Rel}{OML}{2A}
 \DeclareFlexSymbol{\rightharpoondown}{Rel}{OML}{2B}
+%    \end{macrocode}
+% Latin
+%    \begin{macrocode}
 \DeclareFlexSymbol{a}{Var}{latin}{61}
 \DeclareFlexSymbol{b}{Var}{latin}{62}
 \DeclareFlexSymbol{c}{Var}{latin}{63}
@@ -1021,107 +1026,107 @@ and the derived files
 %    \end{macrocode}
 % Symbols from the 128-character \fn{cmsy} encoding.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{*}{Bin}{bin}{03} % \ast
-\DeclareFlexSymbol{-}{Bin}{bin}{00}
-\DeclareFlexSymbol{|}{Ord}{OMS}{6A}
-\DeclareFlexSymbol{\aleph}{Ord}{ord}{40}
-\DeclareFlexSymbol{\Re}{Ord}{ord}{3C}
-\DeclareFlexSymbol{\Im}{Ord}{ord}{3D}
-\DeclareFlexSymbol{\infty}{Ord}{ord}{31}
-\DeclareFlexSymbol{\prime}{Ord}{ord}{30}
-\DeclareFlexSymbol{\emptyset}{Ord}{ord}{3B}
-\DeclareFlexSymbol{\nabla}{Ord}{ord}{72}
-\DeclareFlexSymbol{\top}{Ord}{ord}{3E}
-\DeclareFlexSymbol{\bot}{Ord}{ord}{3F}
-\DeclareFlexSymbol{\triangle}{Ord}{ord}{34}
-\DeclareFlexSymbol{\forall}{Ord}{ord}{38}
-\DeclareFlexSymbol{\exists}{Ord}{ord}{39}
-\DeclareFlexSymbol{\neg}{Ord}{ord}{3A}
-\DeclareFlexSymbol{\clubsuit}{Ord}{ord}{7C}
+\DeclareFlexSymbol{*}           {Bin}{bin}{03} % \ast
+\DeclareFlexSymbol{-}           {Bin}{bin}{00}
+\DeclareFlexSymbol{|}           {Ord}{OMS}{6A}
+\DeclareFlexSymbol{\aleph}      {Ord}{ord}{40}
+\DeclareFlexSymbol{\Re}         {Ord}{ord}{3C}
+\DeclareFlexSymbol{\Im}         {Ord}{ord}{3D}
+\DeclareFlexSymbol{\infty}      {Ord}{ord}{31}
+\DeclareFlexSymbol{\prime}      {Ord}{ord}{30}
+\DeclareFlexSymbol{\emptyset}   {Ord}{ord}{3B}
+\DeclareFlexSymbol{\nabla}      {Ord}{ord}{72}
+\DeclareFlexSymbol{\top}        {Ord}{ord}{3E}
+\DeclareFlexSymbol{\bot}        {Ord}{ord}{3F}
+\DeclareFlexSymbol{\triangle}   {Ord}{ord}{34}
+\DeclareFlexSymbol{\forall}     {Ord}{ord}{38}
+\DeclareFlexSymbol{\exists}     {Ord}{ord}{39}
+\DeclareFlexSymbol{\neg}        {Ord}{ord}{3A}
+\DeclareFlexSymbol{\clubsuit}   {Ord}{ord}{7C}
 \DeclareFlexSymbol{\diamondsuit}{Ord}{ord}{7D}
-\DeclareFlexSymbol{\heartsuit}{Ord}{ord}{7E}
-\DeclareFlexSymbol{\spadesuit}{Ord}{ord}{7F}
-\DeclareFlexSymbol{\smallint}{COs}{OMS}{73}
+\DeclareFlexSymbol{\heartsuit}  {Ord}{ord}{7E}
+\DeclareFlexSymbol{\spadesuit}  {Ord}{ord}{7F}
+\DeclareFlexSymbol{\smallint}   {COs}{OMS}{73}
 %    \end{macrocode}
 % Binary operators.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{\bigtriangleup}{Bin}{bin}{34}
+\DeclareFlexSymbol{\bigtriangleup}  {Bin}{bin}{34}
 \DeclareFlexSymbol{\bigtriangledown}{Bin}{bin}{35}
-\DeclareFlexSymbol{\wedge}{Bin}{bin}{5E}
-\DeclareFlexSymbol{\vee}{Bin}{bin}{5F}
-\DeclareFlexSymbol{\cap}{Bin}{bin}{5C}
-\DeclareFlexSymbol{\cup}{Bin}{bin}{5B}
-\DeclareFlexSymbol{\ddagger}{Bin}{bin}{7A}
-\DeclareFlexSymbol{\dagger}{Bin}{bin}{79}
-\DeclareFlexSymbol{\sqcap}{Bin}{bin}{75}
-\DeclareFlexSymbol{\sqcup}{Bin}{bin}{74}
-\DeclareFlexSymbol{\uplus}{Bin}{bin}{5D}
-\DeclareFlexSymbol{\amalg}{Bin}{bin}{71}
-\DeclareFlexSymbol{\diamond}{Bin}{bin}{05}
-\DeclareFlexSymbol{\bullet}{Bin}{bin}{0F}
-\DeclareFlexSymbol{\wr}{Bin}{bin}{6F}
-\DeclareFlexSymbol{\div}{Bin}{bin}{04}
-\DeclareFlexSymbol{\odot}{Bin}{bin}{0C}
-\DeclareFlexSymbol{\oslash}{Bin}{bin}{0B}
-\DeclareFlexSymbol{\otimes}{Bin}{bin}{0A}
-\DeclareFlexSymbol{\ominus}{Bin}{bin}{09}
-\DeclareFlexSymbol{\oplus}{Bin}{bin}{08}
-\DeclareFlexSymbol{\mp}{Bin}{bin}{07}
-\DeclareFlexSymbol{\pm}{Bin}{bin}{06}
-\DeclareFlexSymbol{\circ}{Bin}{bin}{0E}
-\DeclareFlexSymbol{\bigcirc}{Bin}{bin}{0D}
-\DeclareFlexSymbol{\setminus}{Bin}{bin}{6E}
-\DeclareFlexSymbol{\cdot}{Bin}{bin}{01}
-\DeclareFlexSymbol{\ast}{Bin}{bin}{03}
-\DeclareFlexSymbol{\times}{Bin}{bin}{02}
+\DeclareFlexSymbol{\wedge}          {Bin}{bin}{5E}
+\DeclareFlexSymbol{\vee}            {Bin}{bin}{5F}
+\DeclareFlexSymbol{\cap}            {Bin}{bin}{5C}
+\DeclareFlexSymbol{\cup}            {Bin}{bin}{5B}
+\DeclareFlexSymbol{\ddagger}        {Bin}{bin}{7A}
+\DeclareFlexSymbol{\dagger}         {Bin}{bin}{79}
+\DeclareFlexSymbol{\sqcap}          {Bin}{bin}{75}
+\DeclareFlexSymbol{\sqcup}          {Bin}{bin}{74}
+\DeclareFlexSymbol{\uplus}          {Bin}{bin}{5D}
+\DeclareFlexSymbol{\amalg}          {Bin}{bin}{71}
+\DeclareFlexSymbol{\diamond}        {Bin}{bin}{05}
+\DeclareFlexSymbol{\bullet}         {Bin}{bin}{0F}
+\DeclareFlexSymbol{\wr}             {Bin}{bin}{6F}
+\DeclareFlexSymbol{\div}            {Bin}{bin}{04}
+\DeclareFlexSymbol{\odot}           {Bin}{bin}{0C}
+\DeclareFlexSymbol{\oslash}         {Bin}{bin}{0B}
+\DeclareFlexSymbol{\otimes}         {Bin}{bin}{0A}
+\DeclareFlexSymbol{\ominus}         {Bin}{bin}{09}
+\DeclareFlexSymbol{\oplus}          {Bin}{bin}{08}
+\DeclareFlexSymbol{\mp}             {Bin}{bin}{07}
+\DeclareFlexSymbol{\pm}             {Bin}{bin}{06}
+\DeclareFlexSymbol{\circ}           {Bin}{bin}{0E}
+\DeclareFlexSymbol{\bigcirc}        {Bin}{bin}{0D}
+\DeclareFlexSymbol{\setminus}       {Bin}{bin}{6E}
+\DeclareFlexSymbol{\cdot}           {Bin}{bin}{01}
+\DeclareFlexSymbol{\ast}            {Bin}{bin}{03}
+\DeclareFlexSymbol{\times}          {Bin}{bin}{02}
 %    \end{macrocode}
 % Relation symbols.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{\propto}{Rel}{rel}{2F}
-\DeclareFlexSymbol{\sqsubseteq}{Rel}{rel}{76}
-\DeclareFlexSymbol{\sqsupseteq}{Rel}{rel}{77}
-\DeclareFlexSymbol{\parallel}{Rel}{rel}{6B}
-\DeclareFlexSymbol{\mid}{Rel}{rel}{6A}
-\DeclareFlexSymbol{\dashv}{Rel}{rel}{61}
-\DeclareFlexSymbol{\vdash}{Rel}{rel}{60}
-\DeclareFlexSymbol{\nearrow}{Rel}{rel}{25}
-\DeclareFlexSymbol{\searrow}{Rel}{rel}{26}
-\DeclareFlexSymbol{\nwarrow}{Rel}{rel}{2D}
-\DeclareFlexSymbol{\swarrow}{Rel}{rel}{2E}
+\DeclareFlexSymbol{\propto}        {Rel}{rel}{2F}
+\DeclareFlexSymbol{\sqsubseteq}    {Rel}{rel}{76}
+\DeclareFlexSymbol{\sqsupseteq}    {Rel}{rel}{77}
+\DeclareFlexSymbol{\parallel}      {Rel}{rel}{6B}
+\DeclareFlexSymbol{\mid}           {Rel}{rel}{6A}
+\DeclareFlexSymbol{\dashv}         {Rel}{rel}{61}
+\DeclareFlexSymbol{\vdash}         {Rel}{rel}{60}
+\DeclareFlexSymbol{\nearrow}       {Rel}{rel}{25}
+\DeclareFlexSymbol{\searrow}       {Rel}{rel}{26}
+\DeclareFlexSymbol{\nwarrow}       {Rel}{rel}{2D}
+\DeclareFlexSymbol{\swarrow}       {Rel}{rel}{2E}
 \DeclareFlexSymbol{\Leftrightarrow}{Rel}{rel}{2C}
-\DeclareFlexSymbol{\Leftarrow}{Rel}{rel}{28}
-\DeclareFlexSymbol{\Rightarrow}{Rel}{rel}{29}
-\DeclareFlexSymbol{\leq}{Rel}{rel}{14}
-\DeclareFlexSymbol{\geq}{Rel}{rel}{15}
-\DeclareFlexSymbol{\succ}{Rel}{rel}{1F}
-\DeclareFlexSymbol{\prec}{Rel}{rel}{1E}
-\DeclareFlexSymbol{\approx}{Rel}{rel}{19}
-\DeclareFlexSymbol{\succeq}{Rel}{rel}{17}
-\DeclareFlexSymbol{\preceq}{Rel}{rel}{16}
-\DeclareFlexSymbol{\supset}{Rel}{rel}{1B}
-\DeclareFlexSymbol{\subset}{Rel}{rel}{1A}
-\DeclareFlexSymbol{\supseteq}{Rel}{rel}{13}
-\DeclareFlexSymbol{\subseteq}{Rel}{rel}{12}
-\DeclareFlexSymbol{\in}{Rel}{rel}{32}
-\DeclareFlexSymbol{\ni}{Rel}{rel}{33}
-\DeclareFlexSymbol{\gg}{Rel}{rel}{1D}
-\DeclareFlexSymbol{\ll}{Rel}{rel}{1C}
+\DeclareFlexSymbol{\Leftarrow}     {Rel}{rel}{28}
+\DeclareFlexSymbol{\Rightarrow}    {Rel}{rel}{29}
+\DeclareFlexSymbol{\leq}           {Rel}{rel}{14}
+\DeclareFlexSymbol{\geq}           {Rel}{rel}{15}
+\DeclareFlexSymbol{\succ}          {Rel}{rel}{1F}
+\DeclareFlexSymbol{\prec}          {Rel}{rel}{1E}
+\DeclareFlexSymbol{\approx}        {Rel}{rel}{19}
+\DeclareFlexSymbol{\succeq}        {Rel}{rel}{17}
+\DeclareFlexSymbol{\preceq}        {Rel}{rel}{16}
+\DeclareFlexSymbol{\supset}        {Rel}{rel}{1B}
+\DeclareFlexSymbol{\subset}        {Rel}{rel}{1A}
+\DeclareFlexSymbol{\supseteq}      {Rel}{rel}{13}
+\DeclareFlexSymbol{\subseteq}      {Rel}{rel}{12}
+\DeclareFlexSymbol{\in}            {Rel}{rel}{32}
+\DeclareFlexSymbol{\ni}            {Rel}{rel}{33}
+\DeclareFlexSymbol{\gg}            {Rel}{rel}{1D}
+\DeclareFlexSymbol{\ll}            {Rel}{rel}{1C}
 \DeclareFlexSymbol{\leftrightarrow}{Rel}{rel}{24}
-\DeclareFlexSymbol{\leftarrow}{Rel}{rel}{20}
-\DeclareFlexSymbol{\rightarrow}{Rel}{rel}{21}
-\DeclareFlexSymbol{\sim}{Rel}{rel}{18}
-\DeclareFlexSymbol{\simeq}{Rel}{rel}{27}
-\DeclareFlexSymbol{\perp}{Rel}{rel}{3F}
-\DeclareFlexSymbol{\equiv}{Rel}{rel}{11}
-\DeclareFlexSymbol{\asymp}{Rel}{rel}{10}
+\DeclareFlexSymbol{\leftarrow}     {Rel}{rel}{20}
+\DeclareFlexSymbol{\rightarrow}    {Rel}{rel}{21}
+\DeclareFlexSymbol{\sim}           {Rel}{rel}{18}
+\DeclareFlexSymbol{\simeq}         {Rel}{rel}{27}
+\DeclareFlexSymbol{\perp}          {Rel}{rel}{3F}
+\DeclareFlexSymbol{\equiv}         {Rel}{rel}{11}
+\DeclareFlexSymbol{\asymp}         {Rel}{rel}{10}
 %    \end{macrocode}
 % The \cs{notRel} glyph is a special zero-width glyph intended only
 % for use in constructing negated symbols.    \cs{mapstoRel} and
 % \cs{cdotPun} have similar but more restricted applications.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{\notRel}{Rel}{rel}{36}
+\DeclareFlexSymbol{\notRel}   {Rel}{rel}{36}
 \DeclareFlexSymbol{\mapstoOrd}{Ord}{OMS}{37}
-\DeclareFlexSymbol{\cdotOrd}{Ord}{OMS}{01}
+\DeclareFlexSymbol{\cdotOrd}  {Ord}{OMS}{01}
 \cs_set:Npn\cdotp{\mathpunct{\cdotOrd}}
 %    \end{macrocode}
 % Symbols from the 128-character \fn{cmex} encoding.   
@@ -1132,20 +1137,20 @@ and the derived files
 % default placement of limits.    \verb"cop" stands for
 % `cumulative operator math group'.   
 %    \begin{macrocode}
-\DeclareFlexSymbol{\coprod}{COs}{cop}{60}
-\DeclareFlexSymbol{\bigvee}{COs}{cop}{57}
-\DeclareFlexSymbol{\bigwedge}{COs}{cop}{56}
-\DeclareFlexSymbol{\biguplus}{COs}{cop}{55}
-\DeclareFlexSymbol{\bigcap}{COs}{cop}{54}
-\DeclareFlexSymbol{\bigcup}{COs}{cop}{53}
-\DeclareFlexSymbol{\int}{COi}{cop}{52}
-\DeclareFlexSymbol{\prod}{COs}{cop}{51}
-\DeclareFlexSymbol{\sum}{COs}{cop}{50}
+\DeclareFlexSymbol{\coprod}   {COs}{cop}{60}
+\DeclareFlexSymbol{\bigvee}   {COs}{cop}{57}
+\DeclareFlexSymbol{\bigwedge} {COs}{cop}{56}
+\DeclareFlexSymbol{\biguplus} {COs}{cop}{55}
+\DeclareFlexSymbol{\bigcap}   {COs}{cop}{54}
+\DeclareFlexSymbol{\bigcup}   {COs}{cop}{53}
+\DeclareFlexSymbol{\int}      {COi}{cop}{52}
+\DeclareFlexSymbol{\prod}     {COs}{cop}{51}
+\DeclareFlexSymbol{\sum}      {COs}{cop}{50}
 \DeclareFlexSymbol{\bigotimes}{COs}{cop}{4E}
-\DeclareFlexSymbol{\bigoplus}{COs}{cop}{4C}
-\DeclareFlexSymbol{\bigodot}{COs}{cop}{4A}
-\DeclareFlexSymbol{\oint}{COi}{cop}{48}
-\DeclareFlexSymbol{\bigsqcup}{COs}{cop}{46}
+\DeclareFlexSymbol{\bigoplus} {COs}{cop}{4C}
+\DeclareFlexSymbol{\bigodot}  {COs}{cop}{4A}
+\DeclareFlexSymbol{\oint}     {COi}{cop}{48}
+\DeclareFlexSymbol{\bigsqcup} {COs}{cop}{46}
 %    \end{macrocode}
 % Delimiter symbols.   
 % \verb"DeL" stands for `delimiter (left)'.   
@@ -1167,20 +1172,20 @@ and the derived files
 \DeclareFlexDelimiter{\langle}{DeL}{del}{0A}{OMS}{68}
 \DeclareFlexDelimiter{\rbrace}{DeR}{del}{09}{OMS}{67}
 \DeclareFlexDelimiter{\lbrace}{DeL}{del}{08}{OMS}{66}
-\DeclareFlexDelimiter{\rceil}{DeR}{del}{07}{OMS}{65}
-\DeclareFlexDelimiter{\lceil}{DeL}{del}{06}{OMS}{64}
+\DeclareFlexDelimiter{\rceil} {DeR}{del}{07}{OMS}{65}
+\DeclareFlexDelimiter{\lceil} {DeL}{del}{06}{OMS}{64}
 \DeclareFlexDelimiter{\rfloor}{DeR}{del}{05}{OMS}{63}
 \DeclareFlexDelimiter{\lfloor}{DeL}{del}{04}{OMS}{62}
-\DeclareFlexDelimiter{(}{DeL}{del}{00}{OT1}{28}
-\DeclareFlexDelimiter{)}{DeR}{del}{01}{OT1}{29}
-\DeclareFlexDelimiter{[}{DeL}{del}{02}{OT1}{5B}
-\DeclareFlexDelimiter{]}{DeR}{del}{03}{OT1}{5D}
-\DeclareFlexDelimiter{\lVert}{DeL}{del}{0D}{OMS}{6B}
-\DeclareFlexDelimiter{\rVert}{DeR}{del}{0D}{OMS}{6B}
-\DeclareFlexDelimiter{\lvert}{DeL}{del}{0C}{OMS}{6A}
-\DeclareFlexDelimiter{\rvert}{DeR}{del}{0C}{OMS}{6A}
-\DeclareFlexDelimiter{\Vert}{DeB}{del}{0D}{OMS}{6B}
-\DeclareFlexDelimiter{\vert}{DeB}{del}{0C}{OMS}{6A}
+\DeclareFlexDelimiter{(}      {DeL}{del}{00}{OT1}{28}
+\DeclareFlexDelimiter{)}      {DeR}{del}{01}{OT1}{29}
+\DeclareFlexDelimiter{[}      {DeL}{del}{02}{OT1}{5B}
+\DeclareFlexDelimiter{]}      {DeR}{del}{03}{OT1}{5D}
+\DeclareFlexDelimiter{\lVert} {DeL}{del}{0D}{OMS}{6B}
+\DeclareFlexDelimiter{\rVert} {DeR}{del}{0D}{OMS}{6B}
+\DeclareFlexDelimiter{\lvert} {DeL}{del}{0C}{OMS}{6A}
+\DeclareFlexDelimiter{\rvert} {DeR}{del}{0C}{OMS}{6A}
+\DeclareFlexDelimiter{\Vert}  {DeB}{del}{0D}{OMS}{6B}
+\DeclareFlexDelimiter{\vert}  {DeB}{del}{0C}{OMS}{6A}
 %    \end{macrocode}
 % Maybe make the vert bars mathord instead of delimiter, to discourage
 % poor usage.   
@@ -1195,20 +1200,20 @@ and the derived files
 % The DeA delimiter type is a special case used only for these
 % arrows.   
 %    \begin{macrocode}
-\DeclareFlexDelimiter{\lmoustache}{DeL}{del}{40}{del}{7A}
-\DeclareFlexDelimiter{\rmoustache}{DeR}{del}{41}{del}{7B}
-\DeclareFlexDelimiter{\lgroup}{DeL}{del}{3A}{del}{3A}
-\DeclareFlexDelimiter{\rgroup}{DeR}{del}{3B}{del}{3B}
-\DeclareFlexDelimiter{\bracevert}{DeB}{del}{3E}{del}{3E}
-\DeclareFlexDelimiter{\arrowvert}{DeB}{del}{3C}{OMS}{6A}
-\DeclareFlexDelimiter{\Arrowvert}{DeB}{del}{3D}{OMS}{6B}
-\DeclareFlexDelimiter{\uparrow}{DeA}{del}{78}{OMS}{22}
-\DeclareFlexDelimiter{\downarrow}{DeA}{del}{79}{OMS}{23}
+\DeclareFlexDelimiter{\lmoustache} {DeL}{del}{40}{del}{7A}
+\DeclareFlexDelimiter{\rmoustache} {DeR}{del}{41}{del}{7B}
+\DeclareFlexDelimiter{\lgroup}     {DeL}{del}{3A}{del}{3A}
+\DeclareFlexDelimiter{\rgroup}     {DeR}{del}{3B}{del}{3B}
+\DeclareFlexDelimiter{\bracevert}  {DeB}{del}{3E}{del}{3E}
+\DeclareFlexDelimiter{\arrowvert}  {DeB}{del}{3C}{OMS}{6A}
+\DeclareFlexDelimiter{\Arrowvert}  {DeB}{del}{3D}{OMS}{6B}
+\DeclareFlexDelimiter{\uparrow}    {DeA}{del}{78}{OMS}{22}
+\DeclareFlexDelimiter{\downarrow}  {DeA}{del}{79}{OMS}{23}
 \DeclareFlexDelimiter{\updownarrow}{DeA}{del}{3F}{OMS}{6C}
-\DeclareFlexDelimiter{\Uparrow}{DeA}{del}{7E}{OMS}{2A}
-\DeclareFlexDelimiter{\Downarrow}{DeA}{del}{7F}{OMS}{2B}
+\DeclareFlexDelimiter{\Uparrow}    {DeA}{del}{7E}{OMS}{2A}
+\DeclareFlexDelimiter{\Downarrow}  {DeA}{del}{7F}{OMS}{2B}
 \DeclareFlexDelimiter{\Updownarrow}{DeA}{del}{77}{OMS}{6D}
-\DeclareFlexDelimiter{\backslash}{DeB}{del}{0F}{OMS}{6E}
+\DeclareFlexDelimiter{\backslash}  {DeB}{del}{0F}{OMS}{6E}
 %    \end{macrocode}
 % 
 % 

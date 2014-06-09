@@ -1,6 +1,14 @@
-\documentclass[12pt]{article}
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
 \usepackage{breqn}
 \begin{document}
+\TIMO
+
+\START
+\AUTHOR{wspr}
 
 Bug:
 \begin{dgroup}
@@ -22,6 +30,7 @@ c=d
 \end{dmath}
 \end{dgroup}
 
+\showoutput
+\newpage
 
-
-\end{document}
+\END

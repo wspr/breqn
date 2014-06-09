@@ -1,0 +1,33 @@
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
+\usepackage{breqn}
+\begin{document}
+\TIMO
+
+\START
+\AUTHOR{wspr}
+
+% These three (at time of writing this test) do not behaviour consistently.
+% It looks like having a slash before the equals sign affects the compact behaviour.
+
+Bug:
+\begin{dmath*}
+  1 / 2 = 1 / 2 = 1 / 2
+\end{dmath*}
+
+Work:
+\begin{dmath*}
+  \frac{1}{2} = 1 / 2 = 1 / 2
+\end{dmath*}
+and
+\begin{dmath*}
+  \frac{1}{2} = \frac{1}{2} = \frac{1}{2}
+\end{dmath*}
+
+\showoutput
+\newpage
+
+\END

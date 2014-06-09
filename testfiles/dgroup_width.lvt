@@ -1,0 +1,28 @@
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
+\usepackage{breqn}
+\begin{document}
+\TIMO
+
+\START
+\AUTHOR{wspr}
+
+Bug:
+\begin{dgroup}
+  \begin{dmath}
+    a = a
+  \end{dmath}
+  \begin{dmath}
+    a = a +a+a+a+ b+b+b+b+b+b+b+b+b+b+b+b+b+a+a
+ \end{dmath}
+\end{dgroup}
+
+\noindent\rule\textwidth{0.5mm}
+
+\showoutput
+\newpage
+
+\END

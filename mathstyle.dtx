@@ -2,6 +2,8 @@
 %
 % Copyright (C) 1997-2003 by Michael J. Downes
 % Copyright (C) 2007-2008 by Morten Hoegholm
+% Copyright (C) 2007-2014 by Lars Madsen
+% Copyright (C) 2007-2014 by Will Robertson
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -13,8 +15,7 @@
 %
 % This work has the LPPL maintenance status "maintained".
 %
-% This Current Maintainer of this work is 
-% Lars Madsen, Will Robertson and Joseph Wright.
+% The Current Maintainer of this work is Will Robertson.
 %
 % This work consists of the main source file mathstyle.dtx
 % and the derived files
@@ -34,10 +35,6 @@
 %        (quote the arguments according to the demands of your shell)
 %
 % Documentation:
-%    (a) If mathstyle.drv is present:
-%           latex mathstyle.drv
-%    (b) Without mathstyle.drv:
-%           latex mathstyle.dtx; ...
 %    The class ltxdoc loads the configuration file ltxdoc.cfg
 %    if available. Here you can specify further options, e.g.
 %    use A4 as paper format:
@@ -51,9 +48,9 @@
 %       pdflatex mathstyle.dtx
 %
 % Installation:
-%    TDS:tex/latex/mh/mathstyle.sty
-%    TDS:doc/latex/mh/mathstyle.pdf
-%    TDS:source/latex/mh/mathstyle.dtx
+%    TDS:tex/latex/breqn/mathstyle.sty
+%    TDS:doc/latex/breqn/mathstyle.pdf
+%    TDS:source/latex/breqn/mathstyle.dtx
 %
 %<*ignore>
 \begingroup
@@ -79,6 +76,8 @@ This is a generated file.
 
 Copyright (C) 1997-2003 by Michael J. Downes
 Copyright (C) 2007-2011 by Morten Hoegholm et al
+Copyright (C) 2007-2014 by Lars Madsen
+Copyright (C) 2007-2014 by Will Robertson
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -90,19 +89,17 @@ LaTeX version 2005/12/01 or later.
 
 This work has the LPPL maintenance status "maintained".
 
-This Current Maintainer of this work is
-Lars Madsen, Will Robertson and Joseph Wright.
+The Current Maintainer of this work is Will Robertson.
 
 This work consists of the main source file mathstyle.dtx
 and the derived files
-   mathstyle.sty, mathstyle.pdf, mathstyle.ins, mathstyle.drv.
+   mathstyle.sty, mathstyle.pdf, mathstyle.ins.
 
 \endpreamble
 
 \generate{%
   \file{mathstyle.ins}{\from{mathstyle.dtx}{install}}%
-  \file{mathstyle.drv}{\from{mathstyle.dtx}{driver}}%
-  \usedir{tex/latex/mh}%
+  \usedir{tex/latex/breqn}%
   \file{mathstyle.sty}{\from{mathstyle.dtx}{package}}%
 }
 
@@ -113,9 +110,6 @@ and the derived files
 \Msg{* file into a directory searched by TeX:}
 \Msg{*}
 \Msg{*     mathstyle.sty}
-\Msg{*}
-\Msg{* To produce the documentation run the file `mathstyle.drv'}
-\Msg{* through LaTeX.}
 \Msg{*}
 \Msg{* Happy TeXing!}
 \Msg{*}

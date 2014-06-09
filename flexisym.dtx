@@ -2,6 +2,8 @@
 %
 % Copyright (C) 1997-2003 by Michael J. Downes
 % Copyright (C) 2007-2008 by Morten Hoegholm
+% Copyright (C) 2007-2014 by Lars Madsen
+% Copyright (C) 2007-2014 by Will Robertson
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -13,12 +15,11 @@
 %
 % This work has the LPPL maintenance status "maintained".
 %
-% This Current Maintainer of this work is
-% Lars Madsen, Will Robertson and Joseph Wright.
+% This Current Maintainer of this work is Will Robertson.
 %
 % This work consists of the main source file flexisym.dtx
 % and the derived files
-%    flexisym.sty, flexisym.pdf, flexisym.ins, flexisym.drv,
+%    flexisym.sty, flexisym.pdf, flexisym.ins,
 %    cmbase.sym, mathpazo.sym, mathptmx.sym, msabm.sym.
 %
 % Distribution:
@@ -35,10 +36,6 @@
 %        (quote the arguments according to the demands of your shell)
 %
 % Documentation:
-%    (a) If flexisym.drv is present:
-%           latex flexisym.drv
-%    (b) Without flexisym.drv:
-%           latex flexisym.dtx; ...
 %    The class ltxdoc loads the configuration file ltxdoc.cfg
 %    if available. Here you can specify further options, e.g.
 %    use A4 as paper format:
@@ -52,13 +49,13 @@
 %       pdflatex flexisym.dtx
 %
 % Installation:
-%    TDS:tex/latex/mh/flexisym.sty
-%    TDS:tex/latex/mh/cmbase.sym
-%    TDS:tex/latex/mh/mathpazo.sym
-%    TDS:tex/latex/mh/mathptmx.sym
-%    TDS:tex/latex/mh/msabm.sym
-%    TDS:doc/latex/mh/flexisym.pdf
-%    TDS:source/latex/mh/flexisym.dtx
+%    TDS:tex/latex/breqn/flexisym.sty
+%    TDS:tex/latex/breqn/cmbase.sym
+%    TDS:tex/latex/breqn/mathpazo.sym
+%    TDS:tex/latex/breqn/mathptmx.sym
+%    TDS:tex/latex/breqn/msabm.sym
+%    TDS:doc/latex/breqn/flexisym.pdf
+%    TDS:source/latex/breqn/flexisym.dtx
 %
 %<*ignore>
 \begingroup
@@ -85,6 +82,8 @@ This is a generated file.
 
 Copyright (C) 1997-2003 by Michael J. Downes
 Copyright (C) 2007-2010 by Morten Hoegholm
+Copyright (C) 2007-2014 by Lars Madsen
+Copyright (C) 2007-2014 by Will Robertson
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -96,20 +95,18 @@ LaTeX version 2005/12/01 or later.
 
 This work has the LPPL maintenance status "maintained".
 
-This Current Maintainer of this work is 
-Lars Madsen, Will Robertson and Joseph Wright.
+The Current Maintainer of this work is Will Robertson.
 
 This work consists of the main source file flexisym.dtx
 and the derived files
-   flexisym.sty, flexisym.pdf, flexisym.ins, flexisym.drv,
+   flexisym.sty, flexisym.pdf, flexisym.ins,
    cmbase.sym, mathpazo.sym, mathptmx.sym, msabm.sym.
 
 \endpreamble
 
 \generate{%
   \file{flexisym.ins}{\from{flexisym.dtx}{install}}%
-  \file{flexisym.drv}{\from{flexisym.dtx}{driver}}%
-  \usedir{tex/latex/mh}%
+  \usedir{tex/latex/breqn}%
   \file{flexisym.sty}{\from{flexisym.dtx}{package}}%
   \file{cmbase.sym}{\from{flexisym.dtx}{cmbase}}%
   \file{mathpazo.sym}{\from{flexisym.dtx}{mathpazo}}%
@@ -124,9 +121,6 @@ and the derived files
 \Msg{* files into a directory searched by TeX:}
 \Msg{*}
 \Msg{*     flexisym.sty, cmbase.sym, mathpazo.sym, mathptmx.sym, msabm.sym}
-\Msg{*}
-\Msg{* To produce the documentation run the file `flexisym.drv'}
-\Msg{* through LaTeX.}
 \Msg{*}
 \Msg{* Happy TeXing!}
 \Msg{*}

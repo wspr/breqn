@@ -1,0 +1,40 @@
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
+\usepackage{breqn}
+\begin{document}
+\TIMO
+
+\START
+\AUTHOR{wspr}
+
+\begin{dmath}
+f(x)=\frac{1}{x} \condition{for $x\neq 0$}
+\end{dmath}.
+
+\begin{dmath}
+f(x)=\frac{1}{x} \condition[;]{for $x\neq 0$}
+\end{dmath}.
+
+\begin{dmath}
+f(x)=\frac{1}{x} \condition[]{for $x\neq 0$}
+\end{dmath}.
+
+\begin{dmath}
+f(x)=\frac{1}{x} \condition*{x\neq 0}
+\end{dmath}.
+
+\begin{dmath}
+f(x)=\frac{1}{x} \condition*[;]{x\neq 0}
+\end{dmath}.
+
+\begin{dmath}
+f(x)=\frac{1}{x} \condition*[]{x\neq 0}
+\end{dmath}.
+
+\showoutput
+\newpage
+
+\END

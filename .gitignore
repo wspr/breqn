@@ -1,0 +1,13 @@
+
+build/
+.DS_Store
+*.zip
+*.synctex*
+*.idx
+*.aux
+*.log
+*.tmp
+*.sym
+*.sty
+*.toc
+*.ins

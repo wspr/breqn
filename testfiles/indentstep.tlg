@@ -1,0 +1,827 @@
+This is a generated file for the LaTeX (2e + expl3) validation system.
+Don't change this file in any respect.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+Author: wspr
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 13.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 13.
+Underfull \hbox (badness 10000) in paragraph at lines 19--19
+|  \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 z|$
+\hbox(5.83333+0.83333)x193.47878
+.\rule(*+*)x0.0
+.\glue 8.33313 minus -1.66663
+.\glue(\medmuskip) 2.22217 minus 1.66663
+.\OT1/cmr/m/n/10 +
+.\glue(\medmuskip) 2.22217 minus 1.66663
+.\OML/cmm/m/it/10 z
+.\kern0.4398
+.\rule(*+*)x0.0
+.\mathoff
+.\penalty 10000
+.\glue(\parfillskip) 0.0
+.\glue(\rightskip) 0.0
+Completed box being shipped out [1]
+\vbox(498.33238+0.0)x291.9253
+.\glue -52.36449
+.\vbox(550.69687+0.0)x307.28978, shifted -15.36449
+..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
+...\glue 0.0 plus 1.0fil
+...\hbox(0.0+0.0)x307.28978
+..\glue 25.0
+..\glue(\lineskip) 0.0
+..\vbox(483.69687+0.0)x307.28978, glue set 334.3278fil
+...\write-{}
+...\glue(\topskip) 10.0
+...\rule(0.0+0.0)x*
+...\penalty 10000
+...\glue 13.44444
+...\glue(\baselineskip) 4.5
+...\hbox(7.5+2.5)x307.28978, glue set 294.5119fil
+....\glue 0.0 plus 1.0fil
+....\hbox(7.5+2.5)x12.77782
+.....\OT1/cmr/m/n/10 (
+.....\OT1/cmr/m/n/10 1
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 )
+...\penalty 10000
+...\kern -20.94444
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(6.94444+1.94444)x307.28978, glue set - 0.53189
+....\mathon
+....\OML/cmm/m/it/10 a
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 b
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 c
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 d
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 e
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 f
+....\kern1.0764
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 g
+....\kern0.35878
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 h
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 i
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 j
+....\kern0.57243
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 k
+....\kern0.3148
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 l
+....\kern0.19678
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 m
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 n
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 o
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 p
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 q
+....\kern0.35878
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 r
+....\kern0.27779
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 s
+....\penalty 888
+....\glue(\rightskip) 22.77782
+...\penalty 20000
+...\glue(\baselineskip) 5.11111 plus 2.0
+...\hbox(6.94444+1.94444)x299.28978, glue set - 0.31464, shifted 8.0
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 t
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 u
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 v
+....\kern0.35878
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 w
+....\kern0.26909
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 x
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 y
+....\kern0.35878
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 z
+....\kern0.4398
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OML/cmm/m/it/10 <
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OML/cmm/m/it/10 a
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 b
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 c
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 d
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 e
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 f
+....\kern1.0764
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 g
+....\kern0.35878
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 h
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 i
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 j
+....\kern0.57243
+....\penalty 888
+....\glue(\rightskip) 22.77782
+...\penalty 20000
+...\glue(\baselineskip) 5.11111 plus 2.0
+...\hbox(6.94444+1.94444)x291.28978, glue set - 0.40791, shifted 16.0
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 k
+....\kern0.3148
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 l
+....\kern0.19678
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 m
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 n
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 o
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 p
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 q
+....\kern0.35878
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 r
+....\kern0.27779
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 s
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 t
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 u
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 v
+....\kern0.35878
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 w
+....\kern0.26909
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 x
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 y
+....\kern0.35878
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 z
+....\kern0.4398
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 22.77782
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue(\parskip) 0.0 plus 1.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\glue 10.0 plus 2.0 minus 5.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(6.94444+1.94444)x307.28978, glue set - 0.86206
+....\mathon
+....\OML/cmm/m/it/10 a
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 b
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 c
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 d
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 e
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 f
+....\kern1.0764
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 g
+....\kern0.35878
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 h
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 i
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 j
+....\kern0.57243
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 k
+....\kern0.3148
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 l
+....\kern0.19678
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 m
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 n
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 o
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 p
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 q
+....\kern0.35878
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 r
+....\kern0.27779
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 s
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 t
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 u
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 v
+....\kern0.35878
+....\penalty 888
+....\glue(\rightskip) 0.0
+...\penalty 20000
+...\glue(\baselineskip) 5.11111 plus 2.0
+...\hbox(6.94444+1.94444)x250.38428, glue set - 0.85403, shifted 56.9055
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 w
+....\kern0.26909
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 x
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 y
+....\kern0.35878
+....\penalty 888
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 z
+....\kern0.4398
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OML/cmm/m/it/10 <
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OML/cmm/m/it/10 a
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 b
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 c
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 d
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 e
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 f
+....\kern1.0764
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 g
+....\kern0.35878
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 h
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 i
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 j
+....\kern0.57243
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 k
+....\kern0.3148
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 l
+....\kern0.19678
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 m
+....\penalty 888
+....\glue(\rightskip) 0.0
+...\penalty 10000
+...\glue(\baselineskip) 5.90477 plus 2.0
+...\hbox(6.15079+1.94444)x193.47878, glue set - 0.64299, shifted 113.811
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 n
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 o
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 p
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 q
+....\kern0.35878
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 r
+....\kern0.27779
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 s
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 t
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 u
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 v
+....\kern0.35878
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 w
+....\kern0.26909
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 x
+....\penalty 888
+....\glue -8.33313 minus 1.66663
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 y
+....\kern0.35878
+....\penalty 888
+....\glue(\rightskip) 0.0
+...\penalty 20000
+...\glue(\baselineskip) 6.22223 plus 2.0
+...\hbox(5.83333+0.83333)x193.47878, shifted 113.811
+....\rule(*+*)x0.0
+....\glue 8.33313 minus -1.66663
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OT1/cmr/m/n/10 +
+....\glue(\medmuskip) 2.22217 minus 1.66663
+....\OML/cmm/m/it/10 z
+....\kern0.4398
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0
+...\penalty 10000
+...\glue(\baselineskip) 5.66667 plus 2.0
+...\hbox(7.5+2.5)x307.28978, glue set 294.5119fil
+....\glue 0.0 plus 1.0fil
+....\hbox(7.5+2.5)x12.77782
+.....\OT1/cmr/m/n/10 (
+.....\OT1/cmr/m/n/10 2
+.....\kern 0.0
+.....\OT1/cmr/m/n/10 )
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0 plus 0.0001fil
+..\glue(\baselineskip) 30.0
+..\hbox(0.0+0.0)x307.28978
+{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}

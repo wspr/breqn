@@ -1,0 +1,29 @@
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
+\usepackage{breqn}
+\begin{document}
+\TIMO
+
+\START
+\AUTHOR{wspr}
+
+\begin{dmath}[frame]
+F(s) = \laplace
+\end{dmath}
+
+\setlength\fboxrule{1mm}
+\begin{dmath}[frame]
+F(s) = \laplace
+\end{dmath}
+
+\begin{dmath}[frame=2pt]
+F(s) = \laplace
+\end{dmath}
+
+\showoutput
+\newpage
+
+\END

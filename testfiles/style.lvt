@@ -1,0 +1,24 @@
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
+\usepackage{breqn}
+\begin{document}
+\TIMO
+
+\START
+\AUTHOR{wspr}
+
+\begin{dmath}
+F(s) = \int_0^\infty f(t)e^{-st} dt
+\end{dmath}
+
+\begin{dmath}[style=\scriptsize]
+F(s) = \int_0^\infty f(t)e^{-st} dt
+\end{dmath}
+
+\showoutput
+\newpage
+
+\END

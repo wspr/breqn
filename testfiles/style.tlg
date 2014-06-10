@@ -1,0 +1,161 @@
+This is a generated file for the LaTeX (2e + expl3) validation system.
+Don't change this file in any respect.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+Author: wspr
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 13.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 13.
+Completed box being shipped out [1]
+\vbox(498.33238+0.0)x291.9253
+.\glue -52.36449
+.\vbox(550.69687+0.0)x307.28978, shifted -15.36449
+..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
+...\glue 0.0 plus 1.0fil
+...\hbox(0.0+0.0)x307.28978
+..\glue 25.0
+..\glue(\lineskip) 0.0
+..\vbox(483.69687+0.0)x307.28978, glue set 407.6667fil
+...\write-{}
+...\glue(\topskip) 0.0
+...\hbox(14.15291+9.11122)x307.28978, glue set 1.0
+....\glue(\leftskip) 104.57715
+....\hbox(7.5+2.5)x0.0, glue set - 202.71263fil
+.....\kern -104.57715
+.....\kern 307.28978
+.....\kern -12.77782
+.....\hbox(7.5+2.5)x12.77782
+......\OT1/cmr/m/n/10 (
+......\OT1/cmr/m/n/10 1
+......\kern 0.0
+......\OT1/cmr/m/n/10 )
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\mathon
+....\OML/cmm/m/it/10 F
+....\kern1.3889
+....\OT1/cmr/m/n/10 (
+....\penalty 10000
+....\OML/cmm/m/it/10 s
+....\OT1/cmr/m/n/10 )
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\hbox(0.0+22.22246)x5.55557, shifted -13.61122
+.....\OMX/cmex/m/n/5 Z
+....\vbox(23.26413+0.0)x12.91669, shifted 9.11122
+.....\hbox(3.01389+0.0)x8.47224, shifted 4.44444
+......\OMS/cmsy/m/n/7 1
+.....\kern15.73914
+.....\hbox(4.51111+0.0)x4.48613
+......\OT1/cmr/m/n/7 0
+....\glue(\thinmuskip) 1.66663
+....\OML/cmm/m/it/10 f
+....\kern1.0764
+....\OT1/cmr/m/n/10 (
+....\penalty 10000
+....\OML/cmm/m/it/10 t
+....\OT1/cmr/m/n/10 )
+....\OML/cmm/m/it/10 e
+....\hbox(4.33334+0.83334)x13.54518, shifted -4.12892
+.....\penalty 888
+.....\glue -6.82869 minus 1.36574
+.....\rule(*+*)x0.0
+.....\glue 6.82869 minus -1.36574
+.....\OMS/cmsy/m/n/7 ^^@
+.....\OML/cmm/m/it/7 s
+.....\OML/cmm/m/it/7 t
+....\OML/cmm/m/it/10 d
+....\OML/cmm/m/it/10 t
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 22.77782 plus 81.79933
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue(\parskip) 0.0 plus 1.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\glue 10.0 plus 2.0 minus 5.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(12.86122+9.86124)x307.28978, glue set 1.0
+....\glue(\leftskip) 112.36807
+....\hbox(5.25+1.75)x0.0, glue set - 194.9217fil
+.....\kern -112.36807
+.....\kern 307.28978
+.....\kern -10.23616
+.....\hbox(5.25+1.75)x10.23616
+......\OT1/cmr/m/n/7 (
+......\OT1/cmr/m/n/7 2
+......\kern 0.0
+......\OT1/cmr/m/n/7 )
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\mathon
+....\OML/cmm/m/it/7 F
+....\kern1.07639
+....\OT1/cmr/m/n/7 (
+....\penalty 10000
+....\OML/cmm/m/it/7 s
+....\OT1/cmr/m/n/7 )
+....\penalty 9999
+....\glue(\thickmuskip) 2.27623 minus 0.91049
+....\OT1/cmr/m/n/7 =
+....\glue(\thickmuskip) 2.27623 minus 0.91049
+....\hbox(0.0+22.22246)x5.55557, shifted -12.86122
+.....\OMX/cmex/m/n/5 Z
+....\vbox(22.403+0.0)x11.75009, shifted 9.86124
+.....\hbox(2.15277+0.0)x7.30565, shifted 4.44444
+......\OMS/cmsy/m/n/5 1
+.....\kern17.02802
+.....\hbox(3.22221+0.0)x3.90283
+......\OT1/cmr/m/n/5 0
+....\glue(\thinmuskip) 1.36574
+....\OML/cmm/m/it/7 f
+....\kern0.78473
+....\OT1/cmr/m/n/7 (
+....\penalty 10000
+....\OML/cmm/m/it/7 t
+....\OT1/cmr/m/n/7 )
+....\OML/cmm/m/it/7 e
+....\hbox(3.33336+0.83336)x12.08577, shifted -3.51779
+.....\penalty 888
+.....\glue -6.13426 minus 1.22685
+.....\rule(*+*)x0.0
+.....\glue 6.13426 minus -1.22685
+.....\OMS/cmsy/m/n/5 ^^@
+.....\OML/cmm/m/it/5 s
+.....\OML/cmm/m/it/5 t
+....\OML/cmm/m/it/7 d
+....\OML/cmm/m/it/7 t
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 20.23616 plus 92.13191
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0 plus 0.0001fil
+..\glue(\baselineskip) 30.0
+..\hbox(0.0+0.0)x307.28978
+{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}

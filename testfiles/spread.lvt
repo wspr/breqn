@@ -1,0 +1,29 @@
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
+\usepackage{breqn}
+\begin{document}
+\TIMO
+
+\START
+\AUTHOR{wspr}
+
+\begin{dmath}
+X = \abc
+\end{dmath}
+
+\begin{dmath}[spread=4mm]
+X = \abc
+\end{dmath}
+
+\begin{dmath}[spread=-2mm]
+X = \abc
+\end{dmath}
+
+
+\showoutput
+\newpage
+
+\END

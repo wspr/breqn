@@ -1,0 +1,24 @@
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
+\usepackage{breqn}
+\begin{document}
+\TIMO
+
+\START
+\AUTHOR{wspr}
+
+\begin{dmath}
+\abc < \abc
+\end{dmath}
+
+\begin{dmath}[indentstep=20mm]
+\abc < \abc
+\end{dmath}
+
+\showoutput
+\newpage
+
+\END

@@ -5,6 +5,7 @@
 module = "breqn"
 
 unpackfiles = {"*.dtx"}
+installfiles = {"*.sty","*.sym"}
 
 unpackopts  = "-interaction=batchmode"
 typesetopts = "-interaction=batchmode"

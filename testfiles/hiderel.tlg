@@ -30,14 +30,14 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x307.28978, glue set 234.2830fil
+..\vbox(483.69687+0.0)x307.28978, glue set 234.28302fil
 ...\write-{}
 ...\glue(\topskip) 10.0
 ...\rule(0.0+0.0)x*
 ...\penalty 10000
 ...\glue 20.38887
 ...\glue(\baselineskip) 4.5
-...\hbox(7.5+2.5)x307.28978, glue set 294.5119fil
+...\hbox(7.5+2.5)x307.28978, glue set 294.51196fil
 ....\glue 0.0 plus 1.0fil
 ....\hbox(7.5+2.5)x12.77782
 .....\OT1/cmr/m/n/10 (
@@ -312,7 +312,7 @@ Completed box being shipped out [1]
 ...\penalty 10000
 ...\glue 13.38887
 ...\glue(\baselineskip) 2.55556
-...\hbox(7.5+2.5)x307.28978, glue set 294.5119fil
+...\hbox(7.5+2.5)x307.28978, glue set 294.51196fil
 ....\glue 0.0 plus 1.0fil
 ....\hbox(7.5+2.5)x12.77782
 .....\OT1/cmr/m/n/10 (
@@ -584,7 +584,7 @@ Completed box being shipped out [1]
 ...\penalty 10000
 ...\glue 13.38887
 ...\glue(\baselineskip) 2.55556
-...\hbox(7.5+2.5)x307.28978, glue set 294.5119fil
+...\hbox(7.5+2.5)x307.28978, glue set 294.51196fil
 ....\glue 0.0 plus 1.0fil
 ....\hbox(7.5+2.5)x12.77782
 .....\OT1/cmr/m/n/10 (
@@ -856,7 +856,7 @@ Completed box being shipped out [1]
 ...\penalty 10000
 ...\glue 6.44444
 ...\glue(\baselineskip) 2.55556
-...\hbox(7.5+2.5)x307.28978, glue set 294.5119fil
+...\hbox(7.5+2.5)x307.28978, glue set 294.51196fil
 ....\glue 0.0 plus 1.0fil
 ....\hbox(7.5+2.5)x12.77782
 .....\OT1/cmr/m/n/10 (
@@ -1120,4 +1120,3 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
-{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}

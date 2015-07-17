@@ -30,7 +30,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x300.48979, glue set 338.7777fil
+..\vbox(483.69687+0.0)x300.48979, glue set 338.77779fil
 ...\write-{}
 ...\glue(\topskip) 0.0
 ...\hbox(14.15291+9.11122)x300.48979, glue set 0.0
@@ -303,4 +303,3 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
-{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}

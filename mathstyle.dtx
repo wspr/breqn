@@ -4,6 +4,7 @@
 % Copyright (C) 2007-2008 by Morten Hoegholm
 % Copyright (C) 2007-2014 by Lars Madsen
 % Copyright (C) 2007-2014 by Will Robertson
+% Copyright (C) 2015 by Will Robertson, Joseph Wright
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -78,6 +79,7 @@ Copyright (C) 1997-2003 by Michael J. Downes
 Copyright (C) 2007-2011 by Morten Hoegholm et al
 Copyright (C) 2007-2014 by Lars Madsen
 Copyright (C) 2007-2014 by Will Robertson
+Copyright (C) 2015 by Will Robertson, Joseph Wright
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -127,7 +129,7 @@ and the derived files
 %<package>\NeedsTeXFormat{LaTeX2e}
 %<package>\ProvidesPackage{mathstyle}
 %<*package|driver>
-  [2014/06/10 v0.90a Tracking mathstyle implicitly]
+  [2015/07/17 v0.90b Tracking mathstyle implicitly]
 %</package|driver>
 %<*driver>
 \documentclass{ltxdoc}
@@ -282,19 +284,32 @@ and the derived files
 % We need to keep track of whether we're in inline or display maths, and the only
 % way to do that is to add a switch inside \verb|\everydisplay|.
 % We act sensibly and preserve any of the previous contents of that token register
-% before adding our own code here.
+% before adding our own code here. As we'll see in a second, Lua\TeX{}
+% provides a native mechanism for this so we don't need any action in that
+% case. (Various other parts of the code also need to have different paths
+% for Lua\TeX{} use.)
 %    \begin{macrocode}
-\everydisplay=\expandafter{\the\everydisplay\chardef\mathstyle\z@}
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname directlua\endcsname\relax
+  \everydisplay=\expandafter{\the\everydisplay\chardef\mathstyle\z@}
+\fi
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\mathstyle}
-% A counter for the math style: 0--display, 1--text, 2--script, 3--scriptscript.
+% A counter for the math style: 0--display, 2--text, 4--script, 6--scriptscript.
 % The logic is that display maths will explicitly
 % set \verb|\mathstyle| to zero (see above), so by default it is set to the
-% `text' maths style.
+% `text' maths style.  With Lua\TeX{} there is a primitive to do the same
+% so it just has to be enabled. Note that in all cases we use Lua\TeX{}-like
+% numbering for the states. 
 %    \begin{macrocode}
-\chardef\mathstyle\@ne
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname directlua\endcsname\relax
+  \chardef\mathstyle\@ne
+\else
+  \directlua{tex.enableprimitives("", {"mathstyle"})}
+\fi
 %    \end{macrocode}
 % \end{macro}
 %
@@ -313,16 +328,20 @@ and the derived files
 \@saveprimitive\atopwithdelims\@@atopwithdelims
 \@saveprimitive\abovewithdelims\@@abovewithdelims
 %    \end{macrocode}
-% Then we redeclare the four style changing primitives.
+% Then we redeclare the four style changing primitives: set the value of
+% \cs{mathstyle} if Lua\TeX{} is not in use.q
 %    \begin{macrocode}
-\DeclareRobustCommand{\displaystyle}{%
-  \@@displaystyle \chardef\mathstyle\z@}
-\DeclareRobustCommand{\textstyle}{%
-  \@@textstyle \chardef\mathstyle\@ne}
-\DeclareRobustCommand{\scriptstyle}{%
-  \@@scriptstyle \chardef\mathstyle\tw@}
-\DeclareRobustCommand{\scriptscriptstyle}{%
-  \@@scriptscriptstyle \chardef\mathstyle\thr@@}
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname directlua\endcsname\relax
+  \DeclareRobustCommand{\displaystyle}{%
+    \@@displaystyle \chardef\mathstyle\z@}
+  \DeclareRobustCommand{\textstyle}{%
+    \@@textstyle \chardef\mathstyle\tw@}
+  \DeclareRobustCommand{\scriptstyle}{%
+    \@@scriptstyle \chardef\mathstyle4 }
+  \DeclareRobustCommand{\scriptscriptstyle}{%
+    \@@scriptscriptstyle \chardef\mathstyle6 }
+\fi
 %    \end{macrocode}
 % First we get the primitive operations. These should have been
 % control sequences in \TeX\ just like operations for begin math, end
@@ -339,13 +358,20 @@ and the derived files
 %    \end{macrocode}
 % If we enter a sub- or superscript the \cs{mathstyle} must be
 % adjusted. Since all is happening in a group, we do not have to worry
-% about resetting.
+% about resetting. We can't tell the difference between cramped and
+% non-cramped styles unless Lua\TeX{} is in use, in which case this command
+% is a no-op.
 %    \begin{macrocode}
-\def\subsupstyle{%
-  \ifnum\mathstyle<\tw@ \chardef\mathstyle\tw@
-  \else \chardef\mathstyle\thr@@   
-  \fi
-}
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname directlua\endcsname\relax
+  \def\subsupstyle{%
+    \ifnum\mathstyle<5 \chardef\mathstyle4 %
+    \else \chardef\mathstyle6 %
+    \fi
+  }
+\else
+  \def\subsupstyle{}
+\fi
 %    \end{macrocode}
 % Provide commands with meaningful names for the two primitives, cf.\
 % \cs{mathrel}.
@@ -366,13 +392,19 @@ and the derived files
 %    \begin{macrocode}
 \def\mathchoice{%
   \relax\ifcase\mathstyle
-    \expandafter\@firstoffour
+    \expandafter\@firstoffour % Display
   \or
-    \expandafter\@secondoffour
+    \expandafter\@firstoffour % Cramped display
   \or
-    \expandafter\@thirdoffour
+    \expandafter\@secondoffour % Text
+  \or
+    \expandafter\@secondoffour % Cramped text
+  \or
+    \expandafter\@thirdoffour % Script
+  \or
+    \expandafter\@thirdoffour % Cramped script
   \else
-    \expandafter\@fourthoffour
+    \expandafter\@fourthoffour % (Cramped) Scriptscript
   \fi
 }
 %    \end{macrocode}
@@ -418,14 +450,24 @@ and the derived files
 % The \cs{fracstyle} command is a switch to go one level down but no
 % further than three.
 %    \begin{macrocode}
-\def\fracstyle{\ifcase\mathstyle
-    \chardef\mathstyle=\@ne
-  \or 
-    \chardef\mathstyle=\tw@
-  \else 
-    \chardef\mathstyle=\thr@@
-  \fi
-}
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname directlua\endcsname\relax
+  \def\fracstyle{%
+    \ifcase\mathstyle
+      \chardef\mathstyle=\@ne
+    \or
+      \chardef\mathstyle=\@ne
+    \or 
+      \chardef\mathstyle=\tw@
+    \or 
+      \chardef\mathstyle=\tw@
+    \else 
+      \chardef\mathstyle=\thr@@
+    \fi
+  }
+\else
+  \def\fracstyle{}
+\fi
 %    \end{macrocode}
 % The \cs{currentmathstyle} checks the value of \cs{mathstyle} and
 % switches to it so it is in essence the opposite of \cs{displaystyle}
@@ -435,10 +477,16 @@ and the derived files
   \ifcase\mathstyle
     \@@displaystyle
   \or
+    \@@displaystyle
+  \or
+    \@@textstyle
+  \or
     \@@textstyle
   \or
     \@@scriptstyle
   \or
+    \@@scriptstyle
+  \else
     \@@scriptscriptstyle
   \fi}
 %    \end{macrocode}

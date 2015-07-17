@@ -20,7 +20,7 @@ Author: wspr
 ! Missing $ inserted.
 <inserted text> 
 $
-l.13 Using ^
+l. ...Using ^
 and _:
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -31,7 +31,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ! Missing $ inserted.
 <inserted text> 
 $
-l.14 
+l. ...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 Completed box being shipped out [1]
@@ -43,10 +43,10 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x307.28978, glue set 370.3221fil
+..\vbox(483.69687+0.0)x307.28978, glue set 370.32219fil
 ...\write-{}
 ...\glue(\topskip) 3.05556
-...\hbox(6.94444+1.94444)x307.28978, glue set 245.3698fil
+...\hbox(6.94444+1.94444)x307.28978, glue set 245.36986fil
 ....\hbox(0.0+0.0)x15.0
 ....\OT1/cmr/m/n/10 U
 ....\OT1/cmr/m/n/10 s
@@ -66,9 +66,9 @@ Completed box being shipped out [1]
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(0.0+0.0)x307.28978, glue set 107.9140fil
+...\hbox(0.0+0.0)x307.28978, glue set 107.91405fil
 ....\hbox(0.0+0.0)x15.0
-....\hbox(0.0+0.0)x184.37573, glue set 92.1878fil
+....\hbox(0.0+0.0)x184.37573, glue set 92.18787fil
 .....\glue 0.0 plus 1.0fil minus 1.0fil
 .....\glue 0.0 plus 1.0fil minus 1.0fil
 ....\penalty 10000
@@ -156,7 +156,7 @@ Completed box being shipped out [1]
 ...\glue(\belowdisplayskip) 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\lineskip) 1.0
-...\hbox(6.94444+0.0)x307.28978, glue set 259.7341fil
+...\hbox(6.94444+0.0)x307.28978, glue set 259.73418fil
 ....\hbox(0.0+0.0)x15.0
 ....\OT1/cmr/m/n/10 N
 ....\OT1/cmr/m/n/10 e
@@ -207,4 +207,3 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
-{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}

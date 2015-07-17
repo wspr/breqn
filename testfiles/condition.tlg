@@ -30,7 +30,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x307.28978, glue set 253.2556fil
+..\vbox(483.69687+0.0)x307.28978, glue set 253.25563fil
 ...\write-{}
 ...\glue(\topskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0
@@ -60,7 +60,7 @@ Completed box being shipped out [1]
 .....\hbox(13.20952+6.85951)x8.11526
 ......\hbox(0.0+0.0)x1.2, shifted -2.5
 ......\vbox(13.20952+6.85951)x5.71527
-.......\hbox(6.44444+0.0)x5.71527, glue set 0.3576fil
+.......\hbox(6.44444+0.0)x5.71527, glue set 0.35764fil
 ........\glue 0.0 plus 1.0fil minus 1.0fil
 ........\OT1/cmr/m/n/10 1
 ........\glue 0.0 plus 1.0fil minus 1.0fil
@@ -133,7 +133,7 @@ Completed box being shipped out [1]
 .....\hbox(13.20952+6.85951)x8.11526
 ......\hbox(0.0+0.0)x1.2, shifted -2.5
 ......\vbox(13.20952+6.85951)x5.71527
-.......\hbox(6.44444+0.0)x5.71527, glue set 0.3576fil
+.......\hbox(6.44444+0.0)x5.71527, glue set 0.35764fil
 ........\glue 0.0 plus 1.0fil minus 1.0fil
 ........\OT1/cmr/m/n/10 1
 ........\glue 0.0 plus 1.0fil minus 1.0fil
@@ -206,7 +206,7 @@ Completed box being shipped out [1]
 .....\hbox(13.20952+6.85951)x8.11526
 ......\hbox(0.0+0.0)x1.2, shifted -2.5
 ......\vbox(13.20952+6.85951)x5.71527
-.......\hbox(6.44444+0.0)x5.71527, glue set 0.3576fil
+.......\hbox(6.44444+0.0)x5.71527, glue set 0.35764fil
 ........\glue 0.0 plus 1.0fil minus 1.0fil
 ........\OT1/cmr/m/n/10 1
 ........\glue 0.0 plus 1.0fil minus 1.0fil
@@ -278,7 +278,7 @@ Completed box being shipped out [1]
 .....\hbox(13.20952+6.85951)x8.11526
 ......\hbox(0.0+0.0)x1.2, shifted -2.5
 ......\vbox(13.20952+6.85951)x5.71527
-.......\hbox(6.44444+0.0)x5.71527, glue set 0.3576fil
+.......\hbox(6.44444+0.0)x5.71527, glue set 0.35764fil
 ........\glue 0.0 plus 1.0fil minus 1.0fil
 ........\OT1/cmr/m/n/10 1
 ........\glue 0.0 plus 1.0fil minus 1.0fil
@@ -347,7 +347,7 @@ Completed box being shipped out [1]
 .....\hbox(13.20952+6.85951)x8.11526
 ......\hbox(0.0+0.0)x1.2, shifted -2.5
 ......\vbox(13.20952+6.85951)x5.71527
-.......\hbox(6.44444+0.0)x5.71527, glue set 0.3576fil
+.......\hbox(6.44444+0.0)x5.71527, glue set 0.35764fil
 ........\glue 0.0 plus 1.0fil minus 1.0fil
 ........\OT1/cmr/m/n/10 1
 ........\glue 0.0 plus 1.0fil minus 1.0fil
@@ -416,7 +416,7 @@ Completed box being shipped out [1]
 .....\hbox(13.20952+6.85951)x8.11526
 ......\hbox(0.0+0.0)x1.2, shifted -2.5
 ......\vbox(13.20952+6.85951)x5.71527
-.......\hbox(6.44444+0.0)x5.71527, glue set 0.3576fil
+.......\hbox(6.44444+0.0)x5.71527, glue set 0.35764fil
 ........\glue 0.0 plus 1.0fil minus 1.0fil
 ........\OT1/cmr/m/n/10 1
 ........\glue 0.0 plus 1.0fil minus 1.0fil
@@ -454,4 +454,3 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
-{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}

@@ -1,0 +1,268 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+Author: wspr
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 17.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 17.
+Completed box being shipped out [1]
+\vbox(498.33238+0.0)x291.9253, direction TLT
+.\glue -52.36449
+.\vbox(550.69687+0.0)x307.28978, shifted -15.36449, direction TLT
+..\vbox(12.0+0.0)x307.28978, glue set 12.0fil, direction TLT
+...\glue 0.0 plus 1.0fil
+...\hbox(0.0+0.0)x307.28978, direction TLT
+..\glue 25.0
+..\glue(\lineskip) 0.0
+..\vbox(483.69687+0.0)x307.28978, glue set 336.5094fil, direction TLT
+...\write-{}
+...\glue(\topskip) 3.16669
+...\hbox(6.83331+1.94444)x307.28978, glue set 271.87305fil, direction TLT
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x15.0, direction TLT
+....\OT1/cmr/m/n/10 B
+....\OT1/cmr/m/n/10 u
+....\OT1/cmr/m/n/10 g
+....\OT1/cmr/m/n/10 :
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\glue 0.0 plus 3.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(7.5+2.5)x307.28978, glue set 1.0, direction TLT
+....\glue(\leftskip) 117.8116
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\mathon
+....\OT1/cmr/m/n/10 1
+....\OML/cmm/m/it/10 =
+....\penalty 10000
+....\OT1/cmr/m/n/10 2
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 1
+....\OML/cmm/m/it/10 =
+....\penalty 10000
+....\OT1/cmr/m/n/10 2
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 1
+....\OML/cmm/m/it/10 =
+....\penalty 10000
+....\OT1/cmr/m/n/10 2
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 117.8116
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\baselineskip) 2.55556
+...\hbox(6.94444+0.0)x307.28978, glue set 265.87305fil, direction TLT
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x15.0, direction TLT
+....\OT1/cmr/m/n/10 W
+....\kern-0.83334
+....\OT1/cmr/m/n/10 o
+....\OT1/cmr/m/n/10 r
+....\OT1/cmr/m/n/10 k
+....\OT1/cmr/m/n/10 :
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\glue 0.0 plus 3.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(13.20952+6.85951)x307.28978, glue set 1.0, direction TLT
+....\glue(\leftskip) 135.77824
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\mathon
+....\hbox(13.20952+6.85951)x7.40001, direction TLT
+.....\hbox(13.20952+6.85951)x7.40001, direction TLT
+......\hbox(13.20952+6.85951)x7.40001, direction TLT
+.......\hbox(0.0+0.0)x1.2, shifted -2.5, direction TLT
+.......\vbox(13.20952+6.85951)x5.00002, direction TLT
+........\hbox(6.44444+0.0)x5.00002, direction TLT
+.........\OT1/cmr/m/n/10 1
+........\kern4.06508
+........\rule(0.39998+0.0)x*
+........\kern2.71507
+........\hbox(6.44444+0.0)x5.00002, direction TLT
+.........\OT1/cmr/m/n/10 2
+.......\hbox(0.0+0.0)x1.2, shifted -2.5, direction TLT
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 1
+....\OML/cmm/m/it/10 =
+....\penalty 10000
+....\OT1/cmr/m/n/10 2
+....\penalty -10000
+....\glue(\rightskip) 0.0 plus 135.77824
+...\penalty 30000
+...\glue(\lineskip) 3.0 plus 2.0
+...\hbox(7.5+2.5)x297.11206, glue set 1.0, shifted 10.17772, direction TLT
+....\glue(\leftskip) 135.77824
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 1
+....\OML/cmm/m/it/10 =
+....\penalty 10000
+....\OT1/cmr/m/n/10 2
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 135.77824
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\baselineskip) 2.55556
+...\hbox(6.94444+0.0)x307.28978, glue set 291.17862fil, direction TLT
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\OT1/cmr/m/n/10 a
+....\OT1/cmr/m/n/10 n
+....\OT1/cmr/m/n/10 d
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\glue 0.0 plus 3.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(13.20952+6.85951)x307.28978, glue set 1.0, direction TLT
+....\glue(\leftskip) 139.57826
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\whatsit
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\mathon
+....\hbox(13.20952+6.85951)x7.40001, direction TLT
+.....\hbox(13.20952+6.85951)x7.40001, direction TLT
+......\hbox(13.20952+6.85951)x7.40001, direction TLT
+.......\hbox(0.0+0.0)x1.2, shifted -2.5, direction TLT
+.......\vbox(13.20952+6.85951)x5.00002, direction TLT
+........\hbox(6.44444+0.0)x5.00002, direction TLT
+.........\OT1/cmr/m/n/10 1
+........\kern4.06508
+........\rule(0.39998+0.0)x*
+........\kern2.71507
+........\hbox(6.44444+0.0)x5.00002, direction TLT
+.........\OT1/cmr/m/n/10 2
+.......\hbox(0.0+0.0)x1.2, shifted -2.5, direction TLT
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\hbox(13.20952+6.85951)x7.40001, direction TLT
+.....\hbox(13.20952+6.85951)x7.40001, direction TLT
+......\hbox(0.0+0.0)x1.2, shifted -2.5, direction TLT
+......\vbox(13.20952+6.85951)x5.00002, direction TLT
+.......\hbox(6.44444+0.0)x5.00002, direction TLT
+........\OT1/cmr/m/n/10 1
+.......\kern4.06508
+.......\rule(0.39998+0.0)x*
+.......\kern2.71507
+.......\hbox(6.44444+0.0)x5.00002, direction TLT
+........\OT1/cmr/m/n/10 2
+......\hbox(0.0+0.0)x1.2, shifted -2.5, direction TLT
+....\penalty -10000
+....\glue(\rightskip) 0.0 plus 139.57826
+...\penalty 30000
+...\glue(\lineskip) 3.0 plus 2.0
+...\hbox(13.20952+6.85951)x297.11206, glue set 1.0, shifted 10.17772, direction 
+TLT
+....\glue(\leftskip) 139.57826
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\hbox(13.20952+6.85951)x7.40001, direction TLT
+.....\hbox(13.20952+6.85951)x7.40001, direction TLT
+......\hbox(0.0+0.0)x1.2, shifted -2.5, direction TLT
+......\vbox(13.20952+6.85951)x5.00002, direction TLT
+.......\hbox(6.44444+0.0)x5.00002, direction TLT
+........\OT1/cmr/m/n/10 1
+.......\kern4.06508
+.......\rule(0.39998+0.0)x*
+.......\kern2.71507
+.......\hbox(6.44444+0.0)x5.00002, direction TLT
+........\OT1/cmr/m/n/10 2
+......\hbox(0.0+0.0)x1.2, shifted -2.5, direction TLT
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 139.57826
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0 plus 0.0001fil
+..\glue(\baselineskip) 30.0
+..\hbox(0.0+0.0)x307.28978, direction TLT

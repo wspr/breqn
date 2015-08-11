@@ -69,8 +69,7 @@
 %<*install>
 \input docstrip.tex
 \Msg{************************************************************************}
-\Msg{* Installation}
-\Msg{* Package: flexisym 2014/06/10 v0.97c Flexisym (MH)}
+\Msg{* Installation: flexisym}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -133,8 +132,7 @@ and the derived files
 %</ignore>
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{flexisym.drv}%
-  [2014/06/10 v0.97c flexisym (MH)]
+\ProvidesFile{flexisym.drv}[2015/08/11 v0.98d flexisym (MH)]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -158,8 +156,9 @@ and the derived files
 %</driver>
 % \fi
 %
+% \GetFileInfo{flexisym.drv}
 % \title{The \textsf{flexisym} package}
-% \date{2008/08/08 v0.97a}
+% \date{\filedate\space\fileversion}
 % \author{Author: Morten H\o gholm\\ Inactively maintained by Will Robertson\\ Feedback: \texttt{https://github.com/wspr/breqn/issues}}
 %
 % \maketitle
@@ -176,7 +175,7 @@ and the derived files
 %    \begin{macrocode}
 %<*package>
 \RequirePackage{expl3}[2009/08/05]
-\ProvidesExplPackage{flexisym}{2013/03/16}{0.97c}{Make math characters macros}
+\ProvidesExplPackage{flexisym}{2015/08/11}{0.98d}{Make math characters macros}
 
 \edef\do{%
   \noexpand\AtEndOfPackage{%

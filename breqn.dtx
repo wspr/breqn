@@ -64,8 +64,7 @@
 %<*install>
 \input docstrip.tex
 \Msg{************************************************************************}
-\Msg{* Installation}
-\Msg{* Package: breqn 2014/06/10 v0.98c Breqn}
+\Msg{* Installation: breqn}
 \Msg{************************************************************************}
 
 \keepsilent
@@ -123,8 +122,7 @@ and the derived files
 %</ignore>
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{breqn.drv}%
-  [2014/06/10 v0.98c breqn]
+\ProvidesFile{breqn.drv}[2015/08/11 v0.98d breqn]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -233,8 +231,10 @@ and the derived files
 % \fi
 %
 %
+% \GetFileInfo{breqn.drv}
+% \let\pkgdate\filedate\let\pkgversion\fileversion
 % \title{The \pkg{breqn} package}
-% \date{2014/06/10 v0.98c}
+% \date{\pkg{breqn} bundle: \pkgdate\space\pkgversion}
 % \author{Authors: Michael J. Downes, Morten H\o gholm\\ Inactively maintained by Will Robertson\\ Feedback: \texttt{https://github.com/wspr/breqn/issues}}
 %
 % \maketitle
@@ -1465,7 +1465,7 @@ and the derived files
 % Declare package name and date.   
 %    \begin{macrocode}
 \RequirePackage{expl3}[2009/08/05]
-\ProvidesExplPackage{breqn}{2012/05/10}{0.98b}{Breaking equations}
+\ProvidesExplPackage{breqn}{2015/08/11}{0.98d}{Breaking equations}
 %    \end{macrocode}
 %   Regrettably, \pkg{breqn} is internally a mess, so we have to take
 %   some odd steps.

@@ -14,6 +14,8 @@ excludefiles = {"*/breqn-thesis.pdf",
                 "*/breqn-abbr-test.pdf",
                 "*/eqbreaks.pdf"}
 
+packtdszip = true
+
 kpse.set_program_name("kpsewhich")
 buildscript = kpse.lookup("l3build.lua")
 dofile(buildscript)

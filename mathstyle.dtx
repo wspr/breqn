@@ -386,6 +386,8 @@ and the derived files
 %    \end{macrocode}
 %
 % \begin{macro}{\mathchoice}
+% \changes{v0.98e}{2016/04/09}{Lua\TeX{} primitive \cs{mathstyle} needs
+%   termination}
 % \cs{mathchoice} is now just a switch. Note that this redefinition
 % does not allow the arbitrary \meta{filler} of the \TeX\
 % primitive. Very rarely used anyway.
@@ -432,6 +434,8 @@ and the derived files
 %    \end{macrocode}
 % \changes{v0.90}{2011/08/03}{\cs{fracstyle} must be called \emph{after}
 %   changing to the required style}
+% \changes{v0.98e}{2016/04/09}{Lua\TeX{} primitive \cs{mathstyle} needs
+%   termination}
 % \end{macro}
 %
 %    \begin{macrocode}
@@ -447,6 +451,7 @@ and the derived files
 \renewcommand{\dbinom}{\genfrac\displaystyle(){0pt}}
 \renewcommand{\tbinom}{\genfrac\textstyle(){0pt}}
 %    \end{macrocode}
+
 % The \cs{fracstyle} command is a switch to go one level down but no
 % further than three.
 %    \begin{macrocode}
@@ -469,6 +474,8 @@ and the derived files
   \def\fracstyle{}
 \fi
 %    \end{macrocode}
+% \changes{v0.98e}{2016/04/09}{Lua\TeX{} primitive \cs{mathstyle} needs
+%   termination}
 % The \cs{currentmathstyle} checks the value of \cs{mathstyle} and
 % switches to it so it is in essence the opposite of \cs{displaystyle}
 % and friends.

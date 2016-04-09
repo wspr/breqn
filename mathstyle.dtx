@@ -391,7 +391,7 @@ and the derived files
 % primitive. Very rarely used anyway.
 %    \begin{macrocode}
 \def\mathchoice{%
-  \relax\ifcase\mathstyle
+  \relax\ifcase\numexpr\mathstyle\relax
     \expandafter\@firstoffour % Display
   \or
     \expandafter\@firstoffour % Cramped display
@@ -453,7 +453,7 @@ and the derived files
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname directlua\endcsname\relax
   \def\fracstyle{%
-    \ifcase\mathstyle
+    \ifcase\numexpr\mathstyle\relax
       \chardef\mathstyle=\@ne
     \or
       \chardef\mathstyle=\@ne
@@ -474,7 +474,7 @@ and the derived files
 % and friends.
 %    \begin{macrocode}
 \def\currentmathstyle{%
-  \ifcase\mathstyle
+  \ifcase\numexpr\mathstyle\relax
     \@@displaystyle
   \or
     \@@displaystyle

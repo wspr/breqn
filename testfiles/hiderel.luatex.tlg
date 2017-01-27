@@ -1,26 +1,6 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
-%% \CharacterTable
-%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%%   Digits        \0\1\2\3\4\5\6\7\8\9
-%%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%%   Dollar        \$     Percent       \%     Ampersand     \&
-%%   Acute accent  \'     Left paren    \(     Right paren   \)
-%%   Asterisk      \*     Plus          \+     Comma         \,
-%%   Minus         \-     Point         \.     Solidus       \/
-%%   Colon         \:     Semicolon     \;     Less than     \<
-%%   Equals        \=     Greater than  \>     Question mark \?
-%%   Commercial at \@     Left bracket  \[     Backslash     \\
-%%   Right bracket \]     Circumflex    \^     Underscore    \_
-%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%%   Right brace   \}     Tilde         \~}
-%%
 Author: wspr
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 13.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 13.
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253, direction TLT
 .\glue -52.36449
@@ -50,12 +30,12 @@ Completed box being shipped out [1]
 ...\glue(\parskip) 0.0 plus 1.0
 ...\hbox(6.83331+0.0)x307.28978, glue set 0.99902, direction TLT
 ....\glue(\leftskip) 27.66034
-....\whatsit
+....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
 .....\localrightbox=null
-....\whatsit
+....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
@@ -83,8 +63,7 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 22.77782 plus 228.15588
 ...\penalty 10000
 ...\glue(\baselineskip) 7.05556 plus 2.0
-...\hbox(6.94444+1.94444)x297.01205, glue set 0.0214, shifted 10.27773, directio
-n TLT
+...\hbox(6.94444+1.94444)x297.01205, glue set 0.0214, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
@@ -202,8 +181,7 @@ n TLT
 ....\glue(\rightskip) 22.77782 plus 228.15588
 ...\penalty 20000
 ...\glue(\baselineskip) 5.90477 plus 2.0
-...\hbox(6.15079+1.94444)x297.01205, glue set 0.1092, shifted 10.27773, directio
-n TLT
+...\hbox(6.15079+1.94444)x297.01205, glue set 0.1092, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
@@ -337,12 +315,12 @@ n TLT
 ...\glue(\parskip) 0.0 plus 1.0
 ...\hbox(6.83331+0.0)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 27.66034
-....\whatsit
+....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
 .....\localrightbox=null
-....\whatsit
+....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
@@ -367,8 +345,7 @@ n TLT
 ....\glue(\rightskip) 22.77782 plus 206.73586
 ...\penalty 20000
 ...\glue(\baselineskip) 7.05556 plus 2.0
-...\hbox(6.94444+1.94444)x297.01205, glue set 0.02362, shifted 10.27773, directi
-on TLT
+...\hbox(6.94444+1.94444)x297.01205, glue set 0.02362, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
@@ -486,8 +463,7 @@ on TLT
 ....\glue(\rightskip) 22.77782 plus 206.73586
 ...\penalty 20000
 ...\glue(\baselineskip) 5.90477 plus 2.0
-...\hbox(6.15079+1.94444)x297.01205, glue set 0.12051, shifted 10.27773, directi
-on TLT
+...\hbox(6.15079+1.94444)x297.01205, glue set 0.12051, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
@@ -621,12 +597,12 @@ on TLT
 ...\glue(\parskip) 0.0 plus 1.0
 ...\hbox(6.83331+0.0)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 11.34715
-....\whatsit
+....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
 .....\localrightbox=null
-....\whatsit
+....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
@@ -644,8 +620,7 @@ on TLT
 ....\glue(\rightskip) 22.77782 plus 244.24475
 ...\penalty 20000
 ...\glue(\baselineskip) 7.05556 plus 2.0
-...\hbox(6.94444+1.94444)x297.01205, glue set 0.0, shifted 10.27773, direction T
-LT
+...\hbox(6.94444+1.94444)x297.01205, glue set 0.0, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 11.34715
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
@@ -770,8 +745,7 @@ LT
 ....\glue(\rightskip) 22.77782 plus 244.24475
 ...\penalty 20000
 ...\glue(\baselineskip) 5.90477 plus 2.0
-...\hbox(6.15079+1.94444)x297.01205, glue set 0.1688, shifted 10.27773, directio
-n TLT
+...\hbox(6.15079+1.94444)x297.01205, glue set 0.1688, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 11.34715
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
@@ -905,12 +879,12 @@ n TLT
 ...\glue(\parskip) 0.0 plus 1.0
 ...\hbox(6.94444+1.94444)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 13.3488
-....\whatsit
+....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
 .....\localrightbox=null
-....\whatsit
+....\localpar
 .....\localinterlinepenalty=0
 .....\localbrokenpenalty=0
 .....\localleftbox=null
@@ -1034,8 +1008,7 @@ n TLT
 ....\glue(\rightskip) 22.77782 plus 15.80508
 ...\penalty 30000
 ...\glue(\baselineskip) 5.90477 plus 2.0
-...\hbox(6.15079+1.94444)x297.01205, glue set 0.0, shifted 10.27773, direction T
-LT
+...\hbox(6.15079+1.94444)x297.01205, glue set 0.0, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 13.3488
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663

@@ -1,24 +1,25 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Author: wspr
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
 Completed box being shipped out [1]
-\vbox(498.33238+0.0)x291.9253
+\vbox(498.33238+0.0)x291.9253, direction TLT
 .\glue -52.36449
-.\vbox(550.69687+0.0)x307.28978, shifted -15.36449
-..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
+.\vbox(550.69687+0.0)x307.28978, shifted -15.36449, direction TLT
+..\vbox(12.0+0.0)x307.28978, glue set 12.0fil, direction TLT
 ...\glue 0.0 plus 1.0fil
-...\hbox(0.0+0.0)x307.28978
+...\hbox(0.0+0.0)x307.28978, direction TLT
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x307.28978, glue set 416.37462fil
+..\vbox(483.69687+0.0)x307.28978, glue set 416.37463fil, direction TLT
 ...\write-{}
 ...\glue(\topskip) 3.16669
-...\hbox(6.83331+1.94444)x307.28978, glue set 271.87305fil
-....\hbox(0.0+0.0)x15.0
+...\hbox(6.83331+1.94444)x307.28978, glue set 271.87305fil, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(0.0+0.0)x15.0, direction TLT
 ....\OT1/cmr/m/n/10 B
 ....\OT1/cmr/m/n/10 u
 ....\OT1/cmr/m/n/10 g
@@ -33,19 +34,29 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(7.5+2.5)x307.28978, glue set 1.0
+...\hbox(7.5+2.5)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 14.16669
-....\hbox(7.5+2.5)x0.0, glue set - 293.1231fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(7.5+2.5)x0.0, glue set - 293.12311fil, direction TLT
 .....\kern -14.16669
 .....\kern 307.28978
 .....\kern -17.77783
-.....\hbox(7.5+2.5)x17.77783
+.....\hbox(7.5+2.5)x17.77783, direction TLT
 ......\OT1/cmr/m/n/10 (
 ......\OT1/cmr/m/n/10 1
 ......\OT1/cmr/m/n/10 a
 ......\kern 0.0
 ......\OT1/cmr/m/n/10 )
 .....\glue 0.0 plus 1.0fil minus 1.0fil
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
 ....\mathon
 ....\OML/cmm/m/it/10 a
 ....\penalty 9999
@@ -64,9 +75,9 @@ Completed box being shipped out [1]
 ...\penalty 10000
 ...\glue -1.11111
 ...\glue(\baselineskip) 2.0
-...\hbox(7.5+2.5)x307.28978, glue set 288.95639fil
+...\hbox(7.5+2.5)x307.28978, glue set 288.95639fil, direction TLT
 ....\glue 0.0 plus 1.0fil
-....\hbox(7.5+2.5)x18.33339
+....\hbox(7.5+2.5)x18.33339, direction TLT
 .....\OT1/cmr/m/n/10 (
 .....\OT1/cmr/m/n/10 1
 .....\OT1/cmr/m/n/10 b
@@ -76,10 +87,20 @@ Completed box being shipped out [1]
 ...\kern -6.38889
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(6.94444+0.83333)x307.28978, glue set - 0.52954
+...\hbox(6.94444+0.83333)x307.28978, glue set - 0.52954, direction TLT
 ....\glue(\leftskip) 14.16669
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
 ....\mathon
-....\hbox(4.30554+0.0)x5.28589
+....\hbox(4.30554+0.0)x5.28589, direction TLT
 .....\OML/cmm/m/it/10 a
 ....\penalty 9999
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
@@ -239,8 +260,13 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\baselineskip) 8.63293
-...\hbox(1.42262+0.0)x307.28978
-....\hbox(1.42262+0.0)x307.28978
+...\hbox(1.42262+0.0)x307.28978, direction TLT
+....\localpar
+.....\localinterlinepenalty=0
+.....\localbrokenpenalty=0
+.....\localleftbox=null
+.....\localrightbox=null
+....\hbox(1.42262+0.0)x307.28978, direction TLT
 .....\rule(1.42262+0.0)x307.28978
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
@@ -249,4 +275,4 @@ Completed box being shipped out [1]
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
-..\hbox(0.0+0.0)x307.28978
+..\hbox(0.0+0.0)x307.28978, direction TLT

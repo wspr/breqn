@@ -4,9 +4,9 @@ This is the latest repository for the breqn package, originally developed by Mic
 
 The version of the package here will be used as the source for current CTAN releases.
 
-Internal updates are planned but no major development is expected. Contributors welcome --- if you dare.
+Internal updates are planned but no major development is expected. Contributors welcome — if you dare.
 
-Feedback should be directed to the Issue Tracker at:  
+Feedback should be directed to the Issue Tracker at:
   <https://github.com/wspr/breqn/issues>
 
 ## Installation

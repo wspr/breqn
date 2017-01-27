@@ -4,6 +4,7 @@
 % Copyright (C) 2007-2008 by Morten Hoegholm
 % Copyright (C) 2007-2014 by Lars Madsen
 % Copyright (C) 2007-2014 by Will Robertson
+% Copyright (C) 2010-2017 by Joseph Wright
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -77,7 +78,8 @@ This is a generated file.
 Copyright (C) 1997-2003 by Michael J. Downes
 Copyright (C) 2007-2008 by Morten Hoegholm
 Copyright (C) 2007-2014 by Lars Madsen
-Copyright (C) 2007-2014 by Will Robertson
+Copyright (C) 2007-2017 by Will Robertson
+Copyright (C) 2010-2017 by Joseph Wright
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -122,7 +124,7 @@ and the derived files
 %</ignore>
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{breqn.drv}[2015/08/11 v0.98d breqn]
+\ProvidesFile{breqn.drv}[2017/01/27 0.98e breqn]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -147,7 +149,7 @@ and the derived files
 \makeatletter
 
 {\catcode`\%=12
- \long\gdef\@gobble@percent@space#1{\ifx 
+ \long\gdef\@gobble@percent@space#1{\ifx
    #1%\expandafter\@gobble\else\expandafter#1\fi}}
 
 
@@ -157,7 +159,7 @@ and the derived files
 \newcounter{xio}
 \newenvironment{xio}{% example input and output
   \par\addvspace\bigskipamount
-  \hbox{\itshape 
+  \hbox{\itshape
     \refstepcounter{xio}\kern-\p@ Example \thexio}\@nobreaktrue
   \immediate\openout\tmp@out\jobname.tmp \relax
   \begingroup
@@ -240,12 +242,12 @@ and the derived files
 % \maketitle
 % \begin{abstract}
 %   The \pkg{breqn} package facilitates automatic line-breaking of
-%   displayed math expressions. 
+%   displayed math expressions.
 % \end{abstract}
 %
-% 
+%
 % \tableofcontents
-% 
+%
 %
 % \part{User's guide}
 %
@@ -275,8 +277,8 @@ and the derived files
 % The recommended way of loading the \pkg{breqn} package is to load it
 % \emph{after} other packages dealing with math, \ie, after
 % \pkg{amsmath}, \pkg{amssymb}, or packages such as \pkg{mathpazo} or
-% \pkg{mathptmx}. 
-% 
+% \pkg{mathptmx}.
+%
 % The \pkg{flexisym} package (described in section \vref{flexisym}) is
 % required by \pkg{breqn} and ensures the math symbols are set up
 % correctly. By default \pkg{breqn} loads it with support for Computer
@@ -424,7 +426,7 @@ and the derived files
 %
 % Not that this doesn't introduce new and interesting problems of its
 % own---for example, you don't want to put usepackage statements
-% after flexisym for any package that refers to, e.g., \verb'^^J' or 
+% after flexisym for any package that refers to, e.g., \verb'^^J' or
 % \verb'^^M'
 % internally (too bad that the \LaTeX\ package loading code does not
 % include automatic defenses to ensure normal catcodes in the interior of
@@ -445,7 +447,7 @@ and the derived files
 % illustrations, and I have undoubtedly overlooked more than a few errors.
 %
 % \item[group alignment] The algorithm for doing alignment
-% of mathrel symbols across equations in a \env{dgroup} environment 
+% of mathrel symbols across equations in a \env{dgroup} environment
 % needs work. Currently the standard and \opt{noalign} alternatives
 % produce the same output.
 %
@@ -495,7 +497,7 @@ and the derived files
 % \begin{verbatim}
 % \generate{\file{breqn.sty}{\from{breqn.dtx}{package,trace}}}
 % \end{verbatim}
-% 
+%
 %
 % \section{Environments and commands}
 % \subsection{Environments}
@@ -564,7 +566,7 @@ and the derived files
 %
 % \item[\env{dsuspend}] Suspend the current display in order to print
 %   some text, without loss of the alignment. There is also a command
-%   form of the same thing, \cs{intertext}. 
+%   form of the same thing, \cs{intertext}.
 % \end{description}
 %
 % \subsection{Commands}
@@ -658,8 +660,8 @@ and the derived files
 % \end{verbatim}
 %
 % Use of the normal \cs{label} command instead of the \opt{label} option
-% works, I think, most of the time (untested). \opt{labelprefix} prepends 
-% its argument to the label (only useful as a global option, really), 
+% works, I think, most of the time (untested). \opt{labelprefix} prepends
+% its argument to the label (only useful as a global option, really),
 % and must be called before \opt{label}.
 %
 % \changes{v0.98b}{2010/08/27}{replaced relindent with indentstep}
@@ -901,39 +903,39 @@ and the derived files
 %when the height fluctuates due to stretching or shrinking of the page.
 %
 %
-%Consider the following equation: 
+%Consider the following equation:
 %\begin{dmath}[number={3.15}]
-%  N_{0} \simeq \left( \frac{\nu}{\lVert u\rVert_{H^{i}}} \right) 
+%  N_{0} \simeq \left( \frac{\nu}{\lVert u\rVert_{H^{i}}} \right)
 %  \lvert I\rvert^{-1/2}
 %\end{dmath}
-%It will have only one line, if the column width is not too narrow. 
+%It will have only one line, if the column width is not too narrow.
 %
-%Scrutinizing the vertical list will shed light on some of the basic properties 
-%shared by all breqn equations. After that we will look at what would happen if 
-%two or more lines were needed. The numbers added on the left in the following 
-%\cs{showlists} output mark the points of interest. 
+%Scrutinizing the vertical list will shed light on some of the basic properties
+%shared by all breqn equations. After that we will look at what would happen if
+%two or more lines were needed. The numbers added on the left in the following
+%\cs{showlists} output mark the points of interest.
 %\begin{verbatim}
-%[1] \penalty 10000 
-%    \glue(\abovedisplayskip) 0.0 
-%    \penalty 10000 
-%    \glue(\belowdisplayskip) 0.0 
-%[2] \glue 4.0 plus 4.0 
-%    \glue(\lineskip) 1.0 
-%[3] \vbox(16.53902+0.0)x0.0, glue set 16.53902fil 
-%    .\glue 0.0 plus 1.0fil minus 1.0fil 
-%    \penalty 10000 
-%[4] \glue -8.51945 
-%[5] \hbox(7.5+2.5)x25.55563 
-%    .\OT1/cmr/m/n/10 ( 
-%    .\OT1/cmr/m/n/10 3 
-%    .\OT1/cmr/m/n/10 . 
-%    .\OT1/cmr/m/n/10 1 
-%    .\OT1/cmr/m/n/10 5 
-%    .\kern 0.0 
-%    .\OT1/cmr/m/n/10 ) 
-%    \penalty 10000 
-%[6] \glue(\parskip) -18.01956 
-%[7] \hbox(16.53902+9.50012)x360.0, glue set 1.78647 
+%[1] \penalty 10000
+%    \glue(\abovedisplayskip) 0.0
+%    \penalty 10000
+%    \glue(\belowdisplayskip) 0.0
+%[2] \glue 4.0 plus 4.0
+%    \glue(\lineskip) 1.0
+%[3] \vbox(16.53902+0.0)x0.0, glue set 16.53902fil
+%    .\glue 0.0 plus 1.0fil minus 1.0fil
+%    \penalty 10000
+%[4] \glue -8.51945
+%[5] \hbox(7.5+2.5)x25.55563
+%    .\OT1/cmr/m/n/10 (
+%    .\OT1/cmr/m/n/10 3
+%    .\OT1/cmr/m/n/10 .
+%    .\OT1/cmr/m/n/10 1
+%    .\OT1/cmr/m/n/10 5
+%    .\kern 0.0
+%    .\OT1/cmr/m/n/10 )
+%    \penalty 10000
+%[6] \glue(\parskip) -18.01956
+%[7] \hbox(16.53902+9.50012)x360.0, glue set 1.78647
 %\end{verbatim}
 %\begin{enumerate}
 %\item These four lines are a hidden display structure from \TeX's
@@ -969,7 +971,7 @@ and the derived files
 %
 %\item The hbox containing the equation number.
 %
-%\item Backspace to bring the equation body to the right starting point. We use 
+%\item Backspace to bring the equation body to the right starting point. We use
 %  \cs{parskip} to put this glue in place because we're going to get a
 %  parskip node here in any case when we add the equation body with (in
 %  essence). If we didn't do this we'd get two glue nodes instead of
@@ -986,34 +988,34 @@ and the derived files
 %standard \LaTeX\ would look like this, if the same values of
 %columnwidth and abovedisplayskip are used:
 %\begin{verbatim}
-%[1] \penalty 10000 
-%[2] \glue(\abovedisplayskip) 4.0 plus 4.0 
-%    \glue(\lineskip) 1.0 
-%    \hbox(16.53902+9.50012)x232.94844 
-%[3] .\hbox(7.5+2.5)x25.55563 
-%    ..\hbox(7.5+2.5)x25.55563 
-%    ...\OT1/cmr/m/n/10 ( 
-%    ...\OT1/cmr/m/n/10 3 
-%    ...\OT1/cmr/m/n/10 . 
-%    ...\OT1/cmr/m/n/10 1 
-%    ...\OT1/cmr/m/n/10 5 
-%    ...\kern 0.0 
-%    ...\OT1/cmr/m/n/10 ) 
-%    .\kern101.49591 
-%[4] .\hbox(16.53902+9.50012)x105.8969 
-%    ... 
-%[5] \penalty 0 
-%[6] \glue(\belowdisplayskip) 4.0 plus 4.0 
-%    \glue(\lineskip) 1.0 
+%[1] \penalty 10000
+%[2] \glue(\abovedisplayskip) 4.0 plus 4.0
+%    \glue(\lineskip) 1.0
+%    \hbox(16.53902+9.50012)x232.94844
+%[3] .\hbox(7.5+2.5)x25.55563
+%    ..\hbox(7.5+2.5)x25.55563
+%    ...\OT1/cmr/m/n/10 (
+%    ...\OT1/cmr/m/n/10 3
+%    ...\OT1/cmr/m/n/10 .
+%    ...\OT1/cmr/m/n/10 1
+%    ...\OT1/cmr/m/n/10 5
+%    ...\kern 0.0
+%    ...\OT1/cmr/m/n/10 )
+%    .\kern101.49591
+%[4] .\hbox(16.53902+9.50012)x105.8969
+%    ...
+%[5] \penalty 0
+%[6] \glue(\belowdisplayskip) 4.0 plus 4.0
+%    \glue(\lineskip) 1.0
 %    \hbox(6.94444+1.94444)x345.0, glue set 62.1106fil
 %\end{verbatim}
 %
 %\begin{enumerate}
 %  \item \cs{predisplaypenalty}
-%  \item \cs{abovedisplayskip} 
+%  \item \cs{abovedisplayskip}
 %  \item  equation number box
-%  \item equation body 
-%  \item \cs{postdisplaypenaltly}  
+%  \item equation body
+%  \item \cs{postdisplaypenaltly}
 %  \item \cs{belowdisplayskip}
 %\end{enumerate}
 %
@@ -1024,17 +1026,17 @@ and the derived files
 % \providecommand{\qq}[1]{\textquotedblleft#1\textquotedblright}
 % \providecommand{\mdash}{\textemdash}
 % \providecommand{\ndash}{\textendash}
-% 
+%
 % \newcommand{\ititle}[1]{\textit{#1}}
-% 
+%
 % \newcommand{\LR}[2][.4]{%
 %   \framebox[#1\displaywidth]{$\displaystyle{}#2$}%
 % }
-% 
+%
 % \newcommand{\LHS}[1]{\LR[\relifactor]{#1}}
-% 
+%
 % \newdimen\relindent \newdimen\rhswd
-% 
+%
 % \newcommand{\dwline}{%
 %   \hbox to\curdw{\vrule height1ex
 %     \leaders\hrule height.55ex depth-.45ex\hfil
@@ -1042,7 +1044,7 @@ and the derived files
 %     \leaders\hrule height.55ex depth-.45ex\hfil
 %     \vrule height1ex}%
 % }
-% 
+%
 % \newenvironment{layout}[1][.15]{%
 %   \noindent
 %   $$\edef\curdw{\the\displaywidth}%
@@ -1064,26 +1066,26 @@ and the derived files
 %   $$\relax
 %   \ignorespacesafterend
 % }
-% 
+%
 % \newcommand{\stagger}{\omit\span\gdef\layoutcr{\cr\omit\span}}
-%   
+%
 % \newcount\row
-% 
+%
 % \newcommand{\rhsskew}{}
 % \newcommand{\skewleft}[1]{\gdef\rhsskew{\kern-#1\relax}}
-% 
-% 
+%
+%
 % \subsection{Misc examples}
-% 
+%
 % Let us consider which of these have 50\% or more of wasted whitespace
 % \emph{within the bounding box of the visible material}.
 % \begin{layout}[.4]
 % \LHS{L}&=\LR[.35]{R_{1}}\\
 % &=\LR[.25]{R_{1}}
 % \end{layout}
-% 
+%
 % \subsection{Ladder and step layouts}
-% 
+%
 % \subsubsection{Straight ladder layout}
 % This is distinguished by a relatively short LHS and one or more RHS's of
 % any length.
@@ -1111,7 +1113,7 @@ and the derived files
 % &\quad +\LR[.54]{R_{3c}}\\
 % &\qquad\ldots
 % \end{layout}
-% 
+%
 % \subsubsection{Skew ladder layout}
 % \begin{layout}[.5]
 % \skewleft{.35\displaywidth}
@@ -1127,7 +1129,7 @@ and the derived files
 % \mbox{width}_{\mathrm{max}}(R_{i})>\mbox{width}_{\mathrm{avail}}$. In
 % that case we next try aligning all but the first relation symbol,
 % allowing all the $R_{i}$ after $R_1$ to shift leftward.
-% 
+%
 % \subsubsection{Drop ladder layout}
 % \begin{layout}[.6]
 % \makebox[.15\displaywidth][l]{\LHS{L}}\\
@@ -1141,7 +1143,7 @@ and the derived files
 % we move $R_1$ down to a separate line and try again to align all the
 % relation symbols. Note that this layout consumes more vertical space
 % than the skew ladder layout.
-% 
+%
 % \subsubsection{Step layout}
 % \begin{layout}[.6]
 % \stagger
@@ -1162,7 +1164,7 @@ and the derived files
 % $w_T=\max(w_1+I,w_l+I)$. If there are more than two lines ($l>2$) then
 % use $w_T = \max(w_1 + (l-1)I, w_l+I, w_{\mathrm{avail}}$ and reset $I$
 % to $w_T/(l-1)$ if $w_T = w_{\mathrm{avail}}$.
-% 
+%
 % Furthermore, we would like the material to be distributed as evenly as
 % possible over all the lines rather than leave the last line exceedingly
 % short. If the total width is $1.1(\mbox{width}_{\mathrm{avail}})$, we
@@ -1202,9 +1204,9 @@ and the derived files
 % \quad + \LR[.87]{L_{d}}\\
 % \qquad\ldots
 % \end{layout}
-% 
+%
 % \subsection{Strategy}
-% 
+%
 % Here is the basic procedure for deciding which equation layout to use,
 % before complications like equation numbers and delimiter clearance come
 % into the picture. Let $A$ be the available width, $w_{\mathrm{total}}$
@@ -1214,40 +1216,40 @@ and the derived files
 % binary operators if a break occurs in the middle of an RHS. Also let
 % $t_L$ and $t_R$ represent certain thresholds for the width of the LHS or
 % the RHS at which a layout decision may change, as explained below.
-% 
+%
 % \begin{small}
 % \begin{enumerate}
 % \renewcommand{\labelenumi}{(\theenumi)}
 % \item \ititle{Does everything fit on one line?}\label{i:LR}
 %   $w_{\mathrm{total}}\leq A$?
-% 
+%
 % Yes: print the equation on a single line (done).
-% 
+%
 % No: Check whether the equation has both LHS and RHS (\ref{i:lhs-check}).
-% 
+%
 % \item \ititle{Is there a left-hand side?}\label{i:lhs-check}
 % Are there any relation symbols in the equation?
-% 
+%
 % Yes: Try a ladder layout (\ref{i:ladder}).
-% 
+%
 % No: Try a step layout (\ref{i:step}).
-% 
+%
 % \item\ititle{Does the LHS leave room to fit the widest RHS?}\label{i:ladder}
 %   $w(L)+w_{\max}(R)<A$?
-% 
+%
 % Yes: Use a straight ladder layout (\ref{i:straight-ladder}).
-% 
+%
 % No: Check the width of the LHS (\ref{i:check-lhs}).
-% 
+%
 % \item\ititle{Is the LHS relatively short?}\label{i:check-lhs}
 % $w(L)\leq t_L$? (where $t_L$ is typically $0.4A$).
-% 
+%
 % Yes: Subdividing one or more of the RHS's may permit us to use a
 % straight ladder layout (\ref{i:straight-ladder}).
-% 
+%
 % No: The straight ladder layout is unlikely to work.
 % Try a skew or drop ladder layout (\ref{i:skew-drop}).
-% 
+%
 % \item\ititle{Straight ladder layout}\label{i:straight-ladder}
 % Set up a straight ladder parshape [0pt $A$ $w(L)$ $A-w(L)$] and run
 % a trial break. If the combined width of the LHS plus the longest RHS is
@@ -1255,45 +1257,45 @@ and the derived files
 % line breaks occurring at major division points (relation symbols).
 % Otherwise, we hope, some additional line breaks at minor division points
 % will allow everything to fit within the text column.
-% 
+%
 % \ititle{Line breaks OK?}
-% 
+%
 % \begingroup \hbadness=9999
 % Yes: The straight ladder layout succeeded
 %   (done).\par\endgroup
-% 
+%
 % No: Try a skew or drop ladder layout (\ref{i:skew-drop}).
-% 
+%
 % \item\ititle{Do the LHS and the first RHS fit on one
 %     line?}\label{i:skew-drop} $w(L)+w(R_1) \leq A$?
-% 
+%
 % Yes: Try a skew ladder layout (\ref{i:skew}).
-% 
+%
 % No: Try a drop ladder layout (\ref{i:drop}).
-% 
+%
 % \item\ititle{Skew ladder layout}\label{i:skew}
 % Set up a parshape [0pt $A$ $I$ $A-I$] and run a trial break.
-% 
+%
 % \ititle{Line breaks OK?}
-% 
+%
 % Yes: Skew ladder layout succeeded (done).
-% 
+%
 % No: One of the unbreakable fragments of the $R_i$ ($i>1$) is wider than
 % $A-I$; try an almost-columnar layout (\ref{i:almost-columnar}).
-% 
+%
 % \item\ititle{Drop ladder layout}\label{i:drop}
 % Set up a parshape [0pt $w(L)$ $I$ $A-I$] and run a trial break.
 % This is the same parshape as for a skew ladder layout except that the
 % width of the first line is limited to the LHS width, so that the RHS is
 % forced to drop down to the next line.
-% 
+%
 % \ititle{Line breaks OK?}
-% 
+%
 % Yes: Drop ladder layout succeeded (done).
-% 
+%
 % No: One of the unbreakable fragments of the $R_i$ ($i>1$) is wider than
 % $A-I$; try an almost-columnar layout (\ref{i:almost-columnar}).
-% 
+%
 % \item\ititle{Almost-columnar layout}\label{i:almost-columnar}
 % This presupposes a trial break that yielded a series of expressions or
 % fragments, one per line. Let $w(F)$ denote the width of the first
@@ -1306,32 +1308,32 @@ and the derived files
 % [0pt $w(F)$ 0pt $A$]\mdash for that is the net effect of substituting
 % $\min(A,w_{\max})$ in stead of $w_{\max}$.
 % (Done.)
-% 
+%
 % \item\ititle{Step layout}\label{i:step} Set target width $w_T$ to $A -
-%   2I$.  Set parshape to [0pt $w_T$ $I$ $w_T -I$ $2I$ $w_T -2I$ \ldots\ 
+%   2I$.  Set parshape to [0pt $w_T$ $I$ $w_T -I$ $2I$ $w_T -2I$ \ldots\
 %   $(l-1)I$ $w_T - (l-1)I$], where $l=\lceil w_{\mathrm{total}}/A\rceil$
 %   is the expected number of lines that will be required.  Trial break
 %   with that parshape in order to find out the width of the last line.
-% 
+%
 % \ititle{Indents OK?}
-% 
+%
 % Yes: Step layout succeeded (done).
-% 
+%
 % No: One of the fragments is too wide to fit in
 % the allotted line width, after subtracting the indent specified by the
 % parshape. Try a dropped step layout (\ref{i:drop-step})
-% 
+%
 % \item\ititle{Dropped step layout}\label{i:drop-step} Set up a parshape
 %   [0pt $A$ $I$ $A-I$] and run a trial break.  Note that this is actually
 %   the same parshape as for a skew ladder layout.
-% 
+%
 % \ititle{Line breaks OK?}
-% 
+%
 % Yes: Dropped step layout succeeded (done).
-% 
+%
 % No: One of the unbreakable fragments of the $R_i$ ($i>1$) is wider than
 % $A-I$; as a last resort try an almost-columnar layout (\ref{i:almost-columnar}).
-% 
+%
 % \end{enumerate}
 % \par\end{small}
 %
@@ -1367,7 +1369,7 @@ and the derived files
 % \newgeometry{left=4cm}
 % \part{Implementation}
 %
-% 
+%
 % The package version here is Michael's v0.90 updated by Bruce
 % Miller. Michael's changes between v0.90 and his last v0.94 will be
 % incorporated where applicable.
@@ -1394,15 +1396,15 @@ and the derived files
 % \env{darray} environment similar to the \env{array}
 % environment but using \cs{displaystyle} for all the array cells and
 % providing better interline spacing (because the vertical ruling
-% feature of \env{array} is dropped).   
+% feature of \env{array} is dropped).
 % These are all autonumbered environments like \env{equation}
 % and have starred forms that don't add a number.    For a more
 % comprehensive and detailed description of the features and intended
-% usage of the \pkg{breqn} package see \fn{breqndoc.tex}.   
-% 
-% 
-% 
-% 
+% usage of the \pkg{breqn} package see \fn{breqndoc.tex}.
+%
+%
+%
+%
 % \section{Strategy}
 % Features of particular note are the ability to have
 % linebreaks even within a \cs{left} \ndash  \cs{right} pair of
@@ -1412,20 +1414,20 @@ and the derived files
 % paragraph form with strategic line breaks whose purpose is not to
 % produce line breaks in the final printed output but rather to mark
 % significant points in the equation and give us entry points for
-% unpacking \cn{left} \ndash  \cn{right} boxes.   
+% unpacking \cn{left} \ndash  \cn{right} boxes.
 % After the initial typesetting, we take the resulting stack of line
 % fragments and, working backward, splice them into a new, single-line
 % paragraph; this will eventually be poured into a custom parshape, after
-% we do some measuring to calculate what that parshape should be.   
+% we do some measuring to calculate what that parshape should be.
 % This streamlined horizontal list may contain embedded material
 % from user commands intended to alter line breaks, horizontal alignment,
-% and interline spacing; such material requires special handling.   
-% 
+% and interline spacing; such material requires special handling.
+%
 % To make the `shortskip' possibility work even for
 % multiline equations, we must plug in a dummy \tex  display to give us
 % the value of \cs{predisplaysize}, and calculate for ourselves when
-% to apply the short skips.   
-% 
+% to apply the short skips.
+%
 % In order to measure the equation body and do various
 % enervating calculations on whether the equation number will fit and so
 % on, we have to set it in a box.    Among other things, this means
@@ -1437,35 +1439,35 @@ and the derived files
 % fit in the available width.    So even for simple one-line equations
 % we are forced to fake a whole display without going through \tex 's
 % primitive display mechanism (except for using it to get
-% \cs{predisplaysize} as mentioned above).   
-% 
-% 
+% \cs{predisplaysize} as mentioned above).
+%
+%
 % In the case of a framed equation body, the current implementation is
 % to set the frame in a separate box, of width zero and height zero,
 % pinned to the upper left corner of the equation body, and then print the
-% equation body on top of it.   
+% equation body on top of it.
 % For attaching an equation number it would be much simpler to wrap
 % the equation body in the frame and from then on treat the body as a
-% single box instead of multiple line boxes.   
+% single box instead of multiple line boxes.
 % But I had a notion that it might be possible some day to support
-% vertical stretching of the frame.   
-% 
-% 
-% 
-% 
+% vertical stretching of the frame.
+%
+%
+%
+%
 % \section{Prelim}
 %
 % This package doesn't work with \latex  2.09, nor with other
-% versions of \latex  earlier than 1994/12/01.   
+% versions of \latex  earlier than 1994/12/01.
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
 %    \end{macrocode}
-% 
-% Declare package name and date.   
+%
+% Declare package name and date.
 %    \begin{macrocode}
 \RequirePackage{expl3}[2009/08/05]
-\ProvidesExplPackage{breqn}{2015/08/11}{0.98d}{Breaking equations}
+\ProvidesExplPackage{breqn}{2017/01/27}{0.98e}{Breaking equations}
 %    \end{macrocode}
 %   Regrettably, \pkg{breqn} is internally a mess, so we have to take
 %   some odd steps.
@@ -1475,11 +1477,11 @@ and the derived files
 %
 %
 % \section{Package options}
-% 
+%
 % Most options are set with the \cs{options} command (which
 % calls \cs{setkeys}) because the standard package option
-% mechanism doesn't provide support for key-value syntax.   
-% 
+% mechanism doesn't provide support for key-value syntax.
+%
 % First we need to get the catcodes sorted out.
 %    \begin{macrocode}
 \edef\breqnpopcats{%
@@ -1491,24 +1493,24 @@ and the derived files
   \PassOptionsToPackage{mathstyleoff}{flexisym}%
 }
 %    \end{macrocode}
-% Process options.   
+% Process options.
 %    \begin{macrocode}
 \ProcessOptions\relax
 %    \end{macrocode}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Required packages}
 % The \pkg{flexisym} package makes it possible to attach
 % extra actions to math symbols, in particular mathbin, mathrel, mathopen,
-% and mathclose symbols.   
+% and mathclose symbols.
 % Normally it would suffice to call \cs{RequirePackage} without
 % any extra testing, but the nature of the package is such that it is
-% likely to be called earlier with different (no) options.   
+% likely to be called earlier with different (no) options.
 % Then is it really helpful to be always warning the user about
-% \quoted{Incompatible Package Options!}?   
-% I don't think so.   
+% \quoted{Incompatible Package Options!}?
+% I don't think so.
 %    \begin{macrocode}
 \@ifpackageloaded{flexisym}{}{%
   \RequirePackage{flexisym}[2009/08/07]
@@ -1524,18 +1526,18 @@ and the derived files
 %    \begin{macrocode}
 \RequirePackage{keyval,calc}\relax
 %    \end{macrocode}
-% 
-% 
+%
+%
 % And add an \cs{options} cmd for processing package
 % options that require an argument.    Maybe this will get added to
-% the \pkg{keyval} package eventually.   
+% the \pkg{keyval} package eventually.
 %    \begin{macrocode}
 \@ifundefined{options}{%
 %    \end{macrocode}
-% 
-% 
+%
+%
 % \begin{macro}{\options}
-% Get the package options and run setkeys on them.   
+% Get the package options and run setkeys on them.
 %    \begin{macrocode}
 \newcommand{\options}[2]{%
   \expandafter\options@a\csname opt@#1.sty\endcsname{#2}%
@@ -1543,14 +1545,14 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\options@a}
 % \begin{macro}{\options@b}
 % \begin{macro}{\options@c}
 % \begin{macro}{\options@d}
 % Redefine \cs{opt@pkgname.sty} as we go along to take out
-% the options that are handled and leave the ones that are not.   
+% the options that are handled and leave the ones that are not.
 %    \begin{macrocode}
 \def\options@a#1#2{%
   \edef\@tempa{\options@b#2,\@empty\@nil}%
@@ -1559,19 +1561,19 @@ and the derived files
 }
 %    \end{macrocode}
 % Add the next option, and recurse if there remain more
-% options.   
+% options.
 %    \begin{macrocode}
 \def\options@b#1,#2#3\@nil{%
   \options@c#1 \@nil
   \ifx#2\@empty \else\options@b#2#3\@nil\fi
 }
 %    \end{macrocode}
-% Discard everything after the first space.   
+% Discard everything after the first space.
 %    \begin{macrocode}
 \def\options@c#1 #2\@nil{\options@d#1=\@nil}
 %    \end{macrocode}
 % Discard everything after the first = sign; add a comma only if the
-% remainder is not empty.   
+% remainder is not empty.
 %    \begin{macrocode}
 \def\options@d#1=#2\@nil{\ifx\@empty #1\@empty\else,\fi#1}
 %    \end{macrocode}
@@ -1579,71 +1581,71 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
-% 
-% The tail of the \cs{@ifundefined} test.   
+%
+%
+%
+% The tail of the \cs{@ifundefined} test.
 %    \begin{macrocode}
 }{}% end @ifundefined test
 %    \end{macrocode}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Some useful tools}
-% 
+%
 % \begin{macro}{\@nx}
 % \begin{macro}{\@xp}
 % The comparative brevity of \cs{@nx} and \cs{@xp} is
 % valuable not so much for typing convenience as for reducing visual
-% clutter in code sections that require a lot of expansion control.   
+% clutter in code sections that require a lot of expansion control.
 %    \begin{macrocode}
 \let\@nx\noexpand
 \let\@xp\expandafter
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\@emptytoks}
-% Constant empty token register, analogous to \cs{@empty}.   
+% Constant empty token register, analogous to \cs{@empty}.
 %    \begin{macrocode}
 \@ifundefined{@emptytoks}{\newtoks\@emptytoks}{}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\f@ur}
-% Constants 0\ndash 3 are provided in plain \tex , but not 4.   
+% Constants 0\ndash 3 are provided in plain \tex , but not 4.
 %    \begin{macrocode}
 \chardef\f@ur=4
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\inf@bad}
-% \cs{inf@bad} is for testing box badness.   
+% \cs{inf@bad} is for testing box badness.
 %    \begin{macrocode}
 \newcount\inf@bad \inf@bad=1000000
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\maxint}
-% 
+%
 % We want to use \cs{maxint} rather than coerced
-% \cs{maxdimen} for \cs{linepenalty} in one place.   
+% \cs{maxdimen} for \cs{linepenalty} in one place.
 %    \begin{macrocode}
 \newcount\maxint \maxint=2147483647
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\int@a}
 % \begin{macro}{\int@b}
 % \begin{macro}{\int@b}
-% 
-% Provide some shorter aliases for various scratch registers.   
+%
+% Provide some shorter aliases for various scratch registers.
 %    \begin{macrocode}
 \let\int@a=\@tempcnta
 \let\int@b=\@tempcntb
@@ -1652,16 +1654,16 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\dim@a}
 % \begin{macro}{\dim@b}
 % \begin{macro}{\dim@c}
 % \begin{macro}{\dim@d}
 % \begin{macro}{\dim@e}
 % \begin{macro}{\dim@A}
-% 
-% Same for dimen registers.   
+%
+% Same for dimen registers.
 %    \begin{macrocode}
 \let\dim@a\@tempdima
 \let\dim@b\@tempdimb
@@ -1676,13 +1678,13 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\skip@a}
 % \begin{macro}{\skip@b}
 % \begin{macro}{\skip@c}
-% 
-% Same for skip registers.   
+%
+% Same for skip registers.
 %    \begin{macrocode}
 \let\skip@a\@tempskipa
 \let\skip@b\@tempskipb
@@ -1691,16 +1693,16 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\toks@a}
 % \begin{macro}{\toks@b}
 % \begin{macro}{\toks@c}
 % \begin{macro}{\toks@d}
 % \begin{macro}{\toks@e}
 % \begin{macro}{\toks@f}
-% 
-% Same for token registers.   
+%
+% Same for token registers.
 %    \begin{macrocode}
 \let\toks@a\@temptokena
 \let\toks@b\toks@
@@ -1715,21 +1717,21 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\abs@num}
 % We need an absolute value function for comparing
-% penalties.   
+% penalties.
 %    \begin{macrocode}
 \def\abs@num#1{\ifnum#1<\z@-\fi#1}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\@ifnext}
 % \begin{macro}{\@ifnexta}
 % The \cs{@ifnext} function is a variation of
-% \cs{@ifnextchar} that doesn't skip over intervening whitespace.   
+% \cs{@ifnextchar} that doesn't skip over intervening whitespace.
 % We use it for the optional arg of \dbslash  inside
 % \env{dmath} \etc  because we don't want
 % unwary users to be tripped up by an unexpected attempt on \latex 's part
@@ -1740,21 +1742,21 @@ and the derived files
 % [z,w]...
 % \end{equation}
 % \end{literalcode}
-% .   
+% .
 %    \begin{macrocode}
 \def\@ifnext#1#2#3{%
   \let\@tempd= #1\def\@tempa{#2}\def\@tempb{#3}%
   \futurelet\@tempc\@ifnexta
 }
 %    \end{macrocode}
-% Switch to \cs{@tempa} iff the next token matches.   
+% Switch to \cs{@tempa} iff the next token matches.
 %    \begin{macrocode}
 \def\@ifnexta{\ifx\@tempc\@tempd \let\@tempb\@tempa \fi \@tempb}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\@ifstar}
 % Similarly let's remove space-skipping from \cs{@ifstar}
 % because in some rare case of \dbslash  inside an equation, followed by
@@ -1766,7 +1768,7 @@ and the derived files
 % any case because of \tex 's tokenization rules; or it is a control
 % symbol such as \dbslash  \verb"*" which is exceedingly unlikely to be
 % written as \dbslash  \verb"*" by any one who really wants the
-% \verb"*" to act as a modifier for the \dbslash  command.   
+% \verb"*" to act as a modifier for the \dbslash  command.
 %    \begin{macrocode}
 \def\@ifstar#1#2{%
   \let\@tempd*\def\@tempa*{#1}\def\@tempb{#2}%
@@ -1774,17 +1776,17 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\@optarg}
 % Utility function for reading an optional arg
-% \emph{without} skipping over any intervening spaces.   
+% \emph{without} skipping over any intervening spaces.
 %    \begin{macrocode}
 \def\@optarg#1#2{\@ifnext[{#1}{#1[#2]}}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\@True}
 % \begin{macro}{\@False}
 % \begin{macro}{\@Not}
@@ -1794,7 +1796,7 @@ and the derived files
 % \if\foo
 % \end{literalcode}
 % evaluates to true.    Would rather avoid \cs{newif} because it
-% uses three csnames per Boolean variable; this uses only one.   
+% uses three csnames per Boolean variable; this uses only one.
 %    \begin{macrocode}
 \def\@True{00}
 \def\@False{01}
@@ -1806,15 +1808,15 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
-% 
+%
+%
+%
 %    \begin{macrocode}
 \def\theb@@le#1{\if#1 True\else False\fi}
 %    \end{macrocode}
 % \begin{macro}{\freeze@glue}
-% 
-% Remove the stretch and shrink from a glue register.   
+%
+% Remove the stretch and shrink from a glue register.
 %    \begin{macrocode}
 \def\freeze@glue#1{#11#1\relax}
 %    \end{macrocode}
@@ -1823,7 +1825,7 @@ and the derived files
 % \begin{macro}{\keep@glue}
 % Note well
 % the intentional absence of \cs{relax} at the end of the replacement
-% text of \cs{z@rule}; use it with care.   
+% text of \cs{z@rule}; use it with care.
 %    \begin{macrocode}
 \def\z@rule{\vrule\@width\z@}% no \relax ! use with care
 %    \end{macrocode}
@@ -1839,29 +1841,29 @@ and the derived files
 % unary minus sign.    (the vrule \emph{is} transparent to
 % the math spacing).    The vadjust is the cheapest in terms of box
 % memory\mdash it vanishes after the pass through \tex 's
-% paragrapher.   
+% paragrapher.
 % It is what I would have used, except that the equation contents get
 % run through two paragraphing passes, once for breaking up LR boxes and
-% once for the real typesetting.   
+% once for the real typesetting.
 % If \cs{keep@glue} were done with an empty vadjust, it would
 % disappear after the first pass and\mdash in particular\mdash the
-% pre-bin-op adjustment for relation symbols would disappear at a line break.   
+% pre-bin-op adjustment for relation symbols would disappear at a line break.
 %    \begin{macrocode}
 \def\keep@glue{\z@rule\relax}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\replicate}
-% 
+%
 % This is a fully expandable way of making N copies of a token
-% list.   
+% list.
 % Based on a post of David Kastrup to comp.text.tex circa January
-% 1999.   
+% 1999.
 % The extra application of \cs{number} is needed for maximal
 % robustness in case the repeat count N is given in some weird \tex  form
-% such as \verb|"E9| or \verb|\count9|.   
+% such as \verb|"E9| or \verb|\count9|.
 %    \begin{macrocode}
 % usage: \message{H\replicate{5}{i h}ow de doo dee!}
 \begingroup \catcode`\&=11
@@ -1871,15 +1873,15 @@ and the derived files
 \endgroup
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\replicate@a}
 %    \begin{macrocode}
 \long\def\replicate@a#1#2\endcsname#3{#1\endcsname{#3}#2}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\8m}% fix
 %    \begin{macrocode}
 \begingroup \catcode`\&=11
@@ -1887,18 +1889,18 @@ and the derived files
 \endgroup
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\8q}% fix
 %    \begin{macrocode}
 \@xp\let\csname\string &q\endcsname\@gobble
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\mathchars@reset}
-% 
+%
 % Need to patch up this function from flexisym a little, to better
-% handle certain constructed symbols like \cs{neq}.   
+% handle certain constructed symbols like \cs{neq}.
 %    \begin{macrocode}
 \ExplSyntaxOn
 \g@addto@macro\mathchars@reset{%
@@ -1914,12 +1916,12 @@ and the derived files
 \ExplSyntaxOff
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@cons}
-% 
+%
 % \latex 's \cs{@cons} appends to the end of a list, but we need
-% a function that adds material at the beginning.   
+% a function that adds material at the beginning.
 %    \begin{macrocode}
 \def\eq@cons#1#2{%
   \begingroup \let\@elt\relax \xdef#1{\@elt{#2}#1}\endgroup
@@ -1930,14 +1932,14 @@ and the derived files
 % \begin{macro}{\@saveprimitive}
 % If some preceding package redefined one of the
 % primitives that we must change, we had better do some checking to make
-% sure that we are able to save the primitive meaning for internal use.   
+% sure that we are able to save the primitive meaning for internal use.
 % This is handled by the \cs{@saveprimitive} function.    We
 % follow the example of \cs{@@input} where the primitive meaning is
-% stored in an internal control sequence with a \verb"@@" prefix.   
+% stored in an internal control sequence with a \verb"@@" prefix.
 % Primitive control sequences can be distinguished by the fact that
-% \cs{string} and \cs{meaning} return the same information.   
+% \cs{string} and \cs{meaning} return the same information.
 % Well, not quite all: \cs{nullfont} and \cs{topmark}
-% and the other \cs{...mark} primitives being the exceptions.   
+% and the other \cs{...mark} primitives being the exceptions.
 %    \begin{macrocode}
 \providecommand{\@saveprimitive}[2]{%
   \begingroup
@@ -1947,7 +1949,7 @@ and the derived files
 %    \end{macrocode}%
 % If [arg1] is no longer primitive, then we are in trouble unless
 % [arg2] was already given the desired primitive meaning somewhere
-% else.   
+% else.
 %    \begin{macrocode}
     \edef\@tempb{\meaning#2}%
     \ifx\@tempa\@tempb
@@ -1957,9 +1959,9 @@ and the derived files
   \endgroup
 }
 %    \end{macrocode}
-% Aux function, check for the special cases.   
+% Aux function, check for the special cases.
 % Most of the time this branch will be skipped so we can
-% stuff a lot of work into it without worrying about speed costs.   
+% stuff a lot of work into it without worrying about speed costs.
 %    \begin{macrocode}
 \providecommand\@saveprimitive@a[2]{%
   \begingroup
@@ -1985,8 +1987,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\@@math}
 % \begin{macro}{\@@endmath}
 % \begin{macro}{\@@display}
@@ -1995,10 +1997,10 @@ and the derived files
 % sequences.    If I were redesigning \tex  I guess I'd put these
 % functions into primitive control words instead of linking them to a
 % catcode.    That way \tex  would not have to do the special
-% lookahead at a \verb"$" to see if there's another one coming up.   
+% lookahead at a \verb"$" to see if there's another one coming up.
 % Of course that's related to the question of how to provide user
 % shorthand for common constructions: \tex , or an editing interface of
-% some sort.   
+% some sort.
 %    \begin{macrocode}
 \begingroup \catcode`\$=\thr@@ % just to make sure
   \global\let\@@math=$ \gdef\@@display{$$}% $$$
@@ -2010,8 +2012,8 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\@@insert}
 % \begin{macro}{\@@mark}
 % \begin{macro}{\@@vadjust}
@@ -2021,7 +2023,7 @@ and the derived files
 % decomposition procedures.    We follow the example of
 % \cs{@@input}, \cs{@@end}, \cs{@@par} where the primitive
 % meaning is stored in an internal control sequence with a \verb"@@"
-% prefix.   
+% prefix.
 %    \begin{macrocode}
 \@saveprimitive\vadjust\@@vadjust
 \@saveprimitive\insert\@@insert
@@ -2030,35 +2032,35 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Debugging}
-% Debugging help.   
+% Debugging help.
 %    \begin{macrocode}
 %<*trace>
 \errorcontextlines=2000\relax
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{\breqn@debugmsg}
-% Print a debugging message.   
+% Print a debugging message.
 %    \begin{macrocode}
 \long\def\breqn@debugmsg#1{\GenericInfo{||}{||=\space#1}}
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\debugwr}
 % Sometimes the newline behavior of \cs{message} is
-% unsatisfactory; this provides an alternative.   
+% unsatisfactory; this provides an alternative.
 %    \begin{macrocode}
 \def\debugwr#1{\immediate\write\sixt@@n{||= #1}}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\debug@box}
-% Record the contents of a box in the log file, without stopping.   
+% Record the contents of a box in the log file, without stopping.
 %    \begin{macrocode}
 \def\debug@box#1{%
   \batchmode{\showboxbreadth\maxdimen\showboxdepth99\showbox#1}%
@@ -2066,11 +2068,11 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eqinfo}
 % Show lots of info about the material before launching into the
-% trials.   
+% trials.
 %    \begin{macrocode}
 \def\eqinfo{%
   \debug@box\EQ@copy
@@ -2080,10 +2082,10 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\debug@para}
-% Check params that affect line breaking.   
+% Check params that affect line breaking.
 %    \begin{macrocode}
 \def\debug@para{%
   \debugwr{\hsize\the\hsize, \parfillskip\the\parfillskip}%
@@ -2094,33 +2096,33 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 %    \begin{macrocode}
 %</trace>
 %    \end{macrocode}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{The \cs{listwidth} variable}
 % The dimen variable \cs{listwidth} is \cs{linewidth}
 % plus \cs{leftmargin} plus \cs{rightmargin}, which is typically
-% less than \cs{hsize} if the list depth is greater than one.   
+% less than \cs{hsize} if the list depth is greater than one.
 % In case a future package will provide this variable, define it only
-% if not yet defined.   
+% if not yet defined.
 %    \begin{macrocode}
 \@ifundefined{listwidth}{\newdimen\listwidth}{}
 \listwidth=\z@
 %    \end{macrocode}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Parameters}
-% 
+%
 % Here follows a list of parameters needed.
-% 
+%
 % \begin{macro}{\eqfontsize}
 % \begin{macro}{\eqcolor}
 % \begin{macro}{\eqmargin}
@@ -2140,12 +2142,12 @@ and the derived files
 % \begin{macro}{\eqinterlinepenalty}
 % \begin{macro}{\intereqpenalty}
 % \begin{macro}{\intereqskip}
-% 
+%
 % Note: avoid M, m, P, p because they look like they might be the
 % start of a keyword \quoted{minus} or \quoted{plus}.    Then
 % \tex  looks further to see if the next letter is i or l.    And if
 % the next thing is an undefined macro, the attempt to expand the macro
-% results in an error message.   
+% results in an error message.
 %    \begin{macrocode}
 \def\eqfontsize{}         % Inherit from context    [NOT USED?]
 \def\eqcolor{black}       % Default to black        [NOT USED?]
@@ -2154,7 +2156,7 @@ and the derived files
 %    \end{macrocode}
 % The \cs{eqindent} and \cs{eqnumside} variables need to
 % have their values initialized from context, actually.    But
-% that takes a bit of work, which is postponed till later.   
+% that takes a bit of work, which is postponed till later.
 %    \begin{macrocode}
 \def\eqindent{C}%         % C or I, centered or indented
 \def\eqnumside{R}%        % R or L, right or left
@@ -2164,7 +2166,7 @@ and the derived files
 % \begin{literalcode}
 % {\eqnumcolor \eqnumsize \eqnumfont{\eqnumform{\eq@number}}}
 % \end{literalcode}
-% .   
+% .
 %    \begin{macrocode}
 %d\eqnumfont{\upshape}% % Upright even when surrounding text is slanted
 \def\eqnumfont{}%         % Null for easier debugging [mjd,1997/09/26]
@@ -2177,9 +2179,9 @@ and the derived files
 % number.    Or should the default be empty?    Then in large
 % sections of smaller text, like the dangerous bend stuff in
 % \emph{\TeX book}, the equation number size will keep in synch
-% with the context.   
+% with the context.
 % Maybe need an \cs{eqbodysize} param as well to allow separating
-% the two cases.   
+% the two cases.
 %    \begin{macrocode}
 \def\eqnumcolor{}         % ... or color than eq body e.g. \color{blue}
 \newlength\eqlinespacing \eqlinespacing=14pt plus2pt % Base-to-base space between lines
@@ -2189,7 +2191,7 @@ and the derived files
 % The value of \cs{eqbinoffset} should include a negative shrink
 % component that cancels the shrink component of medmuskip, otherwise
 % there can be a noticeable variation in the indent of adjacent lines if
-% one is shrunken a lot and the other isn't.   
+% one is shrunken a lot and the other isn't.
 %    \begin{macrocode}
 \newmuskip \eqbinoffset \eqbinoffset=15mu minus-3mu % Offset from mathrel alignment pt for mathbins
 \newmuskip\eqdelimoffset \eqdelimoffset=2mu    % Additional offset for break inside delims
@@ -2209,7 +2211,7 @@ and the derived files
 % unfrozen ones.    Nonetheless I think this way is the best
 % compromise short of a new \tex  that can make those built-up objects
 % shrink horizontally in proportion; the alternative is to pretty much
-% eliminate the shrink possibility completely in displays.   
+% eliminate the shrink possibility completely in displays.
 %    \begin{macrocode}
 \newmuskip \Dmedmuskip \Dmedmuskip=4mu minus 3mu % medmuskip in displays
 \newmuskip \Dthickmuskip \Dthickmuskip=5mu minus 2mu % thickmuskip in displays
@@ -2233,9 +2235,9 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
+%
 % And now some internal variables.    1997/10/22: some of
-% these are dead branches that need to be pruned.   
+% these are dead branches that need to be pruned.
 %
 % MH: Started cleaning up a bit. No more funny loops.
 %    \begin{macrocode}
@@ -2266,7 +2268,7 @@ and the derived files
 % dimen registers are needed in the measuring phase, which is a tightly
 % contained step that happens after the contents of the equation have been
 % typeset into a box and before any external functions have a chance to
-% regain control\mdash  \eg , the output routine.   
+% regain control\mdash  \eg , the output routine.
 % Therefore it is possible to make use of the the dimen registers 0--9,
 % reserved by convention for scratch use, without fear of conflict with
 % other macros.    But I don't want to use them directly with the
@@ -2275,13 +2277,13 @@ and the derived files
 % \dimen@ \dimen@i \dimen@ii \dimen3 \dimen4 ... \dimen9
 % \end{literalcode}
 % .    It would be much more useful to have names for these registers
-% indicative of way they are used.   
-% 
+% indicative of way they are used.
+%
 % Another source whence dimen registers could be borrowed is the
 % \pkg{amsmath} package, which allocates six registers for
 % equation-measuring purposes.    We can reuse them under different
 % names since the \pkg{amsmath} functions and our functions will
-% never be used simultaneously.   
+% never be used simultaneously.
 % \begin{literalcode}
 % \eqnshift@ \alignsep@ \tagshift@ \tagwidth@ \totwidth@ \lineht@
 % \end{literalcode}
@@ -2291,9 +2293,9 @@ and the derived files
 \newdimen\eq@wdT        % Total width for framing
 \newdimen\eq@wdMin      % Width of narrowest line in equation
 \newdimen\grp@wdL       % Max width of LHS's in a group
-\newdimen\grp@wdR       % Max RHS of all equations in a group 
+\newdimen\grp@wdR       % Max RHS of all equations in a group
 \newdimen\grp@wdT
-\newdimen\eq@wdRmax 
+\newdimen\eq@wdRmax
 \newdimen\eq@firstht    % Height of first line
 %    \end{macrocode}
 % BRM: measure the condition too.
@@ -2304,30 +2306,30 @@ and the derived files
 \newdimen\grp@linewidth % Max eq@linewidth over a group
 %    \end{macrocode}
 % Maybe \cs{eq@hshift} could share the same register as
-% \cs{mathindent} [mjd,1997/10/22].   
+% \cs{mathindent} [mjd,1997/10/22].
 %    \begin{macrocode}
 \newdimen\eq@hshift
 \let\eq@isIntertext\@False
 %    \end{macrocode}
 % Init \cs{eq@indentstep} to a nonzero value so that we can
-% detect and refrain from clobbering a user setting of zero.   
+% detect and refrain from clobbering a user setting of zero.
 % And \cs{eq@sidespace} to \cs{maxdimen} because
-% that is the right init before computing a min.   
+% that is the right init before computing a min.
 %    \begin{macrocode}
 \eq@indentstep=\maxdimen
 \newdimen\eq@given@sidespace
 %    \end{macrocode}
-% 
+%
 % \begin{macro}{\eq@overrun}
 %   MH: Appears to be unused.
 %
-%   Not a dimen register; don't need to advance it. 
+%   Not a dimen register; don't need to advance it.
 %    \begin{macrocode}
 \def\eq@overrun{0pt}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % To initialize \cs{eqnumside} and \cs{eqindent} properly,
 % we may need to grub around a bit in \cs{@filelist}.    However,
 % if the \pkg{amsmath} package was used, we can use its option
@@ -2335,7 +2337,7 @@ and the derived files
 % \opt{leqno} to \pkg{amsmath} by default, and it gets
 % overridden by the user with a \opt{reqno} documentclass option,
 % then \pkg{amsmath} believes itself to have received
-% \emph{both} options.   
+% \emph{both} options.
 %    \begin{macrocode}
 \@ifpackagewith{amsmath}{leqno}{%
   \@ifpackagewith{amsmath}{reqno}{}{\def\eqnumside{L}}%
@@ -2343,7 +2345,7 @@ and the derived files
 %    \end{macrocode}
 % If the \pkg{amsmath} package was not used, the next
 % method for testing the \opt{leqno} option is to see if
-% \fn{leqno.clo} is present in \cs{@filelist}.   
+% \fn{leqno.clo} is present in \cs{@filelist}.
 %    \begin{macrocode}
   \def\@tempa#1,leqno.clo,#2#3\@nil{%
     \ifx @#2\relax\else \def\eqnumside{L}\fi
@@ -2352,9 +2354,9 @@ and the derived files
 %    \end{macrocode}
 % Even that test may fail in the case of \cls{amsart} if it does
 % not load \pkg{amsmath}.    Then we have to look whether
-% \cs{iftagsleft@} is defined, and if so whether it is true.   
+% \cs{iftagsleft@} is defined, and if so whether it is true.
 % This is tricky if you want to be careful about conditional nesting
-% and don't want to put anything in the hash table unnecessarily.   
+% and don't want to put anything in the hash table unnecessarily.
 %    \begin{macrocode}
   \if L\eqnumside
   \else
@@ -2369,7 +2371,7 @@ and the derived files
 %    \end{macrocode}
 % A similar sequence of tests handles the \quoted{fleqn or not fleqn}
 % question for the \cls{article} and \cls{amsart}
-% documentclasses.   
+% documentclasses.
 %    \begin{macrocode}
 \@ifpackagewith{amsmath}{fleqn}{%
   \def\eqindent{I}%
@@ -2401,43 +2403,43 @@ and the derived files
   }
 %\fi
 %    \end{macrocode}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Measuring equation components}
 % Measure the left-hand side of an equation.    This
 % function is called by mathrel symbols.    For the first mathrel we
 % want to discourage a line break more than for following mathrels; so
 % \cs{mark@lhs} gobbles the following \cs{rel@break} and
-% substitutes a higher penalty.   
+% substitutes a higher penalty.
 % \begin{aside}
-% Maybe the LHS should be kept in a separate box.   
+% Maybe the LHS should be kept in a separate box.
 % \end{aside}
-% 
-% 
-% 
+%
+%
+%
 % \begin{macro}{\EQ@hasLHS}
-% 
-% Boolean: does this equation have a \dquoted{left-hand side}?   
+%
+% Boolean: does this equation have a \dquoted{left-hand side}?
 %    \begin{macrocode}
 \let\EQ@hasLHS=\@False
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\EQ@QED}
-% 
+%
 % If nonempty: the qed material that should be incorporated into this
-% equation after the final punctuation.   
+% equation after the final punctuation.
 %    \begin{macrocode}
 \let\EQ@QED=\@empty
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\mark@lhs}
-% 
+%
 %    \begin{macrocode}
 \def\mark@lhs#1{%
   \ifnum\lr@level<\@ne
@@ -2448,15 +2450,15 @@ and the derived files
 %    \end{macrocode}
 % But the penalty for the first mathrel should still be lower than a
 % binoppenalty.    If not, when the LHS contains a binop, the split
-% will occur inside the LHS rather than at the mathrel.   
+% will occur inside the LHS rather than at the mathrel.
 % On the other hand if we end up with a multline sort of equation
 % layout where the RHS is very short, the break before the relation symbol
 % should be made \emph{less} desirable than the breakpoints inside
-% the LHS.   
+% the LHS.
 % Since a lower penalty takes precedence over a higher one, we start
 % by putting in the highest relpenalty; during subsequent measuring if we
 % find that that RHS is not excessively short then we put in an extra
-% \dquoted{normal} relpenalty when rejoining the LHS and RHS.   
+% \dquoted{normal} relpenalty when rejoining the LHS and RHS.
 %    \begin{macrocode}
     \penalty9999 % instead of normal \rel@break
   % else no penalty = forbid break
@@ -2464,10 +2466,10 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\mark@lhs@a}
-% 
+%
 % Temporarily add an extra thickmuskip to the LHS; it will be removed
 % later.    This is necessary to compensate for the disappearance of
 % the thickmuskip glue preceding a mathrel if a line break is taken at
@@ -2477,7 +2479,7 @@ and the derived files
 % \cs{eq@repack} to suggest that the box containing this line should
 % be measured to find the value of \cs{eq@wdL}.    The
 % second vadjust ensures that the normal prerelpenalty and thickmuskip
-% will not get lost at the line break during this preliminary pass.   
+% will not get lost at the line break during this preliminary pass.
 %
 % BRM: I originally thought the \verb"\mskip\thickmuskip" was messing
 % up summation limits in LHS.  But I may have fixed that problem by
@@ -2488,29 +2490,29 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\hiderel}
 % If you want the LHS to extend past the first mathrel symbol to a
 % following one, mark the first one with \cs{hiderel}:
 % \begin{literalcode}
 % a \hiderel{=} b = c...
 % \end{literalcode}
-% .   
+% .
 % \begin{aside}
 % I'm not sure now why I didn't use \cs{begingroup}
 % \cs{endgroup} here \begin{dn}
 % mjd,1999/01/21
 % \end{dn}
-% .   
+% .
 % \end{aside}
-% 
+%
 %    \begin{macrocode}
 \newcommand\hiderel[1]{\mathrel{\advance\lr@level\@ne#1}}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\m@@Bin}
 % \begin{macro}{\m@@Rel}
 % \begin{macro}{\bin@break}
@@ -2519,10 +2521,10 @@ and the derived files
 % \begin{macro}{\rel@mark}
 % \begin{macro}{\d@@Bin}
 % \begin{macro}{\d@@Rel}
-% 
+%
 % \cf  \pkg{flexisym} handling of mathbins and mathrels.    These
 % are alternate definitions of \cs{m@Bin} and \cs{m@Rel},
-% activated by \cs{display@setup}.   
+% activated by \cs{display@setup}.
 %    \begin{macrocode}
 %%%%\let\m@@Bin\m@Bin
 %%%%%\let\m@@Rel\m@Rel
@@ -2545,8 +2547,8 @@ and the derived files
 % The difficulty of dealing properly with the subscripts and
 % superscripts sometimes appended to mathbins and mathrels is one of the
 % reasons that we do not attempt to handle the mathrels as a separate
-% \quoted{column} a la \env{eqnarray}.   
-% 
+% \quoted{column} a la \env{eqnarray}.
+%
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -2555,8 +2557,8 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\m@@symRel}
 % \begin{macro}{\d@@symRel}
 % \begin{macro}{\m@@symBin}
@@ -2569,11 +2571,11 @@ and the derived files
 % \begin{macro}{\d@@symDeB}
 % \begin{macro}{\m@@symDeA}
 % \begin{macro}{\d@@symDeA}
-% 
-% More of the same.   
+%
+% More of the same.
 %    \begin{macrocode}
 \ExplSyntaxOn
-%%\let\m@@symRel\@symRel 
+%%\let\m@@symRel\@symRel
 %%%\def\d@@symRel{\mark@lhs \rel@break \m@@symRel}
 
 \cs_set_protected:Npn \math_dcsym_Bin:Nn {\bin@break \math_bcsym_Bin:Nn}
@@ -2599,17 +2601,17 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\display@setup}
 % \begin{macro}{\everydisplay}
 % Setup.    Note that \latex  reserves the primitive
-% \cs{everydisplay} under the name \cs{frozen@everydisplay}.   
+% \cs{everydisplay} under the name \cs{frozen@everydisplay}.
 % BRM: Disable this! It also affects non-breqn math!!!!
 %    \begin{macrocode}
 %\global\everydisplay\expandafter{\the\everydisplay \display@setup}
 %    \end{macrocode}
-% Change some math symbol function calls.   
+% Change some math symbol function calls.
 %    \begin{macrocode}
 \def\display@setup{%
   \medmuskip\Dmedmuskip \thickmuskip\Dthickmuskip
@@ -2625,9 +2627,9 @@ and the derived files
 %    \end{macrocode}
 % If we have an embedded array environment (for example), we
 % don't want to have each math cell within the array resetting
-% \cs{lr@level} globally to 0\mdash not good!   
+% \cs{lr@level} globally to 0\mdash not good!
 % And in general I think it is safe to say that whenever we have a
-% subordinate level of boxing we want to revert to a normal math setup.   
+% subordinate level of boxing we want to revert to a normal math setup.
 %    \begin{macrocode}
   \everyhbox{\everyhbox\@emptytoks
     \let\display@setup\relax \textmath@setup \let\textmath@setup\relax
@@ -2638,7 +2640,7 @@ and the derived files
 }
 %    \end{macrocode}
 % The \cs{textmath@setup} function is needed for embedded inline
-% math inside text inside a display.   
+% math inside text inside a display.
 %
 % BRM: DS Experiment: Variant of \cs{display@setup} for use within
 % dseries environmnents
@@ -2646,7 +2648,7 @@ and the derived files
 \def\dseries@display@setup{%
   \medmuskip\Dmedmuskip \thickmuskip\Dthickmuskip
   \math_setup_display_symbols:
-%%%%  \let\m@Bin\d@@Bin 
+%%%%  \let\m@Bin\d@@Bin
 %%%\let\m@Rel\d@@Rel
 %%%  \let\@symRel\d@@symRel
 %%% \let\@symBin\d@@symBin
@@ -2681,7 +2683,7 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
+%
 % \begin{macro}{\if@display}
 % \begin{macro}{\everydisplay}
 % The test \cs{ifinner} is unreliable for distinguishing
@@ -2690,31 +2692,31 @@ and the derived files
 % of \verb"$" \cs{displaystyle} \dots  \verb"$" instead of
 % \dbldollars  \dots  \dbldollars .    So we provide a more reliable
 % test.    But it might have been provided already by the
-% \pkg{amsmath} package.   
+% \pkg{amsmath} package.
 %    \begin{macrocode}
 \@ifundefined{@displaytrue}{%
   \@xp\newif\csname if@display\endcsname
   \everydisplay\@xp{\the\everydisplay \@displaytrue}%
 }{}
 %    \end{macrocode}
-% 
+%
 % \begin{aside}
 % Is there any reason to maintain separate
-% \cs{everydisplay} and \cn{eqstyle}?   
-% 
+% \cs{everydisplay} and \cn{eqstyle}?
+%
 % \end{aside}
-% 
-% 
+%
+%
 % \end{macro}
 % \end{macro}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{The \env{dmath} and \env{dmath*} environments}
 %
 % Options for the \env{dmath} and \env{dmath*}
-% environments.   
+% environments.
 % \begin{literalcode}
 % \begin{dmath}[label={eq:xyz}]
 % \begin{dmath}[labelprefix={eq:},label={xyz}]
@@ -2722,7 +2724,7 @@ and the derived files
 % WSPR: added the option for a label prefix, designed to be used in the preamble like so:
 % \begin{literalcode}
 % \setkeys{breqn}{labelprefix={eq:}}
-% \end{literalcode} 
+% \end{literalcode}
 %    \begin{macrocode}
 \define@key{breqn}{label}{%
   \edef\next@label{\noexpand\label{\next@label@pre#1}}%
@@ -2731,7 +2733,7 @@ and the derived files
 \global\let\next@label\@empty
 \global\let\next@label@pre\@empty
 %    \end{macrocode}
-% Allow a variant number.   
+% Allow a variant number.
 % \begin{literalcode}
 % \begin{dmath}[number={\nref{foo}\textprime}]
 % \end{literalcode}
@@ -2744,7 +2746,7 @@ and the derived files
 % \begin{dmath}[shiftnumber]
 % \begin{dmath}[holdnumber]
 % \end{literalcode}
-% Holding or shifting the number.   
+% Holding or shifting the number.
 %    \begin{macrocode}
 \define@key{breqn}{shiftnumber}{\let\eq@shiftnumber\@True}
 \define@key{breqn}{holdnumber}{\let\eq@holdnumber\@True}
@@ -2762,7 +2764,7 @@ and the derived files
 % for lines that begin with a mathbin symbol there is a fixed amount of
 % indent already built in (\cs{eqbinoffset}) and it cannot be
 % reduced through this option.    The indentstep amount is the indent
-% used for lines that begin with a mathrel symbol.   
+% used for lines that begin with a mathrel symbol.
 %    \begin{macrocode}
 \define@key{breqn}{indentstep}{\eqindentstep#1\relax}
 %    \end{macrocode}
@@ -2771,20 +2773,20 @@ and the derived files
 % \begin{dmath}[compact=-2000]
 % \end{literalcode}
 % To make mathrels stay inline to the extent possible, use the compact
-% option.   
+% option.
 % Can give a numeric value in the range $-10000 \dots  10000$
-% to adjust the behavior.   
+% to adjust the behavior.
 % $-10000$: always break at a rel symbol; $10000$: never
-% break at a rel symbol.   
+% break at a rel symbol.
 %    \begin{macrocode}
 \define@key{breqn}{compact}[-99]{\prerelpenalty=#1\relax}
 %    \end{macrocode}
 % \begin{literalcode}
 % \begin{dmath}[layout={S}]%
 % \end{literalcode}
-% Specify a particular layout.   
+% Specify a particular layout.
 % We take care to ensure that \cs{eq@layout} ends up containing
-% one and only one letter.   
+% one and only one letter.
 %    \begin{macrocode}
 \define@key{breqn}{layout}[?]{%
   \edef\eq@layout{\@car#1?\@nil}%
@@ -2793,7 +2795,7 @@ and the derived files
 % \begin{literalcode}
 % \begin{dmath}[spread={1pt}]
 % \end{literalcode}
-% To change the interline spacing in a particular equation.   
+% To change the interline spacing in a particular equation.
 %    \begin{macrocode}
 \define@key{breqn}{spread}{%
   \addtolength\eqlinespacing{#1}%
@@ -2801,7 +2803,7 @@ and the derived files
   \eqlineskiplimit\eqlineskip
 }
 %    \end{macrocode}
-% To change the amount of space on the side for \dquoted{multline} layout.   
+% To change the amount of space on the side for \dquoted{multline} layout.
 %    \begin{macrocode}
 \define@key{breqn}{sidespace}{%
   \setlength\eq@given@sidespace{#1}%
@@ -2815,7 +2817,7 @@ and the derived files
 % \latex  code here \mdash  thus the option name is \quoted{style} rather
 % than just \quoted{typesize}.    In order for this option to work when
 % setting options globally, we need to put the code in
-% \cs{eqstyle} rather than execute it directly.   
+% \cs{eqstyle} rather than execute it directly.
 %    \begin{macrocode}
 \define@key{breqn}{style}{\eqstyle\@xp{\the\eqstyle #1}}
 %    \end{macrocode}
@@ -2843,14 +2845,14 @@ and the derived files
 % \cs{eqframe}.    It must be a command taking two arguments, the
 % width and height of the equation body.    The top left corner of the
 % box produced by \cs{eqframe} will be pinned to the top-left corner
-% of the equation body.   
+% of the equation body.
 %    \begin{macrocode}
 \define@key{breqn}{frame}[\fboxrule]{\def\eq@frame{T}%
   \dim@a#1\relax\edef\eq@framewd{\the\dim@a}%
 %    \end{macrocode}
 % Until such time as we provide a frame implementation that allows the
 % frame to stretch and shrink, we'd better remove any stretch/shrink from
-% the interline glue in this case.   
+% the interline glue in this case.
 %    \begin{macrocode}
   \freeze@glue\eqlinespacing \freeze@glue\eqlineskip
 }
@@ -2860,12 +2862,12 @@ and the derived files
 \def\eq@frame{F} % no frame
 \def\eq@framewd{\fboxrule}
 %    \end{macrocode}
-% Wishful thinking?   
+% Wishful thinking?
 % \begin{literalcode}
 % \begin{dmath}[frame={width={2pt},color={blue},sep={2pt}}]
 % \end{literalcode}
 % To change the space between the frame and the equation there is a
-% framesep option.   
+% framesep option.
 %    \begin{macrocode}
 \define@key{breqn}{framesep}[\fboxsep]{%
   \if\eq@frame F\def\eq@frame{T}\fi
@@ -2881,7 +2883,7 @@ and the derived files
 % the background area that is colored is the size of the equation, plus
 % fboxsep.    If you need anything fancier for the background, you'd
 % better do it by defining \cs{eqframe} in terms of
-% \cs{colorbox} or \cs{fcolorbox}.   
+% \cs{colorbox} or \cs{fcolorbox}.
 %    \begin{macrocode}
 \define@key{breqn}{background}{\def\eq@background{#1}%
   \freeze@glue\eqlinespacing \freeze@glue\eqlineskip
@@ -2899,7 +2901,7 @@ and the derived files
 % \end{literalcode}
 % The \opt{center} option means add leftskip stretch to make the
 % individual lines be centered; this is the default for
-% \env{dseries}.   
+% \env{dseries}.
 %    \begin{macrocode}
 \define@key{breqn}{center}[]{\let\eq@centerlines\@True}
 \define@key{breqn}{nocenter}[]{\let\eq@centerlines\@False}
@@ -2910,7 +2912,7 @@ and the derived files
 % \end{literalcode}
 % Equation groups normally have alignment of the primary relation
 % symbols across the whole group.    The \opt{noalign} option
-% switches that behavior.   
+% switches that behavior.
 %    \begin{macrocode}
 \define@key{breqn}{noalign}[]{\let\grp@aligned\@False}
 \let\grp@aligned\@True % default
@@ -2919,7 +2921,7 @@ and the derived files
 % \begin{dgroup}[breakdepth={2}]
 % \end{literalcode}
 % Break depth of 2 means that breaks are allowed at mathbin symbols
-% inside two pairs of  delimiters, but not three.   
+% inside two pairs of  delimiters, but not three.
 %    \begin{macrocode}
 \define@key{breqn}{breakdepth}{\eqbreakdepth#1\relax}
 %    \end{macrocode}
@@ -2929,7 +2931,7 @@ and the derived files
 % The \opt{cols} option only makes sense for the
 % \env{darray} environment but we liberally allow all the options to
 % be used with all the environments and just ignore any unsensible ones
-% that happen to come along.   
+% that happen to come along.
 %    \begin{macrocode}
 \define@key{breqn}{cols}{\global\let\@preamble\@empty
   \darray@mkpream#1\@percentchar
@@ -2966,13 +2968,13 @@ and the derived files
 %BRM: The following incorporates several changes:
 %  1) modifications supplied by MJD to fix the eaten \cs{paragraph} problem.
 %  2) Added \cs{display@setup} here, rather than globally.
-% 
+%
 % \begin{macro}{\dmath}
 % \begin{macro}{\enddmath}
 % For the \env{dmath} environment we don't want the standard
 % optional arg processing because of the way it skips over whitespace,
 % including newline, while looking for the \verb"[" char; which is not good
-% for math material.    So we call \cs{@optarg} instead.   
+% for math material.    So we call \cs{@optarg} instead.
 %    \begin{macrocode}
 \newenvironment{dmath}{%
  \let\eq@hasNumber\@True \@optarg\@dmath{}}{}
@@ -2985,14 +2987,14 @@ and the derived files
   \setkeys{breqn}{#1}%
   \the\eqstyle
 %    \end{macrocode}
-% The equation number might have been overridden in \verb|#1|.   
+% The equation number might have been overridden in \verb|#1|.
 %    \begin{macrocode}
   \eq@setnumber
 %    \end{macrocode}
 % Start up the displayed equation by reading the contents into a
 % box register.    Enclose this phase in an extra group so that
 % modified \cs{hsize} and other params will be auto-restored
-% afterwards.   
+% afterwards.
 %    \begin{macrocode}
   \begingroup
   \eq@setup@a
@@ -3001,7 +3003,7 @@ and the derived files
 %    \end{macrocode}
 % Before it finishes off the box holding the equation body,
 % \cs{enddmath} needs to look ahead for punctuation (and
-% \cs{qed}?).   
+% \cs{qed}?).
 %    \begin{macrocode}
 \def\enddmath#1{\check@punct@or@qed}
 \def\end@dmath{%
@@ -3014,23 +3016,23 @@ and the derived files
 % required to get acceptable line breaks, how many lines will be required
 % at that width, and whether the equation number needs to be shifted to
 % avoid overlapping.    This information will then be used by
-% \cs{eq@finish} to do the typesetting of the real equation body.   
+% \cs{eq@finish} to do the typesetting of the real equation body.
 %    \begin{macrocode}
   \eq@measure
 %    \end{macrocode}
 % Piece together the equation from its constituents, recognizing
 % current constraints.    If we are in an equation group, this might
-% just save the material on a stack for later processing.   
+% just save the material on a stack for later processing.
 %    \begin{macrocode}
   \if\eq@group \grp@push \else \eq@finish\fi
 }
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
+%
 % \begin{macro}{\dmath*}
 % \begin{macro}{\enddmath*}
-% Ah yes, now the lovely \env{dmath*} environment.   
+% Ah yes, now the lovely \env{dmath*} environment.
 %    \begin{macrocode}
 \newenvironment{dmath*}{%
   \let\eq@hasNumber\@False \@optarg\@dmath{}%
@@ -3040,17 +3042,17 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@prelim}
 % If \cs{everypar} has a non-null value, it's probably
 % some code from \cs{@afterheading} that sets \cs{clubpenalty}
 % and\slash or removes the parindent box.    Both of those actions
 % are irrelevant and interfering for our purposes and need to be deflected
-% for the time being.   
+% for the time being.
 % If an equation appears at the very beginning of a list item
 % (possibly from a trivlist such as \env{proof}), we need to
-% trigger the item label.   
+% trigger the item label.
 %    \begin{macrocode}
 \def\eq@prelim{%
   \if@inlabel \indent \par \fi
@@ -3061,7 +3063,7 @@ and the derived files
 % \cn{noindent} is better than \cn{leavevmode}, which would produce
 % an indent box and an empty line to hold it.    If we are in a list
 % environment, \cn{par} is defined as \verb"{\@@par}" to preserve
-% \cs{parshape}.   
+% \cs{parshape}.
 %    \begin{macrocode}
   \noindent
   \eq@nulldisplay
@@ -3072,7 +3074,7 @@ and the derived files
 % \end{macro}
 % \begin{macro}{\breqn@parshape@warning}
 % Warning message extracted to a separate function to streamline the
-% calling function.   
+% calling function.
 %    \begin{macrocode}
 \def\breqn@parshape@warning{%
   \PackageWarning{breqn}{%
@@ -3080,19 +3082,19 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@prevshape}
-% Storage; see \cs{eq@saveparinfo}.   
+% Storage; see \cs{eq@saveparinfo}.
 %    \begin{macrocode}
 \let\eq@prevshape\@empty
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
-% \begin{macro}{\eq@saveparinfo} 
+%
+%
+% \begin{macro}{\eq@saveparinfo}
 % Save the number of lines and parshape info for the text preceding
-% the equation.   
+% the equation.
 %    \begin{macrocode}
 \def\eq@saveparinfo{%
   \count@\prevgraf \advance\count@-\thr@@ % for the null display
@@ -3104,7 +3106,7 @@ and the derived files
       }%
 %    \end{macrocode}
 % Maybe best to set \cs{eq@prevshape} the same in the else case
-% also.    Better than nothing.   
+% also.    Better than nothing.
 %    \begin{macrocode}
   \else
     \breqn@parshape@warning
@@ -3112,15 +3114,15 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@setnumber}
 % If the current equation number is not explicitly given, then
 % use an auto-generated number, unless the no-number switch has been
-% thrown (\env{dmath*}).   
+% thrown (\env{dmath*}).
 % \cs{theequation} is the number form to be used for all equations,
 % \cs{eq@number} is the actual value for the current equation
-% (might be an exception to the usual sequence).   
+% (might be an exception to the usual sequence).
 %    \begin{macrocode}
 \def\eq@setnumber{%
   \eq@wdNum\z@
@@ -3139,7 +3141,7 @@ and the derived files
 % number-placement calculations.    The extra braces around
 % \cs{eqnumform} make it possible for \cs{eqnumfont} to have
 % either an \cs{itshape} (recommended) or a \cs{textit}
-% value.   
+% value.
 %    \begin{macrocode}
 %<trace>      \breqn@debugmsg{Number \eq@number}%
       \set@label{equation}\eq@number
@@ -3160,7 +3162,7 @@ and the derived files
 % measuring includes the number of lines required, the width of the
 % equation number, the total height of the equation body, and (most
 % important) the parshape spec that was used in determining height and
-% number of lines.   
+% number of lines.
 %
 % Invoke the equation formatter for the requested centering/indentation
 % having worked out the best parshape.
@@ -3233,10 +3235,10 @@ and the derived files
   \endgroup
   \eq@botspace
 }
-%    \end{macrocode} 
+%    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % These are temporary until the tag position algorithm gets
 % rewritten. At least the tag is positioned correctly for single-line
 % displays. The horizontal frame position is not correct but the
@@ -3245,7 +3247,7 @@ and the derived files
 \def\eq@typeset@L@single{%
   \nobreak
   \eq@params\eq@parshape
-  \nointerlineskip\noindent 
+  \nointerlineskip\noindent
   \add@grp@label
   \rlap{\kern-\leftskip\box\EQ@numbox}%
   \if F\eq@frame
@@ -3257,30 +3259,30 @@ and the derived files
 \def\eq@typeset@R@single{%
   \nobreak
   \eq@params\eq@parshape
-  \nointerlineskip\noindent 
+  \nointerlineskip\noindent
   \add@grp@label
   \if F\eq@frame
   \else
     \rlap{\raise\eq@firstht\hbox to\z@{\eq@addframe\hss}}%
   \fi
   \rlap{\kern-\leftskip\kern\linewidth\kern-\wd\EQ@numbox\copy\EQ@numbox}%
-  \eq@dump@box\unhbox\EQ@box 
+  \eq@dump@box\unhbox\EQ@box
   \@@par
 }
 %    \end{macrocode}
 %
-% 
-% 
+%
+%
 % \section{Special processing for end-of-equation}
-% 
+%
 % At the end of a displayed equation environment we need to peek ahead
 % for two things: following punction such as period or command that
 % should be pulled in for inclusion at the end of the equation; and
 % possibly also an \verb"\end{proof}" with an implied \dquoted{qed}
 % symbol that is traditionally included at the end of the display rather
-% than typeset on a separate line.   
+% than typeset on a separate line.
 % We could require that the users type \cs{qed} explicitly at the
-% end of the display when they want to have the display take notice of it.   
+% end of the display when they want to have the display take notice of it.
 % But the reason for doing that would only be to save work for the
 % programmer; the most natural document markup would allow an inline
 % equation and a displayed equation at the end of a proof to differ only
@@ -3297,12 +3299,12 @@ and the derived files
 % \end{dmath}.
 % \end{proof}
 % \end{literalcode}
-% .   
+% .
 % The technical difficulties involved in supporting this markup within
-% \latex2e  are, admittedly, nontrivial.   
-% Nonetheless, let's see how far we can go.   
-% 
-% 
+% \latex2e  are, admittedly, nontrivial.
+% Nonetheless, let's see how far we can go.
+%
+%
 % The variations that we will support are only the most
 % straightforward ones:
 % \begin{literalcode}
@@ -3315,10 +3317,10 @@ and the derived files
 % Perhaps a comment
 % \end{proof}
 % \end{literalcode}
-% .   
+% .
 % If there is anything more complicated than a space after the
 % period we will not attempt to scan any further for a possible
-% \verb"\end{proof}".   
+% \verb"\end{proof}".
 % This includes material such as:
 % \begin{literalcode}
 % \begin{figure}...\end{figure}%
@@ -3333,10 +3335,10 @@ and the derived files
 % and the preceding paragraph has to be fully finished off before
 % proceeding further, even inside an element like \dquoted{proof} whose
 % end-element formatting requires integration with the end of the
-% paragraph text.   
+% paragraph text.
 % And \tex nically speaking, a \cs{par} token that comes from a
 % blank line and one that comes from the sequence of characters
-% \verb"\" \verb"p" \verb"a" \verb"r" are equally explicit.   
+% \verb"\" \verb"p" \verb"a" \verb"r" are equally explicit.
 % I hope to add support for \cs{footnote} in the future, as it
 % seems to be a legitimate markup possibility in that context from a
 % purely logical point of view, but there are additional technical
@@ -3344,12 +3346,12 @@ and the derived files
 % \begin{dn}
 % mjd,1999/02/08
 % \end{dn}
-% .   
-% 
-% 
+% .
+%
+%
 % \begin{macro}{\peek@branch}
 % This is a generalized \dquoted{look at next token and choose some action
-% based on it} function.   
+% based on it} function.
 %    \begin{macrocode}
 \def\peek@branch#1#2{%
   \let\peek@b#1\let\peek@space#2\futurelet\@let@token\peek@a
@@ -3362,21 +3364,21 @@ and the derived files
 \lowercase{\def\peek@skip@space} {\futurelet\@let@token\peek@a}%
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\check@punct}
 %   \changes{v0.96a}{2007/12/17}{Insert \cs{finish@end} if no special
 %     case is found.}
 % For this one we need to recognize and grab for inclusion any of the
-% following tokens: \verb",;.!?", both catcode 12 (standard \latex 
+% following tokens: \verb",;.!?", both catcode 12 (standard \latex
 % value) and catcode 13 (as might hold when the Babel package is
-% being used).   
+% being used).
 % We do not support a space preceding the punctuation since that would
 % be considered simply invalid markup if a display-math environment were
 % demoted to in-line math; and we want to keep their markup as parallel as
-% possible.   
+% possible.
 % If punctuation does not follow, then the \cs{check@qed} branch
-% is not applicable.   
+% is not applicable.
 %    \begin{macrocode}
 \def\check@punct{\futurelet\@let@token\check@punct@a}
 \def\check@punct@a{%
@@ -3412,7 +3414,7 @@ and the derived files
 }
 \endgroup
 %    \end{macrocode}
-% 
+%
 %    \begin{macrocode}
 \let\found@punct\@empty
 \def\check@qed#1{%
@@ -3427,7 +3429,7 @@ and the derived files
 %    \end{macrocode}
 % For each environment ENV that takes an implied qed at the end, the
 % control sequence ENVqed must be defined; and it must include suitable
-% code to yield the desired results in a displayed equation.   
+% code to yield the desired results in a displayed equation.
 %    \begin{macrocode}
 \def\check@qed@b#1#2{%
   \@ifundefined{#2qed}{}{%
@@ -3439,8 +3441,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\latex@end}
 % \begin{macro}{\finish@end}
 % The lookahead for punctuation following a display requires
@@ -3449,7 +3451,7 @@ and the derived files
 % whole package is so over-the-top anyway, what's a little more
 % going to hurt?    And rationalizing this aspect of
 % equation markup is a worthy cause.    Here is the usual
-% definition of \cs{end}.   
+% definition of \cs{end}.
 % \begin{literalcode}
 % \def\end#1{
 %   \csname end#1\endcsname \@checkend{#1}%
@@ -3459,7 +3461,7 @@ and the derived files
 % \end{literalcode}
 % We can improve the chances of this code surviving through future
 % minor changes in the fundamental definition of \cs{end} by taking a
-% little care in saving the original meaning.   
+% little care in saving the original meaning.
 %    \begin{macrocode}
 \def\@tempa#1\endcsname#2\@nil{\def\latex@end##1{#2}}
 \expandafter\@tempa\end{#1}\@nil
@@ -3467,12 +3469,12 @@ and the derived files
 %    \end{macrocode}
 % Why don't we call \cs{CheckCommand} here?    Because that
 % doesn't help end users much; it works better to use it during package
-% testing by the maintainer.   
-% 
-% 
+% testing by the maintainer.
+%
+%
 % If a particular environment needs to call a different end action, the
 % end command of the environment should be defined to gobble two args and
-% then call a function like \cs{check@punct@or@qed}.   
+% then call a function like \cs{check@punct@or@qed}.
 %    \begin{macrocode}
 \def\check@punct@or@qed#1{%
   \xdef\found@punct{\@empty}% BRM: punctuation was being remembered past this eqn.
@@ -3483,26 +3485,26 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
+%
 % \begin{macro}{\eqpunct}
 % User-settable function for handling
 % the punctuation at the end of an equation.    You could, for example,
-% define it to just discard the punctuation.   
+% define it to just discard the punctuation.
 %    \begin{macrocode}
 \newcommand\eqpunct[1]{\thinspace#1}
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\set@label}
 % \cs{set@label} just sets \cs{@currentlabel} but it
 % takes the counter as an argument, in the hope that \latex  will some
 % day provide an improved labeling system that includes type info on the
-% labels.   
+% labels.
 %    \begin{macrocode}
 \providecommand\set@label[2]{\protected@edef\@currentlabel{#2}}
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\eq@topspace}
 % \begin{macro}{\eq@botspace}
 % The action of \cs{eq@topspace} is complicated by the
@@ -3513,7 +3515,7 @@ and the derived files
 % \cs{eq@botspace}.    This also allows us to optimize
 % slightly by setting the above-skip with \cs{parskip} instead of
 % \cs{vskip}.    \verb|#1|  is either \cs{noindent} or
-% \verb"\vskip\parskip".   
+% \verb"\vskip\parskip".
 %
 % BRM: Hmm; we need to do *@setspace BEFORE this for small skips to work!
 %    \begin{macrocode}
@@ -3547,7 +3549,7 @@ and the derived files
       \addtolength\parskip{\eq@framesep+\eq@framewd}%
     \fi
 %<*trace>
-    \breqn@debugmsg{Topspace: \theb@@le\EQ@shortskips, \parskip=\the\parskip, 
+    \breqn@debugmsg{Topspace: \theb@@le\EQ@shortskips, \parskip=\the\parskip,
       \predisplaysize=\the\predisplaysize}%
 %</trace>
     #1%
@@ -3599,18 +3601,18 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % At the end of an equation, need to put in a pagebreak penalty
 % and some vertical space.    Also set some flags to remove parindent
 % and extra word space if the current paragraph text continues without an
-% intervening \cs{par}.   
+% intervening \cs{par}.
 %    \begin{macrocode}
 \def\eq@botspace{%
   \penalty\postdisplaypenalty
 %    \end{macrocode}
 % Earlier calculations will have set \cs{belowdisplayskip} locally
 % to \cs{belowdisplayshortskip} if applicable.    So we can just use
-% it here.   
+% it here.
 %    \begin{macrocode}
   \if F\eq@frame
   \else
@@ -3624,23 +3626,23 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
+%
 % \begin{macro}{\eq@resume@parshape}
 % This should calculate the total height of the equation,
 % including space above and below, and set prevgraf to the number it would
 % be if that height were taken up by normally-spaced normal-height
 % lines.    We also need to restore parshape if it had a non-null
-% value before the equation.    Not implemented yet.   
+% value before the equation.    Not implemented yet.
 %    \begin{macrocode}
 \def\eq@resume@parshape{}
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \section{Preprocessing the equation body}
 % \begin{macro}{\eq@startup}
 % Here is the function that initially collects the equation
-% material in a box.   
-% 
+% material in a box.
+%
 %    \begin{macrocode}
 \def\eq@startup{%
   \global\let\EQ@hasLHS\@False
@@ -3649,9 +3651,9 @@ and the derived files
     \penalty-\@Mi
 }
 %    \end{macrocode}
-% 
+%
 % This setup defines the environment for the first typesetting
-% pass, note the \cs{hsize} value for example.   
+% pass, note the \cs{hsize} value for example.
 %    \begin{macrocode}
 \def\eq@setup@a{%
   \everymath\everydisplay
@@ -3671,15 +3673,15 @@ and the derived files
 % \cs{hsize}, but more than half of \cs{hsize} so that if a line
 % is nearly empty, the glue stretch factor will always be less than 2.0
 % and so the badness will be less than 100 and so \tex  will not issue
-% badness warnings.   
+% badness warnings.
 %    \begin{macrocode}
   \linepenalty\@m
   \rightskip\z@\@plus\@M\p@ \leftskip\z@skip \parfillskip\z@skip
   \clubpenalty\@ne \widowpenalty\z@ \interlinepenalty\z@
 %    \end{macrocode}
 % After a relation symbol is discovered, binop symbols should start
-% including a special offset space.   
-% But until then \cs{EQ@prebin@space} is a no-op.   
+% including a special offset space.
+% But until then \cs{EQ@prebin@space} is a no-op.
 %    \begin{macrocode}
   \global\let\EQ@prebin@space\relax
 %    \end{macrocode}
@@ -3687,7 +3689,7 @@ and the derived files
 % after mathbins and mathrels.    As a matter of fact, the penalties are
 % then omitted by \tex , since bare glue without a penalty is
 % \emph{not} a valid breakpoint if it occurs within
-% mathon\ndash mathoff items.   
+% mathon\ndash mathoff items.
 %    \begin{macrocode}
   \binoppenalty\@M \relpenalty\@M
 }
@@ -3705,7 +3707,7 @@ and the derived files
 % \end{literalcode}
 % .    The contents are shown in four parts in this figure and the next
 % three.    The first part contains two line boxes, one for the mathon
-% node and one for the LHS.   
+% node and one for the LHS.
 % \begin{literalcode}
 % \hbox(0.0+0.0)x16383.99998, glue set 1.6384
 % .\mathon
@@ -3727,7 +3729,7 @@ and the derived files
 % \begin{figure}\centering
 % This is the first part of the RHS, up to the
 % \cs{right}, where a line break has been forced so that we can break
-% open the left-right box.   
+% open the left-right box.
 % \begin{literalcode}
 % ...
 % \penalty 2
@@ -3775,7 +3777,7 @@ and the derived files
 % \begin{figure}
 %   \centering
 % This is the remainder of the RHS after the post-\cs{right}
-% split.   
+% split.
 % \begin{literalcode}
 % ...
 % \penalty 3
@@ -3816,13 +3818,13 @@ and the derived files
 % .\glue(\rightskip) 0.0 plus 10000.0
 % \glue(\baselineskip) 9.5
 % ...
-% \end{literalcode}   
+% \end{literalcode}
 % \caption{Preliminary equation contents, part 3}
 % \end{figure}
 %
 % \begin{figure}
 %   \centering
-% This is the mathoff fragment.   
+% This is the mathoff fragment.
 % \begin{literalcode}
 % ...
 % \glue(\baselineskip) 9.5
@@ -3834,7 +3836,7 @@ and the derived files
 % \end{literalcode}
 % \caption{Preliminary equation contents, part 4}
 % \end{figure}
-% 
+%
 % \begin{macro}{\eq@capture}
 % \begin{macro}{\eq@punct}
 % If an equation ends with a \cs{right} delim, the last thing
@@ -3845,7 +3847,7 @@ and the derived files
 % any, goes into the last box with the mathoff kern.    If the math list
 % ends with a slanted letter, then there will be an italic correction
 % added after it by \tex .    Should we remove it?    I guess
-% so.   
+% so.
 %
 %
 % \subsection{Capturing the equation}
@@ -3866,7 +3868,7 @@ and the derived files
   \ifnum\lastpenalty>-\@M \penalty-\@Mi \fi
 %    \end{macrocode}
 % We want to keep the mathoff kern from vanishing at the line break,
-% so that we can reuse it later.   
+% so that we can reuse it later.
 %    \begin{macrocode}
   \keep@glue\@@endmath
   \eq@addpunct
@@ -3875,7 +3877,7 @@ and the derived files
 %    \end{macrocode}
 % First snip the last box, which contains the mathoff node, and put it
 % into \cs{EQ@box}.    Then when we call \cs{eq@repack} it
-% will recurse properly.   
+% will recurse properly.
 %    \begin{macrocode}
   \setbox\tw@\lastbox
   \global\setbox\EQ@box\hbox{\unhbox\tw@\unskip\unskip\unpenalty}%
@@ -3887,7 +3889,7 @@ and the derived files
   \eq@wdR\z@%BRM: eq@wdL patch
   \eq@repack % recursive
 %    \end{macrocode}
-% Finally, add the mathon item to \cs{EQ@box} and \cs{EQ@copy}.   
+% Finally, add the mathon item to \cs{EQ@box} and \cs{EQ@copy}.
 %    \begin{macrocode}
   \setbox\tw@\lastbox
   \global\setbox\EQ@box\hbox{\unhcopy\tw@\unskip\unpenalty \unhbox\EQ@box}%
@@ -3899,7 +3901,7 @@ and the derived files
        + 0.2777777777777em}% FUDGE??!?!?!
     \ifdim\dim@a>\eq@wdL
 %<*trace>
-      \breqn@debugmsg{Correcting LHS from \the\eq@wdL\space to 
+      \breqn@debugmsg{Correcting LHS from \the\eq@wdL\space to
                 \the\dim@a = \the\wd\EQ@box - \the\eq@wdR}%
 %</trace>
       \eq@wdL\dim@a
@@ -3921,10 +3923,10 @@ and the derived files
 %    \end{macrocode}
 % Now we have two copies of the equation, one in \cs{EQ@box},
 % and one in \cs{EQ@copy} with inconvenient stuff like inserts and
-% marks omitted.   
-% 
+% marks omitted.
+%
 % \cs{eq@addpunct} is for tacking on text punctuation at the end
-% of a display, if any was captured by the \quoted{gp} lookahead.   
+% of a display, if any was captured by the \quoted{gp} lookahead.
 %    \begin{macrocode}
 \def\eq@addpunct{%
   \ifx\found@punct\@empty
@@ -3935,22 +3937,22 @@ and the derived files
   \EQ@afterspace
 }
 %    \end{macrocode}
-% Needed for the \env{dseries} environment, among other things.   
+% Needed for the \env{dseries} environment, among other things.
 %    \begin{macrocode}
 \global\let\EQ@afterspace\@empty
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
+%
 % \begin{macro}{\eq@repack}
 % The \cs{eq@repack} function looks at the information at hand
-% and proceeds accordingly.   
+% and proceeds accordingly.
 %
 % TeX Note: this scans BACKWARDS from the end of the math.
 %    \begin{macrocode}
 \def\eq@repack{%
 % A previous penalty of 3 on the vertical list means that we need
-% to break open a left-right box.   
+% to break open a left-right box.
 %    \begin{macrocode}
   \ifcase\lastpenalty
      % case 0: normal case
@@ -3960,7 +3962,7 @@ and the derived files
   \or % case 1: finished recursing
 %    \end{macrocode}
 % Grab the mathon object since we need it to inhibit line breaking at
-% bare glue nodes later.   
+% bare glue nodes later.
 %    \begin{macrocode}
     \unpenalty
     \setbox\tw@\lastbox
@@ -3969,7 +3971,7 @@ and the derived files
   \or % case 2: save box width = LHS width
 %    \end{macrocode}
 % Don't need to set \cs{EQ@hasLHS} here because it was set earlier
-% if applicable.   
+% if applicable.
 %    \begin{macrocode}
     \unpenalty
     \setbox\tw@\lastbox
@@ -3985,11 +3987,11 @@ and the derived files
 % .\penalty -10001
 % .\glue(\rightskip) 0.0 plus 10000.0
 % \end{literalcode}
-% and we want to ensure that the thickmuskip glue gets removed.   
+% and we want to ensure that the thickmuskip glue gets removed.
 % And we now arrange for \cs{EQ@copy} and \cs{EQ@box} to
 % keep the LHS in a separate subbox; this is so that we can introduce a
 % different penalty before the first relation symbol if necessary,
-% depending on the layout decisions that are made later.   
+% depending on the layout decisions that are made later.
 %    \begin{macrocode}
     \global\setbox\EQ@copy\hbox{%
       \hbox{\unhcopy\tw@\unskip\unpenalty\unskip}%
@@ -4009,19 +4011,19 @@ and the derived files
   \eq@repack % RECURSE
 }
 %    \end{macrocode}
-% Error message extracted to streamline calling function.   
+% Error message extracted to streamline calling function.
 %    \begin{macrocode}
 \def\breqn@repack@err{%
   \PackageError{breqn}{eq@repack penalty neq 0,1,2,3}\relax
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@repacka}
 % We need to transfer each line into two separate boxes, one
 % containing everything and one that omits stuff like \cs{insert}s
-% that would interfere with measuring.   
+% that would interfere with measuring.
 %    \begin{macrocode}
 \def\eq@repacka#1{%
   \global\setbox#1\hbox{\unhcopy\tw@ \unskip
@@ -4030,7 +4032,7 @@ and the derived files
     \unpenalty
 %    \end{macrocode}
 % If creating the measure copy, ignore all cases above case 3 by
-% folding them into case 1.   
+% folding them into case 1.
 %    \begin{macrocode}
     \ifx\EQ@copy#1\ifnum\count@>\thr@@ \count@\@ne\fi\fi
     \ifcase\count@
@@ -4054,10 +4056,10 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@nulldisplay}
-% Throw in a null display in order to get predisplaysize \etc .   
+% Throw in a null display in order to get predisplaysize \etc .
 % My original approach here was to start the null display, then measure
 % the equation, and set a phantom of the equation's first line before
 % ending the null display.    That would allow finding out if \tex  used
@@ -4070,7 +4072,7 @@ and the derived files
 % control, \eg , the threshold amount of horizontal space between
 % predisplaysize and the equation's left edge that determines when the
 % short skips kick in becomes a designer-settable parameter rather than
-% hardwired into \TeX .   
+% hardwired into \TeX .
 %    \begin{macrocode}
 \def\eq@nulldisplay{%
   \begingroup \frozen@everydisplay\@emptytoks
@@ -4084,7 +4086,7 @@ and the derived files
     \listwidth\the\linewidth
 %    \end{macrocode}
 % Not sure how best to test whether leftmargin should be
-% added.    Let's do this for now [mjd,1997/10/08].   
+% added.    Let's do this for now [mjd,1997/10/08].
 %    \begin{macrocode}
     \ifdim\displayindent>\z@
       \advance\listwidth\the\leftmargin
@@ -4097,7 +4099,7 @@ and the derived files
 % \cs{baselineskip} will be added (so we didn't need to set it to
 % zero) and the previous value of prevdepth carries through.    Those
 % properties do not hold for an empty simple equation without
-% \cs{halign}.   
+% \cs{halign}.
 %    \begin{macrocode}
   \halign{##\cr}%
   \@@enddisplay
@@ -4107,8 +4109,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@newline}
 % \begin{macro}{\eq@newlinea}
 % \begin{macro}{\eq@newlineb}
@@ -4123,7 +4125,7 @@ and the derived files
 % \cs{keep@glue} object which is not such a good idea if a mathbin
 % symbol follows \mdash  the indent of the mathbin will be wrong because
 % the leading negative glue will not disappear as it should at the line
-% break.   
+% break.
 %    \begin{macrocode}
 \def\eq@newline{%
   \@ifstar{\eq@newlinea\@M}{\eq@newlinea\eqinterlinepenalty}}
@@ -4134,15 +4136,15 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@revspace}
 % \begin{macro}{\eq@revspaceb}
 % When \cs{eq@revspace} (re-vspace) is called, we are the
 % end of an equation line; we need to remove the existing penalty of
 % $-10002$ in order to put a vadjust object in front of it, then put
 % back the penalty so that the line break will still take place in the
-% final result.   
+% final result.
 %    \begin{macrocode}
 \def\eq@revspace{%
   \global\setbox\EQ@vimbox\vbox{\unvbox\EQ@vimbox
@@ -4152,7 +4154,7 @@ and the derived files
   \penalty-\@M
 }
 %    \end{macrocode}
-% The b version is used for the \cs{EQ@copy} box.   
+% The b version is used for the \cs{EQ@copy} box.
 %    \begin{macrocode}
 \def\eq@revspaceb{%
   \global\setbox\EQ@vimcopy\vbox{\unvbox\EQ@vimcopy
@@ -4164,19 +4166,19 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@break}
 % The function \cs{eq@break} does a preliminary linebreak with
-% a flag penalty.   
+% a flag penalty.
 %    \begin{macrocode}
 \def\eq@break#1{\penalty-1000#1 \keep@glue}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Choosing optimal line breaks}
 % The question of what line width to use when breaking an
 % equation into several lines is best examined in the light of an extreme
@@ -4184,39 +4186,39 @@ and the derived files
 % equation falls inside a second-level list with nonzero leftmargin and
 % rightmargin.    Then we want to try in succession a number of
 % different possibilities.    In each case if the next possibility is
-% no wider than the previous one, skip ahead to the one after.   
+% no wider than the previous one, skip ahead to the one after.
 % \begin{enumerate}
 % \item First try linewidth(2), the linewidth for the current
-% level-2 list.   
-% 
-%  
+% level-2 list.
+%
+%
 % \item If we cannot find adequate linebreaks at that width, next try
 % listwidth(2), the sum of leftmargin, linewidth, and rightmargin for
-% the current list.   
-% 
-%  
+% the current list.
+%
+%
 % \item If we cannot find linebreaks at that width, next try linewidth
 % (1) (skipping this step if it is no larger then
-% listwidth(2)).   
-% 
-%  
+% listwidth(2)).
+%
+%
 % \item If we cannot find linebreaks at that width, next try
-% listwidth(1).   
-% 
-%  
+% listwidth(1).
+%
+%
 % \item If we cannot find linebreaks at that width, next try column
-% width.   
-% 
-%  
+% width.
+%
+%
 % \item If we cannot find linebreaks at that width, next try text
-% width.   
-% 
-%  
+% width.
+%
+%
 % \item If we cannot find linebreaks at that width, next try equation
 % width, if it exceeds text width (\ie , if the style allows equations
-% to extend into the margins).   
-% 
-%  
+% to extend into the margins).
+%
+%
 % \end{enumerate}
 %
 %
@@ -4228,32 +4230,32 @@ and the derived files
 %
 % At any given line width, we run through a series of parshape
 % trials and, essentially, use the first one that gives decent line
-% breaks.   
-% But the process is a bit more complicated in fact.   
+% breaks.
+% But the process is a bit more complicated in fact.
 % In order to do a really good job of setting up the parshapes, we
-% need to know how many lines the equation will require.   
-% And of course the number of lines needed depends on the parshape!   
+% need to know how many lines the equation will require.
+% And of course the number of lines needed depends on the parshape!
 % So as our very first trial we run a simple first-approximation
 % parshape (Figure~\vref{f:parshape-1}) whose
 % main purpose is to get an estimate on the number of lines that will be
 % needed; it chooses a uniform indent for all lines after the first one
-% and does not take any account of the equation number.   
+% and does not take any account of the equation number.
 % A substantial majority of equations only require one line anyway,
-% and for them this first trial will succeed.   
+% and for them this first trial will succeed.
 % In the one-line case if there is an equation number and it doesn't
 % fit on the same line as the equation body, we don't go on to other
 % trials because breaking up the equation body will not gain us
 % anything\mdash we know that we'll have to use two lines in any case
 % \mdash  so we might as well keep the equation body together on one line
-% and shift the number to a separate line.   
-% 
+% and shift the number to a separate line.
+%
 % If we learn from the first trial that the equation body
 % requires more than one line, the next parshape trial involves adjusting
 % the previous parshape to leave room for the equation number, if
 % present.    If no number is present, again no further trials are
-% needed.   
-% 
-% Some remarks about parshape handling.    The \tex 
+% needed.
+%
+% Some remarks about parshape handling.    The \tex
 % primitive doesn't store the line specs anywhere, \verb"\the\parshape"
 % only returns the number of line specs.    This makes it well nigh
 % impossible for different packages that use \cs{parshape} to work
@@ -4264,15 +4266,15 @@ and the derived files
 % obviously, is provide a parshape interface that includes a record of all
 % the line specs.    For that we designate a macro \cs{@parshape}
 % which includes not only the line specs, but also the line count and even
-% the leading \cs{parshape} token.   
+% the leading \cs{parshape} token.
 % This allows it to be directly executed without an auxiliary if-empty
 % test.    It should include a trailing \cs{relax} when it has a
-% nonempty value.   
+% nonempty value.
 %    \begin{macrocode}
 \let\@parshape\@empty
 %    \end{macrocode}
-% 
-% 
+%
+%
 % The function \cs{eq@measure} runs line-breaking trials
 % on the copy of the equation body that is stored in the box register
 % \cs{EQ@copy}, trying various possible layouts in order of
@@ -4283,27 +4285,27 @@ and the derived files
 % depends on the line breaks such as the depth of the last line, the
 % height of the first line, and positioning information for the equation
 % number.   The two main variables in the equation layout are the line
-% width and the placement of the equation number, if one is present.   
-% 
-% 
+% width and the placement of the equation number, if one is present.
+%
+%
 % \begin{macro}{\eq@measure}
 % Run linebreak trials on the equation contents and measure the
-% results.   
+% results.
 %    \begin{macrocode}
 \def\eq@measure{%
 %    \end{macrocode}
 % If an override value is given for indentstep in the env options, use
-% it.   
+% it.
 %    \begin{macrocode}
   \ifdim\eq@indentstep=\maxdimen \eq@indentstep\eqindentstep \fi
 %    \end{macrocode}
 % If \cs{eq@linewidth} is nonzero at this point, it means that
-% the user specified a particular target width for this equation.   
-% In that case we override the normal list of trial widths.   
+% the user specified a particular target width for this equation.
+% In that case we override the normal list of trial widths.
 %    \begin{macrocode}
   \ifdim\eq@linewidth=\z@ \else \edef\eq@linewidths{{\the\eq@linewidth}}\fi
   \begingroup \eq@params
-  \leftskip\z@skip 
+  \leftskip\z@skip
 %    \end{macrocode}
 % Even if \cs{hfuzz} is greater than zero a box whose contents
 % exceed the target width by less then hfuzz still has a reported badness
@@ -4312,7 +4314,7 @@ and the derived files
 % such boxes return a smaller badness.    To this end we include an
 % \cs{hfuzz} allowance in \cs{rightskip}.    In fact,
 % \cs{eq@params} ensures that \cs{hfuzz} for equations is at
-% least 1pt.   
+% least 1pt.
 %    \begin{macrocode}
   \rightskip\z@\@plus\columnwidth\@minus\hfuzz
 %  \eqinfo
@@ -4322,7 +4324,7 @@ and the derived files
   \endgroup
 %    \end{macrocode}
 % \quoted{local} parameter settings are passed outside the endgroup through
-% \cs{EQ@trial}.   
+% \cs{EQ@trial}.
 %    \begin{macrocode}
   \EQ@trial
 }
@@ -4358,30 +4360,30 @@ and the derived files
 % Layout Trials Driver
 % Basically, trying different sequences of parshapes.
 %
-% 
+%
 % \begin{macro}{\EQ@trial}
-% Init.   
+% Init.
 %    \begin{macrocode}
 \let\EQ@trial\@empty
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\EQ@continue}
 % This is a token register used to carry trial info past a
-% group boundary with only one global assignment.   
+% group boundary with only one global assignment.
 %    \begin{macrocode}
 \newtoks\EQ@continue
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
-% \begin{macro}{\EQ@widths} 
+%
+%
+% \begin{macro}{\EQ@widths}
 % This is used for storing the actual line-width info of the equation
-% contents after breaking.   
+% contents after breaking.
 %    \begin{macrocode}
 \let\EQ@widths\@empty
-%    \end{macrocode} 
+%    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\EQ@fallback}
 %    \begin{macrocode}
@@ -4389,7 +4391,7 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\eq@linewidths}
-% This is the list of target widths for line breaking.   
+% This is the list of target widths for line breaking.
 %
 %========================================
 % BRM: Odd; I don't think I've seen this use anything but \cs{displaywidth}...
@@ -4397,12 +4399,12 @@ and the derived files
 \def\eq@linewidths{\displaywidth\linewidth\columnwidth}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@trial}
 % The \cs{eq@trial} function tries each candidate
 % line width in \cs{eq@linewidths} until an equation layout is found
-% that yields satisfactory line breaks.   
+% that yields satisfactory line breaks.
 %    \begin{macrocode}
 \def\eq@trial{%
   \ifx\@empty\eq@linewidths
@@ -4414,32 +4416,32 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@trial@a}
 % The \cs{eq@trial@a} function reads the leading line
 % width from \cs{eq@linewidths}; if the new line width is greater
 % than the previous one, start running trials with it; otherwise do
-% nothing with it.   
+% nothing with it.
 % Finally, run a peculiar \cs{edef} that leaves
-% \cs{eq@linewidths} redefined to be the tail of the list.   
+% \cs{eq@linewidths} redefined to be the tail of the list.
 % If we succeed in finding satisfactory line breaks
 % for the equation, we will reset \cs{EQ@continue} in such a
-% way that it will terminate the current trials.   
+% way that it will terminate the current trials.
 % An obvious branch here would be to check whether the width of
 % \cs{EQ@copy} is less than \cs{eq@linewidth} and go immediately
-% to the one-line case if so.   
+% to the one-line case if so.
 % However, if the equation contains more than one RHS, by
 % default each additional RHS starts on a new line\mdash \ie , we want
-% the ladder layout anyway.   
+% the ladder layout anyway.
 % So we choose the initial trial on an assumption of multiple lines
-% and leave the one-line case to fall out naturally at a later point.   
+% and leave the one-line case to fall out naturally at a later point.
 %    \begin{macrocode}
 \def\eq@trial@a#1{%
   \dim@c#1\relax
   \if T\eq@frame \eq@frame@adjust\dim@c \fi
   \ifdim\dim@c>\eq@linewidth
-    \eq@linewidth\dim@c 
+    \eq@linewidth\dim@c
 %<trace>    \breqn@debugmsg{Choose Shape for width(#1)=\the\eq@linewidth}%
     \let\eq@trial@b\eq@trial@d
     \csname eq@try@layout@\eq@layout\endcsname
@@ -4466,7 +4468,7 @@ and the derived files
 }
 %    \end{macrocode}
 % \begin{macro}{\eq@trial@done}
-% Success.   
+% Success.
 %    \begin{macrocode}
 \def\eq@trial@done{%
 %<trace>  \breqn@debugmsg{End trial: Success!}%
@@ -4474,22 +4476,22 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\eq@trial@init}
 % This is called from \cs{eq@trial@b} to initialize or
 % re-initialize certain variables as needed when running one or more
-% trials at a given line width.   
-% By default assume success, skip the fallback code.   
+% trials at a given line width.
+% By default assume success, skip the fallback code.
 %    \begin{macrocode}
 \def\eq@trial@init{\global\let\EQ@fallback\eq@nextlayout}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\eq@nextlayout}
-% 
+%
 % In the fallback case cancel the current group to avoid unnecessary
-% group nesting (with associated save-stack cost, \etc ).   
+% group nesting (with associated save-stack cost, \etc ).
 %    \begin{macrocode}
-\def\eq@nextlayout#1{% 
+\def\eq@nextlayout#1{%
   \endgroup
 %<trace>  \breqn@debugmsg{Nope ... that ain't gonna work.}%
   \begingroup #1%
@@ -4497,8 +4499,8 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\eq@failout}
-% 
-% .   
+%
+% .
 %    \begin{macrocode}
 \def\eq@failout{%
 %<trace>\breqn@debugmsg{End trial: failout}%
@@ -4507,8 +4509,8 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\eq@trial@save}
-% 
-% Save the parameters of the current trial.   
+%
+% Save the parameters of the current trial.
 %    \begin{macrocode}
 \def\eq@trial@save#1{%
 %<*trace>
@@ -4540,18 +4542,18 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\eq@trial@b}
-% 
-% By default this just runs \cs{eq@trial@c}; \cf 
-% \cs{eq@trial@d}.   
+%
+% By default this just runs \cs{eq@trial@c}; \cf
+% \cs{eq@trial@d}.
 %    \begin{macrocode}
 \def\eq@trial@b{\eq@trial@c}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@trial@c}
-% 
-% Run the equation contents through the current parshape.   
+%
+% Run the equation contents through the current parshape.
 %    \begin{macrocode}
 \def\eq@trial@c#1#2{%
 %<trace>  \breqn@debugmsg{Trying layout "#1" with\MessageBreak==== parshape\space\@xp\@gobble\@parshape}%
@@ -4565,7 +4567,7 @@ and the derived files
       \eq@trial@save\EQ@trial
 %    \end{macrocode}
 % If there is a number, try the same parshape again with adjustments
-% to make room for the number.   
+% to make room for the number.
 %
 % This is an awkward place for this:
 % It only allows trying to fit the number w/the SAME layout shape!
@@ -4591,7 +4593,7 @@ and the derived files
 \def\eq@trial@d#1#2{\eq@trial@c{#1}{}}
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\eq@check@density}
 %    \begin{macrocode}
 \def\eq@check@density{%
@@ -4607,7 +4609,7 @@ and the derived files
 % \end{macro}
 %
 % \begin{macro}{\eq@shortLHS}
-% Test to see if we need to apply the \cs{eq@dense@enough} test.   
+% Test to see if we need to apply the \cs{eq@dense@enough} test.
 %    \begin{macrocode}
 \def\eq@shortLHS{\ifdim\eq@wdL>.44\eq@wdT 1\else 0\fi 0}
 %    \end{macrocode}
@@ -4635,24 +4637,24 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\adjust@rel@penalty}
-% Normally this is a no-op.   
+% Normally this is a no-op.
 %    \begin{macrocode}
 \let\adjust@rel@penalty\@empty
 %    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\eq@fix@lastline}
-%  Remove parfillskip from the last line box.   
+%  Remove parfillskip from the last line box.
 %    \begin{macrocode}
 \def\eq@fix@lastline{%
   \setbox\tw@\lastbox \dim@b\wd\tw@
   \eq@dp\dp\tw@
 %    \end{macrocode}
-% Remove \cs{parfillskip} but retain \cs{rightskip}.   
-% Need to keep the original line width for later shrink testing.   
+% Remove \cs{parfillskip} but retain \cs{rightskip}.
+% Need to keep the original line width for later shrink testing.
 %    \begin{macrocode}
   \nointerlineskip\hbox to\dim@b{\unhbox\tw@
     \skip@c\lastskip \unskip\unskip\hskip\skip@c
@@ -4661,8 +4663,8 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\eq@recalc} 
-% Calculate \cs{eq@wdT} et cetera.   
+% \begin{macro}{\eq@recalc}
+% Calculate \cs{eq@wdT} et cetera.
 %    \begin{macrocode}
 \def\eq@recalc{%
   \eq@wdT\z@ \eq@wdMin\maxdimen \eq@vspan\z@skip \eq@badness\z@
@@ -4670,8 +4672,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@recalc@a}
 %    \begin{macrocode}
 \def\eq@recalc@a#1x#2+#3\@endelt{%
@@ -4681,8 +4683,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@recalc@b}
 %    \begin{macrocode}
 \def\eq@recalc@b#1X#2,#3x#4+#5@#6\@endelt{%
@@ -4692,18 +4694,18 @@ and the derived files
   \eq@dp#5\relax
   \addtolength\eq@vspan{#1+#4+\eq@dp}%
 %    \end{macrocode}
-% Record the max badness of all the lines in \cs{eq@badness}.   
+% Record the max badness of all the lines in \cs{eq@badness}.
 %    \begin{macrocode}
   \ifnum#6>\eq@badness \eq@badness#6\relax\fi
 }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\eq@layout} 
+% \begin{macro}{\eq@layout}
 % A value of \verb"?" for \cs{eq@layout} means that we should
-% deduce which layout to use by looking at the size of the components.   
+% deduce which layout to use by looking at the size of the components.
 % Any other value means we have a user-specified override on the
-% layout.   
+% layout.
 %
 % Layout Definitions.
 % Based on initial equation measurements, we can choose a sequence of
@@ -4715,11 +4717,11 @@ and the derived files
 \def\eq@layout{?}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@try@layout@?}
 % This is a branching function used to choose a suitable layout if
-% the user didn't specify one in particular.   
+% the user didn't specify one in particular.
 %
 % Default layout:
 %  Try Single line layout first, else try Multiline layouts
@@ -4744,7 +4746,7 @@ and the derived files
     \rightskip\z@\@plus\dim@b\@minus\hfuzz
     \eq@trial@b{i}{\eq@try@layout@multi}%
   \else
-%<*trace>    
+%<*trace>
   \breqn@debugmsg{Choose Shape: Too long (\the\wd\EQ@copy) for one line
             (free width=\the\dim@b)}%
 %</trace>
@@ -4761,8 +4763,8 @@ and the derived files
     \ifdim\eq@wdL>\eq@linewidth
 %<trace>       \breqn@debugmsg{Choose Shape: LHS \the\eq@wdL > linewidth}%
 %    \end{macrocode}
-% Find the total width of the RHS.   
-% If it is relatively short, a step layout is the thing to try.   
+% Find the total width of the RHS.
+% If it is relatively short, a step layout is the thing to try.
 %    \begin{macrocode}
        \setlength\dim@a{\wd\EQ@copy-\eq@wdL}%
        \ifdim\dim@a<.25\eq@linewidth \eq@try@layout@S
@@ -4781,7 +4783,7 @@ and the derived files
   \else
 %<trace>    \breqn@debugmsg{Choose Shape: No LHS here}%
 %    \end{macrocode}
-% Try one-line layout first, then step layout.   
+% Try one-line layout first, then step layout.
 %    \begin{macrocode}
     \eq@try@layout@S % (already checked case i)
   \fi
@@ -4791,13 +4793,13 @@ and the derived files
 %
 % \begin{macro}{\eq@try@layout@D}
 % Change the penalty before the first mathrel symbol to encourage a
-% break there.   
+% break there.
 %
 % Layout D=Drop-Ladder Layout, for wide LHS.
 % \begin{literalcode}
 %   LOOOOOOOONG LHS
 %    = RHS
-%    = ...  
+%    = ...
 % \end{literalcode}
 % If fails, try Almost-Columnar layout
 %    \begin{macrocode}
@@ -4812,9 +4814,9 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\eq@try@layout@L}
-% Try a straight ladder layout.   
+% Try a straight ladder layout.
 % Preliminary filtering ensures that \cs{eq@wdL} is less than 70%
-% of the current line width.   
+% of the current line width.
 % \begin{literalcode}
 % Layout L=Ladder layout
 %  LHS = RHS
@@ -4837,38 +4839,38 @@ and the derived files
 %
 % \begin{macro}{\eq@try@layout@S}
 % In the \dquoted{stepped} layout there is no LHS, or LHS
-% is greater than the line width and RHS is small.   
+% is greater than the line width and RHS is small.
 % Then we want to split up the equation into lines of roughly equal
 % width and stagger them downwards to the right, leaving a small amount of
-% whitespace on both sides.   
+% whitespace on both sides.
 % But also, if there is an equation number, we want to try first a
-% layout that leaves room for the number.   
+% layout that leaves room for the number.
 % Otherwise it would nearly always be the case that the number would
-% get thrown on a separate line.   
+% get thrown on a separate line.
 %
 % Layout S=Stepped layout, typically no LHS or very long, variations on
 % \begin{literalcode}
 %  STUFF ....
 %    + MORE STUFF ...
-%      + MORE STUFF ...  
+%      + MORE STUFF ...
 % \end{literalcode}
 % If fails, try Almost-Columnar layout
 %    \begin{macrocode}
 \def\eq@try@layout@S{%
   \setlength\dim@b{\eq@linewidth-2\eqmargin}% \advance\dim@b-1em%
 %    \end{macrocode}
-% About how many lines will we need if dim@b is the line width?   
+% About how many lines will we need if dim@b is the line width?
 %    \begin{macrocode}
   \int@a\wd\EQ@copy \divide\int@a\dim@b
 %    \end{macrocode}
-% Adjust the target width by number of lines times indentstep.   
-% We don't need to decrement \cs{int@a} because \tex 
-% division is integer division with truncation.   
+% Adjust the target width by number of lines times indentstep.
+% We don't need to decrement \cs{int@a} because \tex
+% division is integer division with truncation.
 %    \begin{macrocode}
   \addtolength\dim@b{-\int@a\eq@indentstep}%
 %    \end{macrocode}
-% Adjust for equation number.   
-% But try not to leave too little room for the equation body.   
+% Adjust for equation number.
+% But try not to leave too little room for the equation body.
 %    \begin{macrocode}
   \if\eq@hasNumber
     \ifdim\dim@b>15em%
@@ -4877,7 +4879,7 @@ and the derived files
     \fi
   \fi
 %    \end{macrocode}
-% Now some hand-waving to set up the parshape.   
+% Now some hand-waving to set up the parshape.
 %    \begin{macrocode}
   \int@b\z@
   \def\@tempa{\dim}%
@@ -4890,7 +4892,7 @@ and the derived files
 %
 % \begin{macro}{\eq@try@layout@l}
 % This is the \dquoted{step-ladder} layout: similar to the drop-ladder
-% layout but the LHS is too wide and needs to be broken up.   
+% layout but the LHS is too wide and needs to be broken up.
 %
 % Layout l = Stepladder
 % Similar to Drop-Ladder, but LHS is long and needs to be broken up.
@@ -4914,11 +4916,11 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\eq@try@layout@A}
 % In the \dquoted{almost-columnar} layout, which is the layout of last
 % resort, we let all lines run to the full width and leave the adjusting
-% of the indents to later.   
+% of the indents to later.
 %
 % Layout A = Almost-Columnar layout.
 % Pretty much straight full width, more of a last-resort.
@@ -4929,7 +4931,7 @@ and the derived files
   \if\EQ@hasLHS \def\adjust@rel@penalty{\penalty-99 }\fi
   \eq@trial@b{A}{}%
 }
-%    \end{macrocode} 
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\eq@shiftnumber}
@@ -4964,7 +4966,7 @@ and the derived files
       \addtolength\dim@b{\@totalleftmargin}%
     \fi
     \setlength\dim@a{\eq@linewidth-\dim@b}%\advance\dim@a1em\relax% Allowance for shrink?
-%    \end{macrocode}    
+%    \end{macrocode}
 % Set up test against 1-line case only if not in a group
 %    \begin{macrocode}
     \int@a\@ne\if\eq@group\int@a\maxint\fi
@@ -5022,7 +5024,7 @@ and the derived files
       \fi\fi%\fi
    \fi\fi\fi
 %    \end{macrocode}
-%       If we got shifted, restore parshape, etc, 
+%       If we got shifted, restore parshape, etc,
 %    \begin{macrocode}
    \if\eq@shiftnumber
      \EQ@trial% Restore parshape & other params,
@@ -5036,12 +5038,12 @@ and the derived files
 % \end{macro}
 %
 % \begin{macro}{\adjust@parshape}
-% Varies depending on the layout.   
+% Varies depending on the layout.
 %
 % Adjust a parshape variable for a given set of left\textbar right skips.
 % Note that the fixed part of the left\textbar right skips effectively
 % comes out of the parshape widths (NOT in addition to it).
-% We also must trim the widths so that the sum of skips, indents 
+% We also must trim the widths so that the sum of skips, indents
 % and widths add up to no more than the \cs{eq@linewidth}.
 %    \begin{macrocode}
 \def\adjust@parshape#1{%
@@ -5050,8 +5052,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\adjust@parshape@a}
 % \begin{macro}{\adjust@parshape@b}
 %    \begin{macrocode}
@@ -5077,9 +5079,9 @@ and the derived files
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\eq@ml@record@indents} 
+% \begin{macro}{\eq@ml@record@indents}
 % Plunk the parshape's indent values into an array for easy access
-% when constructing \cs{eq@measurements}.   
+% when constructing \cs{eq@measurements}.
 %    \begin{macrocode}
 \def\eq@ml@record@indents{%
   \int@a\z@
@@ -5095,20 +5097,20 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\@endelt}
-% This is a scan marker.   
-% It should get a non-expandable definition.   
-% It could be \cs{relax}, but let's try a chardef instead.   
+% This is a scan marker.
+% It should get a non-expandable definition.
+% It could be \cs{relax}, but let's try a chardef instead.
 %    \begin{macrocode}
 \chardef\@endelt=`\?
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@measurements}
 % This is similar to a parshape spec but for each line we record more
-% info: space above, indent, width x height + dp, and badness.   
+% info: space above, indent, width x height + dp, and badness.
 %    \begin{macrocode}
 \def\eq@measurements{%
   \@elt 4.5pt/5.0pt,66.0ptx6.8pt+2.4pt@27\@endelt
@@ -5116,16 +5118,16 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@measure@lines}
 % Loop through the list of boxes to measure things like total
 % height (including interline stretch), \etc .    We check the
-% actual width of the current line against the natural width \mdash 
+% actual width of the current line against the natural width \mdash
 % after removing rightskip \mdash  in case the former is
 % \emph{less} than the latter because of shrinkage.    In that
 % case we do not want to use the natural width for RHS-max-width because
-% it might unnecessarily exceed the right margin.   
+% it might unnecessarily exceed the right margin.
 %    \begin{macrocode}
 \def\eq@measure@lines{%
   \let\eq@ml@continue\eq@measure@lines
@@ -5137,10 +5139,10 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@ml@a}
-% 
+%
 %    \begin{macrocode}
 \def\eq@ml@a{%
   \setbox\tw@\hbox{\unhbox\z@ \unskip}% find natural width
@@ -5148,7 +5150,7 @@ and the derived files
   \ifnum\eq@badness<\inf@bad\else\breqn@debugmsg{!?! Overfull: \the\wd\tw@ >\the\dim@b}\fi
 %</trace>
 %    \end{macrocode}
-% Is actual width less than natural width?   
+% Is actual width less than natural width?
 %    \begin{macrocode}
   \ifdim\dim@b<\wd\tw@ \setlength\dim@a{\dim@b}% shrunken line
   \else                \setlength\dim@a{\wd\tw@}% OK to use natural width
@@ -5156,7 +5158,7 @@ and the derived files
   \addtolength\dim@a{-\leftskip}% BRM: Deduct the skip if we're retrying w/number
 %    \end{macrocode}
 % If there's no aboveskip, assume we've reached the top of the
-% equation.   
+% equation.
 %    \begin{macrocode}
   \skip@a\lastskip \unskip \unpenalty
   \ifdim\skip@a=\z@
@@ -5184,11 +5186,11 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@ml@vspace}
-% 
-% Handle an embedded vspace.   
+%
+% Handle an embedded vspace.
 %    \begin{macrocode}
 \def\eq@ml@vspace{%
   \global\advance\eq@vspan\lastskip \unskip\unpenalty
@@ -5196,17 +5198,17 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@dense@enough}
-% 
+%
 %    \begin{macrocode}
 \def\eq@dense@enough{%
-  \ifnum\eq@lines<\thr@@ 
+  \ifnum\eq@lines<\thr@@
 %<trace>    \breqn@debugmsg{Density check: less than 3 lines; OK}%
     \@True
   \else
-    \ifdim\eq@wdL >.7\eq@wdT 
+    \ifdim\eq@wdL >.7\eq@wdT
 %<trace>     \breqn@debugmsg{Density check: LHS too long; NOT OK}%
       \@False
     \else \@xp\@xp\@xp\eq@dense@enough@a
@@ -5215,8 +5217,8 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\true@true@true}
 % \begin{macro}{\true@false@true}
 % \begin{macro}{\false@true@false}
@@ -5231,34 +5233,34 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@density@factor}
-% 
+%
 % This number specifies, for the ladder layout, how much of the
 % equation's bounding box should contain visible material rather than
-% whitespace.   
+% whitespace.
 % If the amount of visible material drops below this value, then we
-% switch to the drop-ladder layout.   
+% switch to the drop-ladder layout.
 % The optimality of this factor is highly dependent on the equation
 % contents; .475 was chosen as the default just because it worked well
 % with the sample equation, designed to be as average as possible, that I
-% used for testing.   
+% used for testing.
 %    \begin{macrocode}
 \def\eq@density@factor{.475}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@dense@enough@a}
-% 
+%
 % Calculate whether there is more
-% visible material than whitespace within the equation's bounding box.   
+% visible material than whitespace within the equation's bounding box.
 % Sum up the actual line widths and compare to the total
-% \dquoted{area} of the bounding box.   
+% \dquoted{area} of the bounding box.
 % But if we have an extremely large number of lines, fall back to an
 % approximate calculation that is more conservative about the danger of
-% exceeding \cs{maxdimen}.   
+% exceeding \cs{maxdimen}.
 %    \begin{macrocode}
 \def\eq@dense@enough@a{%
   \@True \fi
@@ -5273,20 +5275,20 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@delt}
-% Args are space-above, indent, width, height, depth, badness.   
+% Args are space-above, indent, width, height, depth, badness.
 %    \begin{macrocode}
 \def\eq@delt#1X#2,#3x#4+#5@#6\@endelt{\addtolength\dim@b{#3}}%
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@dense@enough@b}
 % This is an approximate calculation used to keep from going over
 % \cs{maxdimen} if the number of lines in our trial break is large
-% enough to make that a threat.   
+% enough to make that a threat.
 % If l, t, n represent left-side-width, total-width, and number of
 % lines, the formula is
 % \begin{literalcode}
@@ -5297,7 +5299,7 @@ and the derived files
 % \begin{literalcode}
 % l/t < 4n/(9n-10)
 % \end{literalcode}
-% .   
+% .
 %    \begin{macrocode}
 \def\eq@dense@enough@b{%
   \int@b\eq@wdT \divide\int@b\p@
@@ -5310,17 +5312,17 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % \begin{macro}{\eq@parshape}
 %    \begin{macrocode}
 \let\eq@parshape\@empty
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@params}
 % The interline spacing and penalties in \cs{eq@params}
-% are used during both preliminary line breaking and final typesetting.   
+% are used during both preliminary line breaking and final typesetting.
 %    \begin{macrocode}
 \def\eq@params{%
   \baselineskip\eqlinespacing
@@ -5332,19 +5334,19 @@ and the derived files
 % of a page; instead it will be moved whole to the top of the next
 % page.    If you really really need a page break that splits the
 % first or last line from the rest of the equation, you can always fall
-% back to\cs{pagebreak}, I suppose.   
-% 
+% back to\cs{pagebreak}, I suppose.
+%
 %    \begin{macrocode}
   \clubpenalty\@M \widowpenalty\@M \interlinepenalty\eqinterlinepenalty
   \linepenalty199 \exhyphenpenalty5000 % was 9999: make breaks at, eg. \* a bit easier.
 %    \end{macrocode}
-% For equations, hfuzz should be at least 1pt.   
+% For equations, hfuzz should be at least 1pt.
 % But we have to fake it a little because we are running the equation
-% through \tex 's paragrapher.   
+% through \tex 's paragrapher.
 % In our trials we use minus 1pt in the rightskip rather than hfuzz;
 % and we must do the same during final breaking of the equation, otherwise
 % in borderline cases \tex  will use two lines instead of one when our
-% trial indicated that one line would be enough.   
+% trial indicated that one line would be enough.
 %    \begin{macrocode}
   \ifdim\hfuzz<\p@ \hfuzz\p@ \fi
 %\hfuzz=2pt
@@ -5353,16 +5355,16 @@ and the derived files
 %  \hfuzz\z@
 %    \end{macrocode}
 % Make sure we skip \tex 's preliminary line-breaking pass to save
-% processing time.   
+% processing time.
 %    \begin{macrocode}
   \tolerance9999 \pretolerance\m@ne
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Equation layout options}
 % Using the notation C centered, I indented (applied to
 % the equation body), T top, B bottom, M
@@ -5370,14 +5372,14 @@ and the derived files
 % the commonly used equation types are C, CRM, CRB, CLM, CLT,
 % I, IRM, IRB, ILM, ILT.    In other words, CLM stands for Centered equation
 % body with Left-hand Middle-placed equation number, and IRB stands for
-% Indented equation with Right-hand Bottom-placed equation number.   
+% Indented equation with Right-hand Bottom-placed equation number.
 %
 % Here are some general thoughts on how to place an equation
 % tag. Currently it does not work as desired: the L option positions
 % the tag app. 10 lines below the math expression, the RM doesn't
 % position the tag on the baseline for single-line math
 % expressions. Therefore I am going to first write what I think is
-% supposed to happen and then implement it. 
+% supposed to happen and then implement it.
 %
 % Below is a small list where especially the two three specifications
 % should be quite obvious, I just don't want to forget anything and it
@@ -5402,7 +5404,7 @@ and the derived files
 %   positioned exactly halfway between the baseline of the top line of
 %   the display and the baseline of the bottom line of the display.
 % \end{description}
-% 
+%
 % Definitions 1--3 are almost axiomatic in their
 % simplicity. Definition~4 is different because I saw at least two
 % possibilities for which area to span:
@@ -5410,7 +5412,7 @@ and the derived files
 % \item Calculate distance from top of top line to the bottom of the
 %   bottom line, position the vertical center of the tag exactly
 %   halfway between those two extremes.
-% 
+%
 % \item Calculate the distance from the baseline of the top line to
 %   the baseline of the bottom line, position the baseline of the tag
 %   exactly halfway between these two extremes.
@@ -5433,22 +5435,22 @@ and the derived files
 % than the tag.
 %
 % \section{Centered Right-Number Equations}
-% 
+%
 % \begin{macro}{\eq@dump@box}
 % \arg1  might be \cs{unhbox} or \cs{unhcopy}; \arg2  is
-% the box name.   
+% the box name.
 %    \begin{macrocode}
 \def\eq@dump@box#1#2{%
 %\debug@box#1%
   \noindent #1#2\setbox\f@ur\lastbox \setbox\tw@\lastbox
 %    \end{macrocode}
 % If the LHS contains shrinkable glue, in an L layout the alignment
-% could be thrown off if the first line is shrunk noticeably.   
-% For the time being, disable shrinking on the left-hand side.   
+% could be thrown off if the first line is shrunk noticeably.
+% For the time being, disable shrinking on the left-hand side.
 % The proper solution requires more work \begin{dn}
 % mjd,1999/03/17
 % \end{dn}
-% .   
+% .
 %    \begin{macrocode}
   \if L\eq@layout \box\tw@ \else\unhbox\tw@\fi
   \adjust@rel@penalty \unhbox\f@ur
@@ -5464,7 +5466,7 @@ and the derived files
 % Given that left and right skips have been set,
 % typeset the frame, number and equation with the
 % given number side and placement
-% 
+%
 %    \begin{macrocode}
 \def\eq@typeset@Unnumbered{%
   \eq@typeset@frame
@@ -5540,11 +5542,11 @@ and the derived files
 %<*trace>
 \def\debug@showformat{%
   \breqn@debugmsg{Formatting Layout:\eq@layout\space Center/indent: \eqindent\space
-    Number placement \eqnumside\eqnumplace: 
+    Number placement \eqnumside\eqnumplace:
     \MessageBreak==== \eq@linewidth=\the\eq@linewidth, \@totalleftmargin=\the\@totalleftmargin,
     \MessageBreak==== Centered Lines=\theb@@le\eq@centerlines, Shift Number=\theb@@le\eq@shiftnumber,
     \MessageBreak==== \eq@wdT=\the\eq@wdT, \eq@wdMin=\the\eq@wdMin,
-    \MessageBreak==== LHS=\theb@@le\EQ@hasLHS: \eq@wdL=\the\eq@wdL, 
+    \MessageBreak==== LHS=\theb@@le\EQ@hasLHS: \eq@wdL=\the\eq@wdL,
     \MessageBreak==== \eq@firstht=\the\eq@firstht, \eq@vspan=\the\eq@vspan
     \MessageBreak==== \eq@wdNum=\the\eq@wdNum
     \MessageBreak==== \eq@wdCond=\the\eq@wdCond, \conditionsep=\the\conditionsep,
@@ -5556,7 +5558,7 @@ and the derived files
 %</trace>
 %    \end{macrocode}
 %
-% Set left \& right skips for centered equations, 
+% Set left \& right skips for centered equations,
 % making allowances for numbers (if any, right, left) and constraint.
 %
 % Amazingly, I've managed to collect all the positioning logic for
@@ -5656,7 +5658,7 @@ and the derived files
 % Some things handled by eq@C@setsides that probably apply here????
 % \begin{itemize}
 % \item centerlines
-% \item \cs{@totalleftmargin}: SHOULD we move farther right? 
+% \item \cs{@totalleftmargin}: SHOULD we move farther right?
 % \end{itemize}
 % Leftskip is normally just the requested indentation
 %    \begin{macrocode}
@@ -5728,7 +5730,7 @@ and the derived files
 % The \cs{eqframe} function is called in vertical mode
 % with the reference point at the top left corner of the equation, including
 % any allowance for \cs{fboxsep}.    Its arguments are the width
-% and height of the equation body, plus fboxsep.   
+% and height of the equation body, plus fboxsep.
 % \changes{v0.95}{2007/12/03}{Made \cs{eqframe} obey the key settings
 %   for frame and framesep.}
 %    \begin{macrocode}
@@ -5763,7 +5765,7 @@ and the derived files
   \fi
 }
 %    \end{macrocode}
-% 
+%
 % \section{Delimiter handling}
 % The special handling of delimiters is rather complex, but
 % everything is driven by two motives: to mark line breaks inside
@@ -5772,21 +5774,21 @@ and the derived files
 % \cs{left} and \cs{right} delimiters are not absolutely
 % prohibited.    To control the extent to which line breaks will be
 % allowed inside delimiters, set \cs{eqbreakdepth} to the maximum
-% nesting depth.    Depth 0 means never break inside delimiters.   
-% 
-% Note: \cs{eqbreakdepth} is not implemented as a \latex 
+% nesting depth.    Depth 0 means never break inside delimiters.
+%
+% Note: \cs{eqbreakdepth} is not implemented as a \latex
 % counter because changes done by \cs{setcounter} \etc  are always
-% global.   
-% 
+% global.
+%
 % It would be natural to use grouping in the implementation
 % \mdash  at an open delimiter, start a group and increase mathbin
 % penalties; at a close delimiter, close the group.    But this gives us
 % trouble in situations like the \env{array} environment, where a
 % close delimiter might fall in a different cell of the \cs{halign}
-% than the open delimiter.    
+% than the open delimiter.
 % Ok then, here's what we want the various possibilities to
 % expand to.    Note that \cs{right} and \cs{biggr} are
-% being unnaturally applied to a naturally open-type delimiter.   
+% being unnaturally applied to a naturally open-type delimiter.
 % \begin{literalcode}
 % ( -> \delimiter"4... \after@open
 % \left( ->
@@ -5804,23 +5806,23 @@ and the derived files
 % \biggm\vert ->
 %   \mathrel{\@@left \delimiter... \vrule...\@@right.}
 % \end{literalcode}
-% 
+%
 % First save the primitive meanings of \cs{left} and
-% \cs{right}.   
+% \cs{right}.
 %    \begin{macrocode}
 \@saveprimitive\left\@@left
 \@saveprimitive\right\@@right
 %    \end{macrocode}
-% 
+%
 % The variable \cs{lr@level} is used by the first mathrel in
 % an equation to tell whether it is at top level: yes? break and measure
-% the LHS, no? keep going.   
+% the LHS, no? keep going.
 %    \begin{macrocode}
 \newcount\lr@level
 %    \end{macrocode}
-% 
+%
 % It would be nice to have better error checking here if the
-% argument is not a delimiter symbol at all.  
+% argument is not a delimiter symbol at all.
 %
 % Ah, a small problem when renaming commands. In the original version,
 % |\delimiter| is hijacked in order to remove the |\after@bidir| (or
@@ -5834,7 +5836,7 @@ and the derived files
   \@ifnext .{\eq@nullright}{\begingroup \let \math_delimiter:NNnNn \eq@right@a}%
 }
 %    \end{macrocode}
-% The arguments are: \arg1  delim symbol, \arg2 .   
+% The arguments are: \arg1  delim symbol, \arg2 .
 %    \begin{macrocode}
 %\def\eq@left@a#1 #2{\endgroup\@@left\delimiter#1\space \after@open}
 \def\eq@left@a#1#2#3#4#5#6{\endgroup
@@ -5844,26 +5846,26 @@ and the derived files
 }
 \ExplSyntaxOff
 %    \end{macrocode}
-% The null versions.   
+% The null versions.
 %    \begin{macrocode}
 \def\eq@nullleft#1{\@@left#1\after@open}
 \def\eq@nullright#1{\@@right#1\after@close}
 %    \end{macrocode}
-% 
-% Here is the normal operation of \cs{biggl}, for example.   
+%
+% Here is the normal operation of \cs{biggl}, for example.
 % \begin{literalcode}
 % \biggl ->\mathopen \bigg
 % {\mathopen}
-% 
+%
 % \bigg #1->{\hbox {$\left #1\vbox to14.5\p@ {}\right .\n@space $}}
 % #1<-(
 % \end{literalcode}
 % ^^AFor paren matching: )
 % Like \cs{left}, \cs{biggl} coerces its delimiter to be of
-% mathopen type even if its natural inclination is towards closing.   
-% 
+% mathopen type even if its natural inclination is towards closing.
+%
 % The function \cs{delim@reset} makes delimiter characters
-% work just about the same as they would in normal \latex .   
+% work just about the same as they would in normal \latex .
 %    \begin{macrocode}
 \def\delim@reset{%
   \let\after@open\relax \let\after@close\relax
@@ -5875,7 +5877,7 @@ and the derived files
 % variants will have hard-coded point sizes as inherited through the ages
 % from \fn{plain.tex}.    In this case we can kluge a little by
 % setting \cs{big@size} to \cs{p@}, so that our definition of
-% \cs{bBigg@} will work equally well with the different multipliers.   
+% \cs{bBigg@} will work equally well with the different multipliers.
 %    \begin{macrocode}
 \@ifundefined{bBigg@}{% not defined
   \let\big@size\p@
@@ -5891,7 +5893,7 @@ and the derived files
   }%
 }
 %    \end{macrocode}
-% .   
+% .
 %    \begin{macrocode}
 \def\bigl#1{\mathopen\big{#1}\after@open}
 \def\Bigl#1{\mathopen\Big{#1}\after@open}
@@ -5915,20 +5917,20 @@ and the derived files
 %%\def\bigggm{\mathrel\biggg}
 %%\def\Bigggm{\mathrel\Biggg}
 %    \end{macrocode}
-% 
-% 
+%
+%
 % \begin{macro}{\m@@DeL} \begin{macro}{\d@@DeL}
 % \begin{macro}{\m@@DeR} \begin{macro}{\d@@DeR}
 % \begin{macro}{\m@@DeB} \begin{macro}{\d@@DeB}
 % Original definition of \cs{m@DeL} from
 % \pkg{flexisym} is as follows.    \cs{m@DeR} and
-% \cs{m@DeB} are the same except for the math class number.   
+% \cs{m@DeB} are the same except for the math class number.
 % \begin{literalcode}
 % \def\m@DeL#1#2#3{%
 %   \delimiter"4\@xp\delim@a\csname sd@#1#2#3\endcsname #1#2#3 }
 % \end{literalcode}
-% 
-% Save the existing meanings of \cs{m@De[LRB]}.   
+%
+% Save the existing meanings of \cs{m@De[LRB]}.
 %
 % Define display variants of DeL, DeR, DeB
 %    \begin{macrocode}
@@ -5960,18 +5962,18 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
+%
 % \begin{macro}{\after@open}
 % \begin{macro}{\after@close}
 % \begin{macro}{\after@bidir}
 % \begin{macro}{\zero@bop}
 % \begin{macro}{\bop@incr}
 % \cs{after@open} and \cs{after@close} are carefully
-% written to avoid the use of grouping and to run as fast as possible.   
+% written to avoid the use of grouping and to run as fast as possible.
 % \cs{zero@bop} is the value used for \cs{prebinoppenalty} at
 % delimiter level 0, while \cs{bop@incr} is added for each level of
 % nesting.    The standard values provide that breaks will be prohibited
-% within delimiters below nesting level 2.   
+% within delimiters below nesting level 2.
 %    \begin{macrocode}
 \let\after@bidir\@empty
 \mathchardef\zero@bop=888 \relax
@@ -5985,7 +5987,7 @@ and the derived files
 %    \end{macrocode}
 % Inside delimiters, add some fillglue before binops so that a broken off
 % portion will get thrown flush right.    Also shift it slightly
-% further to the right to ensure that it clears the opening delimiter.   
+% further to the right to ensure that it clears the opening delimiter.
 %    \begin{macrocode}
   \else
     \eq@binoffset=\eqbinoffset
@@ -6003,7 +6005,7 @@ and the derived files
   \fi
 %    \end{macrocode}
 % When we get back to level 0, no delimiters, remove the stretch
-% component of \cs{eqbinoffset}.   
+% component of \cs{eqbinoffset}.
 %    \begin{macrocode}
   \ifnum\lr@level<\@ne \eq@binoffset=\eqbinoffset\relax \fi
 }
@@ -6016,16 +6018,16 @@ and the derived files
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\subsup@flag}
 % \begin{macro}{\ss@scan}
 % \cs{ss@scan} is called after a \cs{right} delimiter and
-% looks ahead for sub and superscript tokens.   
+% looks ahead for sub and superscript tokens.
 % If sub and/or superscripts are present, we adjust the line-ending
-% penalty to distinguish the various cases (sub, sup, or both).   
+% penalty to distinguish the various cases (sub, sup, or both).
 % This facilitates the later work of excising the sub/sup box and
-% reattaching it with proper shifting.   
+% reattaching it with proper shifting.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Sub/Superscript measurement
@@ -6033,22 +6035,22 @@ and the derived files
 % BRM: There's possibly a problem here.
 % When \cs{ss@scan} gets invoked after a \cs{left}...\cs{right} pair in the LHS
 % during \cs{eq@measure}, it produces an extra box (marked with \cs{penalty} 3);
-% Apparently \cs{eq@repack} expects only one for the LHS.  
+% Apparently \cs{eq@repack} expects only one for the LHS.
 % The end result is \cs{eq@wdL} => 0.0pt !!! (or at least very small)
 %    \begin{macrocode}
 \let\subsup@flag=\count@
 \def\ss@delim@a@new#1#2#3#4#5{\xdef\right@delim@code{\number"#4#5}}
 %    \end{macrocode}
 % The argument of \cs{ss@scan} is an expanded form of a
-% right-delimiter macro.   
+% right-delimiter macro.
 % We want to use the last three digits in the expansion
-% to define \cs{right@delim@code}.   
+% to define \cs{right@delim@code}.
 % The assignment to a temp register is just a way to scan away the
-% leading digits that we don't care about.   
+% leading digits that we don't care about.
 %    \begin{macrocode}
 \def\ss@scan#1{%
 %    \end{macrocode}
-% This part of the code.   
+% This part of the code.
 %    \begin{macrocode}
   \begingroup
     \ss@delim@a@new #1%
@@ -6068,7 +6070,7 @@ and the derived files
   \breqn@next\@let@token
 }
 %    \end{macrocode}
-% 
+%
 %    \begin{macrocode}
 \ExplSyntaxOn
 \def\ss@scan@b#1#2{#1{%
@@ -6083,7 +6085,7 @@ and the derived files
 %    \end{macrocode}
 % We need to keep following glue from disappearing
 % \mdash  \eg , a thickmuskip or medmuskip from a following mathrel or
-% mathbin symbol.   
+% mathbin symbol.
 %    \begin{macrocode}
 \def\ss@finish{%
   \@@vadjust{\penalty\thr@@}%
@@ -6092,13 +6094,13 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\eq@lrunpack}
 % For \cs{eq@lrunpack} we need to break open a left-right box and
 % reset it just in case it contains any more special breaks.    After
 % it is unpacked the recursion of \cs{eq@repack} will continue,
-% acting on the newly created lines.   
+% acting on the newly created lines.
 %    \begin{macrocode}
 \def\eq@lrunpack{\setbox\z@\lastbox
 %    \end{macrocode}
@@ -6106,14 +6108,14 @@ and the derived files
 % baselineskip for the next line, otherwise we would end up with
 % three items of glue (counting parskip) at this point instead of
 % the single one expected by our recursive repacking
-% procedure.   
+% procedure.
 %    \begin{macrocode}
   \unskip \nointerlineskip
 %    \end{macrocode}
 % Then we open box 0, take the left-right box at the right end of
 % it, and break that open.    If the line-ending penalty is greater than
 % 10000, it means a sub and/or superscript is present on the right
-% delimiter and the box containing them must be taken off first.   
+% delimiter and the box containing them must be taken off first.
 %    \begin{macrocode}
   \noindent\unhbox\z@ \unskip
   \subsup@flag-\lastpenalty \unpenalty
@@ -6135,7 +6137,7 @@ and the derived files
 % ($1\leq N\leq 9$), which would interfere with the usual
 % processing.    Setting a null last line and discarding it dodges
 % this complication.    The penalty value $-10001$ is a no-op case
-% in the case statement of \cs{eq@repacka}.   
+% in the case statement of \cs{eq@repacka}.
 %    \begin{macrocode}
   \penalty-\@Mi\z@rule\@@par
   \setbox\z@\lastbox \unskip\unpenalty
@@ -6143,15 +6145,15 @@ and the derived files
 }
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\lrss@reattach}
-% 
+%
 % Well, for a small self-contained computation, carefully
 % hand-allocated dimens should be safe enough.    But let the
 % maintainer beware!    This code cannot be arbitrarily transplanted
 % or shaken up without regard to grouping and interaction with other
-% hand-allocated dimens.   
+% hand-allocated dimens.
 %    \begin{macrocode}
 \dimendef\sub@depth=8 \dimendef\sup@base=6
 \dimendef\prelim@sub@depth=4 \dimendef\prelim@sup@base=2
@@ -6161,22 +6163,22 @@ and the derived files
 \def\sub@base@two{\fontdimen17\textfont\tw@}
 %    \end{macrocode}
 % Note that only \cs{sup@drop} and \cs{sub@drop} come from
-% the next smaller math style.   
+% the next smaller math style.
 %    \begin{macrocode}
 \def\sup@drop{\fontdimen18\scriptfont\tw@}
 \def\sub@drop{\fontdimen19\scriptfont\tw@}
 %    \end{macrocode}
 % Provide a mnemonic name for the math axis fontdimen, if it's not
-% already defined.   
+% already defined.
 %    \begin{macrocode}
 \providecommand{\mathaxis}{\fontdimen22\textfont\tw@}
 %    \end{macrocode}
-% 
+%
 % Assumes box 2 contains the sub/sup and box 0 contains the left-right
 % box.    This is just a repeat of the algorithm in \fn{tex.web},
 % with some modest simplifications from knowing that this is only going to
 % be called at top level in a displayed equation, thus always mathstyle =
-% uncramped displaystyle.   
+% uncramped displaystyle.
 %    \begin{macrocode}
 \def\lrss@reattach{%
   \begingroup
@@ -6202,7 +6204,7 @@ and the derived files
   \lower\sub@depth\box\tw@
 }
 %    \end{macrocode}
-% 
+%
 %    \begin{macrocode}
 \def\lr@superscript{%
   \sup@base\sup@base@one
@@ -6213,7 +6215,7 @@ and the derived files
   \raise\sup@base\box\tw@
 }
 %    \end{macrocode}
-% 
+%
 %    \begin{macrocode}
 \def\lr@subsup{%
   \sub@depth\sub@base@two
@@ -6222,14 +6224,14 @@ and the derived files
   \lower\sub@depth\box\tw@
 }
 %    \end{macrocode}
-% 
+%
 % For delimiters that curve top and bottom, the twang factor allows
 % horizontal shifting of the sub and superscripts so they don't
 % fall too far away (or too close for that matter).    This is
 % accomplished by arranging for (\eg ) \verb"\right\rangle" to leave
 % a penalty $N$ in the math list before the subsup penalty that triggers
 % \cs{lrss@reattach}, where $N$ is the mathcode of
-% \cs{rangle} (ignoring \dquoted{small} variant).   
+% \cs{rangle} (ignoring \dquoted{small} variant).
 %    \begin{macrocode}
 \def\twang@adjust#1{%
   \begingroup
@@ -6243,37 +6245,37 @@ and the derived files
 }
 %    \end{macrocode}
 % The method used to apply a \dquoted{twang} adjustment is just an
-% approximate solution to a complicated problem.   
+% approximate solution to a complicated problem.
 % We make the following assumptions that hold true, approximately,
 % for the most common kinds of delimiters:
 % \begin{enumerate}
-% \item 
-% The right delimiter is symmetrical top to bottom.   
-% 
-%  
-% \item There is an upper limit on the size of the adjustment.   
-% 
-%  
+% \item
+% The right delimiter is symmetrical top to bottom.
+%
+%
+% \item There is an upper limit on the size of the adjustment.
+%
+%
 % \item When we have a superscript, the amount of left-skew that we
 % want to apply is linearly proportional to the distance of the bottom
 % left corner of the superscript from the math axis, with the ratio
-% depending on the shape of the delimiter symbol.   
-% 
-%  
+% depending on the shape of the delimiter symbol.
+%
+%
 % \end{enumerate}
-% .   
+% .
 % By symmetry, Assumption 3 is true also for subscripts (upper left
-% corner).   
+% corner).
 % Assumption 2 is more obviously true for parens and braces, where the
 % largest super-extended versions consist of truly vertical parts with
-% slight bending on the ends, than it is for a \cs{rangle}.   
+% slight bending on the ends, than it is for a \cs{rangle}.
 % But suppose for the sake of expediency that it is
-% approximately true for rangle symbols also.   
-% 
-% 
+% approximately true for rangle symbols also.
+%
+%
 % Here are some passable twang factors for the most common types of
 % delimiters in \fn{cmex10}, as determined by rough measurements from
-% magnified printouts.   
+% magnified printouts.
 % \begin{literalcode}
 %   vert bar, double vert:  0
 %          square bracket: -.1
@@ -6282,7 +6284,7 @@ and the derived files
 %                  rangle: -.4
 % \end{literalcode}
 % Let's provide a non-private command for changing the twang factor of
-% a given symbol.   
+% a given symbol.
 %    \begin{macrocode}
 \newcommand{\DeclareTwang}[2]{%
   \ifcat.\@nx#1\begingroup
@@ -6293,7 +6295,7 @@ and the derived files
 }
 %    \end{macrocode}
 % Note that this is dependent on a fixed interpretation of the
-% mathgroup number \arg4 .   
+% mathgroup number \arg4 .
 %    \begin{macrocode}
 \def\decl@twang#1#2#3#4#5#6#7\@nil#8{%
   \@namedef{twang@\number"#4#5#6}{#8}%
@@ -6303,22 +6305,22 @@ and the derived files
 \DeclareTwang{\rbrace}{-.25}
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
-% 
+%
+%
+%
 % \section{Series of expressions}
 % The \env{dseries} environment is for a display
 % containing a series of expressions of the form \quoted{A, B} or \quoted{A and
 % B} or \quoted{A, B, and C} and so on.    Typically the expressions
 % are separated by a double quad of space.    If the expressions in a
 % series don't all fit in a single line, they are continued onto extra
-% lines in a ragged-center format.   
+% lines in a ragged-center format.
 %    \begin{macrocode}
 \newenvironment{dseries}{\let\eq@hasNumber\@True \@optarg\@dseries{}}{}%
 \def\enddseries#1{\check@punct@or@qed}%
 %    \end{macrocode}
-% 
-% And the unnumbered version of same.   
+%
+% And the unnumbered version of same.
 %    \begin{macrocode}
 \newenvironment{dseries*}{\let\eq@hasNumber\@False \@optarg\@dseries{}}{}%
 \@namedef{enddseries*}#1{\check@punct@or@qed}%
@@ -6326,7 +6328,7 @@ and the derived files
 \def\@dseries[#1]{%
 %    \end{macrocode}
 % Turn off the special breaking behavior of mathrels \etc  for math
-% formulas embedded in a \env{dseries} environment.   
+% formulas embedded in a \env{dseries} environment.
 %
 %BRM: DS Expermient: Use alternative display setup.
 %    \begin{macrocode}
@@ -6368,7 +6370,7 @@ and the derived files
   \eq@trial@b{M}{}%
 }
 %    \end{macrocode}
-% BRM: Tricky to get right value here. 
+% BRM: Tricky to get right value here.
 % Prefer breaks between formula if we've got to break at all.
 %    \begin{macrocode}
 %\def\intermath@penalty{-201}%
@@ -6380,10 +6382,10 @@ and the derived files
 \newcommand\dquad{\hskip0.6em minus.3em}
 \newcommand\premath{}\newcommand\postmath{}
 %    \end{macrocode}
-% 
+%
 % Change the \env{math} environment to add
 % \cs{premath} and \cs{postmath}.    They are no-ops except
-% inside a \env{dseries} environment.   
+% inside a \env{dseries} environment.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefinition of math environment to take advantage of dseries env.
@@ -6400,10 +6402,10 @@ and the derived files
   \postmath
 }
 %    \end{macrocode}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Equation groups}
 % For many equation groups the strategy is easy: just center each
 % equation individually following the normal rules for a single
@@ -6411,8 +6413,8 @@ and the derived files
 % others, a single number applies to the whole group (and may need to be
 % vertically centered on the height of the group).    In still other
 % groups, the equations share a parent number but get individual equation
-% numbers consisting of parent number plus a letter.   
-% 
+% numbers consisting of parent number plus a letter.
+%
 % If the main relation symbols in a group of equations are to be
 % aligned, then the final alignment computations cannot be done until the
 % end of the group \mdash  \ie , the horizontal positioning of the first
@@ -6424,11 +6426,11 @@ and the derived files
 % they may affect the line breaks.    If the second trial for an
 % equation fails (one of its lines exceeds the available width), but
 % the first one succeeded, fall back to the first trial, \ie  let that
-% equation fall out of alignment with the rest of the group.   
-% 
-% 
+% equation fall out of alignment with the rest of the group.
+%
+%
 % All right then, here is the general idea of the whole algorithm for
-% group alignment.   
+% group alignment.
 % To start with, ignore the possibility of equation numbers so that
 % our equation group has the form:
 % \begin{literalcode}
@@ -6438,29 +6440,29 @@ and the derived files
 % LHS[3] RHS[3,1] RHS[3,2] ... RHS[3,n[3]]
 % \end{literalcode}
 % The number of RHS's might not be the same for all of the
-% equations.   
+% equations.
 % First, accumulate all of the equation contents in a queue, checking
 % along the way to find the maximum width of all the LHS's and the maximum
-% width of all the RHS's.   
-% Call these widths maxwd\_L and maxwd\_R.   
+% width of all the RHS's.
+% Call these widths maxwd\_L and maxwd\_R.
 % Clearly if maxwd\_L + maxwd\_R is less than or equal to the available
-% equation width then aligning all of the equations is going to be simple.   
-% 
-% 
+% equation width then aligning all of the equations is going to be simple.
+%
+%
 % Otherwise we are going to have to break at least one of the RHS's
-% and/or at least one of the LHS's.   
+% and/or at least one of the LHS's.
 % The first thing to try is using maxwd\_L for the LHS's and breaking
-% all the RHS's as needed to fit in the remaining space.   
+% all the RHS's as needed to fit in the remaining space.
 % However, this might be a really dumb strategy if one or more of the
-% LHS's is extraordinarily wide.   
+% LHS's is extraordinarily wide.
 % So before trying that we check whether maxwd\_L exceeds some
-% threshold width beyond which it would be unsensible not to break the LHS.   
+% threshold width beyond which it would be unsensible not to break the LHS.
 % Such as, max(one-third of the available width; six ems), or
-% something like that.   
-% Or how about this?   
+% something like that.
+% Or how about this?
 % Compare the average LHS width and RHS width and divide up the available
-% width in the same ratio for line breaking purposes.   
-% 
+% width in the same ratio for line breaking purposes.
+%
 %
 % BRM: Fairly broad changes; it mostly didn't work before (for me).
 %
@@ -6469,7 +6471,7 @@ and the derived files
 %   The number is the next equation number.
 %   There are 2 cases:
 % \begin{itemize}
-% \item If ANY contained equations are numbered (|\begin{dmath}|), 
+% \item If ANY contained equations are numbered (|\begin{dmath}|),
 %       then they will be subnumbered: eg 1.1a
 %       and the group number is not otherwise displayed.
 % \item If ALL contained equations are unnumbered (|\begin{dmath*}|)
@@ -6488,7 +6490,7 @@ and the derived files
 % NOTE: Does \cs{label} attach to the expected thing?
 %
 % \item[For number placement] We use shiftnumber placement on ALL equations
-%    if ANY equations need it, or if an unnumbered equation is too 
+%    if ANY equations need it, or if an unnumbered equation is too
 %    wide to be aligned, given that the group or other eqns are numbered.
 %    [does this latter case interract with the chosen alignment?]
 %
@@ -6503,7 +6505,7 @@ and the derived files
 %
 % \begin{macro}{\eq@group}
 % \begin{macro}{\GRP@top}
-% 
+%
 %    \begin{macrocode}
 \let\eq@group\@False
 \let\grp@shiftnumber\@False
@@ -6513,9 +6515,9 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
-% 
-% Definition of the \env{dgroup} environment.   
+%
+%
+% Definition of the \env{dgroup} environment.
 %    \begin{macrocode}
 \newenvironment{dgroup}{%
   \let\grp@hasNumber\@True\@optarg\@dgroup{}%
@@ -6523,7 +6525,7 @@ and the derived files
   \end@dgroup
 }
 %    \end{macrocode}
-% And the.   
+% And the.
 %    \begin{macrocode}
 \newtoks\GRP@queue
 \newenvironment{dgroup*}{%
@@ -6551,11 +6553,11 @@ and the derived files
 }
 %    \end{macrocode}
 % If the \pkg{amsmath} package is not loaded the parentequation
-% counter will not be defined.   
+% counter will not be defined.
 %    \begin{macrocode}
 \@ifundefined{c@parentequation}{\newcounter{parentequation}}{}
 %    \end{macrocode}
-% Init.   
+% Init.
 %    \begin{macrocode}
 \global\let\GRP@label\@empty
 \def\add@grp@label{%
@@ -6568,7 +6570,7 @@ and the derived files
 % set the current number in \cs{EQ@numbox}.    The
 % \cs{eq@setnumber} function does everything we need here.    If
 % the child equations are unnumbered, \cs{EQ@numbox} will retain the
-% group number at the end of the group.   
+% group number at the end of the group.
 %    \begin{macrocode}
 \def\grp@setnumber{%
   \global\let\GRP@label\next@label \global\let\next@label\@empty
@@ -6580,7 +6582,7 @@ and the derived files
 % \cn{theequation}.    \cn{edef} is necessary to expand the
 % current value of the equation counter.    This might in rare cases
 % cause something to blow up, in which case the user needs to add
-% \cn{protect}.   
+% \cn{protect}.
 %    \begin{macrocode}
   \global\sbox\GRP@numbox{\unhbox\EQ@numbox}%
   \grp@wdNum\eq@wdNum
@@ -6593,14 +6595,14 @@ and the derived files
 %    \end{macrocode}
 % And set the equation counter to 0, so that the normal incrementing
 % processes will produce the desired results if the child equations are
-% numbered.   
+% numbered.
 %    \begin{macrocode}
   \setcounter{equation}{0}%
   \def\theequation{\theparentequation\alph{equation}}%
 %<trace>  \breqn@debugmsg{Group Number \theequation}%
 }
 %    \end{macrocode}
-% At the end of a group, need to reset the equation counter.   
+% At the end of a group, need to reset the equation counter.
 %    \begin{macrocode}
 \def\grp@resetnumber{%
   \setcounter{equation}{\value{parentequation}}%
@@ -6615,8 +6617,8 @@ and the derived files
 %   \cs{EQ@box}, \cs{EQ@copy}, \cs{penalty} 1 and \cs{EQ@numbox}.
 % \end{itemize}
 % \begin{macro}{\grp@push}
-% 
-% For putting the equation on a queue.   
+%
+% For putting the equation on a queue.
 %    \begin{macrocode}
 \def\grp@push{%
   \global\GRP@queue\@xp\@xp\@xp{\@xp\the\@xp\GRP@queue
@@ -6645,8 +6647,8 @@ and the derived files
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\grp@finish}
-% 
-% Set accumulated equations from a \env{dgroup} environment.   
+%
+% Set accumulated equations from a \env{dgroup} environment.
 %
 % BRM: Questionable patch!!
 % When processing the \cs{GRP@queue}, put it into a \cs{vbox}, then \cs{unvbox} it.
@@ -6665,7 +6667,7 @@ and the derived files
   \setlength\dim@a{\grp@wdL+\grp@wdR-4em}% Allowance for shrink?
   \if\grp@aligned
     \ifdim\dim@a>\grp@linewidth
-      \global\let\grp@aligned\@False     
+      \global\let\grp@aligned\@False
     \fi
   \fi
 %    \end{macrocode}
@@ -6751,8 +6753,8 @@ and the derived files
 % \end{macro}
 %
 % \begin{macro}{\eqgrp@elt}
-% 
-% Mission is to typeset the next equation from the group queue.   
+%
+% Mission is to typeset the next equation from the group queue.
 %
 % The arg is an \cs{EQ@trial}
 %    \begin{macrocode}
@@ -6824,9 +6826,9 @@ and the derived files
 %    \begin{macrocode}
 }
 %    \end{macrocode}
-% 
-% 
-% 
+%
+%
+%
 % \section{The \env{darray} environment}
 % There are two potential applications for darray.    One
 % is like eqnarray where the natural structure of the material crosses the
@@ -6842,15 +6844,15 @@ and the derived files
 % cross purposes with the feature of allowing interline stretch and page
 % breaks within a multiline array of equations, the \env{darray}
 % environment is targeted primarily as an alternative to
-% \env{eqnarray}, and does not support vertical ruling.   
-% 
+% \env{eqnarray}, and does not support vertical ruling.
+%
 % Overall strategy for \env{darray} is to use
 % \cs{halign} for the body.    In the case of a group, use a
-% single halign for the whole group!   
+% single halign for the whole group!
 % \begin{aside}
-% What about intertext?   
+% What about intertext?
 % \end{aside}
-% 
+%
 % That's the most reliable way
 % to get accurate column widths.    Don't spread the halign to the
 % column width, just use the natural width.    Then, if we repack the
@@ -6858,17 +6860,17 @@ and the derived files
 % done for dmath, and twiddle a bit with the widths of the first and last
 % cell in each row, we can use the same algorithms for centering and
 % equation number placement as dmath!    As well as handling footnotes
-% and vadjust objects the same way.   
-% 
+% and vadjust objects the same way.
+%
 % We can't just use \cs{arraycolsep} for \env{darray}, if
-% we want to be able to change it without screwing up interior arrays.   
+% we want to be able to change it without screwing up interior arrays.
 % So let's make a new colsep variable.    The initial value is
-% \quoted{2em, but let it shrink if necessary}.   
+% \quoted{2em, but let it shrink if necessary}.
 %    \begin{macrocode}
 \newskip\darraycolsep \darraycolsep 20pt plus1fil minus12pt
 %    \end{macrocode}
 % Let's make a nice big default setup with eighteen columns, split up
-% into six sets of lcr like \env{eqnarray}.   
+% into six sets of lcr like \env{eqnarray}.
 %    \begin{macrocode}
 \newcount\cur@row \newcount\cur@col
 \def\@tempa#1#2#3{%
@@ -6901,7 +6903,7 @@ and the derived files
 %    \end{macrocode}
 % Init the halign preamble to empty, then unless the \quoted{cols} key is
 % used to provide a non-null preamble just use the
-% default darray preamble which is a multiple lcr.   
+% default darray preamble which is a multiple lcr.
 %    \begin{macrocode}
   \global\let\@preamble\@empty
   \setkeys{breqn}{#1}%
@@ -6918,7 +6920,7 @@ and the derived files
   \halign\@xp\bgroup\@preamble
 }
 %    \end{macrocode}
-% Assimilate following punctuation.   
+% Assimilate following punctuation.
 %    \begin{macrocode}
 \def\enddarray#1{\check@punct@or@qed}
 \def\end@darray{%
@@ -6927,9 +6929,9 @@ and the derived files
   \egroup
 }
 %    \end{macrocode}
-% 
+%
 % The \cs{dar@capture} function steps back through the
-% list of row boxes and grinds them up in the best possible way.   
+% list of row boxes and grinds them up in the best possible way.
 %    \begin{macrocode}
 \def\dar@capture{%
 %% \showboxbreadth\maxdimen\showboxdepth99\showlists
@@ -6937,9 +6939,9 @@ and the derived files
   \dar@repack
 }
 %    \end{macrocode}
-% 
+%
 % The \cs{dar@repack} function is a variation of
-% \cs{eq@repack}.   
+% \cs{eq@repack}.
 %    \begin{macrocode}
 \def\dar@repack{%
   \unpenalty
@@ -6954,15 +6956,15 @@ and the derived files
   \dar@repack
 }
 %    \end{macrocode}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{Miscellaneous}
 % The \cs{condition} command.    With
-% the star form, set the argument in math mode instead of text mode.   
+% the star form, set the argument in math mode instead of text mode.
 % In a series of conditions, use less space between members of the
-% series than between the conditions and the main equation body.   
+% series than between the conditions and the main equation body.
 %
 % WSPR: tidied/fixed things up as it made sense to me but might have
 % broken something else!
@@ -6993,7 +6995,7 @@ and the derived files
   \endgroup}
 %    \end{macrocode}
 % \end{macro}
-% 
+%
 % The \env{dsuspend} environment.    First the old one that didn't work.
 %    \begin{macrocode}
 \newenvironment{XXXXdsuspend}{%
@@ -7001,7 +7003,7 @@ and the derived files
 %    \end{macrocode}
 % If we are inside a list environment, \cs{displayindent} and
 % \cs{displaywidth} give us \cs{@totalleftmargin} and
-% \cs{linewidth}.   
+% \cs{linewidth}.
 %    \begin{macrocode}
     \parshape 1 \displayindent \displaywidth\relax
     \hsize=\columnwidth \noindent\ignorespaces
@@ -7009,14 +7011,14 @@ and the derived files
   \par\egroup
 %    \end{macrocode}
 % Let's try giving \cs{EQ@box} the correct height for the first
-% line and \cs{EQ@copy} the depth of the last line.   
+% line and \cs{EQ@copy} the depth of the last line.
 %    \begin{macrocode}
   \global\setbox\GRP@box\vbox{%
     \vbox{\copy\EQ@box\vtop{\unvbox\EQ@box}}%
     \unvbox\GRP@box
   }%
 %    \end{macrocode}
-% Need to add a dummy element to \cs{GRP@queue}.   
+% Need to add a dummy element to \cs{GRP@queue}.
 %    \begin{macrocode}
   \global\GRP@queue\@xp{\the\GRP@queue
     \@elt{\gdef\EQ@trial{}}%
@@ -7043,26 +7045,26 @@ and the derived files
 %    \end{macrocode}
 % Allow \cn{intertext} as a short form of the \env{dsuspend}
 % environment; it's more convenient to write, but it doesn't support
-% embedded verbatim because it reads the material as a macro argument.   
+% embedded verbatim because it reads the material as a macro argument.
 % To support simultaneous use of \pkg{amsmath} and
 % \pkg{breqn}, the user command \cs{intertext} is left alone
-% until we enter a \pkg{breqn} environment.   
+% until we enter a \pkg{breqn} environment.
 %    \begin{macrocode}
 \newcommand\breqn@intertext[1]{\dsuspend#1\enddsuspend}
 %    \end{macrocode}
-% 
-% 
+%
+%
 % \begin{macro}{\*}
 % \begin{macro}{\discretionarytimes}
 % Discretionary times sign.    Standard \latex  definition
 % serves only for inline math.    Should the thin space be
-% included?    Not sure.   
+% included?    Not sure.
 %    \begin{macrocode}
 \renewcommand{\*}{%
   \if@display
 %    \end{macrocode}
 % Since \cs{eq@binoffset} is mu-glue, we can't use it directly
-% with \cs{kern} but have to measure it separately in a box.   
+% with \cs{kern} but have to measure it separately in a box.
 %    \begin{macrocode}
     \setbox\z@\hbox{\mathsurround\z@$\mkern\eq@binoffset$}%
     \discretionary{}{%
@@ -7075,254 +7077,254 @@ and the derived files
 }
 %    \end{macrocode}
 % This is only the symbol; it can be changed to some other symbol if
-% desired.   
+% desired.
 %    \begin{macrocode}
 \newcommand{\discretionarytimes}{\times}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \begin{macro}{\nref}
-% 
+%
 % This is like \cs{ref} but doesn't apply font changes or other
-% guff if the reference is undefined.   
-% And it is fully expandable for use as a label value.   
+% guff if the reference is undefined.
+% And it is fully expandable for use as a label value.
 % \begin{aside}
-% 
+%
 % Can break with Babel if author uses active characters in label key;
 % need to address that \begin{dn}
 % mjd,1999/01/21
 % \end{dn}
-% .   
+% .
 % \end{aside}
-% 
+%
 %    \begin{macrocode}
 \def\nref#1{\@xp\@nref\csname r@#1\endcsname}
 \def\@nref#1#2{\ifx\relax#1??\else \@xp\@firstoftwo#1\fi}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    \end{macrocode}
 % \end{macro}
-% 
-% 
-% 
-% 
-% 
+%
+%
+%
+%
+%
 % \section{Wrap-up}
-% The usual endinput.   
+% The usual endinput.
 %    \begin{macrocode}
 %</package>
 %    \end{macrocode}
-% 
-% 
-% 
-% 
+%
+%
+%
+%
 % \section{To do}
 % \begin{enumerate}
-% \item Alignment for equation groups.   
-% 
-%  
-% \item 
-% Use dpc's code for package options in keyval form.   
-%  
-% \item 
+% \item Alignment for equation groups.
+%
+%
+% \item
+% Use dpc's code for package options in keyval form.
+%
+% \item
 % Encapsulate \dquoted{break math} into a subroutine taking suitable
-% arguments.   
-%  
-% \item 
-% Need a density check for layout S when linewidth is very small.   
-%  
-% \item 
+% arguments.
+%
+% \item
+% Need a density check for layout S when linewidth is very small.
+%
+% \item
 % Make \verb":=" trigger a warning about using \cs{coloneq}
-% instead.   
-%  
+% instead.
+%
 % \item Ill-centered multiline equation (three-line case) in
-% test008.   
-%  
-% \item Attaching a single group number.   
-% 
-%  
-% \item 
-% Make sure to dump out box registers after done using them.   
-%  
-% \item Do the implementation for \cs{eq@resume@parshape}.   
-% 
-%  
-% \item Check on stackrel and buildrel and relbar and ???.   
-% 
-%  
-% \item Test math symbols at the beginning of array cells.   
-%  
-% \item Test \dbslash  cmd in and out of delims.   
-%  
+% test008.
+%
+% \item Attaching a single group number.
+%
+%
+% \item
+% Make sure to dump out box registers after done using them.
+%
+% \item Do the implementation for \cs{eq@resume@parshape}.
+%
+%
+% \item Check on stackrel and buildrel and relbar and ???.
+%
+%
+% \item Test math symbols at the beginning of array cells.
+%
+% \item Test \dbslash  cmd in and out of delims.
+%
 % \item Framing the equation body: the parshape and number placement
-% need adjusting when a frame is present.   
-% 
-%  
-% \item Cascading line widths in list env.   
-% 
-%  
-% \item Noalign option for dmath = multline arrangement?   
-% 
-%  
+% need adjusting when a frame is present.
+%
+%
+% \item Cascading line widths in list env.
+%
+%
+% \item Noalign option for dmath = multline arrangement?
+%
+%
 % \item Nocompact option, suggested 1998/05/19 by Andrew
-% Swann.   
-% 
-%  
+% Swann.
+%
+%
 % \item \cs{delbreak} cmd to add discretionary space at a break
-% within delimiters.   
-% 
-%  
-% \item Reduce above/below skip when the number is shifted.   
-% 
-%  
+% within delimiters.
+%
+%
+% \item Reduce above/below skip when the number is shifted.
+%
+%
 % \item Need a \cs{middelim} command for marking a delimiter symbol
-% as nondirectional if it has an innate directionality \verb"()[]" \etc .   
-% 
-%  
-% \item 
+% as nondirectional if it has an innate directionality \verb"()[]" \etc .
+%
+%
+% \item
 % \cs{xrightarrow} from amsmath won't participate in line
-% breaking unless something extra is done.   
-% Make \cs{BreakingRel} and \cs{BreakingBin} functions?   
-%  
+% breaking unless something extra is done.
+% Make \cs{BreakingRel} and \cs{BreakingBin} functions?
+%
 % \item Placement of number in an indented quotation or
-% abstract.   
-%  
+% abstract.
+%
 % \item If $LHSwd > 2em$, it might be a good idea to try with
 % eq@indentstep = 2em before shifting the number.    Currently this
 % doesn't happen if the first trial pass (without the number)
-% succeeds with $indentstep = LHSwd > 2em$.   
-% 
-%  
+% succeeds with $indentstep = LHSwd > 2em$.
+%
+%
 % \item Read past \verb"\end{enumerate}" when checking
-% for \verb"\end{proof}"?   
-%  
-% \item 
+% for \verb"\end{proof}"?
+%
+% \item
 % Look into using a \dquoted{qed-list} of environment names instead of
-% checking the existence of \cs{proofqed}.   
-%  
-% \item Pick up the vadjust\slash footnote\slash mark handling.   
-% 
-%  
+% checking the existence of \cs{proofqed}.
+%
+% \item Pick up the vadjust\slash footnote\slash mark handling.
+%
+%
 % \item Forcing\slash prohibiting page breaks after\slash before
-% an equation.   
-% 
-%  
+% an equation.
+%
+%
 % \item Adding a spanner brace on the left and individual numbers on
-% the right (indy-numbered cases).   
-% 
-%  
+% the right (indy-numbered cases).
+%
+%
 % \item Provide \cs{shiftnumber}, \cs{holdnumber} to
-% override the decision.   
-%  
+% override the decision.
+%
 % \item  Provide a mechanism for adjusting the vertical position of
 % the number.    Here a version-specific selection macro would be
-% useful.   
+% useful.
 % \begin{literalcode}
 % \begin{dmath}[
 %   style={\foredition{1}{\raisenumber{13pt}}}
 % ]
 % \end{literalcode}
-% 
-%  
-% \item 
+%
+%
+% \item
 % Add an alignleft option for an equation group to mean, break and
 % align to a ladder layout as usual within the equations, but for the
 % group alignment used the leftmost point (for equations that don't
-% have an LHS, this makes no difference).   
-%  
-% \item 
+% have an LHS, this makes no difference).
+%
+% \item
 % Test with Arseneau's wrapfig for parshape\slash everypar
-% interaction.   
-% 
-%  
-% \item Fix up the macro/def elements.   
-%  
+% interaction.
+%
+%
+% \item Fix up the macro/def elements.
+%
 % \item Convert the literal examples in section \quoted{Equation types and
-% forms} to typeset form.   
-% 
-%  
+% forms} to typeset form.
+%
+%
 % \item Compile comparison-examples: \eg , a standard equation
 % env with big left-right objects that don't shrink, versus how shrinking
-% can allow it to fit.   
-% 
-%  
+% can allow it to fit.
+%
+%
 % \item Frame the \dquoted{figures} since they are mostly
-% text.   
-%  
+% text.
+%
 % \end{enumerate}
-% 
-% 
-% 
+%
+%
+%
 % Possible enhancements:
 % \begin{enumerate}
 % \item Provide a \opt{pull} option meaning to pull the first
 % and last lines out to the margin, like the \env{multline}
 % environment of the \pkg{amsmath} package.    Maybe this should
 % get an optional argument, actually, to specify the amount of space left
-% at the margin.   
-%  
+% at the margin.
+%
 % \item With the draft option, one would like to see the equation
 % labels in the left margin.    Need to check with the
-% \pkg{showkeys} package.   
-% 
-%  
+% \pkg{showkeys} package.
+%
+%
 % \item Options for break preferences: if there's not enough room, do
 % we first shift the number, or first try to break up the equation
 % body?.    In an aligned group, does sticking to the group alignment
 % take precedence over minimizing the number of line breaks needed for
 % individual equations?.    And the general preferences probably need
-% to be overridable for individual instances.   
-%  
+% to be overridable for individual instances.
+%
 % \item Extend suppress-breaks-inside-delimiters support to inline
-% math (suggestion of Michael Doob).   
-%  
+% math (suggestion of Michael Doob).
+%
 % \item Use belowdisplayshortskip above a dsuspend fragment if the
 % fragment is only one line and short enough compared to the equation line
-% above it.   
-% 
-%  
-% \item Add \cs{eqfuzz} distinct from \cs{hfuzz}.   
-% Make use of it in the measuring phase.   
-% 
-%  
-% \item Provision for putting in a \quoted{continued} note.   
-%  
+% above it.
+%
+%
+% \item Add \cs{eqfuzz} distinct from \cs{hfuzz}.
+% Make use of it in the measuring phase.
+%
+%
+% \item Provision for putting in a \quoted{continued} note.
+%
 % \item Conserve box mem: modify frac, sub, sup, overline, underline,
 % sqrt, to turn off \cs{bin@break} and (less urgently)
-% \cs{rel@break}.   
-% 
-%  
+% \cs{rel@break}.
+%
+%
 % \item More explicit support for Russian typesetting conventions (cf
-% Grinchuk article).   
-% 
-%  
+% Grinchuk article).
+%
+%
 % \item With package option \opt{refnumbers},
 % leave unnumbered all uncited equations, even if they are not done with
-% the star form (Bertolazzi's easyeqn idea).   
-%  
+% the star form (Bertolazzi's easyeqn idea).
+%
 % \item In an equation group, use a vertical bracket with the
-% equation number to mark the lines contained in that equation.   
-% 
-%  
+% equation number to mark the lines contained in that equation.
+%
+%
 % \item For a two-line multline thingamabob, try to
 % make sure that the lines overlap in the middle by 2 em or whatever
-% (settable design variable).   
-%  
+% (settable design variable).
+%
 % \item Provide a separate vertical column for the principal mathrel
 % symbols and center them within the column if they aren't all the same
 % width.    Maybe an option for \env{dmath}: relwidth=x, so that two
-% passes are not required to get the max width of all the mathrels.   
+% passes are not required to get the max width of all the mathrels.
 % Or, no, just require it to be an halign or provide a macro to be
 % applied to all the shorter rels:
 % \begin{literalcode}
 % lhs \widerel{19pt}{=} ...
 %     \xrightarrow{foo} ...
 % \end{literalcode}
-% 
-%  
+%
+%
 % \item try to use vadjust for keepglue
-%  
+%
 % \end{enumerate}
 %
 % \PrintIndex

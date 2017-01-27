@@ -3,8 +3,8 @@
 % Copyright (C) 1997-2003 by Michael J. Downes
 % Copyright (C) 2007-2008 by Morten Hoegholm
 % Copyright (C) 2007-2014 by Lars Madsen
-% Copyright (C) 2007-2014 by Will Robertson
-% Copyright (C) 2015,2016 by Will Robertson, Joseph Wright
+% Copyright (C) 2007-2017 by Will Robertson
+% Copyright (C) 2010-2017 by Joseph Wright
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
@@ -78,8 +78,8 @@ This is a generated file.
 Copyright (C) 1997-2003 by Michael J. Downes
 Copyright (C) 2007-2011 by Morten Hoegholm et al
 Copyright (C) 2007-2014 by Lars Madsen
-Copyright (C) 2007-2014 by Will Robertson
-Copyright (C) 2015,2106 by Will Robertson, Joseph Wright
+Copyright (C) 2007-2017 by Will Robertson
+Copyright (C) 2010-2017 by Joseph Wright
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -129,7 +129,7 @@ and the derived files
 %<package>\NeedsTeXFormat{LaTeX2e}
 %<package>\ProvidesPackage{mathstyle}
 %<*package|driver>
-  [2016/04/09 v0.98e Tracking mathstyle implicitly]
+  [2017/01/27 0.98e Tracking mathstyle implicitly]
 %</package|driver>
 %<*driver>
 \documentclass{ltxdoc}
@@ -153,12 +153,12 @@ and the derived files
 %
 % \part*{User's guide}
 %
-% This package exists for two reasons: 
+% This package exists for two reasons:
 % \begin{itemize}
 % \item The primitive operations for creating a super- or subscript in
 %   \TeX\ work almost as if \verb|^| and \verb|_| are macros taking an
 %   argument. However, that is not quite the case, and
-%   some things that you'd expect to work don't (e.g., \verb|^\cong|) 
+%   some things that you'd expect to work don't (e.g., \verb|^\cong|)
 %   whereas others which you'd think shouldn't work actually
 %   do (such as |^\mathsf{s}|). We do everyone a favor if it behaves
 %   consistently, i.e., if the superscript and subscript operations
@@ -174,8 +174,8 @@ and the derived files
 %   not promote the primitive infix notation, this package keeps track
 %   of a current mathstyle parameter.
 % \end{itemize}
-% 
-% 
+%
+%
 % \section{Some usage tips}
 %
 % If you want to use this package with \pkg{amsmath}, it is important
@@ -302,7 +302,7 @@ and the derived files
 % set \verb|\mathstyle| to zero (see above), so by default it is set to the
 % `text' maths style.  With Lua\TeX{} there is a primitive to do the same
 % so it just has to be enabled. Note that in all cases we use Lua\TeX{}-like
-% numbering for the states. 
+% numbering for the states.
 %    \begin{macrocode}
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname directlua\endcsname\relax
@@ -462,11 +462,11 @@ and the derived files
       \chardef\mathstyle=\@ne
     \or
       \chardef\mathstyle=\@ne
-    \or 
+    \or
       \chardef\mathstyle=\tw@
-    \or 
+    \or
       \chardef\mathstyle=\tw@
-    \else 
+    \else
       \chardef\mathstyle=\thr@@
     \fi
   }
@@ -502,17 +502,17 @@ and the derived files
 % begin document, not straight away}
 %    \begin{macrocode}
 \DeclareOption{mathactivechars}{%
- %  \catcode`\^=12\relax 
+ %  \catcode`\^=12\relax
  %  \catcode`\_=12\relax
 \AtBeginDocument{\catcode`\^=12\relax \catcode`\_=12\relax}%
 }
 \DeclareOption{activechars}{%
- %  \catcode`\^=13\relax 
+ %  \catcode`\^=13\relax
  %  \catcode`\_=13\relax
 \AtBeginDocument{\catcode`\^=13\relax \catcode`\_=13\relax}%
 }
 \DeclareOption{noactivechars}{%
- %  \catcode`\^=7\relax 
+ %  \catcode`\^=7\relax
  %  \catcode`\_=8\relax
 \AtBeginDocument{\catcode`\^=7\relax \catcode`\_=8\relax}%
 }
@@ -525,12 +525,12 @@ and the derived files
 \ifnum\catcode`\^=13\relax
   \let^=\sp \let_=\sb
 \else
-  \mathcode`\^="8000\relax 
+  \mathcode`\^="8000\relax
   \mathcode`\_="8000\relax
-  \begingroup 
-    \catcode`\^=\active 
+  \begingroup
+    \catcode`\^=\active
     \catcode`\_=\active
-    \global\let^=\sp 
+    \global\let^=\sp
     \global\let_=\sb
   \endgroup
 \fi

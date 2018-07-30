@@ -2041,12 +2041,13 @@ and the derived files
 %    \begin{macrocode}
 %<*trace>
 \errorcontextlines=2000\relax
+\typeout{BREQN DEBUGGING MODE ACTIVE}
 %    \end{macrocode}
 %
 % \begin{macro}{\breqn@debugmsg}
 % Print a debugging message.
 %    \begin{macrocode}
-\long\def\breqn@debugmsg#1{\GenericInfo{||}{||=\space#1}}
+\long\def\breqn@debugmsg#1{\GenericWarning{||}{||=\space#1}}
 %    \end{macrocode}
 % \end{macro}
 %

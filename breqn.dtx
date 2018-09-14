@@ -78,7 +78,7 @@ This is a generated file.
 Copyright (C) 1997-2003 by Michael J. Downes
 Copyright (C) 2007-2008 by Morten Hoegholm
 Copyright (C) 2007-2014 by Lars Madsen
-Copyright (C) 2007-2017 by Will Robertson
+Copyright (C) 2007-2018 by Will Robertson
 Copyright (C) 2010-2017 by Joseph Wright
 
 This work may be distributed and/or modified under the
@@ -124,7 +124,7 @@ and the derived files
 %</ignore>
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{breqn.drv}[2017/01/27 0.98e breqn]
+\ProvidesFile{breqn.drv}[2018/09/14 0.98f breqn]
 \documentclass{ltxdoc}
 \CodelineIndex
 \EnableCrossrefs
@@ -1457,8 +1457,6 @@ and the derived files
 %
 % \section{Prelim}
 %
-% This package doesn't work with \latex  2.09, nor with other
-% versions of \latex  earlier than 1994/12/01.
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
@@ -1466,8 +1464,8 @@ and the derived files
 %
 % Declare package name and date.
 %    \begin{macrocode}
-\RequirePackage{expl3}[2009/08/05]
-\ProvidesExplPackage{breqn}{2017/01/27}{0.98e}{Breaking equations}
+\RequirePackage{expl3}
+\ProvidesExplPackage{breqn}{2018/09/14}{0.98f}{Breaking equations}
 %    \end{macrocode}
 %   Regrettably, \pkg{breqn} is internally a mess, so we have to take
 %   some odd steps.
@@ -2970,6 +2968,15 @@ and the derived files
 %  1) modifications supplied by MJD to fix the eaten \cs{paragraph} problem.
 %  2) Added \cs{display@setup} here, rather than globally.
 %
+% \begin{macro}{\@dmath@start@hook}
+% \begin{macro}{\@dgroup@start@hook}
+%    \begin{macrocode}
+\let\@dmath@start@hook\@empty
+\let\@dgroup@start@hook\@empty
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
 % \begin{macro}{\dmath}
 % \begin{macro}{\enddmath}
 % For the \env{dmath} environment we don't want the standard
@@ -2978,6 +2985,7 @@ and the derived files
 % for math material.    So we call \cs{@optarg} instead.
 %    \begin{macrocode}
 \newenvironment{dmath}{%
+ \@dmath@start@hook
  \let\eq@hasNumber\@True \@optarg\@dmath{}}{}
 \def\@dmath[#1]{%
 %<trace>  \breqn@debugmsg{=== DMATH ==================================================}%
@@ -3006,7 +3014,9 @@ and the derived files
 % \cs{enddmath} needs to look ahead for punctuation (and
 % \cs{qed}?).
 %    \begin{macrocode}
-\def\enddmath#1{\check@punct@or@qed}
+\def\enddmath#1{%
+  \check@punct@or@qed
+}
 \def\end@dmath{%
   \gdef\EQ@setwdL{}% Occasionally undefined ???
   \eq@capture
@@ -3036,6 +3046,7 @@ and the derived files
 % Ah yes, now the lovely \env{dmath*} environment.
 %    \begin{macrocode}
 \newenvironment{dmath*}{%
+  \@dmath@start@hook
   \let\eq@hasNumber\@False \@optarg\@dmath{}%
 }{}
 \@namedef{end@dmath*}{\end@dmath}
@@ -6521,6 +6532,7 @@ and the derived files
 % Definition of the \env{dgroup} environment.
 %    \begin{macrocode}
 \newenvironment{dgroup}{%
+  \@dgroup@start@hook
   \let\grp@hasNumber\@True\@optarg\@dgroup{}%
 }{%
   \end@dgroup
@@ -7108,6 +7120,17 @@ and the derived files
 % \end{macro}
 %
 %
+% \section{Compatibility}
+%
+% \paragraph{lineno} (or at the very least, allow documents to compile!)
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@ifpackageloaded{lineno}{%
+    \g@addto@macro\@dmath@start@hook{\nolinenumbers}%
+    \g@addto@macro\@dgroup@start@hook{\nolinenumbers}%
+  }{}%
+}
+%    \end{macrocode}
 %
 %
 %

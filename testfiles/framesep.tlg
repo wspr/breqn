@@ -14,7 +14,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x317.87086, glue set 269.28722fil
+..\vbox(483.69687+0.0)x317.87086, glue set 274.28668fil
 ...\write-{}
 ...\glue(\topskip) 0.0
 ...\hbox(14.15291+9.11122)x300.48979, glue set 0.0
@@ -373,8 +373,11 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 109.86769 plus 87.08987
 ...\penalty 0
 ...\glue 4.70946 plus 2.0 minus 5.0
+...\glue -5.0
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
+***************
+Compilation 1 of test file completed with exit status 0

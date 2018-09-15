@@ -14,30 +14,19 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x307.28978, glue set 384.3207fil
+..\vbox(483.69687+0.0)x307.28978, glue set 377.26588fil
 ...\write-{}
-...\glue(\topskip) 3.05556
-...\hbox(6.94444+1.94444)x307.28978, glue set 230.84521fil
+...\glue(\topskip) 10.0
+...\hbox(0.0+0.0)x307.28978, glue set 107.91405fil
 ....\hbox(0.0+0.0)x15.0
-....\OT1/cmr/m/n/10 U
-....\OT1/cmr/m/n/10 s
-....\OT1/cmr/m/n/10 i
-....\OT1/cmr/m/n/10 n
-....\OT1/cmr/m/n/10 g
-....\glue 3.33333 plus 1.66666 minus 1.11111
-....\OT1/cmr/m/n/10 ^
-....\glue 3.33333 plus 1.66666 minus 1.11111
-....\OT1/cmr/m/n/10 a
-....\OT1/cmr/m/n/10 n
-....\OT1/cmr/m/n/10 d
-....\glue 3.33333 plus 1.66666 minus 1.11111
-....\OT1/cmr/m/n/10 _
-....\OT1/cmr/m/n/10 :
+....\hbox(0.0+0.0)x184.37573, glue set 92.18787fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
 ...\penalty 10000
-...\glue(\abovedisplayshortskip) 0.0 plus 3.0
+...\glue(\abovedisplayskip) 10.0 plus 2.0 minus 5.0
 ...\glue(\lineskip) 1.0
 ...\hbox(15.79677+10.79677)x51.7802, shifted 127.75479, display
 ....\hbox(15.79677+10.79677)x51.7802
@@ -115,7 +104,7 @@ Completed box being shipped out [1]
 ..........\hbox(0.0+0.0)x1.2, shifted -2.5
 ......\hbox(0.0+0.0)x1.2, shifted -2.5
 ...\penalty 0
-...\glue(\belowdisplayshortskip) 6.0 plus 3.0 minus 3.0
+...\glue(\belowdisplayskip) 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
 ...\glue(\lineskip) 1.0
 ...\hbox(6.94444+0.0)x307.28978, glue set 259.73418fil
@@ -164,8 +153,11 @@ Completed box being shipped out [1]
 .........\OML/cmm/m/it/5 a
 ...\penalty 0
 ...\glue(\belowdisplayshortskip) 6.0 plus 3.0 minus 3.0
+...\glue -5.0
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
+***************
+Compilation 1 of test file completed with exit status 0

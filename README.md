@@ -1,34 +1,39 @@
+
 # The BREQN packages
 
-This is the latest repository for the breqn package, originally developed by Michael J. Downes and later taken over by Morten Høgholm.
+This is the latest repository for the breqn package, originally developed by
+Michael J. Downes and later taken over by Morten Høgholm.
+Will Robertson currently manages the code but without time for major development.
 
-The version of the package here will be used as the source for current CTAN releases.
-
-Internal updates are planned but no major development is expected. Contributors welcome — if you dare.
-
-Feedback should be directed to the Issue Tracker at:
-  <https://github.com/wspr/breqn/issues>
+* CTAN URL: <https://ctan.org/pkg/breqn>
+* Feedback/bugs: <https://github.com/wspr/breqn/issues>
+* Change history: [CHANGES.md](./CHANGES.md)
 
 ## Installation
 
-Running TeX on each dtx file extracts the runtime files. See the dtx
-files for details.
+The `breqn` packages are distributed in the major TeX distributions so manual installation
+is only necessary if you wish to install pre-release versions or contribute to the development
+of the package.
 
-## The code
+Individually, running `pdftex` on each dtx file extracts the runtime files.
+As a package, `l3build install` will extract the needed files and install them locally.
 
-### breqn
+
+
+# The code
+
+## breqn
 
 The breqn package facilitates automatic line-breaking of displayed
-math expressions. The package was originally developed by Michael
-J. Downes.
+math expressions.
 
-### flexisym
+## flexisym
 
 This package turns math symbols into macros.
-Is is required by breqn so that breqn can make intelligent decisions
+It is required by breqn so that breqn can make intelligent decisions
 with respect to line-breaking and other details.
 
-### mathstyle
+## mathstyle
 
 Ensures uniform syntax for math subscript (_) and superscript (^)
 operations so that they always take exactly one argument.
@@ -36,13 +41,4 @@ Grants access to the current mathstyle which eases several tasks such
 as avoiding the many pitfalls of \mathchoice and \mathpalette.
 This package is used by flexisym.
 
-## Release notes
 
-* v0.98f (2018/09/14)
-
-  * Insert `\nolinenumbers` inside maths environments if the `lineno` package is loaded.
-    It would be better to insert a line number, but at least with this the document still compiles!
-
-* v0.98e (2017/01/27)
-
-  * Fix in `\mathchoice` to allow use under recent versions of LuaTeX

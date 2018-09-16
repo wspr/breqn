@@ -6,28 +6,20 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line ....
 Completed box being shipped out [1]
-\vbox(498.33238+0.0)x291.9253, direction TLT
+\vbox(498.33238+0.0)x291.9253
 .\glue -52.36449
-.\vbox(550.69687+0.0)x307.28978, shifted -15.36449, direction TLT
-..\vbox(12.0+0.0)x307.28978, glue set 12.0fil, direction TLT
+.\vbox(550.69687+0.0)x307.28978, shifted -15.36449
+..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
 ...\glue 0.0 plus 1.0fil
-...\hbox(0.0+0.0)x307.28978, direction TLT
+...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x307.28978, glue set 409.48425fil, direction TLT
+..\vbox(483.69687+0.0)x307.28978, glue set 409.48431fil
 ...\write-{}
 ...\glue(\topskip) 3.17
-...\hbox(6.83+2.06)x307.28978, glue set 271.86978fil, direction TLT
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
-....\hbox(0.0+0.0)x15.0, direction TLT
-....\TU/lmr/m/n/10 B
-....\TU/lmr/m/n/10 u
-....\TU/lmr/m/n/10 g
-....\TU/lmr/m/n/10 :
+...\hbox(6.83+2.05998)x307.28978, glue set 271.86978fil
+....\hbox(0.0+0.0)x15.0
+....\TU/lmr/m/n/10 Bug:
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
@@ -39,28 +31,17 @@ Completed box being shipped out [1]
 ...\rule(0.0+0.0)x*
 ...\penalty 10000
 ...\glue 3.44444
-...\hbox(7.5+2.5)x12.78, direction TLT
-....\TU/lmr/m/n/10 (
-....\TU/lmr/m/n/10 1
-....\kern0.0 (italic)
+...\hbox(7.5+2.49998)x12.78
+....\TU/lmr/m/n/10 (1
+....\kern 0.0
 ....\TU/lmr/m/n/10 )
 ...\penalty 10000
-...\kern-10.94444
-...\kern-10.0
+...\kern -10.94444
+...\kern -10.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(6.94444+0.0)x307.28978, glue set 1.0, direction TLT
+...\hbox(6.94444+0.0)x307.28978, glue set 1.0
 ....\glue(\leftskip) 141.7329
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
 ....\mathon
 ....\OML/cmm/m/it/10 a
 ....\penalty 9999
@@ -77,18 +58,8 @@ Completed box being shipped out [1]
 ...\glue 3.0 plus 2.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(6.94444+0.0)x307.28978, glue set 1.0, direction TLT
+...\hbox(6.94444+0.0)x307.28978, glue set 1.0
 ....\glue(\leftskip) 142.69122
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
 ....\mathon
 ....\OML/cmm/m/it/10 c
 ....\penalty 9999
@@ -104,21 +75,10 @@ Completed box being shipped out [1]
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\baselineskip) 2.56
-...\hbox(6.94+0.22)x307.28978, glue set 261.9198fil, direction TLT
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
-....\hbox(0.0+0.0)x15.0, direction TLT
-....\TU/lmr/m/n/10 W
-....\kern-0.83
-....\TU/lmr/m/n/10 o
-....\TU/lmr/m/n/10 r
-....\TU/lmr/m/n/10 k
-....\TU/lmr/m/n/10 s
-....\TU/lmr/m/n/10 :
+...\glue(\baselineskip) 2.56001
+...\hbox(6.94+0.21999)x307.28978, glue set 261.91978fil
+....\hbox(0.0+0.0)x15.0
+....\TU/lmr/m/n/10 Works:
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
@@ -129,29 +89,17 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 3.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(7.5+2.5)x307.28978, glue set 1.0, direction TLT
+...\hbox(7.5+2.49998)x307.28978, glue set 1.0
 ....\glue(\leftskip) 141.7329
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
-....\hbox(7.5+2.5)x0.0, glue set - 165.55688fil, direction TLT
-.....\kern-141.7329
-.....\kern307.28978
-.....\kern-17.78
-.....\hbox(7.5+2.5)x17.78, direction TLT
-......\TU/lmr/m/n/10 (
-......\TU/lmr/m/n/10 2
-......\TU/lmr/m/n/10 a
-......\kern0.0 (italic)
+....\hbox(7.5+2.49998)x0.0, glue set - 165.55688fil
+.....\kern -141.7329
+.....\kern 307.28978
+.....\kern -17.78
+.....\hbox(7.5+2.49998)x17.78
+......\TU/lmr/m/n/10 (2a
+......\kern 0.0
 ......\TU/lmr/m/n/10 )
 .....\glue 0.0 plus 1.0fil minus 1.0fil
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
 ....\mathon
 ....\OML/cmm/m/it/10 a
 ....\penalty 9999
@@ -168,29 +116,17 @@ Completed box being shipped out [1]
 ...\glue 3.0 plus 2.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(7.5+2.5)x307.28978, glue set 1.0, direction TLT
+...\hbox(7.5+2.49998)x307.28978, glue set 1.0
 ....\glue(\leftskip) 142.69122
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
-....\hbox(7.5+2.5)x0.0, glue set - 164.59856fil, direction TLT
-.....\kern-142.69122
-.....\kern307.28978
-.....\kern-18.34
-.....\hbox(7.5+2.5)x18.34, direction TLT
-......\TU/lmr/m/n/10 (
-......\TU/lmr/m/n/10 2
-......\TU/lmr/m/n/10 b
-......\kern0.0 (italic)
+....\hbox(7.5+2.49998)x0.0, glue set - 164.59856fil
+.....\kern -142.69122
+.....\kern 307.28978
+.....\kern -18.34
+.....\hbox(7.5+2.49998)x18.34
+......\TU/lmr/m/n/10 (2b
+......\kern 0.0
 ......\TU/lmr/m/n/10 )
 .....\glue 0.0 plus 1.0fil minus 1.0fil
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
 ....\mathon
 ....\OML/cmm/m/it/10 c
 ....\penalty 9999
@@ -209,6 +145,6 @@ Completed box being shipped out [1]
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
-..\hbox(0.0+0.0)x307.28978, direction TLT
+..\hbox(0.0+0.0)x307.28978
 ***************
 Compilation 1 of test file completed with exit status 0

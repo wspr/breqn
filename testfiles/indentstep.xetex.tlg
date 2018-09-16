@@ -7,57 +7,46 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line ....
 Underfull \hbox (badness 10000) in paragraph at lines 19--19
 |  \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 z|$
-\hbox(5.83333+0.83333)x193.47878, direction TLT
+\hbox(5.83333+0.83333)x193.47878
 .\rule(*+*)x0.0
 .\glue 8.33313 minus -1.66663
 .\glue(\medmuskip) 2.22217 minus 1.66663
 .\OT1/cmr/m/n/10 +
 .\glue(\medmuskip) 2.22217 minus 1.66663
 .\OML/cmm/m/it/10 z
-.\kern0.4398 (italic)
+.\kern0.4398
 .\rule(*+*)x0.0
 .\mathoff
 .\penalty 10000
 .\glue(\parfillskip) 0.0
 .\glue(\rightskip) 0.0
 Completed box being shipped out [1]
-\vbox(498.33238+0.0)x291.9253, direction TLT
+\vbox(498.33238+0.0)x291.9253
 .\glue -52.36449
-.\vbox(550.69687+0.0)x307.28978, shifted -15.36449, direction TLT
-..\vbox(12.0+0.0)x307.28978, glue set 12.0fil, direction TLT
+.\vbox(550.69687+0.0)x307.28978, shifted -15.36449
+..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
 ...\glue 0.0 plus 1.0fil
-...\hbox(0.0+0.0)x307.28978, direction TLT
+...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x307.28978, glue set 336.82758fil, direction TLT
+..\vbox(483.69687+0.0)x307.28978, glue set 336.82758fil
 ...\write-{}
 ...\glue(\topskip) 10.0
 ...\rule(0.0+0.0)x*
 ...\penalty 10000
 ...\glue 13.44444
 ...\glue(\baselineskip) 4.5
-...\hbox(7.5+2.5)x307.28978, glue set 294.50977fil, direction TLT
+...\hbox(7.5+2.49998)x307.28978, glue set 294.50978fil
 ....\glue 0.0 plus 1.0fil
-....\hbox(7.5+2.5)x12.78, direction TLT
-.....\TU/lmr/m/n/10 (
-.....\TU/lmr/m/n/10 1
-.....\kern0.0 (italic)
+....\hbox(7.5+2.49998)x12.78
+.....\TU/lmr/m/n/10 (1
+.....\kern 0.0
 .....\TU/lmr/m/n/10 )
 ...\penalty 10000
-...\kern-20.94444
+...\kern -20.94444
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(6.94444+1.94444)x307.28978, glue set - 0.53194, direction TLT
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
+...\hbox(6.94444+1.94444)x307.28978, glue set - 0.53194
 ....\mathon
 ....\OML/cmm/m/it/10 a
 ....\penalty 888
@@ -85,13 +74,13 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 f
-....\kern1.0764 (italic)
+....\kern1.0764
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 g
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
@@ -107,19 +96,19 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 j
-....\kern0.57243 (italic)
+....\kern0.57243
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 k
-....\kern0.3148 (italic)
+....\kern0.3148
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 l
-....\kern0.19678 (italic)
+....\kern0.19678
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
@@ -145,13 +134,13 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 q
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 r
-....\kern0.27779 (italic)
+....\kern0.27779
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
@@ -161,7 +150,7 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 22.78
 ...\penalty 20000
 ...\glue(\baselineskip) 5.11111 plus 2.0
-...\hbox(6.94444+1.94444)x299.28978, glue set - 0.31467, shifted 8.0, direction TLT
+...\hbox(6.94444+1.94444)x299.28978, glue set - 0.31467, shifted 8.0
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 t
@@ -175,13 +164,13 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 v
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 w
-....\kern0.26909 (italic)
+....\kern0.26909
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
@@ -192,13 +181,13 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 y
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 z
-....\kern0.4398 (italic)
+....\kern0.4398
 ....\penalty 9999
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
 ....\OML/cmm/m/it/10 <
@@ -244,7 +233,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 f
-....\kern1.0764 (italic)
+....\kern1.0764
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -253,7 +242,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 g
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -278,19 +267,19 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 j
-....\kern0.57243 (italic)
+....\kern0.57243
 ....\penalty 888
 ....\glue(\rightskip) 22.78
 ...\penalty 20000
 ...\glue(\baselineskip) 5.11111 plus 2.0
-...\hbox(6.94444+1.94444)x291.28978, glue set - 0.40794, shifted 16.0, direction TLT
+...\hbox(6.94444+1.94444)x291.28978, glue set - 0.40794, shifted 16.0
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 k
-....\kern0.3148 (italic)
+....\kern0.3148
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -299,7 +288,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 l
-....\kern0.19678 (italic)
+....\kern0.19678
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -340,7 +329,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 q
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -349,7 +338,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 r
-....\kern0.27779 (italic)
+....\kern0.27779
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -382,7 +371,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 v
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -391,7 +380,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 w
-....\kern0.26909 (italic)
+....\kern0.26909
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -408,7 +397,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 y
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -417,7 +406,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 z
-....\kern0.4398 (italic)
+....\kern0.4398
 ....\rule(*+*)x0.0
 ....\mathoff
 ....\penalty 10000
@@ -433,17 +422,7 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(6.94444+1.94444)x307.28978, glue set - 0.86206, direction TLT
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
-....\localpar
-.....\localinterlinepenalty=0
-.....\localbrokenpenalty=0
-.....\localleftbox=null
-.....\localrightbox=null
+...\hbox(6.94444+1.94444)x307.28978, glue set - 0.86206
 ....\mathon
 ....\OML/cmm/m/it/10 a
 ....\penalty 888
@@ -471,13 +450,13 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 f
-....\kern1.0764 (italic)
+....\kern1.0764
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 g
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
@@ -493,19 +472,19 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 j
-....\kern0.57243 (italic)
+....\kern0.57243
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 k
-....\kern0.3148 (italic)
+....\kern0.3148
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 l
-....\kern0.19678 (italic)
+....\kern0.19678
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
@@ -531,13 +510,13 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 q
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 r
-....\kern0.27779 (italic)
+....\kern0.27779
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
@@ -558,16 +537,16 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 v
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\rightskip) 0.0
 ...\penalty 20000
 ...\glue(\baselineskip) 5.11111 plus 2.0
-...\hbox(6.94444+1.94444)x250.38428, glue set - 0.85403, shifted 56.9055, direction TLT
+...\hbox(6.94444+1.94444)x250.38428, glue set - 0.85403, shifted 56.9055
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 w
-....\kern0.26909 (italic)
+....\kern0.26909
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
@@ -578,13 +557,13 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 y
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 z
-....\kern0.4398 (italic)
+....\kern0.4398
 ....\penalty 9999
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
 ....\OML/cmm/m/it/10 <
@@ -630,7 +609,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 f
-....\kern1.0764 (italic)
+....\kern1.0764
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -639,7 +618,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 g
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -664,7 +643,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 j
-....\kern0.57243 (italic)
+....\kern0.57243
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -673,7 +652,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 k
-....\kern0.3148 (italic)
+....\kern0.3148
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -682,7 +661,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 l
-....\kern0.19678 (italic)
+....\kern0.19678
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -695,7 +674,7 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\penalty 10000
 ...\glue(\baselineskip) 5.90477 plus 2.0
-...\hbox(6.15079+1.94444)x193.47878, glue set - 0.64299, shifted 113.811, direction TLT
+...\hbox(6.15079+1.94444)x193.47878, glue set - 0.64299, shifted 113.811
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
 ....\glue(\medmuskip) 2.22217 minus 1.66663
@@ -726,7 +705,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 q
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -735,7 +714,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 r
-....\kern0.27779 (italic)
+....\kern0.27779
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -768,7 +747,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 v
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -777,7 +756,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 w
-....\kern0.26909 (italic)
+....\kern0.26909
 ....\penalty 888
 ....\glue -8.33313 minus 1.66663
 ....\rule(*+*)x0.0
@@ -794,19 +773,19 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 y
-....\kern0.35878 (italic)
+....\kern0.35878
 ....\penalty 888
 ....\glue(\rightskip) 0.0
 ...\penalty 20000
 ...\glue(\baselineskip) 6.22223 plus 2.0
-...\hbox(5.83333+0.83333)x193.47878, shifted 113.811, direction TLT
+...\hbox(5.83333+0.83333)x193.47878, shifted 113.811
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OT1/cmr/m/n/10 +
 ....\glue(\medmuskip) 2.22217 minus 1.66663
 ....\OML/cmm/m/it/10 z
-....\kern0.4398 (italic)
+....\kern0.4398
 ....\rule(*+*)x0.0
 ....\mathoff
 ....\penalty 10000
@@ -814,20 +793,19 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 0.0
 ...\penalty 10000
 ...\glue(\baselineskip) 5.66667 plus 2.0
-...\hbox(7.5+2.5)x307.28978, glue set 294.50977fil, direction TLT
+...\hbox(7.5+2.49998)x307.28978, glue set 294.50978fil
 ....\glue 0.0 plus 1.0fil
-....\hbox(7.5+2.5)x12.78, direction TLT
-.....\TU/lmr/m/n/10 (
-.....\TU/lmr/m/n/10 2
-.....\kern0.0 (italic)
+....\hbox(7.5+2.49998)x12.78
+.....\TU/lmr/m/n/10 (2
+.....\kern 0.0
 .....\TU/lmr/m/n/10 )
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
-...\glue -2.5
+...\glue -2.49998
 ...\glue 0.0 plus 1.0fil
 ...\glue 0.0
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
-..\hbox(0.0+0.0)x307.28978, direction TLT
+..\hbox(0.0+0.0)x307.28978
 ***************
 Compilation 1 of test file completed with exit status 0

@@ -1,0 +1,157 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+Author: wspr
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+Completed box being shipped out [1]
+\vbox(498.33238+0.0)x291.9253
+.\glue -52.36449
+.\vbox(550.69687+0.0)x307.28978, shifted -15.36449
+..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
+...\glue 0.0 plus 1.0fil
+...\hbox(0.0+0.0)x307.28978
+..\glue 25.0
+..\glue(\lineskip) 0.0
+..\vbox(483.69687+0.0)x307.28978, glue set 377.16035fil
+...\write-{}
+...\glue(\topskip) 10.0
+...\hbox(0.0+0.0)x307.28978, glue set 107.91405fil
+....\hbox(0.0+0.0)x15.0
+....\hbox(0.0+0.0)x184.37573, glue set 92.18787fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 10.0 plus 2.0 minus 5.0
+...\glue(\lineskip) 1.0
+...\hbox(15.79677+10.79677)x51.7802, shifted 127.75479, display
+....\hbox(15.79677+10.79677)x51.7802
+.....\hbox(15.79677+10.79677)x51.7802
+......\hbox(0.0+0.0)x1.2, shifted -2.5
+......\vbox(15.79677+10.79677)x49.3802
+.......\hbox(8.44843+3.44841)x49.3802
+........\OML/cmm/m/it/10 a
+........\vbox(10.62213+0.0)x4.48613, shifted 2.4821
+.........\hbox(4.51111+0.0)x4.48613
+..........\OT1/cmr/m/n/7 2
+.........\kern1.59991
+.........\hbox(4.51111+0.0)x4.48613
+..........\OT1/cmr/m/n/7 2
+........\glue(\medmuskip) 2.22217 plus 1.11108 minus 2.22217
+........\OT1/cmr/m/n/10 +
+........\glue(\medmuskip) 2.22217 plus 1.11108 minus 2.22217
+........\OML/cmm/m/it/10 b
+........\vbox(10.62213+0.0)x4.48613, shifted 2.4821
+.........\hbox(4.51111+0.0)x4.48613
+..........\OT1/cmr/m/n/7 2
+.........\kern1.59991
+.........\hbox(4.51111+0.0)x4.48613
+..........\OT1/cmr/m/n/7 2
+........\glue(\medmuskip) 2.22217 plus 1.11108 minus 2.22217
+........\OT1/cmr/m/n/10 +
+........\glue(\medmuskip) 2.22217 plus 1.11108 minus 2.22217
+........\hbox(8.44843+3.44841)x6.38612
+.........\hbox(8.44843+3.44841)x6.38612
+..........\hbox(0.0+0.0)x1.2, shifted -2.5
+..........\vbox(8.44843+3.44841)x3.98613
+...........\hbox(4.51111+0.0)x3.98613
+............\OT1/cmr/m/n/7 1
+...........\kern1.23732
+...........\rule(0.39998+0.0)x*
+...........\kern1.2373
+...........\hbox(4.51111+0.0)x3.98613
+............\OT1/cmr/m/n/7 2
+..........\hbox(0.0+0.0)x1.2, shifted -2.5
+.......\kern1.19994
+.......\rule(0.39998+0.0)x*
+.......\kern1.19994
+.......\hbox(8.44843+3.44841)x49.3802
+........\OML/cmm/m/it/10 a
+........\vbox(10.62213+0.0)x4.48613, shifted 2.6666
+.........\hbox(4.51111+0.0)x4.48613
+..........\OT1/cmr/m/n/7 3
+.........\kern1.59991
+.........\hbox(4.51111+0.0)x4.48613
+..........\OT1/cmr/m/n/7 3
+........\glue(\medmuskip) 2.22217 plus 1.11108 minus 2.22217
+........\OMS/cmsy/m/n/10 ^^@
+........\glue(\medmuskip) 2.22217 plus 1.11108 minus 2.22217
+........\OML/cmm/m/it/10 b
+........\vbox(10.62213+0.0)x4.48613, shifted 2.6666
+.........\hbox(4.51111+0.0)x4.48613
+..........\OT1/cmr/m/n/7 3
+.........\kern1.59991
+.........\hbox(4.51111+0.0)x4.48613
+..........\OT1/cmr/m/n/7 3
+........\glue(\medmuskip) 2.22217 plus 1.11108 minus 2.22217
+........\OMS/cmsy/m/n/10 ^^@
+........\glue(\medmuskip) 2.22217 plus 1.11108 minus 2.22217
+........\hbox(8.44843+3.44841)x6.38612
+.........\hbox(8.44843+3.44841)x6.38612
+..........\hbox(0.0+0.0)x1.2, shifted -2.5
+..........\vbox(8.44843+3.44841)x3.98613
+...........\hbox(4.51111+0.0)x3.98613
+............\OT1/cmr/m/n/7 1
+...........\kern1.23732
+...........\rule(0.39998+0.0)x*
+...........\kern1.2373
+...........\hbox(4.51111+0.0)x3.98613
+............\OT1/cmr/m/n/7 2
+..........\hbox(0.0+0.0)x1.2, shifted -2.5
+......\hbox(0.0+0.0)x1.2, shifted -2.5
+...\penalty 0
+...\glue(\belowdisplayskip) 10.0 plus 2.0 minus 5.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\lineskip) 1.0
+...\hbox(6.94+0.10999)x307.28978, glue set 259.73978fil
+....\hbox(0.0+0.0)x15.0
+....\TU/lmr/m/n/10 Nested:
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\penalty 10000
+...\glue(\abovedisplayshortskip) 0.0 plus 3.0
+...\glue(\lineskip) 1.0
+...\hbox(15.35277+0.0)x27.61212, shifted 139.83884, display
+....\OML/cmm/m/it/10 a
+....\hbox(11.22385+0.0)x22.32623, shifted -4.12892
+.....\OML/cmm/m/it/7 a
+.....\hbox(8.20605+0.0)x17.48859, shifted -3.01779
+......\OML/cmm/m/it/5 a
+......\hbox(6.1883+0.0)x13.11644, shifted -2.01776
+.......\OML/cmm/m/it/5 a
+.......\hbox(4.17053+0.0)x8.7443, shifted -2.01776
+........\OML/cmm/m/it/5 a
+........\hbox(2.15277+0.0)x4.37215, shifted -2.01776
+.........\OML/cmm/m/it/5 a
+...\penalty 0
+...\glue(\belowdisplayshortskip) 6.0 plus 3.0 minus 3.0
+...\penalty 10000
+...\glue(\abovedisplayshortskip) 0.0 plus 3.0
+...\glue(\baselineskip) 7.69446
+...\hbox(4.30554+5.49994)x27.61212, shifted 139.83884, display
+....\OML/cmm/m/it/10 a
+....\hbox(3.01389+3.99995)x22.32623, shifted 1.49998
+.....\OML/cmm/m/it/7 a
+.....\hbox(2.15277+2.99995)x17.48859, shifted 1.0
+......\OML/cmm/m/it/5 a
+......\hbox(2.15277+1.99997)x13.11644, shifted 0.99998
+.......\OML/cmm/m/it/5 a
+.......\hbox(2.15277+0.99998)x8.7443, shifted 0.99998
+........\OML/cmm/m/it/5 a
+........\hbox(2.15277+0.0)x4.37215, shifted 0.99998
+.........\OML/cmm/m/it/5 a
+...\penalty 0
+...\glue(\belowdisplayshortskip) 6.0 plus 3.0 minus 3.0
+...\glue -5.0
+...\glue 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0 plus 0.0001fil
+..\glue(\baselineskip) 30.0
+..\hbox(0.0+0.0)x307.28978
+***************
+Compilation 1 of test file completed with exit status 0

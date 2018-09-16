@@ -1,0 +1,221 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+Author: wspr
+Completed box being shipped out [1]
+\vbox(498.33238+0.0)x291.9253
+.\glue -52.36449
+.\vbox(550.69687+0.0)x307.28978, shifted -15.36449
+..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
+...\glue 0.0 plus 1.0fil
+...\hbox(0.0+0.0)x307.28978
+..\glue 25.0
+..\glue(\lineskip) 0.0
+..\vbox(483.69687+0.0)x307.28978, glue set 325.71767fil
+...\write-{}
+...\glue(\topskip) 5.69446
+...\hbox(4.30554+1.94444)x307.28978, glue set 286.7342fil
+....\hbox(0.0+0.0)x15.0
+....\OT1/cmr/m/n/10 p
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+....\hbox(3.28125+0.0)x0.0, glue set - 12.65628fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\OT1/cmss/m/n/5 1
+.....\glue 10.0
+...\penalty 10000
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\glue 10.0 plus 2.0 minus 5.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(7.5+2.5)x307.28978, glue set 1.0
+....\glue(\leftskip) 141.48984
+....\hbox(7.5+2.5)x0.0, glue set - 165.79994fil
+.....\kern -141.48984
+.....\kern 307.28978
+.....\kern -12.77782
+.....\hbox(7.5+2.5)x12.77782
+......\OT1/cmr/m/n/10 (
+......\OT1/cmr/m/n/10 1
+......\kern 0.0
+......\OT1/cmr/m/n/10 )
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\mathon
+....\OML/cmm/m/it/10 x
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OML/cmm/m/it/10 y
+....\kern0.35878
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 22.77782 plus 118.71202
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\baselineskip) 5.19446
+...\hbox(4.30554+1.94444)x307.28978, glue set 286.7342fil
+....\hbox(0.0+0.0)x15.0
+....\OT1/cmr/m/n/10 p
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+....\hbox(3.28125+0.0)x0.0, glue set - 12.65628fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\OT1/cmss/m/n/5 2
+.....\glue 10.0
+...\penalty 10000
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\glue 10.0 plus 2.0 minus 5.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(4.30554+1.94444)x307.28978, glue set 1.0
+....\glue(\leftskip) 141.48984
+....\mathon
+....\OML/cmm/m/it/10 x
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OML/cmm/m/it/10 y
+....\kern0.35878
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 141.48984
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\baselineskip) 5.75002
+...\hbox(4.30554+1.94444)x307.28978, glue set 286.7342fil
+....\hbox(0.0+0.0)x15.0
+....\OT1/cmr/m/n/10 p
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+....\hbox(3.28125+0.0)x0.0, glue set - 12.65628fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\OT1/cmss/m/n/5 3
+.....\glue 10.0
+...\penalty 10000
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\glue 10.0 plus 2.0 minus 5.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(7.5+2.5)x307.28978, glue set 1.0
+....\glue(\leftskip) 141.48984
+....\hbox(7.5+2.5)x0.0, glue set - 165.79994fil
+.....\kern -141.48984
+.....\kern 307.28978
+.....\kern -17.77783
+.....\hbox(7.5+2.5)x17.77783
+......\OT1/cmr/m/n/10 (
+......\OT1/cmr/m/n/10 2
+......\OT1/cmr/m/n/10 a
+......\kern 0.0
+......\OT1/cmr/m/n/10 )
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+....\mathon
+....\OML/cmm/m/it/10 x
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OML/cmm/m/it/10 y
+....\kern0.35878
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 141.48985 minus 0.1
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue(\parskip) 0.0 plus 1.0
+...\glue(\baselineskip) 5.75002
+...\hbox(4.30554+1.94444)x307.28978, glue set 286.7342fil
+....\hbox(0.0+0.0)x15.0
+....\OT1/cmr/m/n/10 p
+....\penalty 10000
+....\glue(\parfillskip) 0.0 plus 1.0fil
+....\glue(\rightskip) 0.0
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+....\hbox(3.28125+0.0)x0.0, glue set - 12.65628fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\OT1/cmss/m/n/5 4
+.....\glue 10.0
+...\penalty 10000
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+...\glue(\parskip) 0.0 plus 1.0
+...\penalty 10000
+...\glue(\abovedisplayskip) 0.0
+...\penalty 10000
+...\glue(\belowdisplayskip) 0.0
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+...\glue 10.0 plus 2.0 minus 5.0
+...\penalty 10000
+...\glue(\parskip) 0.0 plus 1.0
+...\hbox(4.30554+1.94444)x307.28978, glue set 1.0
+....\glue(\leftskip) 141.48984
+....\mathon
+....\OML/cmm/m/it/10 x
+....\penalty 9999
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OT1/cmr/m/n/10 =
+....\glue(\thickmuskip) 2.77771 minus 1.11108
+....\OML/cmm/m/it/10 y
+....\kern0.35878
+....\rule(*+*)x0.0
+....\mathoff
+....\penalty 10000
+....\glue(\parfillskip) 0.0
+....\glue(\rightskip) 0.0 plus 141.48985 minus 0.1
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+....\hbox(3.28125+0.0)x0.0, glue set - 12.65628fil
+.....\glue 0.0 plus 1.0fil minus 1.0fil
+.....\OT1/cmss/m/n/5 5
+.....\glue 10.0
+...\penalty 10000
+...\kern -1.94444
+...\hbox(0.0+1.94444)x0.0
+...\penalty 0
+...\glue 10.0 plus 2.0 minus 5.0
+...\glue -1.94444
+...\glue 0.0 plus 1.0fil
+...\glue 0.0
+...\glue 0.0 plus 0.0001fil
+..\glue(\baselineskip) 30.0
+..\hbox(0.0+0.0)x307.28978
+***************
+Compilation 1 of test file completed with exit status 0

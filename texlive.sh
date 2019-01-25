@@ -33,6 +33,8 @@ tlmgr install   \
   geometry      \
   graphics      \
   graphics-def  \
+  ifxetex       \
+  ifluatex      \
   oberdiek
 
 

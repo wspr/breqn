@@ -31,12 +31,8 @@ tlmgr install cm etex knuth-lib latex-bin tex tex-ini-files unicode-data \
 # Dependencies
 tlmgr install   \
   collection-latexrecommended \
-  geometry      \
-  graphics      \
-  graphics-def  \
-  ifxetex       \
-  ifluatex      \
-  oberdiek
+  collection-basic \
+  collection-latex
 
 
 # Keep no backups (not required, simply makes cache bigger)

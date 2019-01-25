@@ -30,6 +30,7 @@ tlmgr install cm etex knuth-lib latex-bin tex tex-ini-files unicode-data \
 
 # Dependencies
 tlmgr install   \
+  collection-latexrecommended \
   geometry      \
   graphics      \
   graphics-def  \

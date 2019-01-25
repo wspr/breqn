@@ -32,7 +32,8 @@ tlmgr install cm etex knuth-lib latex-bin tex tex-ini-files unicode-data \
 tlmgr install   \
   geometry      \
   graphics      \
-  graphics-def
+  graphics-def  \
+  oberdiek
 
 
 # Keep no backups (not required, simply makes cache bigger)

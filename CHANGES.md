@@ -1,6 +1,6 @@
 # Release notes for the `breqn` packages
 
-## v0.98g (2019-10-15)
+## v0.98g (2019/10/15)
 
   * Fix for robustness change in LaTeX 2019.
 

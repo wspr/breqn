@@ -1,22 +1,9 @@
 #!/usr/bin/env texlua
 
-package_info = {
-  name = "breqn" ,
-  description = "Automatic line breaking of displayed equations" ,
-  authors = {
-    "Michael J. Downes", "Morten Høgholm", "Lars Madsen", "Joseph Wright", "Will Robertson",
-  },
-  homepage   = "http://wspr.io/breqn/" ,
-  ctanpath   = "macros/latex/contrib/breqn" ,
-  licence    = "lppl 1.3" ,
-  repository = "https://github.com/wspr/breqn" ,
-  bugtracker = "https://github.com/wspr/breqn/issues" ,
-}
+module = "breqn"
 
-module = package_info.name
-
-unpackfiles = {"*.dtx"}
 installfiles = {"*.sty","*.sym"}
+tagfiles = {"*.dtx","CHANGES.md"}
 
 unpackopts  = "-interaction=batchmode"
 typesetopts = "-interaction=batchmode"
@@ -28,10 +15,11 @@ excludefiles = {"*/breqn-thesis.pdf",
 
 packtdszip   = true
 recordstatus = true
-ctanupload   = "ask"
 
 
--- version data
+--[==================[
+      VERSION DATA
+--]==================]
 
 changeslisting = nil
 do
@@ -43,43 +31,73 @@ end
 currentchanges = string.match(changeslisting,"(## %S+ %(.-%).-)%s*## %S+ %(.-%)")
 pkgversion = string.match(changeslisting,"## v(%S+) %(.-%)")
 
+--[=================[
+      CTAN UPLOAD
+--]=================]
 
+uploadconfig = {
+  version      = pkgversion,
+  announcement = currentchanges,
+  author       = "Michael J. Downes, Morten Høgholm, Lars Madsen, Joseph Wright, Will Robertson",
+  license      = "lppl1.3c",
+  summary      = "Automatic line breaking of displayed equations" ,
+  ctanpath     = "macros/latex/contrib/breqn" ,
+  repository   = "https://github.com/wspr/breqn" ,
+  bugtracker   = "https://github.com/wspr/breqn/issues" ,
+}
 
--- ctan upload settings
-
-ctan_summary = package_info.description
-ctan_pkg     = module
-ctan_file    = module..".zip"
-ctan_version = pkgversion
-
-local ctan_author = ""
-if package_info.author then
-  ctan_author = package_info.author
-else
-  for i,j in ipairs(package_info.authors) do
-    local sep = ", "
-    if i == 1 then sep = "" end
-    ctan_author = ctan_author .. sep .. j
-  end
+local function prequire(m) -- from: https://stackoverflow.com/a/17878208
+  local ok, err = pcall(require, m)
+  if not ok then return nil, err end
+  return err
 end
 
-ctan_ctanPath   = package_info.ctanpath
-ctan_license    = package_info.licence
-ctan_home       = package_info.homepage
-ctan_repository = package_info.repository
-ctan_bugtracker = package_info.bugtracker
+prequire("l3build-wspr.lua")
 
-local handle = io.popen('git config user.name')
-ctan_uploader = string.gsub(handle:read("*a"),'%s*$','')
-handle:close()
-local handle = io.popen('git config user.email')
-ctan_email = string.gsub(handle:read("*a"),'%s*$','')
-handle:close()
 
-ctan_announcement = currentchanges
-ctan_update = true
+--[============[
+     TAGGING
+--]============]
 
-ctan_note=[[
-Uploaded automatically with l3build -- experimental. Sorry if any trouble/inconsistency, please let me know if there are fields I need to update.
-]]
+function update_tag(file, content, tagname, tagdate)
+  check_status()
+
+  local date = string.gsub(tagdate, "%-", "/")
+
+  if string.match(content, "{%d%d%d%d/%d%d/%d%d}%s*{[^}]+}%s*{[^}]+}") then
+    print("Found expl3 version line in file: "..file)
+    content = content:gsub("{%d%d%d%d/%d%d/%d%d}(%s*){[^}]+}(%s*){([^}]+)}",
+    "{"..date.."}%1{"..pkgversion.."}%2{%3}")
+  end
+
+  if string.match(content, "## (%S+) %([^)]+%)") then
+    print("Found changes line in file: "..file)
+    content = content:gsub("## (%S+) %([^)]+%)","## %1 ("..date..")",1)
+  end
+
+  return content
+end
+
+
+status_bool = false
+
+function check_status()
+  if status_bool then
+    return true
+  end
+
+  local handle = io.popen('git status --porcelain --untracked-files=no')
+  local gitstatus = string.gsub(handle:read("*a"),'%s*$','')
+  handle:close()
+  if gitstatus=="" then
+    print("Checking git status: clean")
+    status_bool = true
+    return status_bool
+  else
+    print("ABORTING, git status is not clean:")
+    print(gitstatus)
+    status_bool = false
+    return status_bool
+  end
+end
 

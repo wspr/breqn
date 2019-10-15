@@ -27,13 +27,7 @@
 %    CTAN:macros/latex/contrib/mh/breqn.pdf
 %
 % Unpacking:
-%    (a) If breqn.ins is present:
-%           tex breqn.ins
-%    (b) Without breqn.ins:
-%           tex breqn.dtx
-%    (c) If you insist on using LaTeX
-%           latex \let\install=y\input{breqn.dtx}
-%        (quote the arguments according to the demands of your shell)
+%           tex breqnbundle.ins
 %
 % Documentation:
 %    The class ltxdoc loads the configuration file ltxdoc.cfg
@@ -53,75 +47,6 @@
 %    TDS:doc/latex/breqn/breqn.pdf
 %    TDS:source/latex/breqn/breqn.dtx
 %
-%<*ignore>
-\begingroup
-  \def\x{LaTeX2e}
-\expandafter\endgroup
-\ifcase 0\ifx\install y1\fi\expandafter
-         \ifx\csname processbatchFile\endcsname\relax\else1\fi
-         \ifx\fmtname\x\else 1\fi\relax
-\else\csname fi\endcsname
-%</ignore>
-%<*install>
-\input docstrip.tex
-\Msg{************************************************************************}
-\Msg{* Installation: breqn}
-\Msg{************************************************************************}
-
-\keepsilent
-\askforoverwritefalse
-
-\preamble
-
-This is a generated file.
-
-Copyright (C) 1997-2003 by Michael J. Downes
-Copyright (C) 2007-2008 by Morten Hoegholm
-Copyright (C) 2007-2014 by Lars Madsen
-Copyright (C) 2007-2018 by Will Robertson
-Copyright (C) 2010-2017 by Joseph Wright
-
-This work may be distributed and/or modified under the
-conditions of the LaTeX Project Public License, either
-version 1.3 of this license or (at your option) any later
-version. The latest version of this license is in
-   http://www.latex-project.org/lppl.txt
-and version 1.3 or later is part of all distributions of
-LaTeX version 2005/12/01 or later.
-
-This work has the LPPL maintenance status "maintained".
-
-The Current Maintainer of this work is Will Robertson.
-
-This work consists of the main source file breqn.dtx
-and the derived files
-   breqn.sty, breqn.pdf, breqn.ins.
-
-\endpreamble
-
-\generate{%
-  \file{breqn.ins}{\from{breqn.dtx}{install}}%
-  \usedir{tex/latex/breqn}%
-  \file{breqn.sty}{\from{breqn.dtx}{package}}%
-}
-
-\obeyspaces
-\Msg{************************************************************************}
-\Msg{*}
-\Msg{* To finish the installation you have to move the following}
-\Msg{* file into a directory searched by TeX:}
-\Msg{*}
-\Msg{*     breqn.sty}
-\Msg{*}
-\Msg{* Happy TeXing!}
-\Msg{*}
-\Msg{************************************************************************}
-
-\endbatchfile
-%</install>
-%<*ignore>
-\fi
-%</ignore>
 %<*driver>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{breqn.drv}[2018/09/14 0.98f breqn]
@@ -152,7 +77,6 @@ and the derived files
  \long\gdef\@gobble@percent@space#1{\ifx
    #1%\expandafter\@gobble\else\expandafter#1\fi}}
 
-
 \AtBeginDocument{\def\verbatim@processline{\expandafter\check@percent
   \the\verbatim@line\par}}
 \newwrite\tmp@out
@@ -179,15 +103,11 @@ and the derived files
   \par\medskip
 }
 
-
-
-
 \providecommand*\pkg[1]{\textsf{#1}}
 \providecommand*\cls[1]{\textsf{#1}}
 \providecommand*\opt[1]{\texttt{#1}}
 \providecommand*\env[1]{\texttt{#1}}
 \providecommand*\fn[1]{\texttt{#1}}
-
 
 \providecommand*\cn[1]{\cs{#1}}
 \providecommand*\csarg[1]{\texttt{\char`\{#1\char`\}}}
@@ -1465,7 +1385,7 @@ and the derived files
 % Declare package name and date.
 %    \begin{macrocode}
 \RequirePackage{expl3}
-\ProvidesExplPackage{breqn}{2018/09/14}{0.98f}{Breaking equations}
+\ProvidesExplPackage{breqn}{2019/10/15}{0.98g}{Breaking equations}
 %    \end{macrocode}
 %   Regrettably, \pkg{breqn} is internally a mess, so we have to take
 %   some odd steps.

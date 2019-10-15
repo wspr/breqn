@@ -5,9 +5,6 @@ module = "breqn"
 installfiles = {"*.sty","*.sym"}
 tagfiles = {"*.dtx","CHANGES.md"}
 
-unpackopts  = "-interaction=batchmode"
-typesetopts = "-interaction=batchmode"
-
 binaryfiles  = {"*.pdf","*.zip"}
 excludefiles = {"*/breqn-thesis.pdf",
                 "*/breqn-abbr-test.pdf",
@@ -60,7 +57,6 @@ prequire("l3build-wspr.lua")
 --]============]
 
 function update_tag(file, content, tagname, tagdate)
-  check_status()
 
   local date = string.gsub(tagdate, "%-", "/")
 
@@ -68,6 +64,15 @@ function update_tag(file, content, tagname, tagdate)
     print("Found expl3 version line in file: "..file)
     content = content:gsub("{%d%d%d%d/%d%d/%d%d}(%s*){[^}]+}(%s*){([^}]+)}",
     "{"..date.."}%1{"..pkgversion.."}%2{%3}")
+  end
+
+  if string.match(content, "\\def\\filedate{%d%d%d%d/%d%d/%d%d}") then
+    print("Found filedate line in file: "..file)
+    content = content:gsub("\\def\\filedate{[^}]+}", "\\def\\filedate{"..date.."}")
+  end
+  if string.match(content, "\\def\\fileversion{[^}]+}") then
+    print("Found fileversion line in file: "..file)
+    content = content:gsub("\\def\\fileversion{[^}]+}", "\\def\\fileversion{"..pkgversion.."}")
   end
 
   if string.match(content, "## (%S+) %([^)]+%)") then
@@ -78,26 +83,4 @@ function update_tag(file, content, tagname, tagdate)
   return content
 end
 
-
-status_bool = false
-
-function check_status()
-  if status_bool then
-    return true
-  end
-
-  local handle = io.popen('git status --porcelain --untracked-files=no')
-  local gitstatus = string.gsub(handle:read("*a"),'%s*$','')
-  handle:close()
-  if gitstatus=="" then
-    print("Checking git status: clean")
-    status_bool = true
-    return status_bool
-  else
-    print("ABORTING, git status is not clean:")
-    print(gitstatus)
-    status_bool = false
-    return status_bool
-  end
-end
 

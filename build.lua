@@ -35,10 +35,10 @@ pkgversion = string.match(changeslisting,"## v(%S+) %(.-%)")
 uploadconfig = {
   version      = pkgversion,
   announcement = currentchanges,
-  author       = "Michael J. Downes, Morten Høgholm, Lars Madsen, Joseph Wright, Will Robertson",
+  author       = "Michael J. Downes; Morten Høgholm; Lars Madsen; Joseph Wright; Will Robertson",
   license      = "lppl1.3c",
   summary      = "Automatic line breaking of displayed equations" ,
-  ctanpath     = "macros/latex/contrib/breqn" ,
+  ctanPath     = "macros/latex/contrib/breqn" ,
   repository   = "https://github.com/wspr/breqn" ,
   bugtracker   = "https://github.com/wspr/breqn/issues" ,
 }

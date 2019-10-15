@@ -3476,8 +3476,15 @@ and the derived files
 % little care in saving the original meaning.
 %    \begin{macrocode}
 \def\@tempa#1\endcsname#2\@nil{\def\latex@end##1{#2}}
-\expandafter\@tempa\end{#1}\@nil
-\def\end#1{\csname end#1\endcsname \latex@end{#1}}%
+\ifcsname end \endcsname
+  % 2019: \end was made robust
+  \expandafter\expandafter\expandafter\@tempa\csname end \endcsname{#1}\@nil
+  \@namedef{end }#1{\csname end#1\endcsname \latex@end{#1}}%
+\else
+  % pre-2019: the old approach
+  \expandafter\@tempa\end{#1}\@nil
+  \def\end#1{\csname end#1\endcsname \latex@end{#1}}%
+\fi
 %    \end{macrocode}
 % Why don't we call \cs{CheckCommand} here?    Because that
 % doesn't help end users much; it works better to use it during package

@@ -1,5 +1,10 @@
 # Release notes for the `breqn` packages
 
+## v0.98g (2019-10-15)
+
+  * Fix for robustness change in LaTeX 2019.
+
+
 ## v0.98f (2018/09/14)
 
   * Insert `\nolinenumbers` inside maths environments if the `lineno` package is loaded.

@@ -28,6 +28,7 @@ end
 currentchanges = string.match(changeslisting,"(## %S+ %(.-%).-)%s*## %S+ %(.-%)")
 pkgversion = string.match(changeslisting,"## v(%S+) %(.-%)")
 
+
 --[=================[
       CTAN UPLOAD
 --]=================]
@@ -36,7 +37,7 @@ uploadconfig = {
   version      = pkgversion,
   announcement = currentchanges,
   author       = "Michael J. Downes; Morten Høgholm; Lars Madsen; Joseph Wright; Will Robertson",
-  license      = "lppl1.3c",
+  license      = "lppl1.3",
   summary      = "Automatic line breaking of displayed equations" ,
   ctanPath     = "macros/latex/contrib/breqn" ,
   repository   = "https://github.com/wspr/breqn" ,

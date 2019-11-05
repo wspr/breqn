@@ -399,12 +399,12 @@
 % \env{dmath} or \env{dgroup} environments, and some of them require an
 % argument, which is something that cannot be done through the normal
 % package option mechanism. Therefore most of the \pkg{breqn} package
-% options are designed to be set with a \cs{setkeys} command after the
+% options are designed to be set with the \cs{breqnsetup} command after the
 % package is loaded. For example, to load the package and set the
 % maximum delimiter nesting depth for line breaks to~1:
 % \begin{verbatim}
 % \usepackage{breqn}
-% \setkeys{breqn}{breakdepth={1}}
+% \breqnsetup{breakdepth={1}}
 % \end{verbatim}
 %
 % See the discussion of environment options, Section~\vref{envopts}, for
@@ -1395,10 +1395,6 @@
 %
 % \section{Package options}
 %
-% Most options are set with the \cs{options} command (which
-% calls \cs{setkeys}) because the standard package option
-% mechanism doesn't provide support for key-value syntax.
-%
 % First we need to get the catcodes sorted out.
 %    \begin{macrocode}
 \edef\breqnpopcats{%
@@ -1452,66 +1448,11 @@
 %    \end{macrocode}
 %
 %
-% And add an \cs{options} cmd for processing package
-% options that require an argument.    Maybe this will get added to
-% the \pkg{keyval} package eventually.
+% \begin{macro}{\breqnsetup}
 %    \begin{macrocode}
-\@ifundefined{options}{%
-%    \end{macrocode}
-%
-%
-% \begin{macro}{\options}
-% Get the package options and run setkeys on them.
-%    \begin{macrocode}
-\newcommand{\options}[2]{%
-  \expandafter\options@a\csname opt@#1.sty\endcsname{#2}%
-  \setkeys{#1}{#2}%
-}
+\newcommand{\breqnsetup}[1]{\setkeys{breqn}{#1}}
 %    \end{macrocode}
 % \end{macro}
-%
-%
-% \begin{macro}{\options@a}
-% \begin{macro}{\options@b}
-% \begin{macro}{\options@c}
-% \begin{macro}{\options@d}
-% Redefine \cs{opt@pkgname.sty} as we go along to take out
-% the options that are handled and leave the ones that are not.
-%    \begin{macrocode}
-\def\options@a#1#2{%
-  \edef\@tempa{\options@b#2,\@empty\@nil}%
-  \ifx#1\relax \let#1\@empty\fi
-  \xdef#1{#1\ifx#1\@empty\@xp\@gobble\@tempa\@empty\else\@tempa \fi}%
-}
-%    \end{macrocode}
-% Add the next option, and recurse if there remain more
-% options.
-%    \begin{macrocode}
-\def\options@b#1,#2#3\@nil{%
-  \options@c#1 \@nil
-  \ifx#2\@empty \else\options@b#2#3\@nil\fi
-}
-%    \end{macrocode}
-% Discard everything after the first space.
-%    \begin{macrocode}
-\def\options@c#1 #2\@nil{\options@d#1=\@nil}
-%    \end{macrocode}
-% Discard everything after the first = sign; add a comma only if the
-% remainder is not empty.
-%    \begin{macrocode}
-\def\options@d#1=#2\@nil{\ifx\@empty #1\@empty\else,\fi#1}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
-%
-%
-% The tail of the \cs{@ifundefined} test.
-%    \begin{macrocode}
-}{}% end @ifundefined test
-%    \end{macrocode}
 %
 %
 %
@@ -2648,7 +2589,7 @@
 % \end{literalcode}
 % WSPR: added the option for a label prefix, designed to be used in the preamble like so:
 % \begin{literalcode}
-% \setkeys{breqn}{labelprefix={eq:}}
+% \breqnsetup{labelprefix={eq:}}
 % \end{literalcode}
 %    \begin{macrocode}
 \define@key{breqn}{label}{%

@@ -1419,6 +1419,13 @@
 %
 %
 % \section{Required packages}
+%
+% Although breqn can be loaded without amsmath, there's not much point, and explicitly
+% loading amsmath here prevents loading-order issues later.
+%    \begin{macrocode}
+\RequirePackage{amsmath}
+%    \end{macrocode}
+%
 % The \pkg{flexisym} package makes it possible to attach
 % extra actions to math symbols, in particular mathbin, mathrel, mathopen,
 % and mathclose symbols.

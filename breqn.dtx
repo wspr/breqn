@@ -57,9 +57,6 @@
 
 \usepackage{geometry}
 
-\AtBeginDocument{\addtocontents{toc}{\protect\begin{multicols}{2}}}
-\AtEndDocument{\addtocontents{toc}{\protect\end{multicols}}}
-
 \def\partname{Part}
 
 \definecolor{hilite}{rgb}{0.2,0.4,0.7}
@@ -3357,6 +3354,20 @@
 % doesn't help end users much; it works better to use it during package
 % testing by the maintainer.
 %
+% Note to self: I always forget how this redefinition works. Here's a summary.
+% The approach is:
+% \begin{verbatim}
+% \def\enddmath#1{\check@punct@or@qed}
+% \end{verbatim}
+% When hitting the end of the dmath environment we then have:
+% \begin{verbatim}
+% \csname end#1\endcsname \latex@end{#1}
+% \enddmath \latex@end{dmath}
+% \check@punct@or@qed {dmath}  % <- \enddmath absorbs one arg
+% \xdef\found@punct{\@empty}\def\finish@end{\csname end@dmath\endcsname\latex@end{dmath}}\check@punct
+% \end{verbatim}
+% At which point \verb|\check@punct| is `past' the end of the environment and can look ahead.
+%
 %
 % If a particular environment needs to call a different end action, the
 % end command of the environment should be defined to gobble two args and
@@ -3739,7 +3750,7 @@
 % \subsection{Capturing the equation}
 %
 % BRM: There's a problem here (or with \cs{ss@scan}).  If the LHS has
-% \cs{left} \cs{right} pairs, \ss@scan gets involved.  It seems to produce
+% \cs{left} \cs{right} pairs, \cs{ss@scan} gets involved.  It seems to produce
 % a separate box marked w/\cs{penalty} 3.  But it appears that \cs{eq@repack}
 % is only expecting a single box for the LHS; when it measures that
 % box it's missing the (typically larger) bracketted section,

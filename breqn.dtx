@@ -3,7 +3,7 @@
 % Copyright (C) 1997-2003 by Michael J. Downes
 % Copyright (C) 2007-2008 by Morten Hoegholm
 % Copyright (C) 2007-2014 by Lars Madsen
-% Copyright (C) 2007-2014 by Will Robertson
+% Copyright (C) 2007-2020 by Will Robertson
 % Copyright (C) 2010-2017 by Joseph Wright
 %
 % This work may be distributed and/or modified under the
@@ -1619,7 +1619,7 @@
 % \end{macro}
 %
 %
-% \begin{macro}{\@ifstar}
+% \begin{macro}{\breqn@ifstar}
 % Similarly let's remove space-skipping from \cs{@ifstar}
 % because in some rare case of \dbslash  inside an equation, followed by
 % a space and a \verb"*" where the \verb"*" is intended as the math
@@ -1632,7 +1632,7 @@
 % written as \dbslash  \verb"*" by any one who really wants the
 % \verb"*" to act as a modifier for the \dbslash  command.
 %    \begin{macrocode}
-\def\@ifstar#1#2{%
+\def\breqn@ifstar#1#2{%
   \let\@tempd*\def\@tempa*{#1}\def\@tempb{#2}%
   \futurelet\@tempc\@ifnexta
 }
@@ -1640,11 +1640,11 @@
 % \end{macro}
 %
 %
-% \begin{macro}{\@optarg}
+% \begin{macro}{\breqn@optarg}
 % Utility function for reading an optional arg
 % \emph{without} skipping over any intervening spaces.
 %    \begin{macrocode}
-\def\@optarg#1#2{\@ifnext[{#1}{#1[#2]}}
+\def\breqn@optarg#1#2{\@ifnext[{#1}{#1[#2]}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2850,7 +2850,7 @@
 %    \begin{macrocode}
 \newenvironment{dmath}{%
  \@dmath@start@hook
- \let\eq@hasNumber\@True \@optarg\@dmath{}}{}
+ \let\eq@hasNumber\@True \breqn@optarg\@dmath{}}{}
 \def\@dmath[#1]{%
 %<trace>  \breqn@debugmsg{=== DMATH ==================================================}%
   \everydisplay\expandafter{\the\everydisplay \display@setup}%
@@ -2911,7 +2911,7 @@
 %    \begin{macrocode}
 \newenvironment{dmath*}{%
   \@dmath@start@hook
-  \let\eq@hasNumber\@False \@optarg\@dmath{}%
+  \let\eq@hasNumber\@False \breqn@optarg\@dmath{}%
 }{}
 \@namedef{end@dmath*}{\end@dmath}
 \@namedef{enddmath*}#1{\check@punct@or@qed}
@@ -4025,7 +4025,7 @@
 % break.
 %    \begin{macrocode}
 \def\eq@newline{%
-  \@ifstar{\eq@newlinea\@M}{\eq@newlinea\eqinterlinepenalty}}
+  \breqn@ifstar{\eq@newlinea\@M}{\eq@newlinea\eqinterlinepenalty}}
 \def\eq@newlinea#1{%
   \@ifnext[{\eq@newlineb{#1}}{\eq@newlineb{#1}[\maxdimen]}}
 \def\eq@newlineb#1[#2]{\penalty-\@M}
@@ -6213,13 +6213,13 @@
 % series don't all fit in a single line, they are continued onto extra
 % lines in a ragged-center format.
 %    \begin{macrocode}
-\newenvironment{dseries}{\let\eq@hasNumber\@True \@optarg\@dseries{}}{}%
+\newenvironment{dseries}{\let\eq@hasNumber\@True \breqn@optarg\@dseries{}}{}%
 \def\enddseries#1{\check@punct@or@qed}%
 %    \end{macrocode}
 %
 % And the unnumbered version of same.
 %    \begin{macrocode}
-\newenvironment{dseries*}{\let\eq@hasNumber\@False \@optarg\@dseries{}}{}%
+\newenvironment{dseries*}{\let\eq@hasNumber\@False \breqn@optarg\@dseries{}}{}%
 \@namedef{enddseries*}#1{\check@punct@or@qed}%
 \@namedef{end@dseries*}{\end@dseries}%
 \def\@dseries[#1]{%
@@ -6418,7 +6418,7 @@
 %    \begin{macrocode}
 \newenvironment{dgroup}{%
   \@dgroup@start@hook
-  \let\grp@hasNumber\@True\@optarg\@dgroup{}%
+  \let\grp@hasNumber\@True\breqn@optarg\@dgroup{}%
 }{%
   \end@dgroup
 }
@@ -6427,7 +6427,7 @@
 %    \begin{macrocode}
 \newtoks\GRP@queue
 \newenvironment{dgroup*}{%
-  \let\grp@hasNumber\@False\@optarg\@dgroup{}%
+  \let\grp@hasNumber\@False\breqn@optarg\@dgroup{}%
 }{%
   \end@dgroup
 }
@@ -6794,7 +6794,7 @@
 %</trace>
   \unhbox\z@
 }
-\newenvironment{darray}{\@optarg\@darray{}}{}
+\newenvironment{darray}{\breqn@optarg\@darray{}}{}
 \def\@darray[#1]{%
 %<trace>  \breqn@debugmsg{=== DARRAY ==================================================}%
   \if\eq@group\else\eq@prelim\fi
@@ -6874,7 +6874,7 @@
 %    \begin{macrocode}
 \newcommand\condition{%
   \begingroup\@tempswatrue
-    \@ifstar{\@tempswafalse \condition@a}{\condition@a}}
+    \breqn@ifstar{\@tempswafalse \condition@a}{\condition@a}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\condition@a}

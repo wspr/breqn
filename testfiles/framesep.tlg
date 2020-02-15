@@ -1,10 +1,6 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Author: wspr
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x302.50638
 .\glue -52.36449
@@ -68,7 +64,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
 ....\hbox(0.0+22.22246)x5.55557, shifted -13.61122
-.....\OMX/cmex/m/n/5 Z
+.....\OMX/cmex/m/n/10 Z
 ....\vbox(23.26413+0.0)x12.91669, shifted 9.11122
 .....\hbox(3.01389+0.0)x8.47224, shifted 4.44444
 ......\OMS/cmsy/m/n/7 1
@@ -159,7 +155,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
 ....\hbox(0.0+22.22246)x5.55557, shifted -13.61122
-.....\OMX/cmex/m/n/5 Z
+.....\OMX/cmex/m/n/10 Z
 ....\vbox(23.26413+0.0)x12.91669, shifted 9.11122
 .....\hbox(3.01389+0.0)x8.47224, shifted 4.44444
 ......\OMS/cmsy/m/n/7 1
@@ -250,7 +246,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
 ....\hbox(0.0+22.22246)x5.55557, shifted -13.61122
-.....\OMX/cmex/m/n/5 Z
+.....\OMX/cmex/m/n/10 Z
 ....\vbox(23.26413+0.0)x12.91669, shifted 9.11122
 .....\hbox(3.01389+0.0)x8.47224, shifted 4.44444
 ......\OMS/cmsy/m/n/7 1
@@ -341,7 +337,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
 ....\hbox(0.0+22.22246)x5.55557, shifted -13.61122
-.....\OMX/cmex/m/n/5 Z
+.....\OMX/cmex/m/n/10 Z
 ....\vbox(23.26413+0.0)x12.91669, shifted 9.11122
 .....\hbox(3.01389+0.0)x8.47224, shifted 4.44444
 ......\OMS/cmsy/m/n/7 1

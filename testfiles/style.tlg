@@ -1,10 +1,6 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Author: wspr
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line ....
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line ....
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253
 .\glue -52.36449
@@ -14,7 +10,7 @@ Completed box being shipped out [1]
 ...\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
-..\vbox(483.69687+0.0)x307.28978, glue set 412.6662fil
+..\vbox(483.69687+0.0)x307.28978, glue set 419.33224fil
 ...\write-{}
 ...\glue(\topskip) 0.0
 ...\hbox(14.15291+9.11122)x307.28978, glue set 1.0
@@ -41,7 +37,7 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
 ....\hbox(0.0+22.22246)x5.55557, shifted -13.61122
-.....\OMX/cmex/m/n/5 Z
+.....\OMX/cmex/m/n/10 Z
 ....\vbox(23.26413+0.0)x12.91669, shifted 9.11122
 .....\hbox(3.01389+0.0)x8.47224, shifted 4.44444
 ......\OMS/cmsy/m/n/7 1
@@ -81,10 +77,10 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\hbox(12.86122+9.86124)x307.28978, glue set 1.0
-....\glue(\leftskip) 112.36807
-....\hbox(5.25+1.75)x0.0, glue set - 194.9217fil
-.....\kern -112.36807
+...\hbox(9.52785+6.52786)x307.28978, glue set 1.0
+....\glue(\leftskip) 113.38196
+....\hbox(5.25+1.75)x0.0, glue set - 193.90782fil
+.....\kern -113.38196
 .....\kern 307.28978
 .....\kern -10.23616
 .....\hbox(5.25+1.75)x10.23616
@@ -104,12 +100,12 @@ Completed box being shipped out [1]
 ....\glue(\thickmuskip) 2.27623 minus 0.91049
 ....\OT1/cmr/m/n/7 =
 ....\glue(\thickmuskip) 2.27623 minus 0.91049
-....\hbox(0.0+22.22246)x5.55557, shifted -12.86122
-.....\OMX/cmex/m/n/5 Z
-....\vbox(22.403+0.0)x11.75009, shifted 9.86124
-.....\hbox(2.15277+0.0)x7.30565, shifted 4.44444
+....\hbox(0.0+15.55571)x4.52779, shifted -9.52785
+.....\OMX/cmex/m/n/7 Z
+....\vbox(15.73625+0.0)x10.7501, shifted 6.52786
+.....\hbox(2.15277+0.0)x7.30565, shifted 3.44446
 ......\OMS/cmsy/m/n/5 1
-.....\kern17.02802
+.....\kern10.36127
 .....\hbox(3.22221+0.0)x3.90283
 ......\OT1/cmr/m/n/5 0
 ....\glue(\thinmuskip) 1.36574
@@ -134,7 +130,7 @@ Completed box being shipped out [1]
 ....\mathoff
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
-....\glue(\rightskip) 20.23616 plus 92.13191
+....\glue(\rightskip) 20.23616 plus 93.1458
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue -5.0

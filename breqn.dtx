@@ -1419,6 +1419,12 @@
 \RequirePackage{amsmath}
 %    \end{macrocode}
 %
+% Similarly, if graphicx is loaded atbegindocument there is a catcode clash, so load it here too.
+% (see test file 00-clash-1.lvt)
+%    \begin{macrocode}
+\RequirePackage{graphicx}
+%    \end{macrocode}
+%
 % The \pkg{flexisym} package makes it possible to attach
 % extra actions to math symbols, in particular mathbin, mathrel, mathopen,
 % and mathclose symbols.

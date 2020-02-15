@@ -1,0 +1,13 @@
+
+\input{regression-test}
+
+\OMIT
+\documentclass{breqn-test}
+\usepackage{breqn}
+\usepackage{mathtools}
+\begin{document}
+\START
+\TIMO
+\typeout{No output expected.}
+
+\END

@@ -3,7 +3,8 @@
 ## v0.98h (2019/10/15)
 
   * No longer redefine LaTeX2e's `\\@ifstar` command, use a custom prefix instead.
-  * Use a prefix for `\\@optarg`, similar chance of conflict with another package.
+    This fixes a bizarre conflict with a combination of the `thm-restate` and `cleveref` packages.
+  * Use a prefix for `\\@optarg`, similar chance of potential conflict.
 
 
 ## v0.98g (2019/10/15)

@@ -5,6 +5,7 @@
   * No longer redefine LaTeX2e's `\\@ifstar` command, use a custom prefix instead.
     This fixes a bizarre conflict with a combination of the `thm-restate` and `cleveref` packages.
   * Use a prefix for `\\@optarg`, similar chance of potential conflict.
+  * Fix bug in `\\genfrac`.
 
 
 ## v0.98g (2019/10/15)

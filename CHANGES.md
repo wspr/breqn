@@ -6,6 +6,7 @@
     This fixes a bizarre conflict with a combination of the `thm-restate` and `cleveref` packages.
   * Use a prefix for `\\@optarg`, similar chance of potential conflict.
   * Fix bug in `\\genfrac`.
+  * Allow `mathtools` to be loaded after `breqn` (by preloading `graphicx` always).
 
 
 ## v0.98g (2019/10/15)

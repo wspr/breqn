@@ -1,6 +1,6 @@
 # Release notes for the `breqn` packages
 
-## v0.98h (2019/10/15)
+## v0.98h (2020/02/16)
 
   * No longer redefine LaTeX2e's `\\@ifstar` command, use a custom prefix instead.
     This fixes a bizarre conflict with a combination of the `thm-restate` and `cleveref` packages.

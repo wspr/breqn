@@ -4228,16 +4228,16 @@
   \breqn@debugmsg{=> \number\eq@lines\space lines}%
   \begingroup
   \def\breqn@elt##1X##2{\MessageBreak==== \space\space##1/##2}%
-  \let\@endelt\@empty
+  \let\breqn@endelt\@empty
   \breqn@debugmsg{=> trial info:\eq@measurements}%
   \breqn@debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness}%
-  \let\breqn@elt\relax \let\@endelt\relax
+  \let\breqn@elt\relax \let\breqn@endelt\relax
   \endgroup
 }
 \def\debug@showmeasurements{%
   \begingroup
   \def\breqn@elt##1X##2{\MessageBreak====   ##1/##2}%
-  \let\@endelt\@empty
+  \let\breqn@endelt\@empty
   \breqn@debugmsg{===> Measurements: \number\eq@lines\space lines
            \eq@measurements
            \MessageBreak
@@ -4406,9 +4406,9 @@
 %    \begin{macrocode}
 \def\eq@trial@save#1{%
 %<*trace>
-%  \begingroup \def\breqn@elt##1X##2{\MessageBreak==== \space\space##1/##2}\let\@endelt\@empty\breqn@debugmsg{=> trial info:\eq@measurements}%
+%  \begingroup \def\breqn@elt##1X##2{\MessageBreak==== \space\space##1/##2}\let\breqn@endelt\@empty\breqn@debugmsg{=> trial info:\eq@measurements}%
 %         \breqn@debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness\MessageBreak}%
-%         \let\breqn@elt\relax \let\@endelt\relax
+%         \let\breqn@elt\relax \let\breqn@endelt\relax
 %  \endgroup
 %</trace>
   \xdef#1{%
@@ -4568,10 +4568,10 @@
 %
 % \begin{macro}{\eq@recalc@a}
 %    \begin{macrocode}
-\def\eq@recalc@a#1x#2+#3\@endelt{%
+\def\eq@recalc@a#1x#2+#3\breqn@endelt{%
   \eq@firstht#2\relax
   \let\breqn@elt\eq@recalc@b
-  \breqn@elt#1x#2+#3\@endelt
+  \breqn@elt#1x#2+#3\breqn@endelt
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4579,7 +4579,7 @@
 %
 % \begin{macro}{\eq@recalc@b}
 %    \begin{macrocode}
-\def\eq@recalc@b#1X#2,#3x#4+#5@#6\@endelt{%
+\def\eq@recalc@b#1X#2,#3x#4+#5@#6\breqn@endelt{%
   \setlength\dim@a{#2+#3}%
   \ifdim\dim@a>\eq@wdT \eq@wdT\dim@a \fi
   \ifdim\dim@a<\eq@wdMin \eq@wdMin\dim@a \fi
@@ -4990,12 +4990,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\@endelt}
+% \begin{macro}{\breqn@endelt}
 % This is a scan marker.
 % It should get a non-expandable definition.
 % It could be \cs{relax}, but let's try a chardef instead.
 %    \begin{macrocode}
-\chardef\@endelt=`\?
+\chardef\breqn@endelt=`\?
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5004,8 +5004,10 @@
 % This is similar to a parshape spec but for each line we record more
 % info: space above, indent, width x height + dp, and badness.
 %    \begin{macrocode}
+\let\breqn@elt\relax
+\let\breqn@endelt\relax
 \def\eq@measurements{%
-  \breqn@elt 4.5pt/5.0pt,66.0ptx6.8pt+2.4pt@27\@endelt
+  \breqn@elt 4.5pt/5.0pt,66.0ptx6.8pt+2.4pt@27\breqn@endelt
   ...
 }
 %    \end{macrocode}
@@ -5070,7 +5072,7 @@
       \ifnum\eq@curline<\parshape \number\eq@curline
       \else\number\parshape
       \fi
-    \endcsname,\the\dim@a x\the\ht\tw@+\the\dp\tw@ @\the\eq@badness\@endelt
+    \endcsname,\the\dim@a x\the\ht\tw@+\the\dp\tw@ @\the\eq@badness\breqn@endelt
     \eq@measurements
   }%
   \advance\eq@curline\m@ne
@@ -5172,7 +5174,7 @@
 % \begin{macro}{\eq@delt}
 % Args are space-above, indent, width, height, depth, badness.
 %    \begin{macrocode}
-\def\eq@delt#1X#2,#3x#4+#5@#6\@endelt{\addtolength\dim@b{#3}}%
+\def\eq@delt#1X#2,#3x#4+#5@#6\breqn@endelt{\addtolength\dim@b{#3}}%
 %    \end{macrocode}
 % \end{macro}
 %

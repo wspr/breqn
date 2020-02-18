@@ -1,5 +1,10 @@
 # Release notes for the `breqn` packages
 
+## v0.98i (2020/02/18)
+
+  * Fix clash with new version of `babel` around use of the generic `\\@elt` command.
+
+
 ## v0.98h (2020/02/16)
 
   * No longer redefine LaTeX2e's `\\@ifstar` command, use a custom prefix instead.

@@ -1791,8 +1791,9 @@
 % \latex 's \cs{@cons} appends to the end of a list, but we need
 % a function that adds material at the beginning.
 %    \begin{macrocode}
+\let\breqn@elt\relax
 \def\eq@cons#1#2{%
-  \begingroup \let\@elt\relax \xdef#1{\@elt{#2}#1}\endgroup
+  \begingroup \let\breqn@elt\relax \xdef#1{\breqn@elt{#2}#1}\endgroup
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4238,16 +4239,16 @@
 \def\debug@showmeasurements{%
   \breqn@debugmsg{=> \number\eq@lines\space lines}%
   \begingroup
-  \def\@elt##1X##2{\MessageBreak==== \space\space##1/##2}%
+  \def\breqn@elt##1X##2{\MessageBreak==== \space\space##1/##2}%
   \let\@endelt\@empty
   \breqn@debugmsg{=> trial info:\eq@measurements}%
   \breqn@debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness}%
-  \let\@elt\relax \let\@endelt\relax
+  \let\breqn@elt\relax \let\@endelt\relax
   \endgroup
 }
 \def\debug@showmeasurements{%
   \begingroup
-  \def\@elt##1X##2{\MessageBreak====   ##1/##2}%
+  \def\breqn@elt##1X##2{\MessageBreak====   ##1/##2}%
   \let\@endelt\@empty
   \breqn@debugmsg{===> Measurements: \number\eq@lines\space lines
            \eq@measurements
@@ -4417,9 +4418,9 @@
 %    \begin{macrocode}
 \def\eq@trial@save#1{%
 %<*trace>
-%  \begingroup \def\@elt##1X##2{\MessageBreak==== \space\space##1/##2}\let\@endelt\@empty\breqn@debugmsg{=> trial info:\eq@measurements}%
+%  \begingroup \def\breqn@elt##1X##2{\MessageBreak==== \space\space##1/##2}\let\@endelt\@empty\breqn@debugmsg{=> trial info:\eq@measurements}%
 %         \breqn@debugmsg{=> bounding box: \the\eq@wdT x\the\eq@vspan, badness=\the\eq@badness\MessageBreak}%
-%         \let\@elt\relax \let\@endelt\relax
+%         \let\breqn@elt\relax \let\@endelt\relax
 %  \endgroup
 %</trace>
   \xdef#1{%
@@ -4571,7 +4572,7 @@
 %    \begin{macrocode}
 \def\eq@recalc{%
   \eq@wdT\z@ \eq@wdMin\maxdimen \eq@vspan\z@skip \eq@badness\z@
-  \let\@elt\eq@recalc@a \eq@measurements \let\@elt\relax
+  \let\breqn@elt\eq@recalc@a \eq@measurements \let\breqn@elt\relax
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4581,8 +4582,8 @@
 %    \begin{macrocode}
 \def\eq@recalc@a#1x#2+#3\@endelt{%
   \eq@firstht#2\relax
-  \let\@elt\eq@recalc@b
-  \@elt#1x#2+#3\@endelt
+  \let\breqn@elt\eq@recalc@b
+  \breqn@elt#1x#2+#3\@endelt
 }
 %    \end{macrocode}
 % \end{macro}
@@ -5016,7 +5017,7 @@
 % info: space above, indent, width x height + dp, and badness.
 %    \begin{macrocode}
 \def\eq@measurements{%
-  \@elt 4.5pt/5.0pt,66.0ptx6.8pt+2.4pt@27\@endelt
+  \breqn@elt 4.5pt/5.0pt,66.0ptx6.8pt+2.4pt@27\@endelt
   ...
 }
 %    \end{macrocode}
@@ -5074,7 +5075,7 @@
       \fi
     }%
   \fi
-  \edef\eq@measurements{\@elt
+  \edef\eq@measurements{\breqn@elt
     \the\skip@a\space X% extra space to facilitate extracting only the
                         % dimen part later
     \csname eq@i%
@@ -5170,7 +5171,7 @@
   \ifnum\eq@lines>\sixt@@n
     \eq@dense@enough@b
   \else
-    \dim@b\z@ \let\@elt\eq@delt \eq@measurements
+    \dim@b\z@ \let\breqn@elt\eq@delt \eq@measurements
     \dim@c\eq@density@factor\eq@wdT \multiply\dim@c\eq@lines
 %<trace>    \breqn@debugmsg{Density check: black \the\dim@b/\eq@density@factor total \the\dim@c}%
     \ifdim\dim@b>\dim@c \true@false@true \else \false@false@false \fi
@@ -6526,7 +6527,7 @@
 %    \begin{macrocode}
 \def\grp@push{%
   \global\GRP@queue\@xp\@xp\@xp{\@xp\the\@xp\GRP@queue
-    \@xp\@elt\@xp{\EQ@trial}%
+    \@xp\breqn@elt\@xp{\EQ@trial}%
   }%
   \global\setbox\GRP@box\vbox{%
     \hbox{\box\EQ@box\box\EQ@copy\penalty\@ne\copy\EQ@numbox}%
@@ -6606,7 +6607,7 @@
 % in a \cs{vbox}
 %    \begin{macrocode}
   \setbox\GRP@wholebox\vbox{%
-    \let\@elt\eqgrp@elt
+    \let\breqn@elt\eqgrp@elt
     \the\GRP@queue
   }%
 %    \end{macrocode}
@@ -6647,7 +6648,7 @@
 %\debug@box\GRP@wholebox
 %</trace>
   \unvbox\GRP@wholebox
-  \let\@elt\relax
+  \let\breqn@elt\relax
 %    \end{macrocode}
 % We'd need to handle shifted, right number here, too!!!
 %    \begin{macrocode}
@@ -6925,7 +6926,7 @@
 % Need to add a dummy element to \cs{GRP@queue}.
 %    \begin{macrocode}
   \global\GRP@queue\@xp{\the\GRP@queue
-    \@elt{\gdef\EQ@trial{}}%
+    \breqn@elt{\gdef\EQ@trial{}}%
   }%
 }
 %    \end{macrocode}
@@ -6942,8 +6943,8 @@
     \unvbox\GRP@box
   }%
   \global\GRP@queue\@xp{\the\GRP@queue
-%    \@elt{\gdef\EQ@trial{\let\eq@isIntertext\@True}}%
-     \@elt{\let\eq@isIntertext\@True}%
+%    \breqn@elt{\gdef\EQ@trial{\let\eq@isIntertext\@True}}%
+     \breqn@elt{\let\eq@isIntertext\@True}%
   }%
 }
 %    \end{macrocode}

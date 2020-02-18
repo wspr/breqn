@@ -1786,18 +1786,6 @@
 % \end{macro}
 %
 %
-% \begin{macro}{\eq@cons}
-%
-% \latex 's \cs{@cons} appends to the end of a list, but we need
-% a function that adds material at the beginning.
-%    \begin{macrocode}
-\let\breqn@elt\relax
-\def\eq@cons#1#2{%
-  \begingroup \let\breqn@elt\relax \xdef#1{\breqn@elt{#2}#1}\endgroup
-}
-%    \end{macrocode}
-% \end{macro}
-%
 % \begin{macro}{\@saveprimitive}
 % If some preceding package redefined one of the
 % primitives that we must change, we had better do some checking to make

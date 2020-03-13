@@ -1,5 +1,10 @@
 # Release notes for the `breqn` packages
 
+## v0.98j (2020/02/18)
+
+  * Remove `color` and `background` options from the documentation, as they have never done anything!
+    (Todo: make them do something...)
+
 ## v0.98i (2020/02/18)
 
   * Fix clash with new version of `babel` around use of the generic `\\@elt` command.

@@ -6228,8 +6228,9 @@
   \def\premath{%
 %    \end{macrocode}
 % BRM: Tricky to cleanup space OR add space ONLY BETWEEN math!
+% FMi: improvement to measure against current font.
 %    \begin{macrocode}
-    \ifdim\lastskip<.3em \unskip
+    \ifdim\lastskip<\fontdimen2\font \unskip
     \else\ifnum\lastpenalty<\@M \dquad\fi\fi
 }%
 %    \end{macrocode}

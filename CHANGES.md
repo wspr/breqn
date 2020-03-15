@@ -5,6 +5,7 @@
   * Remove `color` and `background` options from the documentation, as they have never done anything!
     (Todo: make them do something...)
   * Fix spacing bug in dseries with arbitrary fonts.
+  * Fix value of `mathstyle` within double subscripts or superscripts.
 
 ## v0.98i (2020/02/18)
 

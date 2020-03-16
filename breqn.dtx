@@ -190,20 +190,28 @@
 % \section{Package loading}
 %
 % The \pkg{breqn} package automatically loads \pkg{amsmath} to avoid loading order conflicts.
+% It also automatically loads \pkg{flexisym} and \pkg{mathstyle}, but in some cases these
+% packages need to be loaded separately. The canonical order for package loading is:
+% \begin{verbatim}
+% \usepackage{amsmath}
+% \usepackage{flexisym}
+% \usepackage{breqn}
+% \end{verbatim}
 %
 % The recommended way of loading the \pkg{breqn} package is to load it
-% \emph{before} other packages dealing with math, \ie, before
-% \pkg{amssymb}, or packages such as \pkg{mathpazo} or
-% \pkg{mathptmx}.
+% \emph{before} other packages dealing with math symbols, \ie, before
+% \pkg{amssymb}, or packages such as \pkg{mathpazo} or \pkg{mathptmx}.
 % However, this can sometimes lead to macro definition clashes, and in such cases
 % you may need to juggle the loading order to make it work.
+%
+% \subsection{Options for \pkg{flexisym}}
 %
 % The \pkg{flexisym} package (described in section \vref{flexisym}) is
 % required by \pkg{breqn} and ensures the math symbols are set up
 % correctly. By default \pkg{breqn} loads it with support for Computer
 % Modern but if you use a different math package requiring slightly
-% different definitions, \pkg{flexisym} must be explicitly loaded before \pkg{breqn}. Below
-% is an example of how you enable \pkg{breqn} to work with the widely
+% different definitions, \pkg{flexisym} must be explicitly loaded before \pkg{breqn} as shown above.
+% Below is an example of how you enable \pkg{breqn} to work with the widely
 % used \pkg{mathpazo} package.
 % \begin{verbatim}
 %\usepackage{mathpazo}

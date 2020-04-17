@@ -1,11 +1,13 @@
 # Release notes for the `breqn` packages
 
+
 ## v0.98j (2020/02/18)
 
   * Remove `color` and `background` options from the documentation, as they have never done anything!
     (Todo: make them do something...)
   * Fix spacing bug in dseries with arbitrary fonts.
-  * Fix value of `mathstyle` within double subscripts or superscripts.
+  * Fix value of `\\mathstyle` within double subscripts or superscripts.
+  * Really fix `\\genfrac` this time, making it backwards compatible with amsmath definition.
 
 ## v0.98i (2020/02/18)
 

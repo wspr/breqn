@@ -338,14 +338,40 @@
 % \end{macro}
 %
 % \begin{macro}{\genfrac}
+% The amsmath definition:
+% \begin{verbatim}
+%    \DeclareRobustCommand{\genfrac}[4]{%
+%      \def\@tempa{#1#2}%
+%      \edef\@tempb{\@nx\@genfrac\@mathstyle{#4}%
+%        \csname @@\ifx @#3@over\else above\fi
+%        \ifx\@tempa\@empty \else withdelims\fi\endcsname}
+%      \@tempb{#1#2#3}}
+% \end{verbatim}
+% with arguments:
+% \begin{itemize}
+% \item left-delim
+% \item right-delim
+% \item line thickness (default if empty)
+% \item mathstyle override
+% \item numerator
+% \item denominator
+% \end{itemize}
 % The fractions. Note that this uses the same names as in
 % \pkg{amsmath}. Much the same except here they call \cs{fracstyle}.
 %    \begin{macrocode}
 \DeclareRobustCommand\genfrac[6]{%
-  {#1\fracstyle
+  {%
+    % emulate old amsmath syntax:
+    \if 0#4\relax\displaystyle\else
+    \if 1#4\relax\textstyle\else
+    \if 2#4\relax\scriptstyle\else
+    \if 3#4\relax\scriptscriptstyle\else
+      #4%
+    \fi\fi\fi\fi
+    \fracstyle
     {\begingroup #5\endgroup
-      \csname @@\ifx\maxdimen#4\maxdimen over\else above\fi
-        \if @#2@\else withdelims\fi\endcsname #2#3\relax
+      \csname @@\ifx\maxdimen#3\maxdimen over\else above\fi
+        \if @#1@\else withdelims\fi\endcsname #1 #2 #3\relax
      #6}%
   }%
 }
@@ -360,14 +386,14 @@
 \renewcommand{\frac}{\genfrac{}{}{}{}}
 \providecommand{\dfrac}{}
 \providecommand{\tfrac}{}
-\renewcommand{\dfrac}{\genfrac\displaystyle{}{}{}}
-\renewcommand{\tfrac}{\genfrac\textstyle{}{}{}}
+\renewcommand{\dfrac}{\genfrac{}{}{}\displaystyle}
+\renewcommand{\tfrac}{\genfracx{}{}{}\displaystyle}
 \providecommand{\binom}{}
 \providecommand{\tbinom}{}
 \providecommand{\dbinom}{}
-\renewcommand{\binom}{\genfrac{}(){0pt}}
-\renewcommand{\dbinom}{\genfrac\displaystyle(){0pt}}
-\renewcommand{\tbinom}{\genfrac\textstyle(){0pt}}
+\renewcommand{\binom}{\genfrac(){0pt}{}}
+\renewcommand{\dbinom}{\genfrac(){0pt}\displaystyle}
+\renewcommand{\tbinom}{\genfrac(){0pt}\textstyle}
 %    \end{macrocode}
 
 % The \cs{fracstyle} command is a switch to go one level down but no

@@ -1,0 +1,119 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+Author: wspr
+Completed box being shipped out [1]
+\hbox(0.0+0.0)x0.0
+.\mathon
+.\hbox(9.22064+3.44841)x8.78299
+..\hbox(9.22064+3.44841)x8.78299
+...\hbox(9.22064+3.44841)x8.78299
+....\hbox(0.0+0.0)x1.2, shifted -2.5
+....\vbox(9.22064+3.44841)x6.383
+.....\hbox(4.78334+0.0)x6.383, glue set 0.18454fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\OML/cmm/m/it/7 A
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\kern3.10237
+.....\hbox(4.78334+0.0)x6.383
+......\OML/cmm/m/it/7 B
+....\hbox(0.0+0.0)x1.2, shifted -2.5
+.\mathoff
+Completed box being shipped out [1]
+\hbox(0.0+0.0)x0.0
+.\mathon
+.\hbox(6.7151+2.4095)x7.81845
+..\hbox(6.7151+2.4095)x7.81845
+...\hbox(6.7151+2.4095)x7.81845
+....\hbox(0.0+0.0)x1.2, shifted -1.75
+....\vbox(6.7151+2.4095)x5.41846
+.....\hbox(3.41667+0.0)x5.41846, glue set 0.11891fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\OML/cmm/m/it/5 A
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\kern2.29126
+.....\hbox(3.41667+0.0)x5.41846
+......\OML/cmm/m/it/5 B
+....\hbox(0.0+0.0)x1.2, shifted -1.75
+.\mathoff
+Completed box being shipped out [1]
+\hbox(0.0+0.0)x0.0
+.\mathon
+.\hbox(8.78334+3.78334)x8.78299
+..\hbox(8.78334+3.78334)x8.78299
+...\hbox(8.78334+3.78334)x8.78299
+....\hbox(0.0+0.0)x1.2, shifted -2.5
+....\vbox(8.78334+3.78334)x6.383
+.....\hbox(4.78334+0.0)x6.383, glue set 0.18454fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\OML/cmm/m/it/7 A
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\kern1.0
+.....\rule(1.0+0.0)x*
+.....\kern1.0
+.....\hbox(4.78334+0.0)x6.383
+......\OML/cmm/m/it/7 B
+....\hbox(0.0+0.0)x1.2, shifted -2.5
+.\mathoff
+Completed box being shipped out [1]
+\hbox(0.0+0.0)x0.0
+.\mathon
+.\hbox(6.66667+3.16667)x7.81845
+..\hbox(6.66667+3.16667)x7.81845
+...\hbox(6.66667+3.16667)x7.81845
+....\hbox(0.0+0.0)x1.2, shifted -1.75
+....\vbox(6.66667+3.16667)x5.41846
+.....\hbox(3.41667+0.0)x5.41846, glue set 0.11891fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\OML/cmm/m/it/5 A
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\kern1.0
+.....\rule(1.0+0.0)x*
+.....\kern1.0
+.....\hbox(3.41667+0.0)x5.41846
+......\OML/cmm/m/it/5 B
+....\hbox(0.0+0.0)x1.2, shifted -1.75
+.\mathoff
+Completed box being shipped out [1]
+\hbox(0.0+0.0)x0.0
+.\mathon
+.\hbox(8.78334+3.78334)x15.54971
+..\hbox(8.78334+3.78334)x15.54971
+...\hbox(8.78334+3.78334)x15.54971
+....\hbox(0.39998+11.60013)x4.58336, shifted -8.10007
+.....\OMX/cmex/m/n/10 ^^@
+....\vbox(8.78334+3.78334)x6.383
+.....\hbox(4.78334+0.0)x6.383, glue set 0.18454fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\OML/cmm/m/it/7 A
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\kern1.0
+.....\rule(1.0+0.0)x*
+.....\kern1.0
+.....\hbox(4.78334+0.0)x6.383
+......\OML/cmm/m/it/7 B
+....\hbox(0.39998+11.60013)x4.58336, shifted -8.10007
+.....\OMX/cmex/m/n/10 ^^A
+.\mathoff
+Completed box being shipped out [1]
+\hbox(0.0+0.0)x0.0
+.\mathon
+.\hbox(6.75+3.25)x13.19626
+..\hbox(6.75+3.25)x13.19626
+...\hbox(6.75+3.25)x13.19626
+....\hbox(7.5+2.5)x3.8889, shifted 0.75
+.....\OT1/cmr/m/n/10 (
+....\vbox(6.66667+3.16667)x5.41846
+.....\hbox(3.41667+0.0)x5.41846, glue set 0.11891fil
+......\glue 0.0 plus 1.0fil minus 1.0fil
+......\OML/cmm/m/it/5 A
+......\glue 0.0 plus 1.0fil minus 1.0fil
+.....\kern1.0
+.....\rule(1.0+0.0)x*
+.....\kern1.0
+.....\hbox(3.41667+0.0)x5.41846
+......\OML/cmm/m/it/5 B
+....\hbox(7.5+2.5)x3.8889, shifted 0.75
+.....\OT1/cmr/m/n/10 )
+.\mathoff
+***************
+Compilation 1 of test file completed with exit status 0

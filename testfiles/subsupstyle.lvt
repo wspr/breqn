@@ -10,21 +10,33 @@
 \START
 \AUTHOR{wspr}
 
+% in the tests following, the "N" in "N\x" is the expected value of the \mathstyle based on the LuaTeX tests.
+
+\def\x{\edef\xx{\number\mathstyle}\typeout{\xx}\xx x}
 \[
-a\typeout{\the\mathstyle}
+  0\x \frac{0\x}{1\x} \qquad 0\x^{4\x} \frac{0\x^{4\x}}{1\x^{5\x}}
+  \qquad 0\x^{4\x^{6\x}} \frac{0\x^{4\x^{6\x}}}{1\x^{5\x^{7\x}}}
 \]
 
 \(
-a\typeout{\the\mathstyle}
+  2\x \frac{2\x}{3\x} \qquad 2\x^{4\x} \frac{2\x^{4\x}}{3\x^{5\x}}
+  \qquad 2\x^{4\x^{6\x}} \frac{2\x^{4\x^{6\x}}}{3\x^{5\x^{7\x}}}
 \)
+
+\[
+  \frac{0\x^{4\x}\frac{0\x^{4\x^{6\x}}}{1\x^{5\x^{7\x}}}}{1\x\frac{1\x}{1\x}}
+\]
 
 \(
-a^{a\typeout{\the\mathstyle}}
+  \frac{2\x^{4\x}\frac{2\x^{4\x^{6\x}}}{3\x^{5\x^{7\x}}}}{3\x\frac{3\x}{3\x }}
 \)
+
+\[
+  \frac{0\x\frac{0\x\frac{0\x}{1\x}}{1\x\frac{1\x}{1\x}}}{1\x\frac{1\x\frac{1\x}{1\x}}{1\x\frac{1\x}{1\x}}}
+\]
 
 \(
-a^{a^{a\typeout{\the\mathstyle}}}
+  \frac{2\x\frac{2\x\frac{2\x}{3\x}}{3\x\frac{3\x}{3\x}}}{3\x\frac{3\x\frac{3\x}{3\x}}{3\x\frac{3\x}{3\x}}}
 \)
-
 
 \END

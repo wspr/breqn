@@ -215,6 +215,7 @@
 % \end{macro}
 %
 % \begin{macro}{\mathstyle}
+% \begin{macro}{\mathstyledenom}
 % A counter for the math style: 0--display, 2--text, 4--script, 6--scriptscript.
 % The logic is that display maths will explicitly
 % set \verb|\mathstyle| to zero (see above), so by default it is set to the
@@ -224,11 +225,13 @@
 %    \begin{macrocode}
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname directlua\endcsname\relax
-  \chardef\mathstyle\@ne
+  \chardef\mathstyle=2\relax
+  \chardef\mathstyledenom=0\relax
 \else
   \directlua{tex.enableprimitives("", {"mathstyle"})}
 \fi
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % Save the four style changing primitives, \cs{mathchoice} and the
@@ -247,18 +250,18 @@
 \@saveprimitive\abovewithdelims\@@abovewithdelims
 %    \end{macrocode}
 % Then we redeclare the four style changing primitives: set the value of
-% \cs{mathstyle} if Lua\TeX{} is not in use.q
+% \cs{mathstyle} if Lua\TeX{} is not in use.
 %    \begin{macrocode}
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname directlua\endcsname\relax
   \DeclareRobustCommand{\displaystyle}{%
-    \@@displaystyle \chardef\mathstyle\z@}
+    \@@displaystyle \chardef\mathstyle0\relax}
   \DeclareRobustCommand{\textstyle}{%
-    \@@textstyle \chardef\mathstyle\tw@}
+    \@@textstyle \chardef\mathstyle2\relax}
   \DeclareRobustCommand{\scriptstyle}{%
-    \@@scriptstyle \chardef\mathstyle4 }
+    \@@scriptstyle \chardef\mathstyle4\relax}
   \DeclareRobustCommand{\scriptscriptstyle}{%
-    \@@scriptscriptstyle \chardef\mathstyle6 }
+    \@@scriptscriptstyle \chardef\mathstyle6\relax}
 \fi
 %    \end{macrocode}
 % First we get the primitive operations. These should have been
@@ -283,8 +286,10 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname directlua\endcsname\relax
   \def\subsupstyle{%
-    \ifnum\mathstyle<4 \chardef\mathstyle4 %
-    \else \chardef\mathstyle6 %
+    \ifnum\mathstyle<4\relax
+      \chardef\mathstyle\numexpr4+\mathstyledenom\relax
+    \else
+      \chardef\mathstyle\numexpr6+\mathstyledenom\relax
     \fi
   }
 \else
@@ -372,9 +377,35 @@
     {\begingroup #5\endgroup
       \csname @@\ifx\maxdimen#3\maxdimen over\else above\fi
         \if @#1@\else withdelims\fi\endcsname #1 #2 #3\relax
-     #6}%
+      \ifnum\mathstyledenom=0\relax
+        \chardef\mathstyledenom=1\relax
+        \edef\mathstyle@tempa{\number\mathstyle}%
+        \chardef\mathstyle=\numexpr\mathstyle@tempa+1\relax
+      \fi
+      #6%
+      \chardef\mathstyledenom=0\relax}%
   }%
 }
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname directlua\endcsname\relax\else
+\DeclareRobustCommand\genfrac[6]{%
+  {%
+    % emulate old amsmath syntax:
+    \if 0#4\relax\displaystyle\else
+    \if 1#4\relax\textstyle\else
+    \if 2#4\relax\scriptstyle\else
+    \if 3#4\relax\scriptscriptstyle\else
+      #4%
+    \fi\fi\fi\fi
+    \fracstyle
+    {\begingroup #5\endgroup
+      \csname @@\ifx\maxdimen#3\maxdimen over\else above\fi
+        \if @#1@\else withdelims\fi\endcsname #1 #2 #3\relax
+      #6%
+    }%
+  }%
+}
+\fi
 %    \end{macrocode}
 % \changes{v0.90}{2011/08/03}{\cs{fracstyle} must be called \emph{after}
 %   changing to the required style}
@@ -387,7 +418,7 @@
 \providecommand{\dfrac}{}
 \providecommand{\tfrac}{}
 \renewcommand{\dfrac}{\genfrac{}{}{}\displaystyle}
-\renewcommand{\tfrac}{\genfracx{}{}{}\displaystyle}
+\renewcommand{\tfrac}{\genfrac{}{}{}\displaystyle}
 \providecommand{\binom}{}
 \providecommand{\tbinom}{}
 \providecommand{\dbinom}{}
@@ -403,15 +434,11 @@
 \expandafter\ifx\csname directlua\endcsname\relax
   \def\fracstyle{%
     \ifcase\numexpr\mathstyle\relax
-      \chardef\mathstyle=\@ne
-    \or
-      \chardef\mathstyle=\@ne
-    \or
-      \chardef\mathstyle=\tw@
-    \or
-      \chardef\mathstyle=\tw@
-    \else
-      \chardef\mathstyle=\thr@@
+          \chardef\mathstyle=0\relax % 0
+    \or   \chardef\mathstyle=1\relax % 1
+    \or   \chardef\mathstyle=2\relax % 2
+    \or   \chardef\mathstyle=3\relax % 3
+    \else \chardef\mathstyle=3\relax % 4 or more
     \fi
   }
 \else

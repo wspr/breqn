@@ -71,6 +71,11 @@ prequire("l3build-wspr.lua")
 
 function update_tag(file, content, tagname, tagdate)
 
+  gitstatus = shell('git status --porcelain')
+  if gitstatus ~= "" then
+    error("ABORT: Files have been edited; please commit all changes first.")
+  end
+
   local date = string.gsub(tagdate, "%-", "/")
 
   if string.match(content, "{%d%d%d%d/%d%d/%d%d}%s*{[^}]+}%s*{[^}]+}") then
@@ -97,12 +102,32 @@ function update_tag(file, content, tagname, tagdate)
 end
 
 
+function shell(cmd)
+  local f = assert(io.popen(cmd, 'r'))
+  local s = assert(f:read('*a'))
+  f:close()
+  s = string.gsub(s, '^%s+', '')
+  s = string.gsub(s, '%s+$', '')
+  s = string.gsub(s, '[\n\r]+', ' ')
+  return s
+end
+
+function exe(s)
+  print('=====================')
+  print('> '..s..'\n')
+  local e = os.execute(s)
+  if e > 0 then
+    error("ABORT: Execution failed")
+  end
+end
+
+
 function tag_hook(tagname)
-  os.execute('git commit -a -m "tag: update package version/data"')
+  exe('git commit -a -m "tag: update package version/data"')
   print("Are you ready to `git tag`? Type 'y' to proceed:")
   tag_check = io.read()
   if tag_check == "y" then
-    os.execute('git tag -a "v'..pkgversion..'" -m "[see CHANGES for detailes]"')
+    exe('git tag -a "v'..pkgversion..'" -m "[see CHANGES for detailes]"')
   end
 end
 

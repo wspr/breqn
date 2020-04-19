@@ -85,3 +85,9 @@ function update_tag(file, content, tagname, tagdate)
 end
 
 
+function tag_hook(tagname)
+  os.execute('git commit -a -m "tag: update package version/data"')
+end
+
+
+

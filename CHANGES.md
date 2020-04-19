@@ -1,7 +1,7 @@
 # Release notes for the `breqn` packages
 
 
-## v0.98j (2020/02/18)
+## v0.98j (2020/04/19)
 
   * Remove `color` and `background` options from the documentation, as they have never done anything!
     (Todo: make them do something...)

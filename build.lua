@@ -90,7 +90,7 @@ function tag_hook(tagname)
   print("Are you ready to `git tag`? Type 'y' to proceed:")
   tag_check = io.read()
   if tag_check == "y" then
-    os.execute('git tag -a "v'..pkgversion..'" -m "'..currentchanges..'"')
+    os.execute('git tag -a "v'..pkgversion..'" -m "[see CHANGES for detailes]"')
   end
 end
 

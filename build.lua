@@ -14,6 +14,18 @@ packtdszip   = true
 recordstatus = true
 
 
+--[==========[
+      HELP
+--]==========]
+
+print([[
+This is the L3BUILD config file for BREQN.
+To perform a new release, run:
+    l3build tag # don't type 'y' to tag with git
+    l3build ctan
+    l3build tag # if upload succeeded, do type 'y' to tag with git
+]])
+
 --[==================[
       VERSION DATA
 --]==================]

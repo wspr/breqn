@@ -1,5 +1,9 @@
 # Release notes for the `breqn` packages
 
+## v0.98k (2020/09/24)
+
+  * Update patch code for new 2e kernel (thanks Ulrike)
+
 
 ## v0.98j (2020/04/19)
 
@@ -11,6 +15,7 @@
     LuaTeX and other engines.
     (This was originally just a quick fix of the value of `\\mathstyle` within double
     subscripts or superscripts)
+
 
 ## v0.98i (2020/02/18)
 

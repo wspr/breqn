@@ -123,7 +123,7 @@ end
 
 
 function tag_hook(tagname)
-  exe('git commit -a -m "tag: update package version/data"')
+--  exe('git commit -a -m "tag: update package version/data"')
   print("Are you ready to `git tag`? Type 'y' to proceed:")
   tag_check = io.read()
   if tag_check == "y" then

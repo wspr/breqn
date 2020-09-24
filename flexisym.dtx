@@ -78,8 +78,8 @@
 % \fi
 %
 % \title{The \textsf{flexisym} package}
-% \def\fileversion{0.98j}
-% \def\filedate{2020/04/19}
+% \def\fileversion{0.98k}
+% \def\filedate{2020/08/24}
 % \date{\filedate\space\fileversion}
 % \author{Authors: Michael J. Downes, Morten H\o gholm\\ Maintained by Morten H\o gholm, Will Robertson\\ Feedback: \texttt{https://github.com/wspr/breqn/issues}}
 %
@@ -628,9 +628,10 @@
 %
 % We have to remove the assignments from the \cs{AtBeginDocument} hook
 % as they will cause an error there.
+% \changes{v0.98k}{2020/08/24}{Removed the patch as it will break with new LaTeX. Instead
+% the mathcodes are set later.}
 %    \begin{macrocode}
 \@ifpackageloaded{amsmath}{%
-  \begingroup
 %    \end{macrocode}
 % Split the contents of \cs{@begindocumenthook} by reading what we
 % search for as a delimited argument and ensure these two assignments
@@ -645,13 +646,6 @@
 % needed. We need those additional files anyway for things like
 % \cs{joinord}.
 %    \begin{macrocode}
-  \long\def\next#1\mathchardef\std@minus\mathcode`\-\relax
-                  \mathchardef\std@equal\mathcode`\=\relax#2\flexi@stop{%
-    \toks@{#1#2}%
-    \xdef\@begindocumenthook{\the\toks@}%
-  }%
-  \expandafter\next\@begindocumenthook\flexi@stop
-  \endgroup
 }{}
 %    \end{macrocode}
 %
@@ -660,26 +654,34 @@
 % mathcode of \texttt{-} being less than 32768. We delay the
 % definition \cs{AtBeginDocument} in case \pkg{amssymb} hasn't been
 % loaded yet.
+% \changes{v0.98k}{2020/08/24}{Adapted to unicode engines (using definition in amsopn)}
 %    \begin{macrocode}
 \AtBeginDocument{%
-\def\newmcodes@{%
-  \mathcode `\'39\space
-  \mathcode `\*42\space
-  \mathcode `\."613A\space
-  \ifnum\mathcode`\-=45\space
-  \else
+\ifx\Umathcode\@undefined
+\gdef\newmcodes@{\mathcode`\'39\mathcode`\*42\mathcode`\."613A%
+  \ifnum\mathcode`\-=45 \else
 %    \end{macrocode}
 % The extra check. Don't do anything if \texttt{-} is math active.
 %    \begin{macrocode}
     \ifnum\mathcode`\-=32768\space
     \else
-      \mathchardef \std@minus \mathcode `\-\relax
+      \mathchardef\std@minus\mathcode`\-\relax
     \fi
   \fi
-  \mathcode `\-45\space
-  \mathcode `\/47\space
-  \mathcode `\:"603A\space\relax
-}%
+  \mathcode`\-45\mathcode`\/47\mathcode`\:"603A\relax}
+\else
+\gdef\newmcodes@{\mathcode`\'39\mathcode`\*42\mathcode`\."613A%
+  \ifnum\Umathcodenum`\-=45 \else
+%    \end{macrocode}
+% The extra check. Don't do anything if \texttt{-} is math active.
+%    \begin{macrocode}
+    \ifnum\Umathcodenum`\-=16777216\space
+    \else
+      \Umathcharnumdef\std@minus\Umathcodenum`\-\relax
+    \fi
+  \fi
+  \mathcode`\-45\mathcode`\/47\mathcode`\:"603A\relax}
+\fi
 }
 %    \end{macrocode}
 %
@@ -776,7 +778,7 @@
 \DeclareFlexSymbol{:}     {Rel}{OT1}{3A}
 \DeclareFlexSymbol{\colon}{Pun}{OT1}{3A}
 \DeclareFlexSymbol{;}     {Pun}{OT1}{3B}
-\DeclareFlexSymbol{=}     {Rel}{OT1}{3D}
+\AtBeginDocument{\DeclareFlexSymbol{=}     {Rel}{OT1}{3D}}
 \DeclareFlexSymbol{?}     {Pun}{OT1}{3F}
 %    \end{macrocode}
 % \AmS\TeX, and therefore the \pkg{amsmath} package, make the
@@ -942,7 +944,7 @@
 % Symbols from the 128-character \fn{cmsy} encoding.
 %    \begin{macrocode}
 \DeclareFlexSymbol{*}           {Bin}{bin}{03} % \ast
-\DeclareFlexSymbol{-}           {Bin}{bin}{00}
+\AtBeginDocument{\DeclareFlexSymbol{-}           {Bin}{bin}{00}}
 \DeclareFlexSymbol{|}           {Ord}{OMS}{6A}
 \DeclareFlexSymbol{\aleph}      {Ord}{ord}{40}
 \DeclareFlexSymbol{\Re}         {Ord}{ord}{3C}

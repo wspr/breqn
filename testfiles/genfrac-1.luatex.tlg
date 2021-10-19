@@ -85,7 +85,7 @@ Completed box being shipped out [1]
 ......\OMX/cmex/m/n/10 ^^@
 .....\vbox(7.55+2.54999)x0.0, direction TLT
 ......\rule(10.09999+0.0)x0.0
-.....\hbox(0.0+0.0)x0.0, shifted -2.5, direction TLT
+.....\hbox(0.0+0.0)x0.0, direction TLT
 ....\mathoff
 ..\kern-1.2
 ..\hbox(8.78334+3.78334)x8.78299, direction TLT
@@ -111,7 +111,7 @@ Completed box being shipped out [1]
 ......\OMX/cmex/m/n/10 ^^A
 .....\vbox(7.55+2.54999)x0.0, direction TLT
 ......\rule(10.09999+0.0)x0.0
-.....\hbox(0.0+0.0)x0.0, shifted -2.5, direction TLT
+.....\hbox(0.0+0.0)x0.0, direction TLT
 ....\mathoff
 .\mathoff
 Completed box being shipped out [1]
@@ -126,7 +126,7 @@ Completed box being shipped out [1]
 ......\OT1/cmr/m/n/10 (
 .....\vbox(6.55+1.54999)x0.0, direction TLT
 ......\rule(8.09999+0.0)x0.0
-.....\hbox(0.0+0.0)x0.0, shifted -2.5, direction TLT
+.....\hbox(0.0+0.0)x0.0, direction TLT
 ....\mathoff
 ..\kern-1.2
 ..\hbox(6.66667+3.16667)x7.81845, direction TLT
@@ -152,7 +152,7 @@ Completed box being shipped out [1]
 ......\OT1/cmr/m/n/10 )
 .....\vbox(6.55+1.54999)x0.0, direction TLT
 ......\rule(8.09999+0.0)x0.0
-.....\hbox(0.0+0.0)x0.0, shifted -2.5, direction TLT
+.....\hbox(0.0+0.0)x0.0, direction TLT
 ....\mathoff
 .\mathoff
 ***************

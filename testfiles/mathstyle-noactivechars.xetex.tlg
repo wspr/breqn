@@ -7,11 +7,14 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line ....
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253
+.\hbox(0.0+0.0)x0.0
+..\special{pdfcolorstackinit 1 page direct (0 g 0 G)}
 .\glue -52.36449
 .\vbox(550.69687+0.0)x307.28978, shifted -15.36449
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978
+....\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x307.28978, glue set 377.16035fil
@@ -106,6 +109,7 @@ Completed box being shipped out [1]
 ...\penalty 0
 ...\glue(\belowdisplayskip) 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\glue(\lineskip) 1.0
 ...\hbox(6.94+0.10999)x307.28978, glue set 259.73978fil
 ....\hbox(0.0+0.0)x15.0
@@ -153,5 +157,7 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
+...\hbox(0.0+0.0)x307.28978
+.\kern 0.0
 ***************
 Compilation 1 of test file completed with exit status 0

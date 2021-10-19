@@ -37,7 +37,6 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 3.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(7.5+2.5)x307.28978, glue set 1.0
 ....\glue(\leftskip) 117.8116
 ....\mathon
@@ -61,7 +60,6 @@ Completed box being shipped out [1]
 ....\OT1/cmr/m/n/10 2
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern 0.0
 ....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
@@ -89,7 +87,6 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 3.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0
 ....\glue(\leftskip) 135.77824
 ....\mathon
@@ -129,7 +126,6 @@ Completed box being shipped out [1]
 ....\rule(*+*)x0.0
 ....\mathoff
 ....\kern 0.0
-....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 135.77824
@@ -152,7 +148,6 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 3.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0
 ....\glue(\leftskip) 139.57826
 ....\mathon
@@ -207,7 +202,6 @@ Completed box being shipped out [1]
 ......\hbox(0.0+0.0)x1.2, shifted -2.5
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern 0.0
 ....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0

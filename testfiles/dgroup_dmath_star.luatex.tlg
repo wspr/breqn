@@ -53,7 +53,6 @@ Completed box being shipped out [1]
 ...\kern-10.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.94444+0.0)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 141.7329
 ....\localpar
@@ -76,7 +75,6 @@ Completed box being shipped out [1]
 ....\rule(*+*)x0.0
 ....\mathoff
 ....\kern0.0
-....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 142.64612 minus 0.1
@@ -84,7 +82,6 @@ Completed box being shipped out [1]
 ...\glue 3.0 plus 2.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.94444+0.0)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 142.69122
 ....\localpar
@@ -106,7 +103,6 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 d
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern0.0
 ....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
@@ -140,7 +136,6 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 3.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(7.5+2.5)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 141.7329
 ....\localpar
@@ -174,7 +169,6 @@ Completed box being shipped out [1]
 ....\rule(*+*)x0.0
 ....\mathoff
 ....\kern0.0
-....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 142.64612 minus 0.1
@@ -182,7 +176,6 @@ Completed box being shipped out [1]
 ...\glue 3.0 plus 2.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(7.5+2.5)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 142.69122
 ....\localpar
@@ -215,7 +208,6 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 d
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern0.0
 ....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0

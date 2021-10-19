@@ -36,7 +36,6 @@ Completed box being shipped out [1]
 ...\kern-13.94444
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.94444+1.94444)x307.28978, glue set 0.47014, direction TLT
 ....\glue(\leftskip) 37.20322
 ....\localpar
@@ -194,7 +193,6 @@ T
 ....\kern0.4398 (italic)
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern0.0
 ....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0

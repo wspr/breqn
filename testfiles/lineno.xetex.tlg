@@ -41,7 +41,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(7.5+2.49998)x307.28978, glue set 1.0
 ....\glue(\leftskip) 141.48984
 ....\hbox(7.5+2.49998)x0.0, glue set - 165.79994fil
@@ -63,7 +62,6 @@ Completed box being shipped out [1]
 ....\kern0.35878
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern 0.0
 ....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
@@ -98,7 +96,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(4.30554+1.94444)x307.28978, glue set 1.0
 ....\glue(\leftskip) 141.48984
 ....\mathon
@@ -111,7 +108,6 @@ Completed box being shipped out [1]
 ....\kern0.35878
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern 0.0
 ....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
@@ -146,7 +142,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(7.5+2.49998)x307.28978, glue set 1.0
 ....\glue(\leftskip) 141.48984
 ....\hbox(7.5+2.49998)x0.0, glue set - 165.79994fil
@@ -168,7 +163,6 @@ Completed box being shipped out [1]
 ....\kern0.35878
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern 0.0
 ....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
@@ -205,7 +199,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(4.30554+1.94444)x307.28978, glue set 1.0
 ....\glue(\leftskip) 141.48984
 ....\mathon
@@ -219,19 +212,9 @@ Completed box being shipped out [1]
 ....\rule(*+*)x0.0
 ....\mathoff
 ....\kern 0.0
-....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 141.48985 minus 0.1
-...\kern -1.94444
-...\hbox(0.0+1.94444)x0.0
-....\hbox(3.28+0.10498)x0.0, glue set - 12.655fil
-.....\glue 0.0 plus 1.0fil minus 1.0fil
-.....\TU/lmss/m/n/5 5
-.....\glue 10.0
-...\penalty 10000
-...\kern -1.94444
-...\hbox(0.0+1.94444)x0.0
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue -1.93999

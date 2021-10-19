@@ -1376,7 +1376,7 @@
 % Declare package name and date.
 %    \begin{macrocode}
 \RequirePackage{expl3}
-\ProvidesExplPackage{breqn}{2020/04/19}{0.98j}{Breaking equations}
+\ProvidesExplPackage{breqn}{2021/10/19}{0.98k}{Breaking equations}
 %    \end{macrocode}
 %   Regrettably, \pkg{breqn} is internally a mess, so we have to take
 %   some odd steps.
@@ -1456,6 +1456,30 @@
 %
 %
 % \section{Some useful tools}
+%
+%
+%
+%  \begin{macro}{\MaybeRawNoindent}
+%    Breqn does a lot of low-level paragraph stuff which iesn't
+%    supposed to execute paragraph hooks, so with a newer \LaTeX{} it
+%    needs to run the versions that prevent the hooks from executing.
+%    \begin{macrocode}
+\def\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\IfFormatAtLeastTF{2021/06/01}
+  {%
+    \def\MaybeRawNoindent{\ifvmode\expandafter\RawNoindent\fi}%
+  }%
+  {%
+   \let\MaybeRawNoindent\noindent
+   \let\RawParEnd\@@par
+  }
+%    \end{macrocode}
+%  \end{macro}
+%
+%
 %
 % \begin{macro}{\@nx}
 % \begin{macro}{\@xp}
@@ -3113,19 +3137,25 @@
 \def\eq@typeset@L@single{%
   \nobreak
   \eq@params\eq@parshape
-  \nointerlineskip\noindent
+  \nointerlineskip
+%  \noindent
+  \MaybeRawNoindent
   \add@grp@label
   \rlap{\kern-\leftskip\box\EQ@numbox}%
   \if F\eq@frame
   \else
     \rlap{\raise\eq@firstht\hbox to\z@{\eq@addframe\hss}}%
   \fi
-  \eq@dump@box\unhbox\EQ@box \@@par
+  \eq@dump@box\unhbox\EQ@box
+  %\@@par
+  \RawParEnd
 }
 \def\eq@typeset@R@single{%
   \nobreak
   \eq@params\eq@parshape
-  \nointerlineskip\noindent
+  \nointerlineskip
+%  \noindent
+  \MaybeRawNoindent
   \add@grp@label
   \if F\eq@frame
   \else
@@ -3133,7 +3163,8 @@
   \fi
   \rlap{\kern-\leftskip\kern\linewidth\kern-\wd\EQ@numbox\copy\EQ@numbox}%
   \eq@dump@box\unhbox\EQ@box
-  \@@par
+  %\@@par
+  \RawParEnd
 }
 %    \end{macrocode}
 %
@@ -3534,7 +3565,9 @@
 \def\eq@startup{%
   \global\let\EQ@hasLHS\@False
   \setbox\z@\vbox\bgroup
-    \noindent \@@math \displaystyle
+%    \noindent
+    \MaybeRawNoindent                   % no matching \RawParEnd (implicit at box end)
+    \@@math \displaystyle
     \penalty-\@Mi
 }
 %    \end{macrocode}
@@ -5331,7 +5364,9 @@
 %    \begin{macrocode}
 \def\eq@dump@box#1#2{%
 %\debug@box#1%
-  \noindent #1#2\setbox\f@ur\lastbox \setbox\tw@\lastbox
+%  \noindent
+  \MaybeRawNoindent                                   % did not find the end yet
+  #1#2\setbox\f@ur\lastbox \setbox\tw@\lastbox
 %    \end{macrocode}
 % If the LHS contains shrinkable glue, in an L layout the alignment
 % could be thrown off if the first line is shrunk noticeably.
@@ -5608,9 +5643,13 @@
 \def\eq@typeset@equation{%
   \nobreak
   \eq@params\eq@parshape
-  \nointerlineskip\noindent
+  \nointerlineskip
+%  \noindent
+  \MaybeRawNoindent
   \add@grp@label
-  \eq@dump@box\unhbox\EQ@box\@@par
+  \eq@dump@box\unhbox\EQ@box
+%  \@@par
+  \RawParEnd
 }
 %    \end{macrocode}
 %
@@ -6006,7 +6045,9 @@
 % 10000, it means a sub and/or superscript is present on the right
 % delimiter and the box containing them must be taken off first.
 %    \begin{macrocode}
-  \noindent\unhbox\z@ \unskip
+%  \noindent
+  \MaybeRawNoindent
+  \unhbox\z@ \unskip
   \subsup@flag-\lastpenalty \unpenalty
   \xdef\right@delim@code{\number\lastpenalty}%
   \unpenalty
@@ -6028,7 +6069,9 @@
 % this complication.    The penalty value $-10001$ is a no-op case
 % in the case statement of \cs{eq@repacka}.
 %    \begin{macrocode}
-  \penalty-\@Mi\z@rule\@@par
+  \penalty-\@Mi\z@rule
+%  \@@par
+  \RawParEnd
   \setbox\z@\lastbox \unskip\unpenalty
 %%{\showboxbreadth\maxdimen\showboxdepth99\showlists}%
 }

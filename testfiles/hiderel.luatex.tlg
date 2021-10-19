@@ -36,7 +36,6 @@ Completed box being shipped out [1]
 ...\kern-27.88887
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.83331+0.0)x307.28978, glue set 0.99902, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\localpar
@@ -325,7 +324,6 @@ on TLT
 ...\kern-20.88887
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.83331+0.0)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\localpar
@@ -611,7 +609,6 @@ n TLT
 ...\kern-20.88887
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.83331+0.0)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 11.34497
 ....\localpar
@@ -897,7 +894,6 @@ n TLT
 ...\kern-13.94444
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.94444+1.94444)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 13.34412
 ....\localpar

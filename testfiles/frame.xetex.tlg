@@ -3,11 +3,14 @@ Don't change this file in any respect.
 Author: wspr
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253
+.\hbox(0.0+0.0)x0.0
+..\special{pdfcolorstackinit 1 page direct (0 g 0 G)}
 .\glue -52.36449
 .\vbox(550.69687+0.0)x307.28978, shifted -15.36449
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978
+....\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x300.48979, glue set 343.77725fil
@@ -90,12 +93,15 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 t
 ....\rule(*+*)x0.0
 ....\mathoff
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 101.17715 plus 78.39716
 ...\penalty 0
 ...\glue 13.4 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -103,6 +109,7 @@ Completed box being shipped out [1]
 ...\glue 15.84526 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(14.15291+9.11122)x295.59926, glue set 0.0
 ....\glue(\leftskip) 98.73189
 ....\hbox(14.15291+0.0)x0.0
@@ -180,12 +187,15 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 t
 ....\rule(*+*)x0.0
 ....\mathoff
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 98.73189 plus 75.95189
 ...\penalty 0
 ...\glue 15.84526 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -193,6 +203,7 @@ Completed box being shipped out [1]
 ...\glue 15.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(14.15291+9.11122)x297.28978, glue set 0.0
 ....\glue(\leftskip) 99.57715
 ....\hbox(14.15291+0.0)x0.0
@@ -270,6 +281,8 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 t
 ....\rule(*+*)x0.0
 ....\mathoff
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 99.57715 plus 76.79715
@@ -281,5 +294,7 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
+...\hbox(0.0+0.0)x307.28978
+.\kern 0.0
 ***************
 Compilation 1 of test file completed with exit status 0

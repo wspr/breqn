@@ -2,11 +2,14 @@ This is a generated file for the l3build validation system.
 Don't change this file in any respect.
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253
+.\hbox(0.0+0.0)x0.0
+..\special{pdfcolorstackinit 1 page direct (0 g 0 G)}
 .\glue -52.36449
 .\vbox(550.69687+0.0)x307.28978, shifted -15.36449
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978
+....\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x307.28978, glue set 435.7059fil
@@ -27,6 +30,7 @@ Completed box being shipped out [1]
 ...\kern -13.94444
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(6.94444+1.94444)x307.28978, glue set 0.47014
 ....\glue(\leftskip) 37.20322
 ....\mathon
@@ -173,6 +177,8 @@ Completed box being shipped out [1]
 ....\kern0.4398
 ....\rule(*+*)x0.0
 ....\mathoff
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 22.78 plus 34.3952
@@ -184,5 +190,7 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
+...\hbox(0.0+0.0)x307.28978
+.\kern 0.0
 ***************
 Compilation 1 of test file completed with exit status 0

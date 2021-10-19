@@ -3,11 +3,14 @@ Don't change this file in any respect.
 Author: wspr
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253
+.\hbox(0.0+0.0)x0.0
+..\special{pdfcolorstackinit 1 page direct (0 g 0 G)}
 .\glue -52.36449
 .\vbox(550.69687+0.0)x307.28978, shifted -15.36449
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978
+....\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x307.28978, glue set 258.2551fil
@@ -70,12 +73,15 @@ Completed box being shipped out [1]
 ....\mathoff
 ....\kern 1.66702
 ....\TU/lmr/m/n/10 .
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 22.78 plus 82.11522
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -83,6 +89,7 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0
 ....\glue(\leftskip) 104.89522
 ....\hbox(7.5+2.49998)x0.0, glue set - 202.39456fil
@@ -140,12 +147,15 @@ Completed box being shipped out [1]
 ....\mathoff
 ....\kern 1.66702
 ....\TU/lmr/m/n/10 .
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 22.78 plus 82.11522
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -153,6 +163,7 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0
 ....\glue(\leftskip) 106.28522
 ....\hbox(7.5+2.49998)x0.0, glue set - 201.00456fil
@@ -209,12 +220,15 @@ Completed box being shipped out [1]
 ....\mathoff
 ....\kern 1.66702
 ....\TU/lmr/m/n/10 .
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 22.78 plus 83.50522
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -222,6 +236,7 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0
 ....\glue(\leftskip) 112.55022
 ....\hbox(7.5+2.49998)x0.0, glue set - 194.73956fil
@@ -277,12 +292,15 @@ Completed box being shipped out [1]
 ....\mathoff
 ....\kern 1.66702
 ....\TU/lmr/m/n/10 .
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 22.78 plus 89.77022
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -290,6 +308,7 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0
 ....\glue(\leftskip) 112.55022
 ....\hbox(7.5+2.49998)x0.0, glue set - 194.73956fil
@@ -345,12 +364,15 @@ Completed box being shipped out [1]
 ....\mathoff
 ....\kern 1.66702
 ....\TU/lmr/m/n/10 .
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 22.78 plus 89.77022
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -358,6 +380,7 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0
 ....\glue(\leftskip) 113.94022
 ....\hbox(7.5+2.49998)x0.0, glue set - 193.34956fil
@@ -412,6 +435,8 @@ Completed box being shipped out [1]
 ....\mathoff
 ....\kern 1.66702
 ....\TU/lmr/m/n/10 .
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 22.78 plus 91.16022
@@ -423,5 +448,7 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
+...\hbox(0.0+0.0)x307.28978
+.\kern 0.0
 ***************
 Compilation 1 of test file completed with exit status 0

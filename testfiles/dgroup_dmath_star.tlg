@@ -3,11 +3,19 @@ Don't change this file in any respect.
 Author: wspr
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253
+.\hbox(0.0+0.0)x0.0
+..\kern -72.26999
+..\vbox(0.0+0.0)x0.0, glue set 72.26999fil
+...\kern -72.26999
+...\hbox(0.0+0.0)x0.0
+....\glue 0.0 plus 1.0fil minus 1.0fil
+...\glue 0.0 plus 1.0fil minus 1.0fil
 .\glue -52.36449
 .\vbox(550.69687+0.0)x307.28978, shifted -15.36449
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978
+....\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x307.28978, glue set 409.81976fil
@@ -40,6 +48,7 @@ Completed box being shipped out [1]
 ...\kern -10.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(6.94444+0.0)x307.28978, glue set 1.0
 ....\glue(\leftskip) 141.7329
 ....\mathon
@@ -51,6 +60,8 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 b
 ....\rule(*+*)x0.0
 ....\mathoff
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 142.64612 minus 0.1
@@ -58,6 +69,7 @@ Completed box being shipped out [1]
 ...\glue 3.0 plus 2.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(6.94444+0.0)x307.28978, glue set 1.0
 ....\glue(\leftskip) 142.69122
 ....\mathon
@@ -69,12 +81,15 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 d
 ....\rule(*+*)x0.0
 ....\mathoff
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 141.73291 minus 0.1
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 2.55556
 ...\hbox(6.94444+0.0)x307.28978, glue set 261.9286fil
 ....\hbox(0.0+0.0)x15.0
@@ -95,6 +110,7 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 3.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(7.5+2.5)x307.28978, glue set 1.0
 ....\glue(\leftskip) 141.7329
 ....\hbox(7.5+2.5)x0.0, glue set - 165.55688fil
@@ -117,6 +133,8 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 b
 ....\rule(*+*)x0.0
 ....\mathoff
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 142.64612 minus 0.1
@@ -124,6 +142,7 @@ Completed box being shipped out [1]
 ...\glue 3.0 plus 2.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\hbox(7.5+2.5)x307.28978, glue set 1.0
 ....\glue(\leftskip) 142.69122
 ....\hbox(7.5+2.5)x0.0, glue set - 164.59856fil
@@ -146,6 +165,8 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 d
 ....\rule(*+*)x0.0
 ....\mathoff
+....\kern 0.0
+....\kern 0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 141.73291 minus 0.1
@@ -156,5 +177,7 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
+...\hbox(0.0+0.0)x307.28978
+.\kern 0.0
 ***************
 Compilation 1 of test file completed with exit status 0

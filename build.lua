@@ -20,9 +20,11 @@ recordstatus = true
 
 print([[
 This is the L3BUILD config file for BREQN.
-To perform a new release, run:
+To perform a new release:
+    # make sure CHANGES.md has a new entry
     l3build tag # don't type 'y' to tag with git
     l3build ctan
+    l3build upload
     l3build tag # if upload succeeded, do type 'y' to tag with git
 ]])
 

@@ -3,19 +3,11 @@ Don't change this file in any respect.
 Author: wspr
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253, direction TLT
-.\hbox(0.0+0.0)x0.0, direction TLT
-..\kern-72.26999
-..\vbox(0.0+0.0)x0.0, glue set 72.26999fil, direction TLT
-...\kern-72.26999
-...\hbox(0.0+0.0)x0.0, direction TLT
-....\glue 0.0 plus 1.0fil minus 1.0fil
-...\glue 0.0 plus 1.0fil minus 1.0fil
 .\glue -52.36449
 .\vbox(550.69687+0.0)x307.28978, shifted -15.36449, direction TLT
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil, direction TLT
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978, direction TLT
-....\hbox(0.0+0.0)x307.28978, direction TLT
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x307.28978, glue set 416.37463fil, direction TLT
@@ -74,7 +66,6 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 a
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 269.21478 minus 0.1
@@ -262,14 +253,12 @@ Completed box being shipped out [1]
 ....\OML/cmm/m/it/10 a
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 0.0 plus 14.17 minus 0.1
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\glue(\baselineskip) 8.51738
 ...\hbox(1.42262+0.0)x307.28978, direction TLT
 ....\localpar
@@ -279,7 +268,6 @@ Completed box being shipped out [1]
 .....\localrightbox=null
 ....\hbox(1.42262+0.0)x307.28978, direction TLT
 .....\rule(1.42262+0.0)x307.28978
-....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0 plus 1.0fil
 ....\glue(\rightskip) 0.0
@@ -288,7 +276,5 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978, direction TLT
-...\hbox(0.0+0.0)x307.28978, direction TLT
-.\kern0.0
 ***************
 Compilation 1 of test file completed with exit status 0

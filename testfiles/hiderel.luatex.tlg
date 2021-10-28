@@ -3,19 +3,11 @@ Don't change this file in any respect.
 Author: wspr
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x291.9253, direction TLT
-.\hbox(0.0+0.0)x0.0, direction TLT
-..\kern-72.26999
-..\vbox(0.0+0.0)x0.0, glue set 72.26999fil, direction TLT
-...\kern-72.26999
-...\hbox(0.0+0.0)x0.0, direction TLT
-....\glue 0.0 plus 1.0fil minus 1.0fil
-...\glue 0.0 plus 1.0fil minus 1.0fil
 .\glue -52.36449
 .\vbox(550.69687+0.0)x307.28978, shifted -15.36449, direction TLT
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil, direction TLT
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978, direction TLT
-....\hbox(0.0+0.0)x307.28978, direction TLT
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x307.28978, glue set 236.22725fil, direction TLT
@@ -71,8 +63,7 @@ Completed box being shipped out [1]
 ....\glue(\rightskip) 22.78 plus 228.1537
 ...\penalty 10000
 ...\glue(\baselineskip) 7.05556 plus 2.0
-...\hbox(6.94444+1.94444)x297.01205, glue set 0.0214, shifted 10.27773, directio
-n TLT
+...\hbox(6.94444+1.94444)x297.01205, glue set 0.0214, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
@@ -190,8 +181,7 @@ n TLT
 ....\glue(\rightskip) 22.78 plus 228.1537
 ...\penalty 20000
 ...\glue(\baselineskip) 5.90477 plus 2.0
-...\hbox(6.15079+1.94444)x297.01205, glue set 0.10918, shifted 10.27773, directi
-on TLT
+...\hbox(6.15079+1.94444)x297.01205, glue set 0.10918, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
@@ -303,7 +293,6 @@ on TLT
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -356,8 +345,7 @@ on TLT
 ....\glue(\rightskip) 22.78 plus 206.73367
 ...\penalty 20000
 ...\glue(\baselineskip) 7.05556 plus 2.0
-...\hbox(6.94444+1.94444)x297.01205, glue set 0.0236, shifted 10.27773, directio
-n TLT
+...\hbox(6.94444+1.94444)x297.01205, glue set 0.0236, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
@@ -475,8 +463,7 @@ n TLT
 ....\glue(\rightskip) 22.78 plus 206.73367
 ...\penalty 20000
 ...\glue(\baselineskip) 5.90477 plus 2.0
-...\hbox(6.15079+1.94444)x297.01205, glue set 0.1205, shifted 10.27773, directio
-n TLT
+...\hbox(6.15079+1.94444)x297.01205, glue set 0.1205, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 27.66034
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
@@ -588,7 +575,6 @@ n TLT
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -634,8 +620,7 @@ n TLT
 ....\glue(\rightskip) 22.78 plus 244.24475
 ...\penalty 20000
 ...\glue(\baselineskip) 7.05556 plus 2.0
-...\hbox(6.94444+1.94444)x297.01205, glue set 0.0, shifted 10.27773, direction T
-LT
+...\hbox(6.94444+1.94444)x297.01205, glue set 0.0, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 11.34497
 ....\OT1/cmr/m/n/10 =
 ....\glue(\thickmuskip) 2.77771 minus 1.11108
@@ -760,8 +745,7 @@ LT
 ....\glue(\rightskip) 22.78 plus 244.24475
 ...\penalty 20000
 ...\glue(\baselineskip) 5.90477 plus 2.0
-...\hbox(6.15079+1.94444)x297.01205, glue set 0.1688, shifted 10.27773, directio
-n TLT
+...\hbox(6.15079+1.94444)x297.01205, glue set 0.1688, shifted 10.27773, direction TLT
 ....\glue(\leftskip) 11.34497
 ....\rule(*+*)x0.0
 ....\glue 8.33313 minus -1.66663
@@ -873,7 +857,6 @@ n TLT
 ...\penalty 0
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -1158,7 +1141,5 @@ n TLT
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978, direction TLT
-...\hbox(0.0+0.0)x307.28978, direction TLT
-.\kern0.0
 ***************
 Compilation 1 of test file completed with exit status 0

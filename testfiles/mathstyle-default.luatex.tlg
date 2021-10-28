@@ -12,7 +12,6 @@ Completed box being shipped out [1]
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil, direction TLT
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978, direction TLT
-....\hbox(0.0+0.0)x307.28978, direction TLT
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x307.28978, glue set 377.16034fil, direction TLT
@@ -112,7 +111,6 @@ Completed box being shipped out [1]
 ...\penalty 0
 ...\glue(\belowdisplayskip) 10.0 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\glue(\lineskip) 1.0
 ...\hbox(6.94+0.11)x307.28978, glue set 259.73978fil, direction TLT
 ....\localpar
@@ -171,6 +169,5 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978, direction TLT
-...\hbox(0.0+0.0)x307.28978, direction TLT
 ***************
 Compilation 1 of test file completed with exit status 0

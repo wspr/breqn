@@ -14,7 +14,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 19--19
 .\rule(*+*)x0.0
 .\mathoff
 .\kern0.0
-.\kern0.0
 .\penalty 10000
 .\glue(\parfillskip) 0.0
 .\glue(\rightskip) 0.0
@@ -53,7 +52,6 @@ Completed box being shipped out [1]
 ...\kern-20.94444
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.94444+1.94444)x307.28978, glue set - 0.53194, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
@@ -430,7 +428,6 @@ TLT
 ....\rule(*+*)x0.0
 ....\mathoff
 ....\kern0.0
-....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0
 ....\glue(\rightskip) 22.78
@@ -445,7 +442,6 @@ TLT
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(6.94444+1.94444)x307.28978, glue set - 0.86206, direction TLT
 ....\localpar
 .....\localinterlinepenalty=0
@@ -824,7 +820,6 @@ ion TLT
 ....\kern0.4398 (italic)
 ....\rule(*+*)x0.0
 ....\mathoff
-....\kern0.0
 ....\kern0.0
 ....\penalty 10000
 ....\glue(\parfillskip) 0.0

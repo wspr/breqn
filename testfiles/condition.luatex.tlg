@@ -105,7 +105,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 104.89522
 ....\localpar
@@ -190,7 +189,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 106.28522
 ....\localpar
@@ -274,7 +272,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 112.55022
 ....\localpar
@@ -355,7 +352,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 112.55022
 ....\localpar
@@ -436,7 +432,6 @@ Completed box being shipped out [1]
 ...\glue 10.0 plus 2.0 minus 5.0
 ...\penalty 10000
 ...\glue(\parskip) 0.0 plus 1.0
-...\glue(\parskip) 0.0
 ...\hbox(13.20952+6.85951)x307.28978, glue set 1.0, direction TLT
 ....\glue(\leftskip) 113.94022
 ....\localpar

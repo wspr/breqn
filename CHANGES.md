@@ -1,5 +1,11 @@
 # Release notes for the `breqn` packages
 
+
+## v0.98l (2021/10/28)
+
+  * Prevent new LaTeX paragraph hooks from running and interfering unnecessarily with breqn internals (thanks Frank)
+
+
 ## v0.98k (2020/09/24)
 
   * Update patch code for new 2e kernel (thanks Ulrike)

@@ -1,0 +1,17 @@
+\documentclass{book}
+\input{regression-test}
+
+\ifx\Umathchar\undefined\else
+\usepackage{unicode-math}
+\fi
+
+\makeatletter
+
+\usepackage{breqn}
+
+
+\START
+% should not error
+\begin{document}
+
+\END

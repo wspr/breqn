@@ -1,0 +1,20 @@
+
+% https://tex.stackexchange.com/questions/705340/why-adding-breqn-packages-gives-undefined-control-sequence-begindocument
+
+\documentclass{book}
+\input{regression-test}
+
+\ifx\Umathchar\undefined\else
+\usepackage{unicode-math}
+\fi
+
+\makeatletter
+
+\usepackage{breqn}
+
+
+\START
+% should not error
+\begin{document}
+
+\END

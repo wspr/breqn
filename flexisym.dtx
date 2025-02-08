@@ -79,8 +79,8 @@
 % \fi
 %
 % \title{The \textsf{flexisym} package}
-% \def\fileversion{0.98l}
-% \def\filedate{2021/10/28}
+% \def\fileversion{0.98lm
+% \def\filedate{2025/02/08}
 % \date{\filedate\space\fileversion}
 % \author{Authors: Michael J. Downes, Morten H\o gholm\\ Maintained by Morten H\o gholm, Will Robertson\\ Feedback: \texttt{https://github.com/wspr/breqn/issues}}
 %
@@ -514,12 +514,17 @@
 \DeclareRobustCommand\textprime{\leavevmode
   \raise.8ex\hbox{\text@char\scriptfont\prime}%
 }
+%    \end{macrocode}
+% \changes{v0.98m}{2025/02/08}{LuaTeX guard}
+%    \begin{macrocode}
+\ifx\directlua\@undefined
 \@ifundefined{resetMathstrut@}{}{%
   \def\resetMathstrut@{%
     \setbox\z@\hbox{\textchar\vert}%
     \ht\Mathstrutbox@\ht\z@ \dp\Mathstrutbox@\dp\z@
   }%
 }
+\fi
 %    \end{macrocode}
 % Arrow fills. changed to 7mu as in amsmath
 %    \begin{macrocode}

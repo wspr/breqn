@@ -3,13 +3,12 @@ Don't change this file in any respect.
 Author: wspr
 Completed box being shipped out [1]
 \vbox(498.33238+0.0)x302.50638
-.\hbox(0.0+0.0)x0.0
-..\special{pdfcolorstackinit 1 page direct (0 g 0 G)}
 .\glue -52.36449
 .\vbox(550.69687+0.0)x317.87086, shifted -15.36449
 ..\vbox(12.0+0.0)x307.28978, glue set 12.0fil
 ...\glue 0.0 plus 1.0fil
 ...\hbox(0.0+0.0)x307.28978
+....\hbox(0.0+0.0)x307.28978
 ..\glue 25.0
 ..\glue(\lineskip) 0.0
 ..\vbox(483.69687+0.0)x317.87086, glue set 274.28668fil
@@ -98,6 +97,7 @@ Completed box being shipped out [1]
 ...\penalty 0
 ...\glue 13.4 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -188,6 +188,7 @@ Completed box being shipped out [1]
 ...\penalty 0
 ...\glue 10.4 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -278,6 +279,7 @@ Completed box being shipped out [1]
 ...\penalty 0
 ...\glue 38.85274 plus 2.0 minus 5.0
 ...\glue(\parskip) 0.0 plus 1.0
+...\glue(\parskip) 0.0
 ...\penalty 10000
 ...\glue(\abovedisplayskip) 0.0
 ...\penalty 10000
@@ -373,6 +375,6 @@ Completed box being shipped out [1]
 ...\glue 0.0 plus 0.0001fil
 ..\glue(\baselineskip) 30.0
 ..\hbox(0.0+0.0)x307.28978
-.\kern 0.0
+...\hbox(0.0+0.0)x307.28978
 ***************
 Compilation 1 of test file completed with exit status 0

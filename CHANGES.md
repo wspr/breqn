@@ -1,5 +1,7 @@
 # Release notes for the `breqn` packages
 
+## v0.98m (2025/02/08)
+  * Minimal guard for luatex to avoid error setting mathstrut at begin document
 
 ## v0.98l (2021/10/28)
 

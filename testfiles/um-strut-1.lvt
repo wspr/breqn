@@ -1,3 +1,6 @@
+
+% https://tex.stackexchange.com/questions/705340/why-adding-breqn-packages-gives-undefined-control-sequence-begindocument
+
 \documentclass{book}
 \input{regression-test}
 
